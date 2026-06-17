@@ -37,11 +37,22 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/banner.2.jpg");
+  background-image: url("/activacion/banner.2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   animation: rayo 5s infinite linear;
+}
+
+/* Landing nueva (masterclass): fondo de hero propio + brillo de sol sutil */
+.hero-section--mc .hero-bg {
+  background-image: url("/masterclass/aida-1.jpg");
+  animation: sol 9s ease-in-out infinite;
+}
+
+@keyframes sol {
+  0%, 100% { filter: brightness(100%); }
+  50%      { filter: brightness(106%); }
 }
 
 @keyframes rayo {
@@ -245,10 +256,20 @@ body {
 
   /* Switch background image on the actual bg element */
   .hero-bg {
-    background-image: url("/bg-mobile.webp");
+    background-image: url("/activacion/bg-mobile.webp");
     background-size: 100% auto;
     background-position: top center;
     /* rayo animation active on mobile too */
+  }
+
+  /* Landing nueva (masterclass): fondo de hero mobile propio */
+  .hero-section--mc {
+    background-color: #0e0200;
+  }
+
+  .hero-section--mc .hero-bg {
+    background-image: url("/masterclass/aida-1-mobile.jpg");
+    background-color: #0e0200;
   }
 
   /* overlay: transparent at top (Aida's face), fades to cream where content starts */
@@ -968,7 +989,7 @@ body {
 .section3 {
   width: 100%;
   height: 700px;
-  background-image: url("/bg-section-3.webp");
+  background-image: url("/activacion/bg-section-3.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -977,7 +998,7 @@ body {
 @media (max-width: 480px) {
   .section3 {
     height: 694px;
-    background-image: url("/bg-section-3-mobile.webp");
+    background-image: url("/activacion/bg-section-3-mobile.webp");
   }
 }
 
@@ -1418,7 +1439,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/section-6.webp");
+  background-image: url("/activacion/section-6.webp");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -1529,7 +1550,7 @@ body {
 
   /* Switch to mobile-specific Aida photo */
   .s6-bg {
-    background-image: url("/bg-aida-mobile.webp");
+    background-image: url("/activacion/bg-aida-mobile.webp");
     background-size: 100% auto;
     background-position: top center;
   }
@@ -1572,7 +1593,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/banner-final.jpg");
+  background-image: url("/activacion/banner-final.jpg");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -2002,10 +2023,15 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/banner.2.jpg");
+  background-image: url("/activacion/banner.2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/* Landing nueva (masterclass): fondo de gracias propio */
+.gracias-section--mc .gracias-bg {
+  background-image: url("/masterclass/gracias.jpg");
 }
 
 .gracias-overlay {
@@ -2389,6 +2415,149 @@ a.pearl-btn {
   .pearl-wrap {
     font-size: 16px;
     padding: 20px 28px;
+  }
+}
+
+/* ===== Masterclass hero — overrides propios de la landing nueva ===== */
+
+/* Sin overlay en la landing nueva: el contenido va directo sobre la foto */
+.hero-section--mc::before {
+  display: none;
+}
+
+/* Titular más grande, en blanco (con sombra para legibilidad sobre la foto) */
+.hero-section--mc .hero-title {
+  color: #ffffff;
+  font-size: clamp(36px, 3.6vw, 52px);
+  line-height: 1.08;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section--mc .hero-description {
+  color: #ffffff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+}
+
+/* CTA en violeta. Para pasarlo a dorado: --pearl-bg: #c9952f; */
+.hero-section--mc .pearl-btn {
+  --pearl-bg: #5b3aa0;
+}
+
+/* ---- Badge "Masterclass gratuita" con espigas doradas (animación continua) ---- */
+.mc-wheat-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: visible;
+  margin-top: 6px;
+  padding: 12px 26px;
+  border: 1px solid #e7bd7c;
+  border-radius: 100px;
+  background: linear-gradient(85deg, #fde9c8, #f6cd8e, #e9b765, #f2c987, #fbe3bf);
+  background-size: 220% 220%;
+  color: #4a3408;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(212, 168, 85, 0.4);
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.12));
+  animation: mc-wheat-wind 6s ease-in-out infinite;
+}
+
+@keyframes mc-wheat-wind {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.mc-wheat {
+  position: absolute;
+  /* tallo apoya en el borde superior del badge, hojas salen hacia arriba */
+  bottom: calc(100% - 4px);
+  display: block;
+  pointer-events: none;
+}
+
+.mc-wheat svg { display: block; width: 100%; height: auto; transform: scaleY(-1); }
+.mc-wheat .fil0 { fill: #2f5233; } /* hojas en verde oscuro */
+
+.mc-wheat--1 {
+  right: 20px;
+  width: 15px;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));
+  animation: mc-slay-1 3s cubic-bezier(0.52, 0, 0.58, 1) infinite;
+}
+
+.mc-wheat--2 {
+  left: 30px;
+  width: 8px;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+  animation: mc-slay-2 3s cubic-bezier(0.52, 0, 0.58, 1) 1s infinite;
+}
+
+.mc-wheat--3 {
+  left: 16px;
+  width: 12px;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+  animation: mc-slay-3 2s cubic-bezier(0.52, 0, 0.58, 1) 1s infinite;
+}
+
+@keyframes mc-slay-1 {
+  0%   { transform: rotate(10deg); }
+  50%  { transform: rotate(-5deg); }
+  100% { transform: rotate(10deg); }
+}
+
+@keyframes mc-slay-2 {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes mc-slay-3 {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ---- Chips de fecha / formato (arriba del formulario, estilo botón dorado) ---- */
+.mc-event-chips {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.mc-chip {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid #e7bd7c;
+  border-radius: 10px;
+  background: linear-gradient(85deg, #fde9c8, #f6cd8e, #e9b765, #f2c987, #fbe3bf);
+  background-size: 220% 220%;
+  color: #4a3408;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(212, 168, 85, 0.3);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1));
+  animation: mc-wheat-wind 6s ease-in-out infinite;
+}
+
+.mc-chip svg { color: #6b4e16; flex-shrink: 0; }
+
+@media (max-width: 480px) {
+  .hero-section--mc .hero-title {
+    font-size: clamp(30px, 8.5vw, 40px);
   }
 }
 

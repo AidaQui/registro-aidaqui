@@ -29,7 +29,7 @@ export default function GraciasSection() {
 
       <div className="gracias-shell">
         <Image
-          src="/logotipo.png"
+          src="/common/logotipo.png"
           alt="Activación de la Frecuencia Original"
           width={420}
           height={65}

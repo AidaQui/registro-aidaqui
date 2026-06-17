@@ -10,10 +10,10 @@ const ctaPrimary = "Reservar mi lugar";
 const ctaSupport = "Contacta con soporte";
 
 const schedules = [
-  { country: "España",    src: "/espana.webp" },
-  { country: "Argentina", src: "/argentina.webp" },
-  { country: "México",    src: "/mexico.webp" },
-  { country: "Colombia",  src: "/colombia.webp" },
+  { country: "España",    src: "/activacion/espana.webp" },
+  { country: "Argentina", src: "/activacion/argentina.webp" },
+  { country: "México",    src: "/activacion/mexico.webp" },
+  { country: "Colombia",  src: "/activacion/colombia.webp" },
 ];
 
 const SparkleIcon = ({ id }: { id: string }) => (
@@ -113,7 +113,7 @@ export default function FinalSection() {
 
         <div className="final-shell">
           <Image
-            src="/logotipo.png"
+            src="/common/logotipo.png"
             alt="Activación de la Frecuencia Original"
             width={420}
             height={65}

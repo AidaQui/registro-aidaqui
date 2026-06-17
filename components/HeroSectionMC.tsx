@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Sparkles, CalendarDays, Video } from "lucide-react";
+import { CalendarDays, Video } from "lucide-react";
+import MasterclassBadge from "@/components/MasterclassBadge";
 
 export default function HeroSectionMC() {
   const router = useRouter();
@@ -34,15 +35,12 @@ export default function HeroSectionMC() {
   }
 
   return (
-    <section className="hero-section" aria-labelledby="hero-title-mc">
+    <section className="hero-section hero-section--mc" aria-labelledby="hero-title-mc">
       <div className="hero-bg" aria-hidden="true" />
       <div className="hero-shell">
         <div className="hero-copy">
 
-          <div className="mc-badge" aria-label="Tipo de evento">
-            <Sparkles size={14} strokeWidth={2.2} aria-hidden="true" />
-            MASTERCLASS GRATUITA
-          </div>
+          <MasterclassBadge />
 
           <h1 id="hero-title-mc" className="hero-title">
             Los 3 pasos para acceder al potencial que aún no estás viviendo
@@ -53,10 +51,20 @@ export default function HeroSectionMC() {
             necesarias para convertirlo en tu nueva realidad.
           </p>
 
+          <div className="mc-event-chips" aria-label="Fecha y formato">
+            <span className="mc-chip">
+              <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
+              28 DE JUNIO
+            </span>
+            <span className="mc-chip">
+              <Video size={15} strokeWidth={2} aria-hidden="true" />
+              ONLINE POR ZOOM
+            </span>
+          </div>
           <form className="mc-form" onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="tu nombre completo"
+              placeholder="Tu nombre completo"
               className="mc-input"
               autoComplete="name"
               value={name}
@@ -65,7 +73,7 @@ export default function HeroSectionMC() {
             />
             <input
               type="email"
-              placeholder="tu correo"
+              placeholder="Tu correo"
               className="mc-input"
               autoComplete="email"
               value={email}
@@ -83,14 +91,6 @@ export default function HeroSectionMC() {
             </button>
             {error && <p className="mc-error" role="alert">{error}</p>}
           </form>
-
-          <div className="mc-date-info" aria-label="Fecha y formato">
-            <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
-            <span>28 de junio</span>
-            <span className="mc-date-sep" aria-hidden="true">·</span>
-            <Video size={15} strokeWidth={2} aria-hidden="true" />
-            <span>online por zoom</span>
-          </div>
 
         </div>
       </div>

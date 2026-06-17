@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 const schedules = [
-  { country: "España", src: "/espana.webp" },
-  { country: "Argentina", src: "/argentina.webp" },
-  { country: "México", src: "/mexico.webp" },
-  { country: "Colombia", src: "/colombia.webp" },
+  { country: "España", src: "/activacion/espana.webp" },
+  { country: "Argentina", src: "/activacion/argentina.webp" },
+  { country: "México", src: "/activacion/mexico.webp" },
+  { country: "Colombia", src: "/activacion/colombia.webp" },
 ];
 
 const ctaText = "Reservar mi lugar";
@@ -41,9 +41,9 @@ export default function HeroSection() {
           <div className="hero-badges" aria-label="Detalles de la experiencia">
             {/* SVGs must use native img — Next Image degrades vector quality at non-native sizes */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/badge-1.webp" alt="Experiencia en vivo" className="hero-badge" />
+            <img src="/activacion/badge-1.webp" alt="Experiencia en vivo" className="hero-badge" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/badge-2.webp" alt="22 de mayo" className="hero-badge" />
+            <img src="/activacion/badge-2.webp" alt="22 de mayo" className="hero-badge" />
           </div>
 
           <h1 id="hero-title" className="hero-title">
@@ -53,7 +53,7 @@ export default function HeroSection() {
 
           <Image
             className="hero-logo"
-            src="/logotipo.png"
+            src="/common/logotipo.png"
             alt="Activación de la Frecuencia Original"
             width={460}
             height={71}

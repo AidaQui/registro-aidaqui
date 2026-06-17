@@ -15,13 +15,13 @@ const WhatsAppIcon = () => (
 
 export default function GraciasSectionMC() {
   return (
-    <section className="gracias-section" aria-labelledby="gracias-mc-title">
+    <section className="gracias-section gracias-section--mc" aria-labelledby="gracias-mc-title">
       <div className="gracias-bg" aria-hidden="true" />
       <div className="gracias-overlay" aria-hidden="true" />
 
       <div className="gracias-shell">
         <Image
-          src="/logotipo.png"
+          src="/common/logotipo.png"
           alt="Aida Qui"
           width={420}
           height={65}

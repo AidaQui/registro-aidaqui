@@ -6,16 +6,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const mainCards = [
-  { src: "/card-1.webp", alt: "Card 1" },
-  { src: "/card-2.webp", alt: "Card 2" },
-  { src: "/card-3.webp", alt: "Card 3" },
-  { src: "/card-4.webp", alt: "Card 4" },
-  { src: "/card-5.webp", alt: "Card 5" },
+  { src: "/activacion/card-1.webp", alt: "Card 1" },
+  { src: "/activacion/card-2.webp", alt: "Card 2" },
+  { src: "/activacion/card-3.webp", alt: "Card 3" },
+  { src: "/activacion/card-4.webp", alt: "Card 4" },
+  { src: "/activacion/card-5.webp", alt: "Card 5" },
 ];
 
 const bonusCards = [
-  { src: "/card-6.webp", alt: "Activación guiada 1" },
-  { src: "/card-7.webp", alt: "Activación guiada 2" },
+  { src: "/activacion/card-6.webp", alt: "Activación guiada 1" },
+  { src: "/activacion/card-7.webp", alt: "Activación guiada 2" },
 ];
 
 // Rotation per card — desktop deck feel, applied as CSS custom prop

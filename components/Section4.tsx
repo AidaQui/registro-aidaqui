@@ -3,16 +3,16 @@ import Image from "next/image";
 import Section4Close from "@/components/Section4Close";
 
 const row1 = [
-  { src: "/img-1.webp", alt: "Liberación energética y emocional de bloqueos que no te permiten avanzar" },
-  { src: "/img-2.webp", alt: "Activación de merecimiento y autenticidad" },
-  { src: "/img-3.webp", alt: "Herramientas para sostener tu energía en el día a día" },
-  { src: "/img-4.webp", alt: "Amplificación de tu energía de manifestación" },
+  { src: "/activacion/img-1.webp", alt: "Liberación energética y emocional de bloqueos que no te permiten avanzar" },
+  { src: "/activacion/img-2.webp", alt: "Activación de merecimiento y autenticidad" },
+  { src: "/activacion/img-3.webp", alt: "Herramientas para sostener tu energía en el día a día" },
+  { src: "/activacion/img-4.webp", alt: "Amplificación de tu energía de manifestación" },
 ];
 
 const row2 = [
-  { src: "/img-5.webp", alt: "Un espacio de conexión grupal con personas que también están despertando" },
-  { src: "/img-6.webp", alt: "Un profundo reset energético para volver a sentirte alineadx, recargado, inspirado y profundamente conectado a tu Ser Superior" },
-  { src: "/img-7.webp", alt: "Liberación energética y emocional de bloqueos que no te permiten avanzar" },
+  { src: "/activacion/img-5.webp", alt: "Un espacio de conexión grupal con personas que también están despertando" },
+  { src: "/activacion/img-6.webp", alt: "Un profundo reset energético para volver a sentirte alineadx, recargado, inspirado y profundamente conectado a tu Ser Superior" },
+  { src: "/activacion/img-7.webp", alt: "Liberación energética y emocional de bloqueos que no te permiten avanzar" },
 ];
 
 const allCards = [...row1, ...row2];
