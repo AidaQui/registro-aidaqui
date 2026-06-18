@@ -2029,22 +2029,19 @@ body {
   background-repeat: no-repeat;
 }
 
-/* Landing nueva (masterclass): fondo de gracias propio */
+/* Landing nueva (masterclass): banner propio de gracias, ocupa 100vh */
 .gracias-section--mc .gracias-bg {
-  background-image: url("/masterclass/gracias.jpg");
+  background-image: url("/masterclass/banner-gracias.jpg");
+  background-size: cover;
+  background-position: center right;
 }
 
-.gracias-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(251, 244, 235, 0.92) 0%,
-    rgba(251, 244, 235, 0.82) 45%,
-    rgba(251, 244, 235, 0.9) 100%
-  );
-  pointer-events: none;
+@media (max-width: 768px) {
+  .gracias-section--mc .gracias-bg {
+    background-image: url("/activacion/bg-mobile.webp");
+    background-size: cover;
+    background-position: center top;
+  }
 }
 
 .gracias-shell {
@@ -2057,6 +2054,47 @@ body {
   align-items: center;
   gap: 24px;
   text-align: center;
+}
+
+/* MC: contenido a la izquierda, espacio derecho para la imagen */
+.gracias-section--mc .gracias-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.gracias-section--mc .gracias-shell > * {
+  max-width: 560px;
+}
+
+/* MC: todas las tipografías en el mismo violeta oscuro */
+.gracias-section--mc .gracias-title,
+.gracias-section--mc .gracias-body,
+.gracias-section--mc .gracias-support-note {
+  color: #290066;
+}
+
+/* MC: título con fondo remarcado para resaltar sobre la imagen */
+.gracias-section--mc .gracias-title {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: rgba(249, 235, 219, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 168, 85, 0.35);
+  box-shadow: 0 14px 32px -14px rgba(41, 0, 102, 0.3);
+}
+
+/* MC: alinear barra y botones a la izquierda */
+.gracias-section--mc .gracias-progress {
+  margin-left: 0;
+}
+
+.gracias-section--mc .gracias-pearl {
+  margin-left: 0;
 }
 
 .gracias-logo {
@@ -2113,6 +2151,158 @@ body {
   line-height: 1.65;
   color: #2E2040;
   max-width: 600px;
+}
+
+/* ---- Pasos numerados con cards translúcidas ---- */
+.gracias-step {
+  width: 100%;
+  max-width: 540px;
+}
+
+.gracias-step__tag {
+  display: inline-block;
+  margin: 0 0 -10px 22px;
+  position: relative;
+  z-index: 2;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--color-gold-main), var(--color-gold-light));
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3a2800;
+}
+
+.gracias-step__card {
+  padding: 30px 30px 26px;
+  border-radius: 18px;
+  background: rgba(249, 235, 219, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 168, 85, 0.3);
+  box-shadow: 0 18px 40px -16px rgba(41, 0, 102, 0.28);
+  text-align: left;
+}
+
+.gracias-step__title {
+  margin: 0 0 12px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: #290066;
+}
+
+.gracias-step__body {
+  margin: 0 0 22px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.6;
+  color: #2E2040;
+}
+
+.gracias-step__body strong {
+  color: #6A4A9C;
+  font-weight: 700;
+}
+
+.gracias-step__help {
+  margin: 16px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #8a7aa0;
+}
+
+/* Botones dentro de las cards de pasos: ancho completo de la card */
+.gracias-step__card .gracias-pearl {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ---- Barra de progreso (87% dorada con shimmer) ---- */
+.gracias-progress {
+  width: 100%;
+  max-width: 440px;
+  height: 30px;
+  border-radius: 100px;
+  background: rgba(41, 0, 102, 0.1);
+  box-shadow: inset 0 2px 5px rgba(41, 0, 102, 0.18);
+  overflow: hidden;
+}
+
+.gracias-progress__fill {
+  height: 100%;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 14px;
+  background: linear-gradient(
+    90deg,
+    #a06c08 0%,
+    #c8960c 30%,
+    #d4a020 55%,
+    #9a6206 80%,
+    #c8960c 100%
+  );
+  background-size: 200% auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 8px rgba(212, 160, 32, 0.4);
+  animation:
+    gracias-progress-shimmer 4s linear infinite,
+    gracias-progress-grow 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Shimmer dorado en sentido inverso: de principio a final */
+@keyframes gracias-progress-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: 0% center; }
+}
+
+@keyframes gracias-progress-grow {
+  from { width: 0%; }
+}
+
+.gracias-progress__value {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* ---- Nota + botón de soporte (verde WhatsApp) ---- */
+.gracias-support-note {
+  margin: 4px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.5;
+  color: #6A4A9C;
+  max-width: 480px;
+}
+
+/* ---- Botones de gracias: mismo efecto pearl que la landing activa, distinto color ---- */
+/* Especificidad doble (.gracias-pearl.gracias-pearl--x) para ganarle a .pearl-btn */
+/* Verde WhatsApp — botón VIP */
+.gracias-pearl.gracias-pearl--green {
+  --pearl-bg: #1faa55;
+  background-color: #1faa55;
+}
+
+/* Violeta de marca — botón soporte */
+.gracias-pearl.gracias-pearl--violet {
+  --pearl-bg: #5b3aa0;
+  background-color: #5b3aa0;
+}
+
+.gracias-pearl .gracias-wa-icon {
+  font-size: 1.2em;
+  display: inline-flex;
+  margin-right: 4px;
 }
 
 /* Primary CTA — inherits .button, max visual priority */
@@ -2181,6 +2371,16 @@ body {
 @media (max-width: 480px) {
   .gracias-section {
     padding: 56px 20px;
+  }
+
+  /* MC: alinear desde arriba para poder empujar el contenido sin pelear con el center.
+     El fondo (.gracias-bg) es absolute, así que este push NO agranda la imagen. */
+  .gracias-section--mc {
+    align-items: flex-start;
+  }
+
+  .gracias-section--mc .gracias-shell {
+    margin-top: 280px;
   }
 
   .gracias-shell {

@@ -1,10 +1,11 @@
-import Image from "next/image";
+// Link de invitación al grupo VIP de WhatsApp (reusado del proyecto).
+const whatsappGroupUrl =
+  "https://chat.whatsapp.com/Go03w9mfDwbDQC7Z7QwLh0?mode=gi_t";
 
-// TODO: reemplazar por el chat/grupo de WhatsApp real de la masterclass.
-// Para chat directo: https://wa.me/<codpais><numero>?text=<mensaje url-encoded>
-// Para grupo: el link de invitación de WhatsApp.
-const whatsappUrl =
-  "https://wa.me/0000000000?text=Hola!%20Me%20anot%C3%A9%20a%20la%20masterclass%20del%2028%20de%20junio";
+// TODO: número directo del equipo de soporte. Reemplazar el placeholder.
+// Formato chat directo: https://wa.me/<codpais><numero>?text=<mensaje>
+const soporteUrl =
+  "https://wa.me/0000000000?text=Hola!%20Necesito%20ayuda%20para%20unirme%20al%20grupo%20de%20la%20Masterclass";
 
 const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -17,55 +18,79 @@ export default function GraciasSectionMC() {
   return (
     <section className="gracias-section gracias-section--mc" aria-labelledby="gracias-mc-title">
       <div className="gracias-bg" aria-hidden="true" />
-      <div className="gracias-overlay" aria-hidden="true" />
 
       <div className="gracias-shell">
-        <Image
-          src="/common/logotipo.png"
-          alt="Aida Qui"
-          width={420}
-          height={65}
-          className="gracias-logo"
-          style={{ width: "100%", maxWidth: 420, height: "auto" }}
-          priority
-        />
-
         <h1 className="gracias-title" id="gracias-mc-title">
-          ¡Listo! Tu lugar en la{" "}
-          <mark className="gracias-highlight">MASTERCLASS GRATUITA</mark> está
-          reservado
+          ¡Tu inscripción está casi completa!
         </h1>
 
-        <p className="gracias-subtitle">Sólo te falta un paso:</p>
-
-        <p className="gracias-body">
-          Unite al WhatsApp para recibir el enlace de acceso a la sesión en vivo
-          y los recordatorios antes de que empiece.
-        </p>
-
-        <a
-          href={whatsappUrl}
-          className="pearl-btn gracias-pearl"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div
+          className="gracias-progress"
+          role="progressbar"
+          aria-valuenow={87}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Progreso de inscripción"
         >
-          <div className="pearl-wrap">
-            <p>
-              <span className="gracias-wa-icon" aria-hidden="true"><WhatsAppIcon /></span>
-              Acceder por WhatsApp
-            </p>
+          <div className="gracias-progress__fill" style={{ width: "87%" }}>
+            <span className="gracias-progress__value">87%</span>
           </div>
-        </a>
-
-        <div className="gracias-rule" aria-hidden="true">
-          <span className="gracias-rule__line" />
-          <span className="gracias-rule__gem">✦</span>
-          <span className="gracias-rule__line" />
         </div>
 
-        <div className="gracias-date">
-          <p className="gracias-date__label">La masterclass es el:</p>
-          <p className="gracias-date__value">28 de junio · online por Zoom</p>
+        {/* Paso 1 — unirse al grupo */}
+        <div className="gracias-step">
+          <span className="gracias-step__tag">Paso #1</span>
+          <div className="gracias-step__card">
+            <h2 className="gracias-step__title">Únete al grupo de WhatsApp.</h2>
+            <p className="gracias-step__body">
+              Este es un grupo cerrado y libre de SPAM. Aquí recibirás el enlace
+              de acceso a la Masterclass y todos los materiales del Workshop.
+            </p>
+            <a
+              href={whatsappGroupUrl}
+              className="pearl-btn gracias-pearl gracias-pearl--green"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="pearl-wrap">
+                <p>
+                  <span className="gracias-wa-icon" aria-hidden="true"><WhatsAppIcon /></span>
+                  Únete al grupo VIP ahora
+                </p>
+              </div>
+            </a>
+            <p className="gracias-step__help">
+              Si no logras acceder al grupo, escríbenos aquí.
+            </p>
+          </div>
+        </div>
+
+        {/* Paso 2 — revisar el mail */}
+        <div className="gracias-step">
+          <span className="gracias-step__tag">Paso #2</span>
+          <div className="gracias-step__card">
+            <h2 className="gracias-step__title">
+              Revisa tu bandeja de entrada y spam.
+            </h2>
+            <p className="gracias-step__body">
+              Recibirás un email donde encontrarás el enlace de
+              acceso y los recordatorios de la Masterclass del 28 de junio.
+              Revisa tu bandeja de entrada y la carpeta de spam.
+            </p>
+            <a
+              href={soporteUrl}
+              className="pearl-btn gracias-pearl gracias-pearl--violet"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="pearl-wrap">
+                <p>
+                  <span className="gracias-wa-icon" aria-hidden="true"><WhatsAppIcon /></span>
+                  Hablar con soporte
+                </p>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
