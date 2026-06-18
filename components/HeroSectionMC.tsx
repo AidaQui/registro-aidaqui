@@ -35,7 +35,7 @@ export default function HeroSectionMC() {
   }
 
   return (
-    <section className="hero-section hero-section--mc" aria-labelledby="hero-title-mc">
+    <section id="registro" className="hero-section hero-section--mc" aria-labelledby="hero-title-mc">
       <div className="hero-bg" aria-hidden="true" />
       <div className="hero-shell">
         <div className="hero-copy">

@@ -1,5 +1,10 @@
 import Head from "next/head";
 import HeroSectionMC from "@/components/HeroSectionMC";
+import ClassContentSection from "@/components/ClassContentSection";
+import AccessPassSection from "@/components/AccessPassSection";
+import AudienceSection from "@/components/AudienceSection";
+import AboutAidaSection from "@/components/AboutAidaSection";
+import ClosingSection from "@/components/ClosingSection";
 
 export default function Home() {
   return (
@@ -14,6 +19,11 @@ export default function Home() {
       </Head>
       <main>
         <HeroSectionMC />
+        <ClassContentSection />
+        <AccessPassSection />
+        <AudienceSection />
+        <AboutAidaSection />
+        <ClosingSection />
       </main>
     </>
   );
