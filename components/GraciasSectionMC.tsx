@@ -21,7 +21,8 @@ export default function GraciasSectionMC() {
 
       <div className="gracias-shell">
         <h1 className="gracias-title" id="gracias-mc-title">
-          ¡Tu inscripción está casi completa!
+          ¡Tu inscripción está{" "}
+          <mark className="gracias-mark">casi completa</mark>!
         </h1>
 
         <div
@@ -37,14 +38,14 @@ export default function GraciasSectionMC() {
           </div>
         </div>
 
-        {/* Paso 1 — unirse al grupo */}
+        {/* Paso único — unirse al grupo */}
         <div className="gracias-step">
-          <span className="gracias-step__tag">Paso #1</span>
+          <span className="gracias-step__tag">ÚLTIMO PASO</span>
           <div className="gracias-step__card">
             <h2 className="gracias-step__title">Únete al grupo de WhatsApp.</h2>
             <p className="gracias-step__body">
               Este es un grupo cerrado y libre de SPAM. Aquí recibirás el enlace
-              de acceso a la Masterclass y todos los materiales del Workshop.
+              de acceso a la Masterclass.
             </p>
             <a
               href={whatsappGroupUrl}
@@ -59,39 +60,23 @@ export default function GraciasSectionMC() {
                 </p>
               </div>
             </a>
-            <p className="gracias-step__help">
-              Si no logras acceder al grupo, escríbenos aquí.
-            </p>
           </div>
         </div>
 
-        {/* Paso 2 — revisar el mail */}
-        <div className="gracias-step">
-          <span className="gracias-step__tag">Paso #2</span>
-          <div className="gracias-step__card">
-            <h2 className="gracias-step__title">
-              Revisa tu bandeja de entrada y spam.
-            </h2>
-            <p className="gracias-step__body">
-              Recibirás un email donde encontrarás el enlace de
-              acceso y los recordatorios de la Masterclass del 28 de junio.
-              Revisa tu bandeja de entrada y la carpeta de spam.
+        {/* Botón de soporte (solo, separado del paso) */}
+        <a
+          href={soporteUrl}
+          className="pearl-btn gracias-pearl gracias-pearl--violet"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div className="pearl-wrap">
+            <p>
+              <span className="gracias-wa-icon" aria-hidden="true"><WhatsAppIcon /></span>
+              Hablar con soporte
             </p>
-            <a
-              href={soporteUrl}
-              className="pearl-btn gracias-pearl gracias-pearl--violet"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="pearl-wrap">
-                <p>
-                  <span className="gracias-wa-icon" aria-hidden="true"><WhatsAppIcon /></span>
-                  Hablar con soporte
-                </p>
-              </div>
-            </a>
           </div>
-        </div>
+        </a>
       </div>
     </section>
   );

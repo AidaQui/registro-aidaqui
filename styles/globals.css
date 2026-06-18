@@ -2090,16 +2090,20 @@ body {
   color: #290066;
 }
 
-/* MC: título con fondo remarcado para resaltar sobre la imagen */
-.gracias-section--mc .gracias-title {
-  display: inline-block;
-  padding: 14px 24px;
-  border-radius: 14px;
-  background: rgba(249, 235, 219, 0.86);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(212, 168, 85, 0.35);
-  box-shadow: 0 14px 32px -14px rgba(41, 0, 102, 0.3);
+/* Marcador dorado sobre "casi completa" — mismo efecto fibrón que la hero */
+.gracias-mark {
+  --mark-rgb: 196 152 70;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px 8px 5px 9px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  background:
+    conic-gradient(at 0 100%, rgb(var(--mark-rgb) / 95%) 1%, transparent 3%) no-repeat 0 0 / auto 120%,
+    conic-gradient(from 180deg at 100% 0, transparent, rgb(var(--mark-rgb) / 95%) 1%, transparent 4%) no-repeat 100% 100% / auto 120%,
+    linear-gradient(52deg, rgb(var(--mark-rgb) / 72%), rgb(var(--mark-rgb) / 45%) 75%, rgb(var(--mark-rgb) / 68%)) no-repeat center / auto;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* MC: alinear barra y botones a la izquierda */
