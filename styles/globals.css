@@ -17,6 +17,20 @@
   box-sizing: border-box;
 }
 
+/* Scroll suave y deslizante para los anclajes internos (#registro) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respiro arriba al anclar al formulario, no queda pegado al borde */
+#registro {
+  scroll-margin-top: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 body {
   background-color: #F9F5F0;
   color: #2E2040;
@@ -92,7 +106,7 @@ body {
   max-width: 100%;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
+  gap: 15px;
 }
 
 .hero-badges {
@@ -290,7 +304,7 @@ body {
     width: 100%;
     min-height: unset;
     /* empuja el contenido para que la cara de Aida quede visible arriba */
-    padding-top: clamp(225px, 50vw, 325px);
+    padding-top: clamp(200px, 50vw, 325px);
     padding-bottom: 40px;
   }
 
@@ -2478,10 +2492,12 @@ body {
 
 .pearl-wrap {
   font-family: var(--font-jost), Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.82);
-  padding: 22px 40px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 20px 36px;
   border-radius: inherit;
   position: relative;
   overflow: hidden;
@@ -2491,17 +2507,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   margin: 0;
   transition: all 0.2s ease;
-  transform: translateY(2%);
-  mask-image: linear-gradient(to bottom, white 40%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, white 40%, transparent);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.pearl-wrap p span:nth-child(2) { display: none; }
-.pearl-btn:hover .pearl-wrap p span:nth-child(1) { display: none; }
-.pearl-btn:hover .pearl-wrap p span:nth-child(2) { display: inline-block; }
+/* Estrellas a cada lado del texto, alineadas al centro vertical */
+.pearl-star {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+/* Texto largo en 2 líneas (botones "Haz clic aquí para registrarte gratis") */
+.pearl-label {
+  max-width: 22ch;
+  text-align: center;
+  text-wrap: balance;
+  line-height: 1.25;
+}
 
 .pearl-wrap::before,
 .pearl-wrap::after {
@@ -2628,14 +2655,33 @@ a.pearl-btn {
 /* Titular más grande, en blanco (con sombra para legibilidad sobre la foto) */
 .hero-section--mc .hero-title {
   color: #ffffff;
-  font-size: clamp(36px, 3.6vw, 52px);
+  font-size: clamp(36px, 3.6vw, 40px);
   line-height: 1.08;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 
 .hero-section--mc .hero-description {
   color: #ffffff;
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 500;
+  line-height: 1.7;
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+}
+
+/* Marcador tipo highlight para resaltar palabras clave de la promesa */
+.hero-mark {
+  --mark-rgb: 196 152 70; /* dorado cálido de marca */
+  color: #ffffff;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px 8px 5px 9px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  background:
+    conic-gradient(at 0 100%, rgb(var(--mark-rgb) / 95%) 1%, transparent 3%) no-repeat 0 0 / auto 120%,
+    conic-gradient(from 180deg at 100% 0, transparent, rgb(var(--mark-rgb) / 95%) 1%, transparent 4%) no-repeat 100% 100% / auto 120%,
+    linear-gradient(52deg, rgb(var(--mark-rgb) / 72%), rgb(var(--mark-rgb) / 45%) 75%, rgb(var(--mark-rgb) / 68%)) no-repeat center / auto;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* CTA en violeta. Para pasarlo a dorado: --pearl-bg: #c9952f; */
@@ -2724,12 +2770,13 @@ a.pearl-btn {
   100% { transform: rotate(0deg); }
 }
 
-/* ---- Chips de fecha / formato (arriba del formulario, estilo botón dorado) ---- */
+/* ---- Chips de fecha / formato (debajo del botón, estilo botón dorado) ---- */
 .mc-event-chips {
   display: flex;
   gap: 10px;
   width: 100%;
   max-width: 460px;
+  margin-top: 10px;
 }
 
 .mc-chip {
@@ -2757,7 +2804,7 @@ a.pearl-btn {
 
 @media (max-width: 480px) {
   .hero-section--mc .hero-title {
-    font-size: clamp(30px, 8.5vw, 40px);
+    font-size: clamp(28px, 7.5vw, 30px);
   }
 }
 
@@ -2880,6 +2927,27 @@ a.pearl-btn {
 
 .learn-card:hover .learn-glare {
   opacity: 0.22;
+}
+
+/* Spotlight que sigue al cursor (estilo SpotlightCard, con las vars --mx/--my ya existentes).
+   z-index 3 para verse sobre el fondo del inner; pointer-events none para no tapar nada. */
+.learn-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(
+    circle 200px at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.14),
+    transparent 80%
+  );
+}
+
+.learn-card:hover .learn-spotlight {
+  opacity: 0.7;
 }
 
 /* ---- Variante con imagen: foto arriba visible, texto sobre shadow inferior ---- */
@@ -3473,7 +3541,7 @@ a.pearl-btn {
   text-align: center;
   font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 600;
-  font-size: clamp(28px, 3.4vw, 44px);
+  font-size: clamp(28px, 3.4vw, 42px);
   line-height: 1.16;
   letter-spacing: -0.01em;
   color: #6A4A9C;

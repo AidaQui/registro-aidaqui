@@ -67,6 +67,7 @@ export default function LearnCard({ item }: { item: LearnItem }) {
       <div className="learn-dot" />
       <div className="learn-ray" />
       <div className="learn-glare" aria-hidden="true" />
+      <div className="learn-spotlight" aria-hidden="true" />
       <div className="learn-card-inner">
         <span className="learn-icon">{item.icon}</span>
         <p className="learn-text">{item.text}</p>

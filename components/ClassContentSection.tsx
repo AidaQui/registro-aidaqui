@@ -6,7 +6,6 @@ const items: LearnItem[] = [
   {
     icon: <KeyRound size={26} strokeWidth={2} aria-hidden="true" />,
     variant: "violet",
-    image: "/masterclass/img1.jpg",
     text: (
       <>
         Qué está bloqueando el acceso a tu verdadero potencial y por qué tener
@@ -17,7 +16,6 @@ const items: LearnItem[] = [
   {
     icon: <Layers size={26} strokeWidth={2} aria-hidden="true" />,
     variant: "violet",
-    image: "/masterclass/img2.jpg",
     text: (
       <>
         Cómo construir la estructura interna necesaria para sostener una nueva
@@ -28,7 +26,6 @@ const items: LearnItem[] = [
   {
     icon: <Footprints size={26} strokeWidth={2} aria-hidden="true" />,
     variant: "violet",
-    image: "/masterclass/img3.jpg",
     text: (
       <>
         Los 3 pasos para atravesar esta transición sin perderte en el ruido

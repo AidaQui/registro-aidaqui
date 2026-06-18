@@ -47,20 +47,13 @@ export default function HeroSectionMC() {
           </h1>
 
           <p className="hero-description">
-            Y aprender a sostener la energía, la claridad y la confianza
+            Y{" "}
+            <mark className="hero-mark">
+              aprender a sostener la energía, la claridad y la confianza
+            </mark>{" "}
             necesarias para convertirlo en tu nueva realidad.
           </p>
 
-          <div className="mc-event-chips" aria-label="Fecha y formato">
-            <span className="mc-chip">
-              <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
-              28 DE JUNIO
-            </span>
-            <span className="mc-chip">
-              <Video size={15} strokeWidth={2} aria-hidden="true" />
-              ONLINE POR ZOOM
-            </span>
-          </div>
           <form className="mc-form" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -83,14 +76,25 @@ export default function HeroSectionMC() {
             <button type="submit" className="pearl-btn" disabled={submitting}>
               <div className="pearl-wrap">
                 <p>
-                  <span aria-hidden="true">✧</span>
-                  <span aria-hidden="true">✦</span>
+                  <span className="pearl-star" aria-hidden="true">✦</span>
                   {submitting ? "Reservando..." : "Reservar mi plaza ahora"}
+                  <span className="pearl-star" aria-hidden="true">✦</span>
                 </p>
               </div>
             </button>
             {error && <p className="mc-error" role="alert">{error}</p>}
           </form>
+
+          <div className="mc-event-chips" aria-label="Fecha y formato">
+            <span className="mc-chip">
+              <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
+              28 DE JUNIO
+            </span>
+            <span className="mc-chip">
+              <Video size={15} strokeWidth={2} aria-hidden="true" />
+              ONLINE POR ZOOM
+            </span>
+          </div>
 
         </div>
       </div>

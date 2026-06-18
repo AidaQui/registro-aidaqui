@@ -41,12 +41,12 @@ export default function AboutAidaSection() {
           </p>
 
           <div className="about-aida-cta">
-            <a href="#registro" className="pearl-btn">
+            <a href="#registro" className="pearl-btn pearl-btn--scroll">
               <div className="pearl-wrap">
                 <p>
-                  <span aria-hidden="true">✧</span>
-                  <span aria-hidden="true">✦</span>
-                  Haz clic aquí para registrarte gratis
+                  <span className="pearl-star" aria-hidden="true">✦</span>
+                  <span className="pearl-label">Haz clic aquí para registrarte gratis</span>
+                  <span className="pearl-star" aria-hidden="true">✦</span>
                 </p>
               </div>
             </a>
