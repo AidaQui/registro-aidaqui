@@ -1,6 +1,6 @@
-// Link de invitación al grupo VIP de WhatsApp (reusado del proyecto).
+// Link de invitación al grupo VIP de WhatsApp de la masterclass.
 const whatsappGroupUrl =
-  "https://chat.whatsapp.com/Go03w9mfDwbDQC7Z7QwLh0?mode=gi_t";
+  "https://chat.whatsapp.com/EaUZns8DMeG4zLBP3cIcI2?s=cl&p=i&ilr=2";
 
 // TODO: número directo del equipo de soporte. Reemplazar el placeholder.
 // Formato chat directo: https://wa.me/<codpais><numero>?text=<mensaje>

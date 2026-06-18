@@ -1,12 +1,34 @@
+import { useRef } from "react";
+import Image from "next/image";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+
+const MAX_TILT = 10; // grados
 
 export default function AboutAidaSection() {
   const ref = useScrollReveal<HTMLElement>();
+  const frameRef = useRef<HTMLDivElement>(null);
+
+  function handleMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = frameRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.setProperty("--rx", `${(-py * MAX_TILT).toFixed(2)}deg`);
+    el.style.setProperty("--ry", `${(px * MAX_TILT).toFixed(2)}deg`);
+    el.style.setProperty("--mx", `${((px + 0.5) * 100).toFixed(1)}%`);
+    el.style.setProperty("--my", `${((py + 0.5) * 100).toFixed(1)}%`);
+  }
+
+  function handleLeave() {
+    const el = frameRef.current;
+    if (!el) return;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  }
 
   return (
     <section ref={ref} className="about-aida" aria-labelledby="about-aida-title">
-      <div className="about-aida-bg" aria-hidden="true" />
-
       <div className="about-aida-shell">
         <div className="about-aida-copy" data-reveal-group>
           <h2 id="about-aida-title" className="about-aida-eyebrow">
@@ -50,6 +72,28 @@ export default function AboutAidaSection() {
                 </p>
               </div>
             </a>
+          </div>
+        </div>
+
+        <div className="about-aida-media">
+          <div
+            ref={frameRef}
+            className="aida-frame"
+            onMouseMove={handleMove}
+            onMouseLeave={handleLeave}
+          >
+            <div className="aida-frame__glow" aria-hidden="true" />
+            <div className="aida-frame__inner">
+              <Image
+                src="/masterclass/aida-foto-.png"
+                alt="Aida Qui"
+                width={520}
+                height={620}
+                className="aida-frame__img"
+                priority
+              />
+              <div className="aida-frame__shine" aria-hidden="true" />
+            </div>
           </div>
         </div>
       </div>

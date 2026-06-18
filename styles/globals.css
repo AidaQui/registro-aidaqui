@@ -3597,44 +3597,59 @@ a.pearl-btn {
 .about-aida {
   position: relative;
   width: 100%;
-  min-height: 720px;
-  display: flex;
-  align-items: center;
-  padding: 96px 24px;
+  padding: 104px 24px;
   overflow: hidden;
+  /* Fondo violeta sólido, integra con la sección final */
+  background: linear-gradient(165deg, #241644 0%, #1c1233 60%, #170E2B 100%);
 }
 
-/* Fondo desktop */
-.about-aida-bg {
+/* Línea dorada de separación entre Aida y la sección final */
+.about-aida::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 168, 85, 0.2) 18%,
+    #f0c98a 50%,
+    rgba(212, 168, 85, 0.2) 82%,
+    transparent 100%
+  );
+  box-shadow: 0 0 18px rgba(240, 201, 138, 0.5);
+}
+
+/* Orbe de luz decorativo */
+.about-aida::before {
+  content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/masterclass/aida-2.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  /* Sombra interna inferior: funde con el violeta con que arranca la sección final */
-  box-shadow: inset 0 -140px 90px -40px #170E2B;
+  background:
+    radial-gradient(circle 600px at 90% 10%, rgba(212, 168, 85, 0.16), transparent 60%),
+    radial-gradient(circle 700px at 0% 100%, rgba(155, 126, 200, 0.22), transparent 62%);
+  pointer-events: none;
 }
 
+/* Layout 2 columnas: texto izquierda, foto derecha */
 .about-aida-shell {
   position: relative;
   z-index: 2;
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 56px;
 }
 
-/* Contenido a la derecha, con caja semitransparente solo detrás del texto */
 .about-aida-copy {
-  max-width: 560px;
-  margin-left: auto;
-  padding: 40px 44px;
-  border-radius: 18px;
-  background: rgba(28, 18, 51, 0.62);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(249, 245, 240, 0.12);
+  max-width: 580px;
 }
 
 .about-aida-eyebrow {
@@ -3652,7 +3667,7 @@ a.pearl-btn {
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: clamp(15px, 1.1vw, 17px);
   line-height: 1.6;
-  color: rgba(249, 245, 240, 0.92);
+  color: rgba(249, 245, 240, 0.9);
 }
 
 .about-aida-text strong {
@@ -3669,46 +3684,124 @@ a.pearl-btn {
   max-width: 420px;
 }
 
-/* ---- Mobile: imagen tope 750px + color de fondo de relleno ---- */
-@media (max-width: 768px) {
-  .about-aida {
-    min-height: 0;
-    padding: 80px 22px;
-    /* Color de relleno detrás de la imagen: si el contenido pasa los 750px,
-       el resto se completa con este violeta en vez de estirar la foto.
-       Mismo violeta con que arranca la sección final → integración perfecta */
-    background-color: #170E2B;
-  }
+/* ---- Columna de la foto ---- */
+.about-aida-media {
+  display: flex;
+  justify-content: center;
+  perspective: 1200px;
+}
 
-  /* La imagen NO se estira a toda la altura: queda fija arriba, máx 750px */
-  .about-aida-bg {
-    inset: 0 0 auto 0;
-    height: 750px;
-    background-image: url("/masterclass/aida-2-mobile.jpg");
-    background-size: cover;
-    background-position: center top;
-    /* Funde el corte inferior de la foto con el color de relleno */
-    box-shadow: inset 0 -160px 100px -50px #170E2B;
+/* Marco con tilt 3D */
+.aida-frame {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 24px;
+  padding: 10px;
+  background: linear-gradient(150deg, rgba(240, 201, 138, 0.5), rgba(155, 126, 200, 0.35));
+  box-shadow:
+    0 40px 80px -28px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(212, 168, 85, 0.3);
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.aida-frame:hover {
+  box-shadow:
+    0 50px 100px -28px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(212, 168, 85, 0.6);
+}
+
+/* Glow exterior que late suave */
+.aida-frame__glow {
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 26px;
+  background: linear-gradient(135deg, var(--color-gold-main), var(--color-violet-main));
+  filter: blur(22px);
+  opacity: 0.45;
+  transition: opacity 0.4s ease;
+}
+
+.aida-frame:hover .aida-frame__glow {
+  opacity: 0.75;
+}
+
+.aida-frame__inner {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  transform: translateZ(30px);
+}
+
+.aida-frame__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Luz que sigue al cursor sobre la foto */
+.aida-frame__shine {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    circle 240px at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.28),
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
+}
+
+.aida-frame:hover .aida-frame__shine {
+  opacity: 1;
+}
+
+/* ---- Tablet / mobile: una columna, foto arriba ---- */
+@media (max-width: 860px) {
+  .about-aida {
+    padding: 80px 22px;
   }
 
   .about-aida-shell {
-    /* Empuja el contenido hacia abajo para que se vea Aida arriba */
-    margin-top: 200px;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
-  /* En mobile el fondo ya da contraste: sin caja, sin border, sin blur */
+  /* Foto primero, luego texto */
+  .about-aida-media {
+    order: -1;
+    perspective: none;
+  }
+
+  .aida-frame {
+    max-width: 340px;
+    /* Sin tilt en mobile (no hay mouse) */
+    transform: none;
+  }
+
   .about-aida-copy {
     max-width: 100%;
-    margin-left: 0;
-    padding: 0;
-    background: none;
-    border: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 
   .about-aida-cta .pearl-btn {
     max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aida-frame {
+    transform: none !important;
   }
 }
 
@@ -3725,9 +3818,48 @@ a.pearl-btn {
   position: absolute;
   inset: 0;
   z-index: 0;
+  /* Arranca EXACTO en #170E2B (igual que el fin de la sección Aida) → sin corte */
   background:
     radial-gradient(circle 720px at 0% 100%, rgba(155, 126, 200, 0.18), transparent 62%),
-    linear-gradient(165deg, #170E2B 0%, #160d29 55%, #120a22 100%);
+    linear-gradient(180deg, #170E2B 0%, #160d29 55%, #120a22 100%);
+}
+
+/* Esferas de blur que dan sombra/profundidad sobre el violeta oscuro */
+.closing-orb {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.closing-orb--gold {
+  width: 360px;
+  height: 360px;
+  top: -80px;
+  right: 6%;
+  background: radial-gradient(circle, rgba(212, 168, 85, 0.3), transparent 70%);
+}
+
+.closing-orb--violet {
+  width: 440px;
+  height: 440px;
+  bottom: -120px;
+  left: -60px;
+  background: radial-gradient(circle, rgba(155, 126, 200, 0.32), transparent 70%);
+}
+
+/* Contenedor de los LightRays: detrás del contenido, sobre el fondo */
+.closing-rays {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.closing-rays .light-rays-container {
+  z-index: 0;
 }
 
 .closing-shell {

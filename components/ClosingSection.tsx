@@ -1,5 +1,6 @@
 import { CalendarDays } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import LightRays from "@/components/LightRays";
 
 export default function ClosingSection() {
   const ref = useScrollReveal<HTMLElement>();
@@ -7,6 +8,23 @@ export default function ClosingSection() {
   return (
     <section ref={ref} className="closing" aria-labelledby="closing-title">
       <div className="closing-bg" aria-hidden="true" />
+      <div className="closing-orb closing-orb--gold" aria-hidden="true" />
+      <div className="closing-orb closing-orb--violet" aria-hidden="true" />
+      <div className="closing-rays" aria-hidden="true">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#e8c98a"
+          raysSpeed={0.8}
+          lightSpread={1.1}
+          rayLength={1.3}
+          fadeDistance={1.2}
+          saturation={0.9}
+          followMouse
+          mouseInfluence={0.08}
+          noiseAmount={0.06}
+          distortion={0.03}
+        />
+      </div>
 
       <div className="closing-shell">
         <p className="closing-eyebrow" data-reveal>
