@@ -2,10 +2,7 @@
 const whatsappGroupUrl =
   "https://chat.whatsapp.com/EaUZns8DMeG4zLBP3cIcI2?s=cl&p=i&ilr=2";
 
-// TODO: número directo del equipo de soporte. Reemplazar el placeholder.
-// Formato chat directo: https://wa.me/<codpais><numero>?text=<mensaje>
-const soporteUrl =
-  "https://wa.me/0000000000?text=Hola!%20Necesito%20ayuda%20para%20unirme%20al%20grupo%20de%20la%20Masterclass";
+const soporteUrl = "https://wa.link/o34ds1";
 
 const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
