@@ -1,6 +1,6 @@
 // Link de invitación al grupo VIP de WhatsApp de la masterclass.
 const whatsappGroupUrl =
-  "https://chat.whatsapp.com/EaUZns8DMeG4zLBP3cIcI2?s=cl&p=i&ilr=2";
+  "https://chat.whatsapp.com/HugrHbU2PIO7YDWEQYnWUc";
 
 const soporteUrl = "https://wa.link/o34ds1";
 
