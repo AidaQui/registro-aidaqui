@@ -1,5 +1,5 @@
 import { KeyRound, Layers, Footprints } from "lucide-react";
-import LearnCard, { type LearnItem } from "@/components/LearnCard";
+import LearnCard, { type LearnItem } from "@/components/masterclass/LearnCard";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const items: LearnItem[] = [

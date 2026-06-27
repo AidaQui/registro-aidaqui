@@ -1,11 +1,11 @@
 import Head from "next/head";
-import HeroSection from "@/components/HeroSection";
-import PainSection from "@/components/PainSection";
-import Section3 from "@/components/Section3";
-import Section4 from "@/components/Section4";
-import Section5 from "@/components/Section5";
-import Section6 from "@/components/Section6";
-import FinalSection from "@/components/FinalSection";
+import HeroSection from "@/components/activacion/HeroSection";
+import PainSection from "@/components/activacion/PainSection";
+import Section3 from "@/components/activacion/Section3";
+import Section4 from "@/components/activacion/Section4";
+import Section5 from "@/components/activacion/Section5";
+import Section6 from "@/components/activacion/Section6";
+import FinalSection from "@/components/activacion/FinalSection";
 
 export default function Home() {
   return (

@@ -1,10 +1,10 @@
 import Head from "next/head";
-import HeroSectionMC from "@/components/HeroSectionMC";
-import ClassContentSection from "@/components/ClassContentSection";
-import AccessPassSection from "@/components/AccessPassSection";
-import AudienceSection from "@/components/AudienceSection";
-import AboutAidaSection from "@/components/AboutAidaSection";
-import ClosingSection from "@/components/ClosingSection";
+import HeroSectionMC from "@/components/masterclass/HeroSectionMC";
+import ClassContentSection from "@/components/masterclass/ClassContentSection";
+import AccessPassSection from "@/components/masterclass/AccessPassSection";
+import AudienceSection from "@/components/masterclass/AudienceSection";
+import AboutAidaSection from "@/components/masterclass/AboutAidaSection";
+import ClosingSection from "@/components/masterclass/ClosingSection";
 
 export default function Home() {
   return (

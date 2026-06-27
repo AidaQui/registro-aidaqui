@@ -1,5 +1,5 @@
 import Head from "next/head";
-import GraciasSectionMC from "@/components/GraciasSectionMC";
+import GraciasSectionMC from "@/components/masterclass/GraciasSectionMC";
 
 export default function GraciasMasterclass() {
   return (

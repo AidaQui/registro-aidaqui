@@ -1,6 +1,6 @@
 import { CalendarDays } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import LightRays from "@/components/LightRays";
+import LightRays from "@/components/masterclass/LightRays";
 
 export default function ClosingSection() {
   const ref = useScrollReveal<HTMLElement>();

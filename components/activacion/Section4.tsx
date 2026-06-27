@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Image from "next/image";
-import Section4Close from "@/components/Section4Close";
+import Section4Close from "@/components/activacion/Section4Close";
 
 const row1 = [
   { src: "/activacion/img-1.webp", alt: "Liberación energética y emocional de bloqueos que no te permiten avanzar" },

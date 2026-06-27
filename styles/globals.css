@@ -318,6 +318,10 @@ body {
     align-items: flex-start;
   }
 
+  .hero-adn-copy {
+    gap: 12px;
+  }
+
   /* badges: siempre en una fila, escalan juntos para caber en 330px */
   .hero-badges {
     gap: 8px;
@@ -4009,4 +4013,1921 @@ a.pearl-btn {
   .closing-cta .pearl-btn {
     max-width: 100%;
   }
+}
+
+/* ===== Academia ADN 3.0 — Hero (sales landing) ===== */
+
+.hero-adn {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #faf7f2;
+  /* La sección adopta el ratio de la imagen (1920x700) → la imagen se ve completa,
+     sin zoom. Si el contenido necesita más alto en algún ancho, min-height lo protege. */
+  aspect-ratio: 1920 / 700;
+  min-height: 540px;
+}
+
+/* Imagen de fondo real: define el alto natural de la sección (ratio 1920x700)
+   sin zoom ni recorte. El texto va por encima en absoluto vía .hero-adn-shell. */
+.hero-adn-bg {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-adn-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+
+/* Glow suave bajo el bloque textual para despegarlo del fondo sin caja dura */
+.hero-adn-glow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: -6%;
+  width: 720px;
+  height: 720px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(249, 247, 242, 0.92) 0%,
+    rgba(249, 247, 242, 0.55) 42%,
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+.hero-adn-shell {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 45%) minmax(0, 55%);
+  align-items: center;
+  width: min(calc(100% - 48px), 1140px);
+  height: 100%;
+  margin: 0 auto;
+}
+
+.hero-adn-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  max-width: 480px;
+}
+
+/* ---- Pill de urgencia ---- */
+.hero-adn-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(212, 168, 85, 0.45);
+  background: rgba(255, 252, 245, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px -8px rgba(176, 125, 31, 0.4);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #8a6212;
+}
+
+.hero-adn-urgency__dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d4a020;
+  box-shadow: 0 0 0 0 rgba(212, 160, 32, 0.6);
+  animation: hero-adn-pulse 2.2s ease-out infinite;
+}
+
+@keyframes hero-adn-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(212, 160, 32, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(212, 160, 32, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 160, 32, 0); }
+}
+
+/* ---- Promesa — encabezado principal, máximo peso ---- */
+/* Toda la promesa lleva el degradé violeta en movimiento (oscuro → claro) */
+.hero-adn-title {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(30px, 4vw, 45px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    92deg,
+    #290066 0%,
+    #6A4A9C 28%,
+    #9B7EC8 50%,
+    #6A4A9C 72%,
+    #290066 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: hero-adn-violet-flow 5s linear infinite;
+}
+
+@keyframes hero-adn-violet-flow {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Parte resaltada: solo cambia la tipografía a serif itálico.
+   El color/animación lo hereda del degradé del título (background-clip en el padre). */
+.hero-adn-title__accent {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Párrafo descriptivo ---- */
+.hero-adn-lead {
+  margin: 0;
+  max-width: 470px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(17px, 1.4vw, 20px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #4a3d5e;
+}
+
+/* ---- Bloque de marca / subidentidad — protagonista, arriba del título ---- */
+.hero-adn-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+  padding-left: 18px;
+}
+
+/* Acento dorado vertical a la izquierda del nombre */
+.hero-adn-brand::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #f0c98a, #d4a855);
+}
+
+.hero-adn-brand__name {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 2.8vw, 38px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  color: #290066;
+}
+
+.hero-adn-brand__tagline {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(15px, 1.5vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  background: linear-gradient(92deg, #d4a855, #b07d1f, #d4a855);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ---- CTA dorado con estrellas y degradé en movimiento ---- */
+.hero-adn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 360px;
+  padding: 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3a2800;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  /* Degradé dorado multitono en movimiento continuo */
+  background: linear-gradient(
+    100deg,
+    #b07d1f 0%,
+    #d4a855 22%,
+    #f7e3b5 42%,
+    #f0c98a 58%,
+    #d4a855 78%,
+    #b07d1f 100%
+  );
+  background-size: 250% auto;
+  border: 1px solid rgba(247, 227, 181, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 10px 24px -6px rgba(176, 125, 31, 0.55),
+    0 4px 6px rgba(0, 0, 0, 0.12);
+  animation: hero-adn-cta-flow 4s linear infinite;
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+@keyframes hero-adn-cta-flow {
+  0%   { background-position: 0% center; }
+  100% { background-position: 250% center; }
+}
+
+.hero-adn-cta:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 16px 32px -8px rgba(176, 125, 31, 0.65),
+    0 6px 8px rgba(0, 0, 0, 0.14);
+}
+
+.hero-adn-cta:active {
+  transform: translateY(0) scale(1);
+}
+
+/* Estrellas a cada lado, con leve titileo */
+.hero-adn-cta__star {
+  flex-shrink: 0;
+  font-size: 0.85em;
+  color: #5a3d0a;
+  opacity: 0.9;
+  animation: hero-adn-star-twinkle 2.4s ease-in-out infinite;
+}
+
+.hero-adn-cta__star:last-child {
+  animation-delay: 1.2s;
+}
+
+@keyframes hero-adn-star-twinkle {
+  0%, 100% { opacity: 0.55; transform: scale(0.9); }
+  50%      { opacity: 1;    transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-adn-cta,
+  .hero-adn-cta__star,
+  .hero-adn-title__accent {
+    animation: none;
+  }
+}
+
+/* ---- Tablet (≤ 1023px) — una columna ---- */
+@media (max-width: 1023px) {
+  /* El ratio panorámico no sirve en una columna: que mande el contenido */
+  .hero-adn {
+    aspect-ratio: auto;
+    min-height: unset;
+  }
+
+  .hero-adn-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: clamp(72px, 12vw, 120px) 0;
+  }
+
+  .hero-adn-copy {
+    max-width: 600px;
+  }
+
+  /* En una columna el glow ya no aporta; suaviza el fondo entero */
+  .hero-adn-glow {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+  }
+}
+
+/* ---- Mobile (≤ 600px) — imagen vertical (960x1500), contenido empujado abajo ---- */
+@media (max-width: 600px) {
+  .hero-adn {
+    aspect-ratio: auto;
+    height: 800px;
+    min-height: 800px;
+  }
+
+  /* La imagen llena los 800px (está calculada para ese alto) */
+  .hero-adn-bg img {
+    object-position: top center;
+  }
+
+  .hero-adn-shell {
+    width: 100%;
+    height: 100%;
+    /* Contenido pegado arriba, máximo 50px de respiro al top */
+    padding: 35px 24px 56px;
+    align-items: start;
+  }
+
+  .hero-adn-copy {
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .hero-adn-lead {
+    max-width: 100%;
+  }
+
+  /* Bloque de marca: acento vertical a la izquierda, como en desktop */
+  .hero-adn-brand {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-adn-cta {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-adn-urgency__dot {
+    animation: none;
+  }
+}
+
+/* ===== Academia ADN — Scarcity / plazas (high-ticket) ===== */
+
+.scarcity {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(80px, 9vw, 128px) 24px;
+}
+
+/* Fondo violeta profundo — continúa el lenguaje de closing/access-pass */
+.scarcity-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 680px at 78% 8%, rgba(212, 168, 85, 0.16), transparent 58%),
+    radial-gradient(circle 720px at 8% 100%, rgba(155, 126, 200, 0.22), transparent 62%),
+    linear-gradient(165deg, #241644 0%, #1c1233 58%, #140c26 100%);
+}
+
+/* Orbes de blur para profundidad */
+.scarcity-orb {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.scarcity-orb--gold {
+  width: 380px;
+  height: 380px;
+  top: -90px;
+  right: 4%;
+  background: radial-gradient(circle, rgba(212, 168, 85, 0.32), transparent 70%);
+  animation: section-orb-pulse 11s ease-in-out infinite;
+}
+
+.scarcity-orb--violet {
+  width: 460px;
+  height: 460px;
+  bottom: -130px;
+  left: -70px;
+  background: radial-gradient(circle, rgba(155, 126, 200, 0.3), transparent 70%);
+  animation: section-orb-pulse 13s ease-in-out infinite reverse;
+}
+
+.scarcity-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---- Eyebrow de urgencia ---- */
+.scarcity-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 22px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(212, 168, 85, 0.4);
+  background: rgba(212, 168, 85, 0.08);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.scarcity-eyebrow svg {
+  color: var(--color-gold-light);
+}
+
+/* ---- Título (total de plazas) ---- */
+.scarcity-title {
+  margin: 0 0 48px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  color: rgba(249, 245, 240, 0.92);
+}
+
+/* ---- Número gigante — el golpe ---- */
+.scarcity-hero-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 52px;
+}
+
+.scarcity-hero-label {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(201, 179, 232, 0.85);
+}
+
+.scarcity-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.scarcity-count__num {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(96px, 18vw, 200px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  background: linear-gradient(
+    92deg,
+    #f0c98a 0%,
+    #d4a855 28%,
+    #fbe3bf 52%,
+    #d4a855 74%,
+    #f0c98a 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 12px 40px rgba(212, 168, 85, 0.35));
+  animation: gold-shimmer 5s linear infinite;
+  font-variant-numeric: tabular-nums;
+}
+
+.scarcity-count__unit {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.8vw, 20px);
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* ---- Barra de ocupación ---- */
+.scarcity-progress-block {
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 56px;
+}
+
+.scarcity-progress-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.scarcity-progress-head__label {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 179, 232, 0.8);
+}
+
+.scarcity-progress-head__pct {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  color: var(--color-gold-light);
+  font-variant-numeric: tabular-nums;
+}
+
+.scarcity-progress {
+  width: 100%;
+  height: 34px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.scarcity-progress__fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(
+    90deg,
+    #a06c08 0%,
+    #c8960c 30%,
+    #d4a020 55%,
+    #9a6206 80%,
+    #c8960c 100%
+  );
+  background-size: 200% auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 14px rgba(212, 160, 32, 0.5);
+  animation:
+    gracias-progress-shimmer 4s linear infinite,
+    scarcity-progress-grow 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes scarcity-progress-grow {
+  from { width: 0% !important; }
+}
+
+/* ---- Stats de respaldo ---- */
+.scarcity-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.scarcity-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 168px;
+  padding: 26px 28px;
+  border-radius: 18px;
+  background: linear-gradient(
+    150deg,
+    rgba(249, 245, 240, 0.1) 0%,
+    rgba(249, 245, 240, 0.03) 100%
+  );
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(249, 245, 240, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -10px 24px rgba(20, 12, 38, 0.4),
+    0 14px 30px -12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.scarcity-stat:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -10px 24px rgba(20, 12, 38, 0.5),
+    0 20px 38px -14px rgba(0, 0, 0, 0.6);
+}
+
+.scarcity-stat__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  background: rgba(212, 168, 85, 0.14);
+  color: var(--color-gold-light);
+}
+
+.scarcity-stat__num {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.scarcity-stat__label {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 179, 232, 0.85);
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 520px) {
+  .scarcity-stats {
+    gap: 12px;
+  }
+
+  .scarcity-stat {
+    min-width: 132px;
+    padding: 22px 18px;
+    flex: 1 1 140px;
+  }
+
+  .scarcity-progress {
+    height: 28px;
+  }
+}
+
+/* ===== Academia ADN — Pricing ticket (la card épica) ===== */
+
+.ticket-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(88px, 10vw, 140px) 24px;
+}
+
+/* Fondo claro premium con glows sutiles de marca */
+.ticket-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 600px at 18% 6%, rgba(155, 126, 200, 0.18), transparent 62%),
+    radial-gradient(circle 540px at 92% 90%, rgba(212, 168, 85, 0.16), transparent 64%),
+    linear-gradient(160deg, #faf7f2 0%, #f3edfa 52%, #efe7f6 100%);
+}
+
+.ticket-orb {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.ticket-orb--gold {
+  width: 360px;
+  height: 360px;
+  top: -90px;
+  left: 8%;
+  background: radial-gradient(circle, rgba(212, 168, 85, 0.28), transparent 70%);
+  animation: section-orb-pulse 12s ease-in-out infinite;
+}
+
+.ticket-orb--violet {
+  width: 420px;
+  height: 420px;
+  bottom: -120px;
+  right: -60px;
+  background: radial-gradient(circle, rgba(155, 126, 200, 0.26), transparent 70%);
+  animation: section-orb-pulse 14s ease-in-out infinite reverse;
+}
+
+.ticket-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ticket-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #b07d1f;
+}
+
+.ticket-heading {
+  margin: 0 0 56px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #290066;
+  max-width: 680px;
+}
+
+.ticket-heading em {
+  font-style: italic;
+  color: #6A4A9C;
+}
+
+/* ---- Escenario con perspectiva para el tilt 3D ---- */
+.ticket-stage {
+  perspective: 1300px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ticket-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 620px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(150deg, #fffdf8 0%, #f6eedf 100%);
+  box-shadow:
+    0 40px 80px -24px rgba(41, 0, 102, 0.45),
+    0 0 0 1px rgba(212, 168, 85, 0.45);
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.ticket-card:hover {
+  box-shadow:
+    0 52px 100px -26px rgba(41, 0, 102, 0.55),
+    0 0 0 1px rgba(212, 168, 85, 0.8);
+}
+
+/* ---- Stub lateral dorado ---- */
+.ticket-stub {
+  position: relative;
+  flex-shrink: 0;
+  width: 86px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 0;
+  background: linear-gradient(165deg, #f0c98a 0%, #d4a855 45%, #b07d1f 100%);
+}
+
+.ticket-stub__label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: #3a2800;
+}
+
+.ticket-stub__barcode {
+  width: 28px;
+  color: rgba(58, 40, 0, 0.7);
+}
+
+.ticket-stub__barcode svg {
+  width: 100%;
+  height: 92px;
+  display: block;
+}
+
+/* Perforación entre stub y cuerpo */
+.ticket-perf {
+  position: relative;
+  width: 0;
+  border-left: 2px dashed rgba(176, 125, 31, 0.45);
+}
+
+.ticket-perf::before,
+.ticket-perf::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #faf7f2, #f3edfa);
+  transform: translateX(-50%);
+}
+
+.ticket-perf::before { top: -11px; }
+.ticket-perf::after { bottom: -11px; }
+
+/* ---- Cuerpo del ticket ---- */
+.ticket-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px clamp(28px, 4vw, 48px);
+  text-align: left;
+}
+
+/* ---- Bloque de precios ---- */
+.ticket-prices {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ticket-price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ticket-price__label {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Precio real — tachado, apagado */
+.ticket-price--old .ticket-price__label {
+  color: #a08bbf;
+}
+
+.ticket-price--old .ticket-price__amount {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 500;
+  color: #9080a8;
+  text-decoration: line-through;
+  text-decoration-color: rgba(176, 125, 31, 0.7);
+  text-decoration-thickness: 2px;
+}
+
+/* Precio lanzamiento — gigante, shimmer dorado */
+.ticket-price--new .ticket-price__label {
+  color: #b07d1f;
+}
+
+.ticket-price--new .ticket-price__amount {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(52px, 8vw, 76px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    92deg,
+    #b07d1f 0%,
+    #d4a855 28%,
+    #fbe3bf 50%,
+    #d4a855 72%,
+    #b07d1f 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 8px 28px rgba(212, 168, 85, 0.3));
+  animation: gold-shimmer 5s linear infinite;
+}
+
+/* ---- Nota de escasez ---- */
+.ticket-note {
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: rgba(41, 0, 102, 0.04);
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  border-left: 3px solid #d4a855;
+}
+
+.ticket-note__title {
+  margin: 0 0 6px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(16px, 1.8vw, 19px);
+  font-weight: 600;
+  font-style: italic;
+  color: #290066;
+}
+
+.ticket-note__body {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.4vw, 15px);
+  line-height: 1.6;
+  color: #4a3d5e;
+}
+
+.ticket-note__body strong {
+  color: #b07d1f;
+  font-weight: 700;
+}
+
+/* ---- Acciones / CTAs ---- */
+.ticket-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 16px 24px;
+  border-radius: 14px;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.ticket-cta__main {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ticket-cta__sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* CTA sólido — pago único, máxima prioridad, dorado en movimiento */
+.ticket-cta--solid {
+  color: #3a2800;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  background: linear-gradient(
+    100deg,
+    #b07d1f 0%,
+    #d4a855 22%,
+    #f7e3b5 42%,
+    #f0c98a 58%,
+    #d4a855 78%,
+    #b07d1f 100%
+  );
+  background-size: 250% auto;
+  border: 1px solid rgba(247, 227, 181, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 12px 26px -8px rgba(176, 125, 31, 0.6);
+  animation: hero-adn-cta-flow 4s linear infinite;
+}
+
+.ticket-cta--solid:hover {
+  transform: translateY(-2px) scale(1.012);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 18px 34px -10px rgba(176, 125, 31, 0.7);
+}
+
+/* CTA ghost — pago en cuotas, secundario, violeta outline */
+.ticket-cta--ghost {
+  color: #5b3aa0;
+  background: rgba(91, 58, 160, 0.06);
+  border: 1.5px solid rgba(91, 58, 160, 0.35);
+}
+
+.ticket-cta--ghost:hover {
+  transform: translateY(-2px);
+  background: rgba(91, 58, 160, 0.1);
+  border-color: rgba(91, 58, 160, 0.55);
+  box-shadow: 0 12px 26px -10px rgba(91, 58, 160, 0.4);
+}
+
+/* Brillo que sigue al cursor */
+.ticket-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 240px at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.65),
+    transparent 60%
+  );
+  mix-blend-mode: overlay;
+  transition: opacity 0.3s ease;
+}
+
+.ticket-card:hover .ticket-glare {
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket-card {
+    transform: none !important;
+  }
+  .ticket-orb,
+  .ticket-heading em,
+  .ticket-price--new .ticket-price__amount,
+  .ticket-cta--solid {
+    animation: none;
+  }
+}
+
+/* ---- Card de soporte (dentro de la sección de precio) ---- */
+.ticket-support {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  max-width: 620px;
+  margin-top: 24px;
+  padding: 22px 28px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(155, 126, 200, 0.25);
+  box-shadow: 0 14px 34px -18px rgba(41, 0, 102, 0.3);
+}
+
+.ticket-support__text {
+  text-align: left;
+}
+
+.ticket-support__lead {
+  margin: 0 0 3px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #4a3d5e;
+}
+
+.ticket-support__title {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #290066;
+}
+
+/* Botón verde WhatsApp */
+.ticket-support__btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 24px;
+  border-radius: 100px;
+  text-decoration: none;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #25d366, #1faa55);
+  box-shadow: 0 10px 22px -8px rgba(31, 170, 85, 0.7);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.ticket-support__btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 30px -10px rgba(31, 170, 85, 0.8);
+}
+
+.ticket-support__icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.3em;
+  line-height: 0;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 560px) {
+  .ticket-stub {
+    width: 64px;
+  }
+
+  .ticket-stub__label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  .ticket-stub__barcode {
+    display: none;
+  }
+
+  .ticket-body {
+    padding: 32px 22px;
+    gap: 20px;
+  }
+
+  .ticket-support {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 16px;
+    padding: 24px 22px;
+  }
+
+  .ticket-support__text {
+    text-align: center;
+  }
+
+  .ticket-support__btn {
+    justify-content: center;
+  }
+}
+
+/* ===== Academia ADN — Lo que incluye / Esto es lo que obtendrás ===== */
+
+.included {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(60px, 9vw, 120px) 24px;
+}
+
+.included-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 560px at 88% 4%, rgba(212, 168, 85, 0.12), transparent 60%),
+    radial-gradient(circle 620px at 4% 100%, rgba(155, 126, 200, 0.12), transparent 62%),
+    linear-gradient(180deg, #faf7f2 0%, #f6f1ea 100%);
+}
+
+.included-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.included-eyebrow {
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #b07d1f;
+}
+
+.included-title {
+  margin: 0 0 48px;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: #290066;
+}
+
+.included-title em {
+  font-style: italic;
+  color: #6A4A9C;
+}
+
+/* ---- Lista — 2 columnas en desktop ---- */
+.included-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+}
+
+.included-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(155, 126, 200, 0.18);
+}
+
+/* En 2 columnas, los dos últimos items no llevan divisoria inferior */
+.included-item:nth-last-child(1),
+.included-item:nth-last-child(2) {
+  border-bottom: none;
+}
+
+.included-item__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(212, 168, 85, 0.12);
+  color: #b07d1f;
+}
+
+.included-item__text {
+  margin: 0;
+  padding-top: 10px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: #2E2040;
+}
+
+/* ---- Bonus: icono dorado lleno + tag ---- */
+.included-item--bonus .included-item__icon {
+  background: linear-gradient(135deg, #d4a855, #f0c98a);
+  color: #3a2800;
+}
+
+.included-item__tag {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(212, 168, 85, 0.16);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b07d1f;
+  vertical-align: 2px;
+}
+
+/* ---- Tablet / mobile — 1 columna ---- */
+@media (max-width: 700px) {
+  .included-list {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  /* En 1 columna, solo el último sin divisoria */
+  .included-item:nth-last-child(2) {
+    border-bottom: 1px solid rgba(155, 126, 200, 0.18);
+  }
+
+  .included-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 520px) {
+  /* Menos separación entre el título y los items */
+  .included-title {
+    margin-bottom: 28px;
+  }
+
+  .included-item {
+    gap: 14px;
+    padding: 18px 0;
+  }
+
+  .included-item__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .included-item__text {
+    padding-top: 8px;
+  }
+}
+
+/* ===== Academia ADN — Lo que vas a vivir (transformaciones) ===== */
+
+.transform {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(88px, 10vw, 132px) 24px;
+}
+
+/* Fondo violeta profundo — lenguaje high-ticket */
+.transform-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 640px at 80% 6%, rgba(212, 168, 85, 0.14), transparent 58%),
+    radial-gradient(circle 720px at 6% 100%, rgba(155, 126, 200, 0.2), transparent 62%),
+    linear-gradient(165deg, #241644 0%, #1c1233 58%, #140c26 100%);
+}
+
+.transform-orb {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+}
+
+.transform-orb--gold {
+  width: 360px;
+  height: 360px;
+  top: -90px;
+  right: 6%;
+  background: radial-gradient(circle, rgba(212, 168, 85, 0.26), transparent 70%);
+  animation: section-orb-pulse 12s ease-in-out infinite;
+}
+
+.transform-orb--violet {
+  width: 440px;
+  height: 440px;
+  bottom: -130px;
+  left: -70px;
+  background: radial-gradient(circle, rgba(155, 126, 200, 0.28), transparent 70%);
+  animation: section-orb-pulse 14s ease-in-out infinite reverse;
+}
+
+.transform-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.transform-eyebrow {
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.transform-title {
+  margin: 0 0 56px;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(30px, 3.8vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.transform-title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a855, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ---- Grilla 3 + 2 (6 columnas: fila 1 = 3 cards de 2col; fila 2 = 2 cards centradas) ---- */
+.transform-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  perspective: 1200px;
+}
+
+.transform-card:nth-child(1) { grid-column: 1 / 3; }
+.transform-card:nth-child(2) { grid-column: 3 / 5; }
+.transform-card:nth-child(3) { grid-column: 5 / 7; }
+.transform-card:nth-child(4) { grid-column: 2 / 4; }
+.transform-card:nth-child(5) { grid-column: 4 / 6; }
+
+/* ---- Card con tilt 3D ---- */
+.transform-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  border-radius: 18px;
+  padding: 1px;
+  background: linear-gradient(150deg, rgba(212, 168, 85, 0.4), rgba(155, 126, 200, 0.28));
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.transform-card:hover {
+  box-shadow:
+    0 30px 60px -22px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 168, 85, 0.5);
+}
+
+.transform-card__inner {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 17px;
+  padding: 34px 30px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(160deg, #2a1c4f 0%, #1d1336 100%);
+}
+
+/* Número grande de fondo, marca de agua */
+.transform-card__num {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgba(212, 168, 85, 0.12);
+  pointer-events: none;
+}
+
+.transform-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(212, 168, 85, 0.14);
+  color: var(--color-gold-light);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.transform-card:hover .transform-card__icon {
+  transform: translateY(-2px) scale(1.06);
+  background: linear-gradient(135deg, #d4a855, #f0c98a);
+  color: #2a1c4f;
+}
+
+.transform-card__text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.4vw, 18px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(249, 245, 240, 0.92);
+}
+
+/* Spotlight que sigue al cursor */
+.transform-card__spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    circle 220px at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.1),
+    transparent 70%
+  );
+}
+
+.transform-card:hover .transform-card__spotlight {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transform-card {
+    transform: none !important;
+  }
+  .transform-orb {
+    animation: none;
+  }
+}
+
+/* ---- Tablet (≤ 900px) — 2 columnas ---- */
+@media (max-width: 900px) {
+  .transform-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .transform-card:nth-child(n) {
+    grid-column: auto;
+  }
+}
+
+/* ---- Mobile (≤ 600px) — 1 columna ---- */
+@media (max-width: 600px) {
+  .transform-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .transform-card__inner {
+    padding: 28px 24px;
+  }
+}
+
+/* ===== Academia ADN — Testimonios (coverflow 3D) ===== */
+
+.testi {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(80px, 9vw, 120px) 0 clamp(72px, 8vw, 104px);
+}
+
+.testi-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 600px at 14% 6%, rgba(155, 126, 200, 0.16), transparent 60%),
+    radial-gradient(circle 560px at 90% 92%, rgba(212, 168, 85, 0.14), transparent 62%),
+    linear-gradient(180deg, #faf7f2 0%, #f3edfa 100%);
+}
+
+.testi-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.testi-title {
+  margin: 0 auto clamp(40px, 5vw, 64px);
+  max-width: 760px;
+  padding: 0 24px;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.8vw, 36px);
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+  color: #290066;
+}
+
+.testi-title em {
+  font-style: italic;
+  color: #6A4A9C;
+}
+
+/* ---- Escenario con perspectiva ---- */
+.testi-stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.testi-track {
+  --testi-step: 240px;
+  position: relative;
+  width: 100%;
+  height: 520px;
+  perspective: 1600px;
+  transform-style: preserve-3d;
+}
+
+/* ---- Slide: altura uniforme, ancho según ratio (sin recorte) ---- */
+.testi-slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  height: 480px;
+  /* Tope de ancho: una captura horizontal ancha no desborda la pantalla */
+  max-width: min(86vw, 460px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #efe7f6;
+  box-shadow:
+    0 30px 60px -22px rgba(41, 0, 102, 0.45),
+    0 0 0 1px rgba(155, 126, 200, 0.2);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+}
+
+.testi-slide img {
+  display: block;
+  height: 100%;
+  width: auto;
+  /* la imagen no puede pasar el ancho tope del slide; entra completa */
+  max-width: min(86vw, 460px);
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+/* La card activa: más nítida y elevada */
+.testi-slide.is-active {
+  box-shadow:
+    0 44px 90px -26px rgba(41, 0, 102, 0.6),
+    0 0 0 1px rgba(212, 168, 85, 0.55);
+}
+
+/* Velo sutil sobre las cards no activas para dar profundidad */
+.testi-slide:not(.is-active)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(36, 22, 68, 0.28);
+  pointer-events: none;
+}
+
+/* ---- Nav + contador ---- */
+.testi-nav {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.testi-hint {
+  margin: 18px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9080a8;
+}
+
+/* Flechitas animadas a los lados del hint */
+.testi-hint::before,
+.testi-hint::after {
+  content: "‹  ›";
+  letter-spacing: -1px;
+  color: #b09acb;
+  animation: testi-hint-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes testi-hint-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testi-hint::before,
+  .testi-hint::after {
+    animation: none;
+  }
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 768px) {
+  .testi-track {
+    --testi-step: 180px;
+    height: 440px;
+  }
+
+  .testi-slide {
+    height: 400px;
+  }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 520px) {
+  .testi-track {
+    /* paso chico: en mobile el activo manda y los laterales solo asoman */
+    --testi-step: 64px;
+    height: 420px;
+  }
+
+  .testi-slide {
+    height: 380px;
+    max-width: 86vw;
+  }
+
+  .testi-slide img {
+    max-width: 86vw;
+  }
+}
+
+/* ===== Academia ADN — Testimonios en video (YouTube) ===== */
+
+.vtesti {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(80px, 9vw, 120px) 24px;
+}
+
+.vtesti-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle 620px at 84% 6%, rgba(212, 168, 85, 0.14), transparent 58%),
+    radial-gradient(circle 700px at 6% 100%, rgba(155, 126, 200, 0.2), transparent 62%),
+    linear-gradient(165deg, #241644 0%, #1c1233 58%, #140c26 100%);
+}
+
+.vtesti-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.vtesti-eyebrow {
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.vtesti-title {
+  margin: 0 0 52px;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.vtesti-title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a855, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ---- Grilla de videos ---- */
+.vtesti-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.vtesti-card {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #170E2B;
+  box-shadow:
+    0 24px 50px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 168, 85, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vtesti-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 32px 64px -22px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(212, 168, 85, 0.5);
+}
+
+/* Thumbnail (botón) — imagen de YouTube de fondo */
+.vtesti-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: #170E2B;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vtesti-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(23, 14, 43, 0.1) 0%,
+    rgba(23, 14, 43, 0.45) 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.vtesti-card:hover .vtesti-thumb::after {
+  background: rgba(23, 14, 43, 0.25);
+}
+
+/* Botón play dorado */
+.vtesti-play {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  padding-left: 4px;
+  border-radius: 50%;
+  color: #2a1c4f;
+  background: linear-gradient(135deg, #f0c98a, #d4a855);
+  box-shadow: 0 10px 26px -6px rgba(212, 168, 85, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.vtesti-card:hover .vtesti-play {
+  transform: scale(1.1);
+}
+
+/* Iframe una vez reproducido */
+.vtesti-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---- Tablet / mobile ---- */
+@media (max-width: 860px) {
+  .vtesti-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .vtesti-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+    gap: 18px;
+  }
+
+  .vtesti-play {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+/* ===== Academia ADN — Cierre: card de soporte ===== */
+
+.closing-support {
+  position: relative;
+  width: 100%;
+  padding: clamp(64px, 7vw, 96px) 24px;
+  background: linear-gradient(180deg, #f3edfa 0%, #efe7f6 100%);
+}
+
+.closing-support__shell {
+  max-width: 620px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.closing-support__shell .ticket-support {
+  margin-top: 0;
 }
