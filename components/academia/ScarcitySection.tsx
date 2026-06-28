@@ -3,7 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useCountUp } from "@/hooks/useCountUp";
 
 // ⚠️ Cambiar este número manualmente cuando quieras actualizar las plazas
-const PLAZAS_RESTANTES = 87;
+const PLAZAS_RESTANTES = 68;
 
 const TOTAL = 250;
 const PCT = Math.round(((TOTAL - PLAZAS_RESTANTES) / TOTAL) * 100);
