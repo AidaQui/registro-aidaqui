@@ -1,5 +1,3 @@
-import SupportCard from "@/components/academia/SupportCard";
-
 const whatsappGroupUrl = "https://chat.whatsapp.com/F0u6zEBiH5185pTdBz3tfB?mode=gi_t";
 
 const WhatsAppIcon = () => (
@@ -48,14 +46,6 @@ export default function GraciasSectionAcademia() {
           </span>
           UNIRME AL GRUPO DE LA ACADEMIA
         </a>
-
-        <div className="gracias-adn-rule" aria-hidden="true">
-          <span className="gracias-adn-rule__line" />
-          <span className="gracias-adn-rule__gem">✦</span>
-          <span className="gracias-adn-rule__line" />
-        </div>
-
-        <SupportCard />
 
         <footer className="gracias-adn-footer">
           <p>© {new Date().getFullYear()} Aida Qui · Divine Alignment LLC · Todos los derechos reservados</p>
