@@ -1,50 +1,17 @@
-import { useEffect, useRef } from "react";
 import { AlertCircle } from "lucide-react";
-import { gsap } from "gsap";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useCountUp } from "@/hooks/useCountUp";
-import { useScarcityCounter } from "@/hooks/useScarcityCounter";
-import ScarcityToast from "@/components/academia/ScarcityToast";
+
+// ⚠️ Cambiar este número manualmente cuando quieras actualizar las plazas
+const PLAZAS_RESTANTES = 87;
+
+const TOTAL = 250;
+const PCT = Math.round(((TOTAL - PLAZAS_RESTANTES) / TOTAL) * 100);
 
 export default function ScarcitySection() {
   const ref = useScrollReveal<HTMLElement>();
-  const { seats, total, pct, active } = useScarcityCounter();
-
-  // Initial scroll-triggered count-up (fires once on scroll-in)
-  const remainingRef = useCountUp<HTMLSpanElement>(seats);
-  const pctRef = useCountUp<HTMLSpanElement>(pct);
-
-  // When the live counter changes, tween the displayed number smoothly
-  const liveSeatsRef = useRef(seats);
-  const livePctRef = useRef(pct);
-
-  useEffect(() => {
-    if (!active) return;
-    const el = remainingRef.current;
-    if (!el) return;
-    const obj = { v: liveSeatsRef.current };
-    gsap.to(obj, {
-      v: seats,
-      duration: 1.2,
-      ease: "power2.out",
-      onUpdate: () => { el.textContent = String(Math.round(obj.v)); },
-    });
-    liveSeatsRef.current = seats;
-  }, [seats, active, remainingRef]);
-
-  useEffect(() => {
-    if (!active) return;
-    const el = pctRef.current;
-    if (!el) return;
-    const obj = { v: livePctRef.current };
-    gsap.to(obj, {
-      v: pct,
-      duration: 1.2,
-      ease: "power2.out",
-      onUpdate: () => { el.textContent = String(Math.round(obj.v)); },
-    });
-    livePctRef.current = pct;
-  }, [pct, active, pctRef]);
+  const remainingRef = useCountUp<HTMLSpanElement>(PLAZAS_RESTANTES);
+  const pctRef = useCountUp<HTMLSpanElement>(PCT);
 
   return (
     <section ref={ref} className="scarcity" aria-labelledby="scarcity-title">
@@ -66,7 +33,7 @@ export default function ScarcitySection() {
           <p className="scarcity-hero-label">SOLAMENTE QUEDAN</p>
           <div className="scarcity-count">
             <span className="scarcity-count__num" ref={remainingRef}>
-              {seats}
+              {PLAZAS_RESTANTES}
             </span>
             <span className="scarcity-count__unit">PLAZAS DISPONIBLES</span>
           </div>
@@ -78,26 +45,24 @@ export default function ScarcitySection() {
               Ocupación actual
             </span>
             <span className="scarcity-progress-head__pct">
-              <span ref={pctRef}>{pct}</span>%
+              <span ref={pctRef}>{PCT}</span>%
             </span>
           </div>
           <div
             className="scarcity-progress"
             role="progressbar"
-            aria-valuenow={pct}
+            aria-valuenow={PCT}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label="Plazas ocupadas"
           >
             <div
               className="scarcity-progress__fill"
-              style={{ width: `${pct}%` }}
+              style={{ width: `${PCT}%` }}
             />
           </div>
         </div>
       </div>
-
-      <ScarcityToast currentSeats={seats} active={active} />
     </section>
   );
 }
