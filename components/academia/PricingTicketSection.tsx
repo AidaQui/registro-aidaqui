@@ -85,7 +85,7 @@ export default function PricingTicketSection() {
               <div className="ticket-prices">
                 <div className="ticket-price ticket-price--old">
                   <span className="ticket-price__label">PRECIO REAL</span>
-                  <span className="ticket-price__amount">$1897 EUR</span>
+                  <span className="ticket-price__amount">EUR 3.997</span>
                 </div>
 
                 <div className="ticket-price ticket-price--new">
