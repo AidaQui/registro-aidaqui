@@ -4389,7 +4389,7 @@ a.pearl-btn {
   width: 100%;
   min-height: 100svh;
   overflow: hidden;
-  background: #0d0720;
+  background: #faf7f2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4400,8 +4400,8 @@ a.pearl-btn {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(88, 28, 180, 0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(41, 0, 102, 0.4) 0%, transparent 65%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(155, 126, 200, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 100%, rgba(212, 168, 85, 0.08) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -4409,7 +4409,7 @@ a.pearl-btn {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(80px);
+  filter: blur(90px);
 }
 
 .gracias-adn-orb--gold {
@@ -4417,7 +4417,7 @@ a.pearl-btn {
   height: 420px;
   top: -80px;
   right: -100px;
-  background: radial-gradient(circle, rgba(212, 168, 85, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 168, 85, 0.1) 0%, transparent 70%);
 }
 
 .gracias-adn-orb--violet {
@@ -4425,7 +4425,7 @@ a.pearl-btn {
   height: 500px;
   bottom: -120px;
   left: -120px;
-  background: radial-gradient(circle, rgba(120, 40, 220, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(155, 126, 200, 0.12) 0%, transparent 70%);
 }
 
 .gracias-adn-shell {
@@ -4440,37 +4440,43 @@ a.pearl-btn {
   gap: 28px;
 }
 
-.gracias-adn-logo {
-  opacity: 0.92;
-}
-
 .gracias-adn-badge {
   font-size: 28px;
-  color: #d4a820;
+  color: #b07d1f;
   line-height: 1;
   animation: gracias-adn-pulse 2.4s ease-in-out infinite;
 }
 
 @keyframes gracias-adn-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
+  0%, 100% { opacity: 0.5; transform: scale(1); }
   50%       { opacity: 1;   transform: scale(1.15); }
 }
 
 .gracias-adn-title {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-jost), Arial, sans-serif;
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 700;
-  line-height: 1.15;
-  color: #f5f0ff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    92deg,
+    #290066 0%,
+    #6A4A9C 28%,
+    #9B7EC8 50%,
+    #6A4A9C 72%,
+    #290066 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: hero-adn-violet-flow 5s linear infinite;
   margin: 0;
 }
 
 .gracias-adn-title em {
-  font-style: normal;
-  background: linear-gradient(135deg, #d4a820 0%, #f0cc60 50%, #b8860b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
 }
 
 .gracias-adn-lead {
@@ -4478,14 +4484,14 @@ a.pearl-btn {
   font-size: clamp(16px, 2vw, 19px);
   font-weight: 400;
   line-height: 1.65;
-  color: #c4b3e0;
+  color: #4a3a6a;
   margin: 0;
   max-width: 560px;
 }
 
 .gracias-adn-step {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(212, 168, 85, 0.25);
+  background: rgba(155, 126, 200, 0.07);
+  border: 1px solid rgba(155, 126, 200, 0.22);
   border-radius: 16px;
   padding: 24px 28px;
   text-align: left;
@@ -4500,7 +4506,7 @@ a.pearl-btn {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: #d4a820;
+  color: #8a6212;
   margin: 0;
 }
 
@@ -4509,7 +4515,7 @@ a.pearl-btn {
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;
-  color: #d4c8f0;
+  color: #3a2a5a;
   margin: 0;
 }
 
@@ -4526,13 +4532,13 @@ a.pearl-btn {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-decoration: none;
-  box-shadow: 0 8px 32px -8px rgba(37, 211, 102, 0.5);
+  box-shadow: 0 8px 32px -8px rgba(37, 211, 102, 0.4);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .gracias-adn-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 40px -8px rgba(37, 211, 102, 0.65);
+  box-shadow: 0 14px 40px -8px rgba(37, 211, 102, 0.55);
 }
 
 .gracias-adn-cta__icon {
@@ -4546,7 +4552,7 @@ a.pearl-btn {
   align-items: center;
   gap: 16px;
   width: 100%;
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
 .gracias-adn-rule__line {
@@ -4556,7 +4562,7 @@ a.pearl-btn {
 }
 
 .gracias-adn-rule__gem {
-  color: #d4a820;
+  color: #b07d1f;
   font-size: 14px;
 }
 

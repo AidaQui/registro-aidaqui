@@ -1,4 +1,3 @@
-import Image from "next/image";
 import SupportCard from "@/components/academia/SupportCard";
 
 const whatsappGroupUrl = "https://chat.whatsapp.com/F0u6zEBiH5185pTdBz3tfB?mode=gi_t";
@@ -18,26 +17,15 @@ export default function GraciasSectionAcademia() {
       <div className="gracias-adn-orb gracias-adn-orb--violet" aria-hidden="true" />
 
       <div className="gracias-adn-shell">
-        <Image
-          src="/common/logotipo.png"
-          alt="Academia ADN — Alineamiento Divino Natural"
-          width={420}
-          height={65}
-          className="gracias-adn-logo"
-          style={{ width: "100%", maxWidth: 320, height: "auto" }}
-          priority
-        />
-
         <div className="gracias-adn-badge" aria-hidden="true">✦</div>
 
         <h1 className="gracias-adn-title" id="gracias-adn-title">
-          ¡Bienvenida a la <em>Academia ADN 3.0!</em>
+          ¡Ya eres parte de la <em>Academia ADN 3.0!</em>
         </h1>
 
         <p className="gracias-adn-lead">
-          Tu inversión está confirmada. Acabas de dar el paso más importante
-          hacia ordenar tu energía y crear resultados reales. Estamos
-          increíblemente felices de tenerte aquí.
+          Estamos felices de tenerte aquí. Todo lo que viene va a sorprenderte —
+          preparate para las próximas 6 semanas.
         </p>
 
         <div className="gracias-adn-step">
