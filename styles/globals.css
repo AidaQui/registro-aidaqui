@@ -4373,6 +4373,15 @@ a.pearl-btn {
   }
 }
 
+/* ---- Short viewport (laptops ~700-800px tall) ---- */
+@media (max-height: 800px) and (min-width: 1024px) {
+  .hero-adn-shell {
+    align-items: flex-start;
+    padding-top: clamp(48px, 8vh, 80px);
+    padding-bottom: clamp(56px, 10vh, 100px);
+  }
+}
+
 /* ===== Academia ADN — Scarcity / plazas (high-ticket) ===== */
 
 .scarcity {
