@@ -4022,10 +4022,10 @@ a.pearl-btn {
   width: 100%;
   overflow: hidden;
   background-color: #faf7f2;
-  /* La sección adopta el ratio de la imagen (1920x700) → la imagen se ve completa,
-     sin zoom. Si el contenido necesita más alto en algún ancho, min-height lo protege. */
+  /* Ratio panorámico como guía, pero min-height asegura que el CTA nunca quede cortado
+     en laptops de 700-750px de alto. La imagen siempre cubre con object-fit: cover. */
   aspect-ratio: 1920 / 700;
-  min-height: 540px;
+  min-height: max(620px, min(78vh, 760px));
 }
 
 /* Imagen de fondo real: define el alto natural de la sección (ratio 1920x700)
@@ -4073,6 +4073,9 @@ a.pearl-btn {
   width: min(calc(100% - 48px), 1140px);
   height: 100%;
   margin: 0 auto;
+  /* Padding vertical evita que el contenido toque los bordes cuando min-height manda */
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .hero-adn-copy {
@@ -5556,6 +5559,107 @@ a.pearl-btn {
 
   .transform-card__inner {
     padding: 28px 24px;
+  }
+}
+
+/* ===== Academia ADN — Scarcity Toasts (notificaciones ficticias) ===== */
+
+.scarcity-toasts {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.scarcity-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(18, 10, 38, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(99, 91, 255, 0.35);
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(99, 91, 255, 0.12);
+  max-width: 300px;
+  animation: scarcity-toast-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both,
+             scarcity-toast-out 0.35s ease 3.65s both;
+}
+
+@keyframes scarcity-toast-in {
+  from { opacity: 0; transform: translateX(-24px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes scarcity-toast-out {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(-16px) scale(0.96); }
+}
+
+.scarcity-toast__stripe {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 6px;
+}
+
+.scarcity-toast__stripe-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.scarcity-toast__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.scarcity-toast__name {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8deff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scarcity-toast__detail {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #9b8fc4;
+  margin: 0;
+}
+
+.scarcity-toast__detail strong {
+  color: #d4a820;
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .scarcity-toasts {
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .scarcity-toast {
+    max-width: calc(100vw - 24px);
   }
 }
 

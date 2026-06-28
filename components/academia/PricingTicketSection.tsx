@@ -105,16 +105,16 @@ export default function PricingTicketSection() {
               </div>
 
               <div className="ticket-actions">
-                <a href="#" className="ticket-cta ticket-cta--solid">
+                <a href="https://buy.stripe.com/aFa28j4081eK1MK9MK2400H" className="ticket-cta ticket-cta--solid" target="_blank" rel="noopener noreferrer">
                   <span className="ticket-cta__main">QUIERO SER PARTE</span>
                   <span className="ticket-cta__sub">
                     <Check size={14} strokeWidth={2.6} aria-hidden="true" />
-                    PAGO ÚNICO
+                    PAGO ÚNICO — EUR 369
                   </span>
                 </a>
-                <a href="#" className="ticket-cta ticket-cta--ghost">
+                <a href="https://buy.stripe.com/14AeV50NW6z47749MK2400I" className="ticket-cta ticket-cta--ghost" target="_blank" rel="noopener noreferrer">
                   <span className="ticket-cta__main">QUIERO SER PARTE</span>
-                  <span className="ticket-cta__sub">PAGO EN CUOTAS</span>
+                  <span className="ticket-cta__sub">2 PAGOS DE EUR 197</span>
                 </a>
               </div>
             </div>
