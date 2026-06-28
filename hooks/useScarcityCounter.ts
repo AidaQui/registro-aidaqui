@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+// ⚠️ Flip to true when ready to activate the live countdown
+const ACTIVE = false;
+
 const TOTAL = 250;
 const START = 100;
 const FLOOR = 23;
@@ -54,10 +57,9 @@ export function useScarcityCounter(): ScarcityState {
   useEffect(() => {
     mountedRef.current = true;
 
-    const startEnv = process.env.NEXT_PUBLIC_SCARCITY_START;
-    if (!startEnv) return;
+    if (!ACTIVE) return;
 
-    const startTime = new Date(startEnv).getTime();
+    const startTime = Date.now();
 
     function schedule(delay: number) {
       timerRef.current = setTimeout(tick, delay);
@@ -67,12 +69,6 @@ export function useScarcityCounter(): ScarcityState {
       if (!mountedRef.current) return;
 
       const elapsed = Date.now() - startTime;
-
-      if (elapsed < 0) {
-        // Not started yet — check again in 1s
-        schedule(1000);
-        return;
-      }
 
       setActive(true);
       setSeats(computeSeats(elapsed));
@@ -84,9 +80,7 @@ export function useScarcityCounter(): ScarcityState {
       // else: counter done, no more ticks needed
     }
 
-    // First check: immediately if already started, else in 1s
-    const elapsed = Date.now() - startTime;
-    schedule(elapsed >= 0 ? 0 : 1000);
+    schedule(0);
 
     return () => {
       mountedRef.current = false;
