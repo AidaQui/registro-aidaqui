@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 // ⚠️ Flip to true when ready to activate the live countdown
-const ACTIVE = false;
+const ACTIVE = true;
 
 const TOTAL = 250;
-const START = 100;
+const START = 87;
 const FLOOR = 23;
 
 // Drop schedule: [targetValue, durationMs]
