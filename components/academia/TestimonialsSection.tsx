@@ -32,6 +32,8 @@ const images = [
 
 // Cuántos slides a cada lado del activo se muestran (el resto se oculta)
 const VISIBLE_SIDE = 2;
+// Cuántos slides a cada lado se precargan aunque estén ocultos
+const PRELOAD_SIDE = 3;
 
 export default function TestimonialsSection() {
   const ref = useScrollReveal<HTMLElement>();
@@ -78,18 +80,20 @@ export default function TestimonialsSection() {
                 pointerEvents: offset === 0 ? "auto" : "none",
               };
 
+              const shouldRenderImg = abs <= PRELOAD_SIDE;
+
               return (
                 <figure
                   key={src}
-                  className={`testi-slide${offset === 0 ? " is-active" : ""}`}
+                  className={`testi-slide${offset === 0 ? " is-active" : ""}${shouldRenderImg ? " img-loaded" : ""}`}
                   style={style}
                   aria-hidden={offset !== 0}
                 >
-                  {!hidden && (
+                  {shouldRenderImg && (
                     <img
                       src={src}
                       alt={`Testimonio ${i + 1} sobre la Academia ADN`}
-                      loading="lazy"
+                      loading={abs <= 1 ? "eager" : "lazy"}
                       draggable={false}
                     />
                   )}
