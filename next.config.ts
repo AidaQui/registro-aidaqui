@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         destination: "/academia",
         has: [{ type: "host", value: "academia.aidaqui.com" }],
       },
+      {
+        source: "/gracias",
+        destination: "/academia/gracias",
+        has: [{ type: "host", value: "academia.aidaqui.com" }],
+      },
     ];
   },
 };
