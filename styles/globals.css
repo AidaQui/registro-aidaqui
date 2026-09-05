@@ -6489,12 +6489,13 @@ body::after {
 }
 
 /* ---- Modal de la lista de espera ---- */
-/* Por encima del grano (9999) y del GradualBlur (9998): si no, el modal
-   quedaría desenfocado en su borde inferior. */
+/* Por encima del GradualBlur (9998) para que el modal no quede
+   desenfocado abajo, pero por debajo del grano (9999): el puntillismo
+   pasa por delante del pop-up. */
 .espera-modal {
   position: fixed;
   inset: 0;
-  z-index: 10001;
+  z-index: 9998;
   display: flex;
   align-items: center;
   justify-content: center;

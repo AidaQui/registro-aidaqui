@@ -35,7 +35,7 @@ export default function GradualBlur({
   exponential = true,
   curve = "bezier",
   opacity = 1,
-  zIndex = 9998,
+  zIndex = 9990,
 }: Props) {
   const layers = useMemo(() => {
     const increment = 100 / divCount;

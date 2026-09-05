@@ -73,7 +73,7 @@ export default function WaitlistModal({ open, onClose }: Props) {
         throw new Error("No se pudo completar el registro");
       }
 
-      router.push("/academia-lista-de-espera/gracias");
+      router.push("/lista-de-espera/gracias");
     } catch {
       setError("Hubo un problema. Por favor, intentá de nuevo.");
       setSubmitting(false);
