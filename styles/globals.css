@@ -6268,3 +6268,1356 @@ a.pearl-btn {
 .closing-support__shell .ticket-support {
   margin-top: 0;
 }
+
+/* ===== Academia ADN — Lista de espera ===== */
+
+/* Grano de película sobre toda la landing */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: radial-gradient(at 20% 80%, #fff 1px, transparent 0px);
+  background-size: 3px 3px;
+  opacity: 0.08;
+  mix-blend-mode: plus-lighter;
+  z-index: 9999;
+  pointer-events: none !important;
+}
+
+/* CTA dorado, en línea con la paleta ADN (el pearl por defecto es negro) */
+.espera-cta {
+  --pearl-bg: #b07d1f;
+  max-width: 460px;
+}
+
+/* ---- Hero: el contenido se apoya en el borde inferior del banner ---- */
+.espera-hero {
+  position: relative;
+  width: 100%;
+  /* Alto real del banner de escritorio */
+  min-height: 800px;
+  display: flex;
+  overflow: hidden;
+  background-color: #f9f5f0;
+}
+
+.espera-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/lista-de-espera/hero-web2.jpg");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.espera-hero__shell {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  /* Ancla el bloque al fondo del banner */
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  width: min(calc(100% - 48px), 820px);
+  margin: 0 auto;
+  padding-bottom: clamp(40px, 4.5vw, 64px);
+}
+
+.espera-hero__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.espera-hero__accent {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.espera-hero__lead {
+  max-width: 660px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 400;
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+.espera-hero .espera-cta {
+  margin-top: 10px;
+}
+
+/* ---- Badge "Academia ADN" — borde dorado giratorio ---- */
+.espera-badge {
+  position: relative;
+  display: inline-flex;
+  padding: 1.5px;
+  border-radius: 100px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(41, 0, 102, 0.12);
+}
+
+/* Cónico giratorio: es el borde animado */
+.espera-badge::before {
+  content: "";
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(212, 168, 85, 0.25) 60deg,
+    #f0c98a 110deg,
+    #d4a020 130deg,
+    #f0c98a 150deg,
+    rgba(212, 168, 85, 0.25) 200deg,
+    transparent 300deg
+  );
+  animation: espera-badge-spin 4s linear infinite;
+}
+
+.espera-badge__inner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 22px 7px 8px;
+  border-radius: 100px;
+  background: linear-gradient(180deg, #fdfaf5 0%, #f6efe4 100%);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(12px, 1.1vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #6a4a9c;
+  white-space: nowrap;
+}
+
+/* Logo con ondas violetas expandiéndose por detrás */
+.espera-badge__logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.espera-badge__logo img {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: block;
+}
+
+.espera-badge__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.5);
+  animation: espera-badge-pulse 2.4s ease-out infinite;
+}
+
+/* Segunda onda desfasada, para que sea un latido continuo */
+.espera-badge__pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.45);
+  animation: espera-badge-pulse 2.4s ease-out infinite 1.2s;
+}
+
+@keyframes espera-badge-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes espera-badge-pulse {
+  0%   { transform: scale(1);    opacity: 0.65; }
+  70%  { transform: scale(1.85); opacity: 0;    }
+  100% { transform: scale(1.85); opacity: 0;    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .espera-badge::before,
+  .espera-badge__pulse,
+  .espera-badge__pulse::after {
+    animation: none;
+  }
+}
+
+/* ---- Mobile: alineado a la izquierda y el bloque sube ---- */
+@media (max-width: 700px) {
+  .espera-hero {
+    /* El alto lo marca el contenido; la imagen cubre por detrás */
+    min-height: 0;
+  }
+
+  .espera-hero__bg {
+    background-image: url("/lista-de-espera/hero-mobile.jpg");
+  }
+
+  .espera-hero__shell {
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+    /* 200px arriba para que se vea la figura de Aida del banner */
+    padding: 200px 24px 48px;
+    justify-content: flex-start;
+    gap: 15px;
+  }
+
+  .espera-hero .espera-cta {
+    width: 100%;
+  }
+}
+
+/* ---- Modal de la lista de espera ---- */
+/* Por encima del grano (9999) y del GradualBlur (9998): si no, el modal
+   quedaría desenfocado en su borde inferior. */
+.espera-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(20, 8, 40, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: espera-modal-in 220ms ease-out;
+}
+
+.espera-modal__panel {
+  position: relative;
+  width: min(100%, 480px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: clamp(32px, 4vw, 44px) clamp(24px, 3vw, 36px);
+  border-radius: 22px;
+  border: 1px solid rgba(212, 168, 85, 0.35);
+  background: linear-gradient(180deg, #fbf7f2 0%, #f3ecf8 100%);
+  box-shadow: 0 24px 60px rgba(41, 0, 102, 0.35);
+  animation: espera-panel-in 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes espera-modal-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes espera-panel-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .espera-modal,
+  .espera-modal__panel {
+    animation: none;
+  }
+}
+
+.espera-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.08);
+  color: #6a4a9c;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.espera-modal__close:hover {
+  background: rgba(106, 74, 156, 0.16);
+  transform: scale(1.06);
+}
+
+.espera-modal__eyebrow {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #6a4a9c;
+}
+
+.espera-modal__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(24px, 2.6vw, 31px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.espera-modal__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.espera-modal__lead {
+  margin: 0 0 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 16px);
+  line-height: 1.6;
+  color: #2e2040;
+}
+
+.espera-modal__form {
+  width: 100%;
+}
+
+/* ---- Campo de teléfono con selector de país ---- */
+.espera-phone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 16px;
+  border: 1px solid rgba(106, 74, 156, 0.28);
+  border-radius: 12px;
+  background: #fff;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.espera-phone:focus-within {
+  border-color: #9b7ec8;
+  box-shadow: 0 0 0 3px rgba(155, 126, 200, 0.18);
+}
+
+.espera-phone .PhoneInputInput {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 16px;
+  color: #2e2040;
+}
+
+.espera-phone .PhoneInputInput::placeholder {
+  color: rgba(46, 32, 64, 0.5);
+}
+
+.espera-phone .PhoneInputCountry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.espera-phone .PhoneInputCountryIcon {
+  width: 26px;
+  height: 19px;
+  box-shadow: none;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.espera-phone .PhoneInputCountrySelectArrow {
+  color: #6a4a9c;
+  opacity: 0.7;
+}
+
+/* ===== Academia ADN — Sección "la brecha" (lista de espera) ===== */
+
+.gap-section {
+  position: relative;
+  width: 100%;
+  /* Acompaña el alto del banner para que cover no recorte los laterales
+     decorativos (olivos y líneas doradas) */
+  min-height: 1200px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(72px, 8vw, 120px) 24px;
+  background-color: #f9f5f0;
+}
+
+/* Fondo por CSS (como .hero-bg del resto del sitio): no depende de que el
+   hijo de un <picture> resuelva su altura. */
+.gap-section__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/lista-de-espera/bg-2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.gap-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 76px);
+}
+
+/* ---- Intro: titular a la izquierda, bajada a la derecha ---- */
+.gap-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.gap-intro__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(28px, 3.6vw, 46px);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  color: #290066;
+}
+
+.gap-intro__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.gap-intro__text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.7vw, 19px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+/* ---- Tres certezas: icono · número · texto, en una sola fila ---- */
+.gap-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.gap-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: clamp(16px, 1.8vw, 20px) clamp(18px, 2vw, 24px);
+  border-radius: 16px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 28px rgba(41, 0, 102, 0.07);
+  transition: transform 280ms ease, box-shadow 280ms ease;
+}
+
+.gap-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(41, 0, 102, 0.13);
+}
+
+.gap-card__num {
+  flex-shrink: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 2.6vw, 32px);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: #d4a020;
+}
+
+.gap-card__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(155, 126, 200, 0.12);
+  color: #6a4a9c;
+}
+
+.gap-card__text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 400;
+  line-height: 1.4;
+  color: #290066;
+}
+
+/* ---- El giro: ancho completo, fondo oscuro, rompe el ritmo ---- */
+.gap-twist {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(26px, 3vw, 38px) clamp(28px, 3.4vw, 48px);
+  border-radius: 20px;
+  background: linear-gradient(120deg, #2e1a52 0%, #43276f 55%, #34205c 100%);
+  box-shadow: 0 18px 44px rgba(41, 0, 102, 0.28);
+}
+
+.gap-twist__label {
+  flex-shrink: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(17px, 1.9vw, 23px);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.2;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  max-width: 150px;
+}
+
+.gap-twist__text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.7vw, 20px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.94);
+  border-left: 1px solid rgba(240, 201, 138, 0.35);
+  padding-left: clamp(20px, 3vw, 40px);
+}
+
+.gap-twist__text em {
+  font-style: italic;
+  color: #f0c98a;
+  font-weight: 500;
+}
+
+/* ---- Cierre alineado a la izquierda ---- */
+.gap-close {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: clamp(28px, 4vw, 60px) clamp(32px, 5vw, 72px);
+}
+
+.gap-close__emphasis {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  background: linear-gradient(92deg, #a06c08, #c8960c, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 4s linear infinite;
+}
+
+.gap-close__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gap-close__body p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+/* El botón arranca en la columna del texto, no centrado */
+.gap-close__cta {
+  grid-column: 2;
+  justify-self: start;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 900px) {
+  .gap-close {
+    grid-template-columns: 1fr;
+  }
+
+  .gap-close__cta {
+    grid-column: 1;
+  }
+
+  .gap-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .gap-twist {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .gap-twist__label {
+    max-width: none;
+  }
+
+  .gap-twist__text {
+    border-left: none;
+    border-top: 1px solid rgba(240, 201, 138, 0.3);
+    padding-left: 0;
+    padding-top: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .gap-close__cta {
+    max-width: none;
+  }
+
+  .gap-card {
+    gap: 12px;
+    padding: 16px 18px;
+  }
+
+  .gap-card__num {
+    font-size: 24px;
+  }
+
+  .gap-card__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .gap-section__bg {
+    background-image: url("/lista-de-espera/bg-2-mobile.jpg");
+  }
+
+  /* El alto lo marca el contenido: 1200px dejaría un vacío enorme */
+  .gap-section {
+    min-height: 0;
+  }
+}
+
+/* ===== Academia ADN — Beneficios de la lista de espera =====
+   Scopeado bajo .benefits-section: las clases .transform-* las comparte
+   la landing de academia y no deben cambiar allí. */
+
+.benefits-section {
+  position: relative;
+  /* El claro de las secciones vecinas queda por detrás del panel violeta */
+  background: #fffffd;
+  padding: clamp(56px, 6vw, 88px) 24px clamp(72px, 8vw, 110px);
+}
+
+
+/* Panel violeta con esquinas muy redondeadas: separa las secciones
+   sin el corte recto de un borde a borde */
+/* Alineado a los 1140px del resto de la landing, igual que
+   .closing-espera__panel: se centra en vez de estirarse a los bordes */
+.benefits-section__panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 48px), 1140px);
+  z-index: 0;
+  border-radius: clamp(48px, 9vw, 120px);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 52%, #341f5e 100%);
+  overflow: hidden;
+}
+
+/* Aurora por encima del violeta, tenue: aporta profundidad sin ensuciar */
+.benefits-section__panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.benefits-section .transform-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1140px;
+  /* Más aire entre las cards y el borde del panel violeta */
+  padding-inline: clamp(24px, 5vw, 72px);
+}
+
+/* 2 cards al 49% arriba y la tercera a todo el ancho abajo.
+   Doble clase para ganarle al media query global de .transform-grid. */
+.benefits-section.benefits-section .transform-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2%;
+}
+
+.benefits-section.benefits-section .transform-card:nth-child(1) {
+  grid-column: 1 / 2;
+}
+
+.benefits-section.benefits-section .transform-card:nth-child(2) {
+  grid-column: 2 / 3;
+}
+
+.benefits-section.benefits-section .transform-card:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+/* La card ancha aprovecha el espacio en fila en vez de apilar */
+@media (min-width: 901px) {
+  .benefits-section .transform-card:nth-child(3) .transform-card__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 32px;
+    row-gap: 6px;
+  }
+
+  .benefits-section .transform-card:nth-child(3) .transform-card__icon {
+    grid-row: 1 / 3;
+  }
+}
+
+/* Mobile: todo a una columna */
+@media (max-width: 700px) {
+  .benefits-section.benefits-section .transform-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .benefits-section.benefits-section .transform-card:nth-child(n) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---- Cards claras sobre el panel violeta ---- */
+.benefits-section .transform-card {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 14px 34px rgba(20, 8, 40, 0.22);
+}
+
+.benefits-section .transform-card__inner {
+  background: #fffffd;
+}
+
+.benefits-section .transform-card:hover .transform-card__inner {
+  background: #fffdfb;
+}
+
+/* Violeta para número, icono y título: el dorado no contrasta sobre claro */
+.benefits-section .transform-card__num {
+  color: rgba(106, 74, 156, 0.16);
+}
+
+.benefits-section .transform-card__icon,
+.benefits-section .transform-card:hover .transform-card__icon {
+  background: rgba(106, 74, 156, 0.12);
+  color: #6a4a9c;
+}
+
+.benefits-section .espera-benefit__title {
+  color: #43276f;
+}
+
+.benefits-section .transform-card__text {
+  color: #2e2040;
+}
+
+.benefits-section .transform-title {
+  color: #f9f5f0;
+}
+
+.benefits-section .transform-title em {
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* El spotlight blanco no se ve sobre card clara */
+.benefits-section .transform-card__spotlight {
+  background: radial-gradient(
+    circle 220px at var(--mx) var(--my),
+    rgba(106, 74, 156, 0.1),
+    transparent 70%
+  );
+}
+
+/* Más aire entre las cards y el CTA */
+.benefits-section .s5-cta {
+  padding-top: 26px;
+}
+
+@media (max-width: 700px) {
+  .benefits-section__panel {
+    width: calc(100% - 16px);
+    border-radius: 40px;
+  }
+}
+
+
+/* ===== Academia ADN — Testimonios de la lista de espera =====
+   Scopeado bajo .testi-espera: .testi/.testi-bg/.testi-title los comparte
+   la landing de academia y no deben cambiar allí. */
+
+.testi-espera {
+  background: #fffffd;
+}
+
+.testi-espera .testi-title {
+  margin-bottom: 12px;
+}
+
+.testi-espera .testi-title em {
+  font-style: italic;
+}
+
+.testi-espera .testi-subtitle {
+  margin-top: 0;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.testi-espera .testi-subtitle strong {
+  font-weight: 600;
+}
+
+.testi-espera .testi-subtitle strong em {
+  font-style: italic;
+}
+
+/* ===== Academia ADN — Sección "Quién es Aida" (lista de espera) =====
+   Estructura propia, no reusa .about-aida-*: esas clases las comparte
+   masterclass y este diseño rompe con foto grande + nombre a la derecha. */
+
+.aida-espera {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(64px, 8vw, 112px) 24px;
+  background-color: #fffffd;
+}
+
+/* Fondo apenas insinuado: la imagen casi tapada por blanco */
+.aida-espera__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 253, 0.94), rgba(255, 255, 253, 0.94)),
+    url("/lista-de-espera/bg-pagegracias.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.aida-espera__shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 420px) 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* ---- Foto con marco redondeado, estilo tarjeta ---- */
+/* El PNG ya trae sus esquinas redondeadas y transparentes: un box-shadow
+   aquí dibujaría un rectángulo visible detrás. La sombra va con drop-shadow,
+   que sigue el contorno real del PNG. */
+.aida-espera__media {
+  position: relative;
+  filter: drop-shadow(0 24px 40px rgba(41, 0, 102, 0.22));
+}
+
+.aida-espera__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- Copy a la derecha ---- */
+.aida-espera__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* El badge es inline-flex: sin esto se estira a todo el ancho de la columna */
+.aida-espera__copy .espera-badge {
+  align-self: flex-start;
+  margin-bottom: 4px;
+}
+
+.aida-espera__name {
+  margin: 0 0 4px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(44px, 6vw, 76px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(100deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+.aida-espera__lead {
+  margin: 0 0 8px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(18px, 1.9vw, 22px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: #43276f;
+}
+
+.aida-espera__lead em {
+  font-style: italic;
+}
+
+.aida-espera__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.aida-espera__body p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+.aida-espera__body strong {
+  color: #290066;
+  font-weight: 600;
+}
+
+/* ---- Tablet: la foto sube, el copy queda debajo, todo centrado ---- */
+@media (max-width: 900px) {
+  .aida-espera__shell {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .aida-espera__media {
+    max-width: 340px;
+  }
+
+  .aida-espera__copy {
+    align-items: center;
+  }
+
+  .aida-espera__copy .espera-badge {
+    align-self: center;
+  }
+
+  .aida-espera__lead,
+  .aida-espera__body {
+    max-width: 560px;
+  }
+
+  .aida-espera__body {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .aida-espera__name {
+    font-size: clamp(38px, 12vw, 48px);
+  }
+}
+
+/* ===== Academia ADN — Página de gracias de la lista de espera ===== */
+
+.espera-gracias {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #f9f5f0;
+}
+
+.espera-gracias__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/lista-de-espera/bg-pagegracias.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.espera-gracias__shell {
+  position: relative;
+  z-index: 1;
+  /* Ocupa el alto libre y centra el bloque; el footer queda abajo */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 22px;
+  width: min(calc(100% - 48px), 720px);
+  margin: 0 auto;
+  padding: 64px 0;
+}
+
+.espera-gracias__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 3.6vw, 48px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.espera-gracias__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.espera-gracias__lead {
+  max-width: 620px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.7vw, 19px);
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+.espera-gracias__lead strong {
+  font-weight: 600;
+  color: #290066;
+}
+
+/* Card "próximo paso" — sombra interna clara arriba, oscura abajo */
+.espera-gracias__card {
+  width: 100%;
+  max-width: 620px;
+  padding: clamp(26px, 3vw, 36px) clamp(24px, 3vw, 38px);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.95),
+    inset 0 14px 26px rgba(255, 255, 255, 0.75),
+    inset 0 -14px 26px rgba(41, 0, 102, 0.12),
+    inset 0 -2px 4px rgba(41, 0, 102, 0.16),
+    0 14px 34px rgba(41, 0, 102, 0.12);
+}
+
+.espera-gracias__card-label {
+  margin: 0 0 10px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(24px, 2.8vw, 34px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.espera-gracias__card-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+/* CTA de WhatsApp con borde verde animado */
+.espera-gracias__cta {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  max-width: 420px;
+  padding: 2px;
+  border-radius: 100px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 12px 26px rgba(31, 170, 85, 0.3);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.espera-gracias__cta:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 32px rgba(31, 170, 85, 0.4);
+}
+
+.espera-gracias__cta-border {
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(31, 170, 85, 0.3) 60deg,
+    #4ade80 110deg,
+    #ffffff 130deg,
+    #4ade80 150deg,
+    rgba(31, 170, 85, 0.3) 200deg,
+    transparent 300deg
+  );
+  animation: espera-badge-spin 3s linear infinite;
+}
+
+.espera-gracias__cta-face {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 19px 24px;
+  border-radius: 100px;
+  background: linear-gradient(180deg, #24b95e 0%, #199247 100%);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.espera-gracias__cta-icon {
+  display: inline-flex;
+  font-size: 21px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .espera-gracias__cta-border {
+    animation: none;
+  }
+}
+
+.espera-gracias__footer {
+  position: relative;
+  z-index: 1;
+  padding: 0 24px 32px;
+  text-align: center;
+}
+
+.espera-gracias__footer p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(46, 32, 64, 0.62);
+}
+
+@media (max-width: 700px) {
+  .espera-gracias__shell {
+    width: 100%;
+    padding: 48px 24px;
+    gap: 18px;
+  }
+
+  .espera-gracias__card-text {
+    font-size: 16px;
+  }
+}
+
+/* Subtítulo bajo el titular de testimonios */
+.testi-subtitle {
+  margin: -12px 0 32px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #2e2040;
+  text-align: center;
+}
+
+/* Título de cada beneficio de la lista de espera, sobre la card oscura */
+.espera-benefit__title {
+  margin: 0 0 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(19px, 1.8vw, 23px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #f0c98a;
+}
+
+/* ===== Academia ADN — Cierre de la lista de espera =====
+   Panel oscuro sobre fondo claro, mismo lenguaje que .benefits-section.
+   El footer va dentro de la sección, separado por una línea sutil. */
+
+.closing-espera {
+  position: relative;
+  background: #fffffd;
+  padding: clamp(48px, 6vw, 80px) 24px 0;
+}
+
+.closing-espera__panel {
+  position: relative;
+  max-width: 1140px;
+  margin: 0 auto;
+  border-radius: clamp(48px, 9vw, 120px);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 52%, #341f5e 100%);
+  padding: clamp(56px, 7vw, 96px) clamp(28px, 5vw, 72px);
+  overflow: hidden;
+}
+
+/* Misma aurora que .benefits-section__panel: repite el patrón */
+.closing-espera__panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.closing-espera__shell {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* Titular corto: el peso lo lleva el remate, no un párrafo de seis líneas */
+.closing-espera__title {
+  margin: 4px 0 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(34px, 5vw, 60px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #f9f5f0;
+}
+
+.closing-espera__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+.closing-espera__lead {
+  max-width: 560px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.7vw, 19px);
+  line-height: 1.65;
+  color: rgba(249, 245, 240, 0.88);
+}
+
+.closing-espera__cta {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.closing-espera__note {
+  max-width: 520px;
+  margin: 2px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 15px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.62);
+}
+
+.closing-espera__note strong {
+  font-weight: 600;
+  color: rgba(249, 245, 240, 0.9);
+}
+
+/* Footer integrado: línea sutil en vez de un corte de sección */
+/* El padding inferior deja al footer fuera del alcance del GradualBlur
+   fijo (7rem), para que no quede desenfocado al llegar al final. */
+.closing-espera__footer {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: clamp(28px, 3.5vw, 40px) 24px 8rem;
+  border-top: 1px solid rgba(106, 74, 156, 0.14);
+  margin-top: clamp(40px, 5vw, 64px);
+  text-align: center;
+}
+
+.closing-espera__footer p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+@media (max-width: 700px) {
+  .closing-espera__panel {
+    border-radius: 40px;
+  }
+
+  .closing-espera__cta {
+    max-width: none;
+  }
+}
