@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { KeyRound, BadgePercent, Gift } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import CtaBlock from "@/components/academia-lista-de-espera/CtaBlock";
 
 type Benefit = {
   icon: React.ReactNode;
@@ -66,18 +65,21 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
           ))}
         </ul>
 
-        <div className="s5-cta">
-          <CtaBlock
-            variant="dark"
-            title={
-              <>
-                Las plazas de cada edición <em>se agotan rápido</em>
-              </>
-            }
-            note="Entrar en la lista no te compromete a nada"
-            label="QUIERO ACCEDER A LA LISTA"
-            onOpenForm={onOpenForm}
-          />
+        <div className="benefits-section__cta">
+          <button
+            type="button"
+            className="pearl-btn espera-cta"
+            onClick={onOpenForm}
+            data-reveal
+          >
+            <div className="pearl-wrap">
+              <p>
+                <span className="pearl-star" aria-hidden="true">✦</span>
+                QUIERO ACCEDER A LA LISTA
+                <span className="pearl-star" aria-hidden="true">✦</span>
+              </p>
+            </div>
+          </button>
         </div>
       </div>
     </section>
