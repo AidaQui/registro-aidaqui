@@ -1,4 +1,5 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useMarquee } from "@/hooks/useMarquee";
 
 const images = [
   "/testimonios/testimonio-01.webp",
@@ -31,10 +32,16 @@ const images = [
 
 export default function TestimonialsSection() {
   const ref = useScrollReveal<HTMLElement>();
+  const trackRef = useMarquee<HTMLDivElement>();
 
   return (
-    <section ref={ref} className="testi testi-espera" aria-label="Testimonios">
+    <section ref={ref} className="testi testi-espera" aria-labelledby="testi-title">
       <div className="testi-shell">
+        <h2 id="testi-title" className="testi-espera__title" data-reveal="title">
+          Esto es lo que cuentan quienes ya atravesaron{" "}
+          <em>Academia ADN</em>.
+        </h2>
+
         <img
           src="/lista-de-espera/trutspilot.png"
           alt="TrustScore 4,9 sobre 5 en base a 82 opiniones"
@@ -43,16 +50,12 @@ export default function TestimonialsSection() {
           className="testi-trustpilot"
           data-reveal
         />
-
-        <p className="testi-subtitle" data-reveal>
-          Esto es lo que cuentan quienes ya atravesaron <strong><em>Academia ADN</em></strong>.
-        </p>
       </div>
 
       {/* Marquee a ancho completo: la fila se duplica para que el bucle
           no tenga corte visible al reiniciarse. */}
       <div className="testi-marquee" data-reveal>
-        <div className="testi-marquee__track">
+        <div className="testi-marquee__track" ref={trackRef}>
           {[...images, ...images].map((src, i) => (
             <figure className="testi-marquee__item" key={`${src}-${i}`}>
               <img

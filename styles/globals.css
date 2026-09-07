@@ -6309,22 +6309,22 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: 0;
-  /* Fondo sin figura: Aida ya está como foto propia en la columna
-     derecha, y hero-web2 la traía sentada en el centro (duplicada) */
-  background-image: url("/lista-de-espera/bg-2.jpg");
+  /* El banner ya trae a Aida integrada a la derecha: el texto ocupa
+     la mitad izquierda, que viene despejada */
+  background-image: url("/lista-de-espera/hero-web3.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Dos columnas: el mensaje a la izquierda, Aida a la derecha */
+/* El texto ocupa la mitad izquierda; la derecha queda libre para la
+   figura de Aida, que ya viene en el banner */
 .espera-hero__shell {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr minmax(0, 420px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(32px, 5vw, 72px);
   width: min(calc(100% - 48px), 1140px);
   margin: 0 auto;
   padding: clamp(48px, 6vw, 80px) 0;
@@ -6339,16 +6339,6 @@ body::after {
 
 .espera-hero__copy .espera-badge {
   align-self: flex-start;
-}
-
-.espera-hero__media {
-  filter: drop-shadow(0 24px 44px rgba(41, 0, 102, 0.2));
-}
-
-.espera-hero__img {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 /* Refuerzo bajo el CTA: da contexto sin sumar otro párrafo */
@@ -6501,21 +6491,14 @@ body::after {
   }
 
   .espera-hero__bg {
-    background-image: url("/lista-de-espera/bg-2-mobile.jpg");
+    background-image: url("/lista-de-espera/hero-mobile.jpg");
   }
 
-  /* Una columna: la foto arriba, el mensaje debajo */
+  /* Una columna: el banner trae a Aida arriba, el texto va debajo */
   .espera-hero__shell {
     grid-template-columns: 1fr;
     width: 100%;
-    padding: 40px 24px 48px;
-    gap: 28px;
-  }
-
-  .espera-hero__media {
-    order: -1;
-    max-width: 300px;
-    margin: 0 auto;
+    padding: clamp(340px, 76vw, 520px) 24px 48px;
   }
 
   .espera-hero__copy {
@@ -6867,12 +6850,18 @@ body::after {
   font-weight: 500;
 }
 
-/* ---- Cierre alineado a la izquierda ---- */
+/* ---- Cierre: texto a la izquierda, bloque de decisión a la derecha ---- */
 .gap-close {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: start;
-  gap: clamp(28px, 4vw, 60px) clamp(32px, 5vw, 72px);
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+}
+
+.gap-close__text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .gap-close__emphasis {
@@ -6904,9 +6893,7 @@ body::after {
   color: #2e2040;
 }
 
-/* El bloque de decisión ocupa el ancho de la columna del texto */
 .gap-close__cta {
-  grid-column: 2;
   width: 100%;
 }
 
@@ -6914,10 +6901,6 @@ body::after {
 @media (max-width: 900px) {
   .gap-close {
     grid-template-columns: 1fr;
-  }
-
-  .gap-close__cta {
-    grid-column: 1;
   }
 
   .gap-cards {
@@ -7033,6 +7016,13 @@ body::after {
   grid-column: auto;
 }
 
+/* En móvil el título fluye solo: el salto forzado lo cortaría mal */
+@media (max-width: 700px) {
+  .benefits-title__break {
+    display: none;
+  }
+}
+
 /* Mobile: una columna, con el icono al lado del titular */
 @media (max-width: 700px) {
   .benefits-section.benefits-section .transform-grid {
@@ -7133,9 +7123,24 @@ body::after {
   padding-top: 26px;
 }
 
-/* El bloque de decisión no ocupa todo el ancho del panel */
+/* El bloque de decisión ocupa el mismo ancho que la fila de cards */
+.benefits-section .s5-cta {
+  display: block;
+}
+
 .benefits-section .cta-block {
-  max-width: 620px;
+  max-width: none;
+}
+
+/* Vidrio esmerilado sobre el panel violeta */
+.benefits-section .cta-block--dark {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 40px rgba(20, 8, 40, 0.28);
 }
 
 @media (max-width: 700px) {
@@ -7155,17 +7160,33 @@ body::after {
   padding: clamp(48px, 5vw, 76px) 0 clamp(44px, 5vw, 68px);
 }
 
-/* Trustpilot en lugar del titular: el dato duro valida más que la frase */
+.testi-espera__title {
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 0 24px;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.testi-espera__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Trustpilot debajo del titular: el dato duro respalda la frase */
 .testi-trustpilot {
   display: block;
   width: clamp(240px, 26vw, 320px);
   height: auto;
-  margin: 0 auto 6px;
-}
-
-.testi-espera .testi-subtitle {
-  margin-top: 0;
-  margin-bottom: clamp(28px, 3.5vw, 40px);
+  margin: 4px auto clamp(24px, 3vw, 36px);
 }
 
 .testi-espera .testi-subtitle strong {
@@ -7210,42 +7231,33 @@ body::after {
 .testi-marquee__track {
   --testi-gap: 20px;
   display: flex;
+  /* Cada tarjeta conserva su alto real y todas arrancan arriba */
+  align-items: flex-start;
   gap: var(--testi-gap);
   width: max-content;
-  animation: testi-scroll 90s linear infinite;
-}
-
-.testi-marquee:hover .testi-marquee__track {
-  animation-play-state: paused;
+  /* El desplazamiento lo controla useMarquee (JS): permite frenar y
+     retomar de forma progresiva, cosa que animation-play-state no hace. */
+  will-change: transform;
 }
 
 .testi-marquee__item {
   flex: 0 0 auto;
   margin: 0;
   width: clamp(230px, 24vw, 310px);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 28px rgba(41, 0, 102, 0.1);
+  /* Sin overflow ni fondo: la tarjeta termina donde termina la imagen */
+  line-height: 0;
+  filter: drop-shadow(0 10px 24px rgba(41, 0, 102, 0.1));
 }
 
 .testi-marquee__item img {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 16px;
 }
 
-/* Se desplaza la mitad exacta: la lista está duplicada, así el salto
-   al reiniciar cae en un punto idéntico y no se nota. */
-@keyframes testi-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(calc(-50% - var(--testi-gap) / 2)); }
-}
-
+/* Sin animación: useMarquee no arranca y la fila queda deslizable a mano */
 @media (prefers-reduced-motion: reduce) {
-  .testi-marquee__track {
-    animation: none;
-  }
-
   .testi-marquee {
     overflow-x: auto;
   }
@@ -7254,7 +7266,6 @@ body::after {
 @media (max-width: 700px) {
   .testi-marquee__track {
     --testi-gap: 14px;
-    animation-duration: 60s;
   }
 }
 
@@ -7266,19 +7277,15 @@ body::after {
   position: relative;
   overflow: hidden;
   padding: clamp(48px, 5vw, 76px) 24px;
-  /* Tono más cálido que el #fffffd de las vecinas: da contraste entre
-     secciones sin romper la paleta */
-  background-color: #f6efe6;
+  background-color: #fffffd;
 }
 
-/* Fondo apenas insinuado: la imagen casi tapada por blanco */
+/* Mismo tratamiento de fondo que el hero */
 .aida-espera__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image:
-    linear-gradient(180deg, rgba(246, 239, 230, 0.93), rgba(246, 239, 230, 0.93)),
-    url("/lista-de-espera/bg-pagegracias.jpg");
+  background-image: url("/lista-de-espera/bg-2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -7377,6 +7384,10 @@ body::after {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
+  }
+
+  .aida-espera__bg {
+    background-image: url("/lista-de-espera/bg-2-mobile.jpg");
   }
 
   .aida-espera__media {

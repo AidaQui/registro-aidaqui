@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Fraunces, Jost } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={`${fraunces.variable} ${jost.variable}`}>
       <Component {...pageProps} />
+      <Analytics />
     </main>
   );
 }

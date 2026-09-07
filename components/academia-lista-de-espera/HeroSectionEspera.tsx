@@ -40,16 +40,6 @@ export default function HeroSectionEspera({ onOpenForm }: Props) {
           </p>
         </div>
 
-        <div className="espera-hero__media">
-          <img
-            src="/lista-de-espera/aida.png"
-            alt="Aida Qui"
-            width={870}
-            height={1080}
-            className="espera-hero__img"
-            fetchPriority="high"
-          />
-        </div>
       </div>
     </section>
   );

@@ -55,7 +55,9 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
 
       <div className="transform-shell">
         <h2 id="benefits-title" className="transform-title" data-reveal="title">
-          ¿Por qué entrar a la <em>lista de espera</em> de ADN?
+          ¿Por qué entrar a la
+          <br className="benefits-title__break" />{" "}
+          <em>lista de espera</em> de ADN?
         </h2>
 
         <ul className="transform-grid" data-reveal-group data-reveal-fade>

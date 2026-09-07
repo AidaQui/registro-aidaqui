@@ -68,19 +68,21 @@ export default function GapSection({ onOpenForm }: Props) {
 
         {/* Cierre: remate + explicación, alineados a la izquierda */}
         <div className="gap-close">
-          <p className="gap-close__emphasis" data-reveal="title">
-            Porque comprender algo no significa haberlo integrado.
-          </p>
+          <div className="gap-close__text">
+            <p className="gap-close__emphasis" data-reveal="title">
+              Porque comprender algo no significa haberlo integrado.
+            </p>
 
-          <div className="gap-close__body" data-reveal>
-            <p>
-              Academia ADN nace para cerrar esa distancia entre lo que ya sabes y
-              la forma en la que realmente vives.
-            </p>
-            <p>
-              Para que todo ese conocimiento deje de existir únicamente en tu
-              mente y puedas empezar a encarnarlo en tu día a día.
-            </p>
+            <div className="gap-close__body" data-reveal>
+              <p>
+                Academia ADN nace para cerrar esa distancia entre lo que ya
+                sabes y la forma en la que realmente vives.
+              </p>
+              <p>
+                Para que todo ese conocimiento deje de existir únicamente en tu
+                mente y puedas empezar a encarnarlo en tu día a día.
+              </p>
+            </div>
           </div>
 
           <div className="gap-close__cta">
