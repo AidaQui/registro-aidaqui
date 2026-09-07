@@ -32,7 +32,7 @@ export default function ClosingEspera({ onOpenForm }: Props) {
             <div className="pearl-wrap">
               <p>
                 <span className="pearl-star" aria-hidden="true">✦</span>
-                QUIERO ACCEDER
+                QUIERO ACCEDER A LA LISTA
                 <span className="pearl-star" aria-hidden="true">✦</span>
               </p>
             </div>

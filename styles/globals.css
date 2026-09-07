@@ -6297,8 +6297,9 @@ body::after {
 .espera-hero {
   position: relative;
   width: 100%;
-  /* Alto real del banner de escritorio */
-  min-height: 800px;
+  /* El contenido define el alto: con dos columnas ya no hay banner que
+     acompañar, y forzar 800px dejaba aire muerto */
+  min-height: 620px;
   display: flex;
   overflow: hidden;
   background-color: #f9f5f0;
@@ -6308,34 +6309,64 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/lista-de-espera/hero-web2.jpg");
+  /* Fondo sin figura: Aida ya está como foto propia en la columna
+     derecha, y hero-web2 la traía sentada en el centro (duplicada) */
+  background-image: url("/lista-de-espera/bg-2.jpg");
   background-size: cover;
-  background-position: top center;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
+/* Dos columnas: el mensaje a la izquierda, Aida a la derecha */
 .espera-hero__shell {
   position: relative;
   z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 420px);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  width: min(calc(100% - 48px), 1140px);
+  margin: 0 auto;
+  padding: clamp(48px, 6vw, 80px) 0;
+}
+
+.espera-hero__copy {
   display: flex;
   flex-direction: column;
-  /* Ancla el bloque al fondo del banner */
-  justify-content: flex-end;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
   gap: 18px;
-  width: min(calc(100% - 48px), 820px);
-  margin: 0 auto;
-  padding-bottom: clamp(40px, 4.5vw, 64px);
+}
+
+.espera-hero__copy .espera-badge {
+  align-self: flex-start;
+}
+
+.espera-hero__media {
+  filter: drop-shadow(0 24px 44px rgba(41, 0, 102, 0.2));
+}
+
+.espera-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Refuerzo bajo el CTA: da contexto sin sumar otro párrafo */
+.espera-hero__note {
+  margin: 2px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.2vw, 14px);
+  letter-spacing: 0.04em;
+  color: rgba(46, 32, 64, 0.6);
 }
 
 .espera-hero__title {
   margin: 0;
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(26px, 3vw, 42px);
+  font-size: clamp(32px, 4.2vw, 56px);
   font-weight: 600;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: #290066;
 }
 
@@ -6470,16 +6501,24 @@ body::after {
   }
 
   .espera-hero__bg {
-    background-image: url("/lista-de-espera/hero-mobile.jpg");
+    background-image: url("/lista-de-espera/bg-2-mobile.jpg");
   }
 
+  /* Una columna: la foto arriba, el mensaje debajo */
   .espera-hero__shell {
+    grid-template-columns: 1fr;
     width: 100%;
-    align-items: flex-start;
-    text-align: left;
-    /* 200px arriba para que se vea la figura de Aida del banner */
-    padding: 200px 24px 48px;
-    justify-content: flex-start;
+    padding: 40px 24px 48px;
+    gap: 28px;
+  }
+
+  .espera-hero__media {
+    order: -1;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .espera-hero__copy {
     gap: 15px;
   }
 
@@ -6661,26 +6700,21 @@ body::after {
 .gap-section {
   position: relative;
   width: 100%;
-  /* Acompaña el alto del banner para que cover no recorte los laterales
-     decorativos (olivos y líneas doradas) */
-  min-height: 1200px;
-  display: flex;
-  align-items: center;
+  /* Sin banner de fondo, el alto lo define el contenido */
   overflow: hidden;
-  padding: clamp(72px, 8vw, 120px) 24px;
+  padding: clamp(56px, 5vw, 80px) 24px;
   background-color: #f9f5f0;
 }
 
 /* Fondo por CSS (como .hero-bg del resto del sitio): no depende de que el
-   hijo de un <picture> resuelva su altura. */
+   hijo de un <picture> resuelva su altura.
+   El hero ya usa bg-2, así que aquí va plano para no repetir la imagen
+   en dos secciones seguidas. */
 .gap-section__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/lista-de-espera/bg-2.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #fffffd;
 }
 
 .gap-shell {
@@ -6691,7 +6725,7 @@ body::after {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(48px, 6vw, 76px);
+  gap: clamp(36px, 4vw, 52px);
 }
 
 /* ---- Intro: titular a la izquierda, bajada a la derecha ---- */
@@ -6870,12 +6904,10 @@ body::after {
   color: #2e2040;
 }
 
-/* El botón arranca en la columna del texto, no centrado */
+/* El bloque de decisión ocupa el ancho de la columna del texto */
 .gap-close__cta {
   grid-column: 2;
-  justify-self: start;
   width: 100%;
-  max-width: 420px;
 }
 
 /* ---- Tablet ---- */
@@ -6947,7 +6979,7 @@ body::after {
   position: relative;
   /* El claro de las secciones vecinas queda por detrás del panel violeta */
   background: #fffffd;
-  padding: clamp(56px, 6vw, 88px) 24px clamp(72px, 8vw, 110px);
+  padding: clamp(40px, 4vw, 60px) 24px clamp(48px, 5vw, 72px);
 }
 
 
@@ -6990,49 +7022,56 @@ body::after {
   padding-inline: clamp(24px, 5vw, 72px);
 }
 
-/* 2 cards al 49% arriba y la tercera a todo el ancho abajo.
+/* Las 3 cards en una sola fila.
    Doble clase para ganarle al media query global de .transform-grid. */
 .benefits-section.benefits-section .transform-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.benefits-section.benefits-section .transform-card:nth-child(1) {
-  grid-column: 1 / 2;
+.benefits-section.benefits-section .transform-card:nth-child(n) {
+  grid-column: auto;
 }
 
-.benefits-section.benefits-section .transform-card:nth-child(2) {
-  grid-column: 2 / 3;
-}
-
-.benefits-section.benefits-section .transform-card:nth-child(3) {
-  grid-column: 1 / -1;
-}
-
-/* La card ancha aprovecha el espacio en fila en vez de apilar */
-@media (min-width: 901px) {
-  .benefits-section .transform-card:nth-child(3) .transform-card__inner {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    column-gap: 32px;
-    row-gap: 6px;
-  }
-
-  .benefits-section .transform-card:nth-child(3) .transform-card__icon {
-    grid-row: 1 / 3;
-  }
-}
-
-/* Mobile: todo a una columna */
+/* Mobile: una columna, con el icono al lado del titular */
 @media (max-width: 700px) {
   .benefits-section.benefits-section .transform-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
-  .benefits-section.benefits-section .transform-card:nth-child(n) {
+  .benefits-section .transform-card__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 10px;
+    padding: 22px 20px;
+  }
+
+  /* Icono y título comparten fila; el texto pasa completo debajo */
+  .benefits-section .transform-card__icon {
+    grid-column: 1;
+    grid-row: 1;
+    width: 46px;
+    height: 46px;
+  }
+
+  .benefits-section .espera-benefit__title {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .benefits-section .transform-card__text {
     grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .benefits-section .transform-card__num {
+    top: 10px;
+    right: 14px;
+    font-size: 44px;
   }
 }
 
@@ -7094,6 +7133,11 @@ body::after {
   padding-top: 26px;
 }
 
+/* El bloque de decisión no ocupa todo el ancho del panel */
+.benefits-section .cta-block {
+  max-width: 620px;
+}
+
 @media (max-width: 700px) {
   .benefits-section__panel {
     width: calc(100% - 16px);
@@ -7108,19 +7152,20 @@ body::after {
 
 .testi-espera {
   background: #fffffd;
+  padding: clamp(48px, 5vw, 76px) 0 clamp(44px, 5vw, 68px);
 }
 
-.testi-espera .testi-title {
-  margin-bottom: 12px;
-}
-
-.testi-espera .testi-title em {
-  font-style: italic;
+/* Trustpilot en lugar del titular: el dato duro valida más que la frase */
+.testi-trustpilot {
+  display: block;
+  width: clamp(240px, 26vw, 320px);
+  height: auto;
+  margin: 0 auto 6px;
 }
 
 .testi-espera .testi-subtitle {
   margin-top: 0;
-  margin-bottom: clamp(32px, 4vw, 48px);
+  margin-bottom: clamp(28px, 3.5vw, 40px);
 }
 
 .testi-espera .testi-subtitle strong {
@@ -7131,6 +7176,88 @@ body::after {
   font-style: italic;
 }
 
+/* ---- Marquee de testimonios ---- */
+.testi-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 0 4px;
+}
+
+/* Degradados en las puntas: los testimonios se desvanecen contra el
+   fondo en vez de cortarse de golpe */
+.testi-marquee::before,
+.testi-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(60px, 12vw, 200px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.testi-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #fffffd 12%, rgba(255, 255, 253, 0) 100%);
+}
+
+.testi-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #fffffd 12%, rgba(255, 255, 253, 0) 100%);
+}
+
+.testi-marquee__track {
+  --testi-gap: 20px;
+  display: flex;
+  gap: var(--testi-gap);
+  width: max-content;
+  animation: testi-scroll 90s linear infinite;
+}
+
+.testi-marquee:hover .testi-marquee__track {
+  animation-play-state: paused;
+}
+
+.testi-marquee__item {
+  flex: 0 0 auto;
+  margin: 0;
+  width: clamp(230px, 24vw, 310px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(41, 0, 102, 0.1);
+}
+
+.testi-marquee__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Se desplaza la mitad exacta: la lista está duplicada, así el salto
+   al reiniciar cae en un punto idéntico y no se nota. */
+@keyframes testi-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-50% - var(--testi-gap) / 2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testi-marquee__track {
+    animation: none;
+  }
+
+  .testi-marquee {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .testi-marquee__track {
+    --testi-gap: 14px;
+    animation-duration: 60s;
+  }
+}
+
 /* ===== Academia ADN — Sección "Quién es Aida" (lista de espera) =====
    Estructura propia, no reusa .about-aida-*: esas clases las comparte
    masterclass y este diseño rompe con foto grande + nombre a la derecha. */
@@ -7138,8 +7265,10 @@ body::after {
 .aida-espera {
   position: relative;
   overflow: hidden;
-  padding: clamp(64px, 8vw, 112px) 24px;
-  background-color: #fffffd;
+  padding: clamp(48px, 5vw, 76px) 24px;
+  /* Tono más cálido que el #fffffd de las vecinas: da contraste entre
+     secciones sin romper la paleta */
+  background-color: #f6efe6;
 }
 
 /* Fondo apenas insinuado: la imagen casi tapada por blanco */
@@ -7148,7 +7277,7 @@ body::after {
   inset: 0;
   z-index: 0;
   background-image:
-    linear-gradient(180deg, rgba(255, 255, 253, 0.94), rgba(255, 255, 253, 0.94)),
+    linear-gradient(180deg, rgba(246, 239, 230, 0.93), rgba(246, 239, 230, 0.93)),
     url("/lista-de-espera/bg-pagegracias.jpg");
   background-size: cover;
   background-position: center;
@@ -7495,6 +7624,87 @@ body::after {
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: #f0c98a;
+}
+
+/* ===== Academia ADN — Bloque de decisión (CTA) =====
+   El CTA deja de ser un botón suelto: titular, botón y refuerzo dentro
+   de un contenedor con peso propio. */
+
+.cta-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  padding: clamp(26px, 3vw, 36px) clamp(24px, 3vw, 40px);
+  border-radius: 22px;
+}
+
+.cta-block__title {
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.cta-block__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.cta-block__note {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.2vw, 14px);
+  letter-spacing: 0.03em;
+}
+
+.cta-block .espera-cta {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Sobre fondo claro */
+.cta-block--light {
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+  border: 1px solid rgba(155, 126, 200, 0.2);
+  box-shadow: 0 14px 34px rgba(41, 0, 102, 0.08);
+}
+
+.cta-block--light .cta-block__title {
+  color: #290066;
+}
+
+.cta-block--light .cta-block__note {
+  color: rgba(46, 32, 64, 0.6);
+}
+
+/* Sobre el panel violeta */
+.cta-block--dark {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(240, 201, 138, 0.24);
+}
+
+.cta-block--dark .cta-block__title {
+  color: #f9f5f0;
+}
+
+.cta-block--dark .cta-block__title em {
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.cta-block--dark .cta-block__note {
+  color: rgba(249, 245, 240, 0.6);
 }
 
 /* ===== Academia ADN — Cierre de la lista de espera =====

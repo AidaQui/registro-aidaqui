@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { KeyRound, BadgePercent, Gift } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import CtaBlock from "@/components/academia-lista-de-espera/CtaBlock";
 
 type Benefit = {
   icon: React.ReactNode;
@@ -11,33 +12,29 @@ type Benefit = {
 const benefits: Benefit[] = [
   {
     icon: <KeyRound size={26} strokeWidth={1.8} aria-hidden="true" />,
-    title: "Acceso prioritario",
+    title: "Acceso anticipado",
     text: (
       <>
-        Sé de las primeras personas en enterarse de la próxima apertura y accede
-        antes de que abramos las plazas al público. Las plazas de cada edición se
-        agotan rápidamente.
+        Entérate antes que nadie de la próxima apertura y ten prioridad para
+        conseguir una de las plazas.
       </>
     ),
   },
   {
     icon: <BadgePercent size={26} strokeWidth={1.8} aria-hidden="true" />,
-    title: "Condiciones especiales",
+    title: "Mejores condiciones",
     text: (
       <>
-        Accede a un precio exclusivo reservado únicamente para quienes formen
-        parte de la lista de espera.
+        Accede a condiciones y precio especiales antes de la apertura al público.
       </>
     ),
   },
   {
     icon: <Gift size={26} strokeWidth={1.8} aria-hidden="true" />,
-    title: "Regalo de bienvenida",
+    title: "Regalos y bonos especiales",
     text: (
       <>
-        Recibe un diagnóstico de tu situación actual para identificar dónde te
-        encuentras hoy y comenzar tu proceso antes incluso de que abra la
-        Academia.
+        Recibe regalos y bonos exclusivos por formar parte de la lista de espera.
       </>
     ),
   },
@@ -67,20 +64,18 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
           ))}
         </ul>
 
-        <div className="s5-cta" data-reveal>
-          <button
-            type="button"
-            className="pearl-btn s5-cta__btn espera-cta"
-            onClick={onOpenForm}
-          >
-            <div className="pearl-wrap">
-              <p>
-                <span className="pearl-star" aria-hidden="true">✦</span>
-                QUIERO ACCEDER
-                <span className="pearl-star" aria-hidden="true">✦</span>
-              </p>
-            </div>
-          </button>
+        <div className="s5-cta">
+          <CtaBlock
+            variant="dark"
+            title={
+              <>
+                Las plazas de cada edición <em>se agotan rápido</em>
+              </>
+            }
+            note="Entrar en la lista no te compromete a nada"
+            label="QUIERO ACCEDER A LA LISTA"
+            onOpenForm={onOpenForm}
+          />
         </div>
       </div>
     </section>
