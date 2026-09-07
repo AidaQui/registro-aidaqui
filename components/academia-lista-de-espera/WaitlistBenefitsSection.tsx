@@ -70,8 +70,10 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
         </h2>
 
         <p className="benefits-section__badge" data-reveal>
-          <span className="benefits-section__badge-dot" aria-hidden="true" />
-          La próxima edición abre pronto
+          <span className="benefits-section__badge-inner">
+            <span className="benefits-section__badge-dot" aria-hidden="true" />
+            La próxima edición abre pronto
+          </span>
         </p>
 
         <ul className="transform-grid" data-reveal-group data-reveal-fade>
@@ -90,8 +92,7 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
             <div className="pearl-wrap">
               <p>
                 <span className="pearl-star" aria-hidden="true">✦</span>
-                QUIERO ACCEDER A LA LISTA
-                <span className="cta-label__extra"> DE ESPERA</span>
+                QUIERO ACCEDER<span className="cta-label__extra"> A LA LISTA</span>
                 <span className="pearl-star" aria-hidden="true">✦</span>
               </p>
             </div>

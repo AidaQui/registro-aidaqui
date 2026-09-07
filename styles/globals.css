@@ -7032,19 +7032,15 @@ body::after {
   display: none;
 }
 
-/* En móvil el botón ya ocupa dos líneas: conviene completar la frase
-   antes que cortarla en "QUIERO ACCEDER A LA / LISTA" */
-.cta-label__extra {
-  display: none;
-}
-
+/* En móvil el botón se queda en "QUIERO ACCEDER": la frase completa se
+   partía en tres líneas desordenadas */
 @media (max-width: 700px) {
   .benefit-title__break {
     display: inline;
   }
 
   .cta-label__extra {
-    display: inline;
+    display: none;
   }
 }
 
@@ -7143,34 +7139,66 @@ body::after {
   );
 }
 
-/* Aviso bajo el título: da urgencia sin sumar otro bloque */
+/* Aviso bajo el título: fondo claro y borde giratorio para que resalte
+   sobre el panel violeta. El padding hace de borde animado. */
 .benefits-section__badge {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
   width: fit-content;
   /* El .transform-title trae 56px abajo: se recorta para dejar ~18px */
-  margin: -38px auto 44px;
+  margin: -38px auto 30px;
+  padding: 1.5px;
+  border-radius: 100px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.benefits-section__badge::before {
+  content: "";
+  position: absolute;
+  inset: -150%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(240, 201, 138, 0.3) 60deg,
+    #f0c98a 110deg,
+    #ffffff 130deg,
+    #f0c98a 150deg,
+    rgba(240, 201, 138, 0.3) 200deg,
+    transparent 300deg
+  );
+  animation: espera-badge-spin 3.5s linear infinite;
+}
+
+.benefits-section__badge-inner {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   padding: 8px 20px;
   border-radius: 100px;
-  border: 1px solid rgba(240, 201, 138, 0.3);
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #fffffd;
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: clamp(13px, 1.2vw, 14px);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: #f0c98a;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #43276f;
+  white-space: nowrap;
 }
 
 .benefits-section__badge-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #f0c98a;
+  background: #b07d1f;
   animation: espera-badge-pulse 2.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefits-section__badge::before,
+  .benefits-section__badge-dot {
+    animation: none;
+  }
 }
 
 /* Solo el botón bajo la fila de cards */
@@ -7427,6 +7455,11 @@ body::after {
 
 /* ---- Tablet: la foto sube, el copy queda debajo, todo centrado ---- */
 @media (max-width: 900px) {
+  /* Menos aire con la sección de testimonios, que ya trae el suyo */
+  .aida-espera {
+    padding-top: 28px;
+  }
+
   .aida-espera__shell {
     grid-template-columns: 1fr;
     justify-items: center;
