@@ -68,7 +68,7 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
         <div className="benefits-section__cta">
           <button
             type="button"
-            className="pearl-btn espera-cta"
+            className="pearl-btn espera-cta espera-cta--gold"
             onClick={onOpenForm}
             data-reveal
           >

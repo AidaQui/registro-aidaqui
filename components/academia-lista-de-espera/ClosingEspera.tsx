@@ -25,7 +25,7 @@ export default function ClosingEspera({ onOpenForm }: Props) {
 
           <button
             type="button"
-            className="pearl-btn espera-cta closing-espera__cta"
+            className="pearl-btn espera-cta espera-cta--gold closing-espera__cta"
             onClick={onOpenForm}
             data-reveal
           >

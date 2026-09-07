@@ -6288,9 +6288,15 @@ body::after {
 }
 
 /* CTA dorado, en línea con la paleta ADN (el pearl por defecto es negro) */
+/* Violeta por defecto: es el color que contrasta sobre los fondos claros */
 .espera-cta {
-  --pearl-bg: #b07d1f;
+  --pearl-bg: #5b3aa0;
   max-width: 460px;
+}
+
+/* Dorado para los botones que van sobre panel violeta */
+.espera-cta--gold {
+  --pearl-bg: #b07d1f;
 }
 
 /* ---- Hero: el contenido se apoya en el borde inferior del banner ---- */
@@ -6353,10 +6359,11 @@ body::after {
 .espera-hero__title {
   margin: 0;
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(32px, 4.2vw, 56px);
+  /* Entra en 4-5 líneas dentro de la mitad izquierda del banner */
+  font-size: clamp(28px, 3.2vw, 42px);
   font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
   color: #290066;
 }
 
@@ -7190,6 +7197,11 @@ body::after {
   width: 100%;
   overflow: hidden;
   padding: 8px 0 4px;
+  /* Se puede arrastrar con el cursor o el dedo */
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Degradados en las puntas: los testimonios se desvanecen contra el

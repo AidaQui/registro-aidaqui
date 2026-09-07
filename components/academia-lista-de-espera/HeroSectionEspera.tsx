@@ -14,9 +14,7 @@ export default function HeroSectionEspera({ onOpenForm }: Props) {
           <AcademiaBadge />
 
           <h1 id="hero-espera-title" className="espera-hero__title">
-            EL CONOCIMIENTO ABRE PUERTAS.
-            <br />
-            PERO EN LA INTEGRACIÓN ESTÁ LA{" "}
+            EL CONOCIMIENTO ABRE PUERTAS. PERO EN LA INTEGRACIÓN ESTÁ LA{" "}
             <em className="espera-hero__accent">TRANSFORMACIÓN</em>.
           </h1>
 
