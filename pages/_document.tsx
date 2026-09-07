@@ -31,6 +31,24 @@ export default function Document() {
           }}
         />
         {/* End Google Tag Manager — segundo contenedor */}
+
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-BF1P6HS3NX"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-BF1P6HS3NX');
+            `,
+          }}
+        />
+        {/* End Google tag (gtag.js) */}
       </Head>
 
       <body className="antialiased">
