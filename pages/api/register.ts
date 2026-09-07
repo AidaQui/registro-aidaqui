@@ -94,9 +94,12 @@ async function saveToSupabase(
 
 const SOURCE_CONFIG: Record<string, { table: string; mailerliteGroupEnv: string }> = {
   masterclass: { table: "registros_masterclass", mailerliteGroupEnv: "MAILERLITE_GROUP_ID" },
+  // Reutiliza el grupo ya configurado en producción. Si algún día la
+  // lista de espera necesita su propio grupo, basta con definir
+  // MAILERLITE_GROUP_ID_ACADEMIA_ESPERA y apuntar aquí a esa variable.
   "academia-lista-de-espera": {
     table: "registros_academia_espera",
-    mailerliteGroupEnv: "MAILERLITE_GROUP_ID_ACADEMIA_ESPERA",
+    mailerliteGroupEnv: "MAILERLITE_GROUP_ID",
   },
 };
 
