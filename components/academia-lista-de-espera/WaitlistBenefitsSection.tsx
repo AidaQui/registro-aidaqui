@@ -4,14 +4,19 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 type Benefit = {
   icon: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   text: React.ReactNode;
 };
 
 const benefits: Benefit[] = [
   {
     icon: <KeyRound size={26} strokeWidth={1.8} aria-hidden="true" />,
-    title: "Acceso anticipado",
+    title: (
+      <>
+        Acceso
+        <br className="benefit-title__break" /> anticipado
+      </>
+    ),
     text: (
       <>
         Entérate antes que nadie de la próxima apertura y ten prioridad para
@@ -21,7 +26,12 @@ const benefits: Benefit[] = [
   },
   {
     icon: <BadgePercent size={26} strokeWidth={1.8} aria-hidden="true" />,
-    title: "Mejores condiciones",
+    title: (
+      <>
+        Mejores
+        <br className="benefit-title__break" /> condiciones
+      </>
+    ),
     text: (
       <>
         Accede a condiciones y precio especiales antes de la apertura al público.
@@ -59,6 +69,11 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
           <em>lista de espera</em> de ADN?
         </h2>
 
+        <p className="benefits-section__badge" data-reveal>
+          <span className="benefits-section__badge-dot" aria-hidden="true" />
+          La próxima edición abre pronto
+        </p>
+
         <ul className="transform-grid" data-reveal-group data-reveal-fade>
           {benefits.map((benefit, i) => (
             <BenefitCard key={i} benefit={benefit} index={i} />
@@ -76,6 +91,7 @@ export default function WaitlistBenefitsSection({ onOpenForm }: Props) {
               <p>
                 <span className="pearl-star" aria-hidden="true">✦</span>
                 QUIERO ACCEDER A LA LISTA
+                <span className="cta-label__extra"> DE ESPERA</span>
                 <span className="pearl-star" aria-hidden="true">✦</span>
               </p>
             </div>

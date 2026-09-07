@@ -6951,9 +6951,6 @@ body::after {
     height: 36px;
   }
 
-  .gap-section__bg {
-    background-image: url("/lista-de-espera/bg-2-mobile.jpg");
-  }
 
   /* El alto lo marca el contenido: 1200px dejaría un vacío enorme */
   .gap-section {
@@ -7027,6 +7024,27 @@ body::after {
 @media (max-width: 700px) {
   .benefits-title__break {
     display: none;
+  }
+}
+
+/* Los títulos de card se parten en dos líneas solo en móvil */
+.benefit-title__break {
+  display: none;
+}
+
+/* En móvil el botón ya ocupa dos líneas: conviene completar la frase
+   antes que cortarla en "QUIERO ACCEDER A LA / LISTA" */
+.cta-label__extra {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .benefit-title__break {
+    display: inline;
+  }
+
+  .cta-label__extra {
+    display: inline;
   }
 }
 
@@ -7123,6 +7141,36 @@ body::after {
     rgba(106, 74, 156, 0.1),
     transparent 70%
   );
+}
+
+/* Aviso bajo el título: da urgencia sin sumar otro bloque */
+.benefits-section__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: fit-content;
+  /* El .transform-title trae 56px abajo: se recorta para dejar ~18px */
+  margin: -38px auto 44px;
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(240, 201, 138, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.2vw, 14px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #f0c98a;
+}
+
+.benefits-section__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f0c98a;
+  animation: espera-badge-pulse 2.2s ease-out infinite;
 }
 
 /* Solo el botón bajo la fila de cards */
@@ -7635,88 +7683,6 @@ body::after {
   letter-spacing: -0.01em;
   color: #f0c98a;
 }
-
-/* ===== Academia ADN — Bloque de decisión (CTA) =====
-   El CTA deja de ser un botón suelto: titular, botón y refuerzo dentro
-   de un contenedor con peso propio. */
-
-.cta-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 16px;
-  width: 100%;
-  padding: clamp(26px, 3vw, 36px) clamp(24px, 3vw, 40px);
-  border-radius: 22px;
-}
-
-.cta-block__title {
-  margin: 0;
-  max-width: 520px;
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(20px, 2.2vw, 28px);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-}
-
-.cta-block__title em {
-  font-style: italic;
-  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.cta-block__note {
-  margin: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: clamp(13px, 1.2vw, 14px);
-  letter-spacing: 0.03em;
-}
-
-.cta-block .espera-cta {
-  width: 100%;
-  max-width: 420px;
-}
-
-/* Sobre fondo claro */
-.cta-block--light {
-  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
-  border: 1px solid rgba(155, 126, 200, 0.2);
-  box-shadow: 0 14px 34px rgba(41, 0, 102, 0.08);
-}
-
-.cta-block--light .cta-block__title {
-  color: #290066;
-}
-
-.cta-block--light .cta-block__note {
-  color: rgba(46, 32, 64, 0.6);
-}
-
-/* Sobre el panel violeta */
-.cta-block--dark {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(240, 201, 138, 0.24);
-}
-
-.cta-block--dark .cta-block__title {
-  color: #f9f5f0;
-}
-
-.cta-block--dark .cta-block__title em {
-  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.cta-block--dark .cta-block__note {
-  color: rgba(249, 245, 240, 0.6);
-}
-
 /* ===== Academia ADN — Cierre de la lista de espera =====
    Panel oscuro sobre fondo claro, mismo lenguaje que .benefits-section.
    El footer va dentro de la sección, separado por una línea sutil. */

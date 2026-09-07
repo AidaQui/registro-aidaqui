@@ -29,7 +29,7 @@ export default function AcademiaEspera() {
       <SmoothScroll />
       <main>
         <HeroSectionEspera onOpenForm={openForm} />
-        <GapSection onOpenForm={openForm} />
+        <GapSection />
         <WaitlistBenefitsSection onOpenForm={openForm} />
         <TestimonialsSection />
         <AboutAidaEspera />

@@ -1,6 +1,5 @@
 import { BookOpen, Brain, Zap } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import CtaBlock from "@/components/academia-lista-de-espera/CtaBlock";
 
 const knowledge = [
   {
@@ -17,11 +16,7 @@ const knowledge = [
   },
 ];
 
-type Props = {
-  onOpenForm: () => void;
-};
-
-export default function GapSection({ onOpenForm }: Props) {
+export default function GapSection() {
   const ref = useScrollReveal<HTMLElement>();
 
   return (
@@ -85,18 +80,6 @@ export default function GapSection({ onOpenForm }: Props) {
             </div>
           </div>
 
-          <div className="gap-close__cta">
-            <CtaBlock
-              title={
-                <>
-                  La próxima edición abre <em>en breve</em>
-                </>
-              }
-              note="Sin compromiso · Te avisamos antes que al público"
-              label="QUIERO ACCEDER A LA LISTA"
-              onOpenForm={onOpenForm}
-            />
-          </div>
         </div>
       </div>
     </section>

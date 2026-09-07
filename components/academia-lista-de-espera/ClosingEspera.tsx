@@ -33,6 +33,7 @@ export default function ClosingEspera({ onOpenForm }: Props) {
               <p>
                 <span className="pearl-star" aria-hidden="true">✦</span>
                 QUIERO ACCEDER A LA LISTA
+                <span className="cta-label__extra"> DE ESPERA</span>
                 <span className="pearl-star" aria-hidden="true">✦</span>
               </p>
             </div>
