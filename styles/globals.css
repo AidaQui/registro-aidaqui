@@ -6301,7 +6301,7 @@ a.pearl-btn {
   z-index: 0;
   /* El banner ya trae a Aida integrada a la derecha: el texto ocupa
      la mitad izquierda, que viene despejada */
-  background-image: url("/lista-de-espera/hero-web3.jpg");
+  background-image: url("/lista-de-espera/hero-web-4.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6488,14 +6488,14 @@ a.pearl-btn {
   }
 
   .espera-hero__bg {
-    background-image: url("/lista-de-espera/hero-mobile.jpg");
+    background-image: url("/lista-de-espera/hero-mobile-4.jpg");
   }
 
   /* Una columna: el banner trae a Aida arriba, el texto va debajo */
   .espera-hero__shell {
     grid-template-columns: 1fr;
     width: 100%;
-    padding: clamp(340px, 76vw, 520px) 24px 48px;
+    padding: clamp(290px, 66vw, 470px) 24px 48px;
   }
 
   .espera-hero__copy {
@@ -7446,7 +7446,9 @@ a.pearl-btn {
   position: relative;
   width: min(100%, 620px);
   max-height: calc(100vh - 48px);
-  overflow-y: auto;
+  /* min-height:0 permite que el cuerpo se encoja y active su scroll:
+     sin esto los hijos flex empujan el alto y el testimonio se corta */
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -7512,10 +7514,26 @@ a.pearl-btn {
   color: #290066;
 }
 
+/* El scroll vive aquí: el encabezado y el título quedan fijos y solo
+   se desplaza el texto en los testimonios largos */
 .testi-modal__body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(106, 74, 156, 0.35) transparent;
+}
+
+.testi-modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.testi-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(106, 74, 156, 0.35);
+  border-radius: 100px;
 }
 
 .testi-modal__body p {

@@ -71,6 +71,9 @@ export default function GradualBlur({
             backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
             WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
             opacity,
+            // backdrop-filter crea contexto propio y puede volver a
+            // capturar el puntero pese al none del contenedor
+            pointerEvents: "none",
           }}
         />
       );
@@ -91,7 +94,14 @@ export default function GradualBlur({
         isolation: "isolate",
       }}
     >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+        }}
+      >
         {layers}
       </div>
     </div>
