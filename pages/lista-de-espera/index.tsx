@@ -4,6 +4,7 @@ import HeroSectionEspera from "@/components/academia-lista-de-espera/HeroSection
 import GapSection from "@/components/academia-lista-de-espera/GapSection";
 import WaitlistBenefitsSection from "@/components/academia-lista-de-espera/WaitlistBenefitsSection";
 import TestimonialsSection from "@/components/academia-lista-de-espera/TestimonialsSection";
+import WhatIsAdnSection from "@/components/academia-lista-de-espera/WhatIsAdnSection";
 import AboutAidaEspera from "@/components/academia-lista-de-espera/AboutAidaEspera";
 import ClosingEspera from "@/components/academia-lista-de-espera/ClosingEspera";
 import WaitlistModal from "@/components/academia-lista-de-espera/WaitlistModal";
@@ -32,6 +33,7 @@ export default function AcademiaEspera() {
         <GapSection />
         <WaitlistBenefitsSection onOpenForm={openForm} />
         <TestimonialsSection />
+        <WhatIsAdnSection />
         <AboutAidaEspera />
         <ClosingEspera onOpenForm={openForm} />
       </main>

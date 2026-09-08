@@ -18,17 +18,18 @@ export default function GraciasSectionEspera() {
         </h1>
 
         <p className="espera-gracias__lead">
-          Gracias por sumarte. En cuanto abramos los cupos de la próxima edición
-          de la <strong><em>Academia ADN</em></strong>, vas a ser de las primeras
-          en enterarte y en poder reservar tu lugar.
+          Gracias por unirte. En cuanto abramos las plazas de la próxima edición
+          de <strong><em>Academia ADN</em></strong>, serás de las primeras
+          personas en enterarte y en poder reservar tu plaza.
         </p>
 
         <div className="espera-gracias__card">
           <p className="espera-gracias__card-label">PRÓXIMO PASO</p>
           <p className="espera-gracias__card-text">
-            Mientras esperás, sumate a la comunidad de WhatsApp de Aida Qui —
-            ahí vas a recibir novedades, contenido y el aviso apenas se abra la
-            inscripción a la próxima Academia.
+            Mientras esperas, únete a la comunidad de WhatsApp de Aida Qui. Allí
+            recibirás novedades, contenido y serás de las primeras personas en
+            saber cuándo abramos las inscripciones para la próxima edición de
+            Academia ADN.
           </p>
         </div>
 

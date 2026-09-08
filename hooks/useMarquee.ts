@@ -34,6 +34,7 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
     let frame = 0;
 
     let dragging = false;
+    let moved = false;
     let startX = 0;
     let startOffset = 0;
 
@@ -47,6 +48,7 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
 
     const onPointerDown = (e: PointerEvent) => {
       dragging = true;
+      moved = false;
       target = 0;
       startX = e.clientX;
       startOffset = offset;
@@ -56,7 +58,18 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
 
     const onPointerMove = (e: PointerEvent) => {
       if (!dragging) return;
-      offset = startOffset + (e.clientX - startX);
+      const delta = e.clientX - startX;
+      if (Math.abs(delta) > 4) moved = true;
+      offset = startOffset + delta;
+    };
+
+    // Tras arrastrar, el pointerup dispara un click: si hubo movimiento
+    // real hay que frenarlo para no activar botones sin querer.
+    const onClickCapture = (e: MouseEvent) => {
+      if (!moved) return;
+      e.preventDefault();
+      e.stopPropagation();
+      moved = false;
     };
 
     const onPointerUp = (e: PointerEvent) => {
@@ -71,6 +84,7 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
     container.addEventListener("mouseenter", onEnter);
     container.addEventListener("mouseleave", onLeave);
     container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("click", onClickCapture, true);
     container.addEventListener("pointermove", onPointerMove);
     container.addEventListener("pointerup", onPointerUp);
     container.addEventListener("pointercancel", onPointerUp);
@@ -105,6 +119,7 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
       container.removeEventListener("mouseenter", onEnter);
       container.removeEventListener("mouseleave", onLeave);
       container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("click", onClickCapture, true);
       container.removeEventListener("pointermove", onPointerMove);
       container.removeEventListener("pointerup", onPointerUp);
       container.removeEventListener("pointercancel", onPointerUp);

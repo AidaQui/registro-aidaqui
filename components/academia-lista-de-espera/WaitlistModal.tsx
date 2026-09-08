@@ -51,7 +51,7 @@ export default function WaitlistModal({ open, onClose }: Props) {
     setError("");
 
     if (!phone || !isValidPhoneNumber(phone)) {
-      setError("Revisá el número de teléfono.");
+      setError("Revisa el número de teléfono.");
       return;
     }
 
@@ -75,7 +75,7 @@ export default function WaitlistModal({ open, onClose }: Props) {
 
       router.push("/lista-de-espera/gracias");
     } catch {
-      setError("Hubo un problema. Por favor, intentá de nuevo.");
+      setError("Ha habido un problema. Por favor, inténtalo de nuevo.");
       setSubmitting(false);
     }
   }

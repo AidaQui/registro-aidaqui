@@ -14,13 +14,14 @@ export default function HeroSectionEspera({ onOpenForm }: Props) {
           <AcademiaBadge />
 
           <h1 id="hero-espera-title" className="espera-hero__title">
-            EL CONOCIMIENTO ABRE PUERTAS. PERO EN LA INTEGRACIÓN ESTÁ LA{" "}
-            <em className="espera-hero__accent">TRANSFORMACIÓN</em>.
+            Un entrenamiento para recordar quién eres más allá de tus patrones,
+            recuperar tu poder y aprender a vivir desde tu{" "}
+            <em className="espera-hero__accent">verdadero Ser</em>.
           </h1>
 
           <p className="espera-hero__lead">
-            Un entrenamiento para recordar quién eres más allá de tus patrones,
-            recuperar tu poder y aprender a vivir desde tu verdadero Ser.
+            El conocimiento abre puertas. Pero en la integración está la
+            transformación.
           </p>
 
           <button type="button" className="pearl-btn espera-cta" onClick={onOpenForm}>

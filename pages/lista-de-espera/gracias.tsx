@@ -8,7 +8,7 @@ export default function GraciasAcademiaEspera() {
         <title>¡Estás en la lista! | Aida Qui</title>
         <meta
           name="description"
-          content="Te anotamos en la lista de espera de la próxima Academia ADN. Te avisaremos apenas abran los cupos."
+          content="Ya estás en la lista de espera de la próxima Academia ADN. Te avisaremos en cuanto abramos las plazas."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="noindex" />

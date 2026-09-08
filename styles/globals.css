@@ -6271,22 +6271,6 @@ a.pearl-btn {
 
 /* ===== Academia ADN — Lista de espera ===== */
 
-/* Grano de película sobre toda la landing */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: radial-gradient(at 20% 80%, #fff 1px, transparent 0px);
-  background-size: 3px 3px;
-  opacity: 0.08;
-  mix-blend-mode: plus-lighter;
-  z-index: 9999;
-  pointer-events: none !important;
-}
-
 /* CTA dorado, en línea con la paleta ADN (el pearl por defecto es negro) */
 /* Violeta por defecto: es el color que contrasta sobre los fondos claros */
 .espera-cta {
@@ -6359,11 +6343,12 @@ body::after {
 .espera-hero__title {
   margin: 0;
   font-family: var(--font-fraunces), Georgia, serif;
-  /* Entra en 4-5 líneas dentro de la mitad izquierda del banner */
-  font-size: clamp(28px, 3.2vw, 42px);
+  /* Más contenido que el titular anterior: baja de tamaño para entrar en
+     4-5 líneas dentro de la mitad izquierda del banner */
+  font-size: clamp(25px, 2.6vw, 35px);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: #290066;
 }
 
@@ -6375,14 +6360,19 @@ body::after {
   color: transparent;
 }
 
+/* Frase conceptual bajo el titular: itálica y con filete dorado para que
+   se lea como una cita y no como otro párrafo */
 .espera-hero__lead {
-  max-width: 660px;
+  max-width: 520px;
   margin: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
+  padding-left: 16px;
+  border-left: 2px solid rgba(212, 160, 32, 0.5);
+  font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(16px, 1.6vw, 19px);
-  font-weight: 400;
-  line-height: 1.65;
-  color: #2e2040;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #43276f;
 }
 
 .espera-hero .espera-cta {
@@ -6858,17 +6848,20 @@ body::after {
 }
 
 /* ---- Cierre: texto a la izquierda, bloque de decisión a la derecha ---- */
+/* Una sola columna centrada: el bloque de decisión que ocupaba la
+   derecha se retiró, así que la grilla ya no tiene sentido */
 .gap-close {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  align-items: center;
-  gap: clamp(28px, 4vw, 56px);
+  display: flex;
+  justify-content: center;
 }
 
 .gap-close__text {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 18px;
+  max-width: 780px;
 }
 
 .gap-close__emphasis {
@@ -6906,10 +6899,6 @@ body::after {
 
 /* ---- Tablet ---- */
 @media (max-width: 900px) {
-  .gap-close {
-    grid-template-columns: 1fr;
-  }
-
   .gap-cards {
     grid-template-columns: 1fr;
   }
@@ -7315,20 +7304,234 @@ body::after {
   will-change: transform;
 }
 
-.testi-marquee__item {
+/* ---- Tarjeta de testimonio ---- */
+.testi-card {
   flex: 0 0 auto;
-  margin: 0;
-  width: clamp(230px, 24vw, 310px);
-  /* Sin overflow ni fondo: la tarjeta termina donde termina la imagen */
-  line-height: 0;
-  filter: drop-shadow(0 10px 24px rgba(41, 0, 102, 0.1));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: clamp(280px, 30vw, 360px);
+  /* Alto fijo para que la fila no baile: el texto se recorta y el resto
+     se lee en el pop-up */
+  height: 340px;
+  padding: 24px 26px;
+  border-radius: 20px;
+  border: 1px solid rgba(155, 126, 200, 0.2);
+  background: #fffffd;
+  box-shadow: 0 10px 26px rgba(41, 0, 102, 0.08);
 }
 
-.testi-marquee__item img {
-  display: block;
+.testi-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Violeta de marca cuando no hay foto: se muestran las iniciales */
+.testi-card__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(160deg, #6a4a9c 0%, #43276f 100%);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f9f5f0;
+}
+
+.testi-card__avatar img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.testi-card__who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.testi-card__name {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #290066;
+}
+
+.testi-card__meta {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+.testi-card__stars {
+  width: 116px;
   height: auto;
-  border-radius: 16px;
+  display: block;
+}
+
+.testi-card__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #290066;
+}
+
+/* El recorte deja ver que hay más texto detrás del "Ver más" */
+.testi-card__text {
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #2e2040;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  white-space: pre-line;
+}
+
+.testi-card__more {
+  align-self: flex-start;
+  padding: 9px 20px;
+  border: 1px solid rgba(155, 126, 200, 0.35);
+  border-radius: 100px;
+  background: rgba(155, 126, 200, 0.08);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #5b3aa0;
+  cursor: pointer;
+  transition: background 220ms ease, border-color 220ms ease,
+    transform 220ms ease;
+}
+
+.testi-card__more:hover {
+  background: rgba(155, 126, 200, 0.16);
+  border-color: rgba(155, 126, 200, 0.55);
+  transform: translateY(-1px);
+}
+
+/* ---- Pop-up del testimonio completo ---- */
+.testi-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(20, 8, 40, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: espera-modal-in 220ms ease-out;
+}
+
+.testi-modal__panel {
+  position: relative;
+  width: min(100%, 620px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 22px;
+  border: 1px solid rgba(155, 126, 200, 0.25);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f6f0fb 100%);
+  box-shadow: 0 24px 60px rgba(41, 0, 102, 0.35);
+  animation: espera-panel-in 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.testi-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.08);
+  color: #6a4a9c;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.testi-modal__close:hover {
+  background: rgba(106, 74, 156, 0.16);
+  transform: scale(1.06);
+}
+
+.testi-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.testi-modal__header .testi-card__avatar {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+.testi-modal__who {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.testi-modal__header .testi-card__name {
+  font-size: 17px;
+}
+
+.testi-modal__title {
+  margin: 2px 0 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(21px, 2.4vw, 27px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #290066;
+}
+
+.testi-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.testi-modal__body p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 16px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+@media (max-width: 700px) {
+  .testi-card {
+    width: clamp(260px, 78vw, 320px);
+    height: 320px;
+    padding: 20px 22px;
+  }
 }
 
 /* Sin animación: useMarquee no arranca y la fila queda deslizable a mano */
@@ -7341,6 +7544,353 @@ body::after {
 @media (max-width: 700px) {
   .testi-marquee__track {
     --testi-gap: 14px;
+  }
+}
+
+/* ===== Academia ADN — Sección "Qué es Academia ADN" ===== */
+
+.whatis {
+  position: relative;
+  padding: clamp(48px, 5vw, 76px) 24px;
+  background: #fffffd;
+}
+
+.whatis-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(30px, 3.5vw, 44px);
+}
+
+.whatis-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.whatis-intro .espera-badge {
+  align-self: center;
+}
+
+.whatis-title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #290066;
+}
+
+.whatis-title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+/* Promesa central: el peso lo lleva esta frase, no el párrafo */
+.whatis-lead {
+  max-width: 700px;
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(19px, 2.1vw, 26px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: #43276f;
+}
+
+.whatis-lead strong {
+  font-weight: 600;
+  color: #290066;
+}
+
+.whatis-body {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.whatis-body p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+.whatis-body strong {
+  font-weight: 600;
+  color: #290066;
+}
+
+/* ---- Contraste: lo que no es / lo que sí ---- */
+.whatis-contrast {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(24px, 3vw, 34px) clamp(24px, 3vw, 38px);
+  border-radius: 20px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+}
+
+.whatis-contrast__no {
+  margin: 0;
+  max-width: 220px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(17px, 1.9vw, 22px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgba(46, 32, 64, 0.5);
+}
+
+.whatis-contrast__yes {
+  margin: 0;
+  padding-left: clamp(20px, 3vw, 40px);
+  border-left: 1px solid rgba(155, 126, 200, 0.3);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+/* ---- Los cuatro pilares ---- */
+.whatis-pillars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.whatis-pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(155, 126, 200, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 16px);
+  font-weight: 500;
+  text-align: center;
+  color: #290066;
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.whatis-pillar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(41, 0, 102, 0.1);
+}
+
+.whatis-pillar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(155, 126, 200, 0.12);
+  color: #6a4a9c;
+}
+
+/* ---- La consciencia aterrizada en el día a día ---- */
+.whatis-daily {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.whatis-daily__intro {
+  max-width: 620px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+.whatis-daily__claim {
+  max-width: 700px;
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.whatis-daily__claim em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.whatis-areas {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.whatis-area {
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(212, 160, 32, 0.3);
+  background: rgba(240, 201, 138, 0.1);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.3vw, 15px);
+  font-weight: 500;
+  color: #7a5410;
+}
+
+/* ---- El giro colectivo: panel oscuro, rompe el ritmo claro ---- */
+.whatis-collective {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  margin-top: 8px;
+  padding: clamp(36px, 4.5vw, 60px) clamp(26px, 4vw, 56px);
+  border-radius: clamp(28px, 4vw, 48px);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 52%, #341f5e 100%);
+}
+
+/* Misma aurora que los otros paneles violeta */
+.whatis-collective::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.whatis-collective > * {
+  position: relative;
+  z-index: 1;
+}
+
+.whatis-collective__label {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+.whatis-collective__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 640px;
+}
+
+.whatis-collective__body p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.7;
+  color: rgba(249, 245, 240, 0.86);
+}
+
+.whatis-collective__body strong {
+  font-weight: 600;
+  color: #f9f5f0;
+}
+
+.whatis-collective__accent {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(18px, 2vw, 23px) !important;
+  font-style: italic;
+  font-weight: 500;
+  color: #f0c98a !important;
+  padding: 4px 0;
+}
+
+.whatis-collective__closing {
+  margin: 6px 0 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(24px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #f9f5f0;
+}
+
+.whatis-collective__closing em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+@media (max-width: 900px) {
+  .whatis-pillars {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .whatis-contrast {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .whatis-contrast__no {
+    max-width: none;
+  }
+
+  .whatis-contrast__yes {
+    padding-left: 0;
+    padding-top: 16px;
+    border-left: none;
+    border-top: 1px solid rgba(155, 126, 200, 0.3);
+  }
+}
+
+@media (max-width: 700px) {
+  .whatis-area {
+    font-size: 13px;
+    padding: 7px 14px;
   }
 }
 
