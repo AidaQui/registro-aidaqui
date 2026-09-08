@@ -6287,9 +6287,8 @@ a.pearl-btn {
 .espera-hero {
   position: relative;
   width: 100%;
-  /* El contenido define el alto: con dos columnas ya no hay banner que
-     acompañar, y forzar 800px dejaba aire muerto */
-  min-height: 620px;
+  /* Alto real del banner de escritorio: así cover no lo recorta */
+  min-height: 750px;
   display: flex;
   overflow: hidden;
   background-color: #f9f5f0;
@@ -6495,7 +6494,7 @@ a.pearl-btn {
   .espera-hero__shell {
     grid-template-columns: 1fr;
     width: 100%;
-    padding: clamp(290px, 66vw, 470px) 24px 48px;
+    padding: clamp(250px, 58vw, 420px) 24px 48px;
   }
 
   .espera-hero__copy {
