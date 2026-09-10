@@ -44,7 +44,7 @@ export default function WhatIsAdnSection() {
           </h2>
 
           <p className="whatis-lead" data-reveal>
-            El lugar donde todo lo que has aprendido sobre transformación deja
+            El lugar donde todo lo que has aprendido sobre consciencia deja
             de ser conocimiento y empieza a convertirse en{" "}
             <strong>tu forma de vivir</strong>.
           </p>
@@ -66,10 +66,13 @@ export default function WhatIsAdnSection() {
             Aquí no vienes a consumir más información.
           </p>
           <p className="whatis-contrast__yes">
-            Vienes a trabajar sobre tu mente, tus emociones, tu energía y tu
-            identidad para transformar desde la raíz los patrones que hoy siguen
-            determinando cómo reaccionas, qué eliges, qué permites y la realidad
-            que eres capaz de sostener.
+            Vienes a trabajar sobre <mark>tu mente</mark>,{" "}
+            <mark>tus emociones</mark>, <mark>tu energía</mark> y{" "}
+            <mark>tu identidad</mark> para transformar desde la raíz los
+            patrones que hoy siguen determinando{" "}
+            <strong>cómo reaccionas</strong>, <strong>qué eliges</strong>,{" "}
+            <strong>qué permites</strong> y{" "}
+            <strong>la realidad que eres capaz de sostener</strong>.
           </p>
         </div>
 
@@ -79,7 +82,7 @@ export default function WhatIsAdnSection() {
               <span className="whatis-pillar__icon" aria-hidden="true">
                 {pillar.icon}
               </span>
-              {pillar.label}
+              <span className="whatis-pillar__label">{pillar.label}</span>
             </li>
           ))}
         </ul>
