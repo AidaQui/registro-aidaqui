@@ -73,12 +73,7 @@ export default function WaitlistModal({ open, onClose }: Props) {
         throw new Error("No se pudo completar el registro");
       }
 
-      /* Los datos viajan a la página de gracias para que el diagnóstico no
-         tenga que volver a pedirlos: desde allí se arrastran a /diagnostico. */
-      router.push({
-        pathname: "/lista-de-espera/gracias",
-        query: { n: name, e: email, t: phone },
-      });
+      router.push("/lista-de-espera/gracias");
     } catch {
       setError("Ha habido un problema. Por favor, inténtalo de nuevo.");
       setSubmitting(false);

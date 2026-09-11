@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-
 const whatsappGroupUrl = "https://chat.whatsapp.com/JBThHsrH03wJyIAbU4LbpA?mode=gi_t";
 
 const WhatsAppIcon = () => (
@@ -11,20 +8,6 @@ const WhatsAppIcon = () => (
 );
 
 export default function GraciasSectionEspera() {
-  const router = useRouter();
-
-  /* Los datos llegan del modal de registro y se arrastran al diagnóstico,
-     para que no haya que volver a pedirlos allí. */
-  const { n, e, t } = router.query;
-  const enlaceDiagnostico = {
-    pathname: "/diagnostico",
-    query: {
-      ...(typeof n === "string" ? { n } : {}),
-      ...(typeof e === "string" ? { e } : {}),
-      ...(typeof t === "string" ? { t } : {}),
-    },
-  };
-
   return (
     <div className="espera-gracias">
       <div className="espera-gracias__bg" aria-hidden="true" />
@@ -40,27 +23,15 @@ export default function GraciasSectionEspera() {
           personas en enterarte y en poder reservar tu plaza.
         </p>
 
-        {/* EL DIAGNÓSTICO ES EL PASO PRINCIPAL y va antes que WhatsApp: es lo
-            que mantiene a la persona dentro del embudo. El grupo queda como
-            segunda acción, no como la única. */}
         <div className="espera-gracias__card">
           <p className="espera-gracias__card-label">PRÓXIMO PASO</p>
           <p className="espera-gracias__card-text">
-            Antes de que abramos las plazas, descubre qué patrón inconsciente
-            sigue dirigiendo tu vida. Son 4 preguntas, menos de 2 minutos, y
-            recibirás tu lectura personalizada en vídeo.
+            Mientras esperas, únete a la comunidad de WhatsApp de Aida Qui. Allí
+            recibirás novedades, contenido y serás de las primeras personas en
+            saber cuándo abramos las inscripciones para la próxima edición de
+            Academia ADN.
           </p>
         </div>
-
-        <Link href={enlaceDiagnostico} className="pearl-btn espera-cta espera-cta--gold">
-          <div className="pearl-wrap">
-            <p>
-              <span className="pearl-star" aria-hidden="true">✦</span>
-              HACER MI RADIOGRAFÍA
-              <span className="pearl-star" aria-hidden="true">✦</span>
-            </p>
-          </div>
-        </Link>
 
         <a
           href={whatsappGroupUrl}
