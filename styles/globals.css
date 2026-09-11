@@ -8455,3 +8455,609 @@ a.pearl-btn {
     max-width: none;
   }
 }
+
+/* ===== Radiografía de tu ADN — diagnóstico ===== */
+
+.dg-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #fffffd;
+}
+
+.dg-page__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/lista-de-espera/bg-2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.dg-page__shell {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(calc(100% - 48px), 860px);
+  margin: 0 auto;
+  padding: clamp(48px, 6vw, 80px) 0;
+}
+
+.dg-page__footer {
+  position: relative;
+  z-index: 1;
+  padding: 24px;
+  text-align: center;
+}
+
+.dg-page__footer p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+/* ---- Presentación ---- */
+.dg-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.dg-intro .espera-badge {
+  align-self: center;
+}
+
+.dg-intro__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+.dg-intro__subtitle {
+  max-width: 640px;
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(18px, 2vw, 24px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #43276f;
+}
+
+.dg-intro__promise {
+  max-width: 600px;
+  margin: 0 0 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+.dg-intro__note {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(46, 32, 64, 0.6);
+}
+
+.dg-intro__locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 520px;
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: 20px;
+  border: 1px solid rgba(155, 126, 200, 0.25);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+}
+
+.dg-intro__locked-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+.dg-intro__block {
+  width: 100%;
+  margin-top: clamp(24px, 3vw, 38px);
+  padding-top: clamp(24px, 3vw, 38px);
+  border-top: 1px solid rgba(155, 126, 200, 0.2);
+}
+
+.dg-intro__block-title {
+  margin: 0 0 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.dg-intro__block-subtitle {
+  max-width: 620px;
+  margin: 0 auto clamp(22px, 3vw, 32px);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 16px);
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+.dg-intro__points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  text-align: left;
+}
+
+.dg-point {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(240, 201, 138, 0.22);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+  box-shadow: 0 14px 30px rgba(41, 0, 102, 0.18);
+}
+
+.dg-point::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.32;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.dg-point > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dg-point__num {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #f0c98a;
+}
+
+.dg-point__title {
+  margin: 0 0 6px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(17px, 1.7vw, 20px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #f9f5f0;
+}
+
+.dg-point__text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 15px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.82);
+}
+
+/* ---- Cuestionario ---- */
+.dg-quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 24px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: #fffffd;
+  box-shadow: 0 20px 50px rgba(41, 0, 102, 0.12);
+}
+
+.dg-quiz__head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dg-quiz__step {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6a4a9c;
+}
+
+.dg-quiz__bar {
+  height: 4px;
+  border-radius: 100px;
+  background: rgba(155, 126, 200, 0.18);
+  overflow: hidden;
+}
+
+.dg-quiz__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, #a06c08, #d4a020);
+  transition: width 320ms ease;
+}
+
+/* La clave por pregunta reinicia esta animación en cada paso */
+.dg-quiz__body {
+  animation: dg-fade-in 320ms ease-out;
+}
+
+@keyframes dg-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-quiz__body {
+    animation: none;
+  }
+}
+
+.dg-quiz__question {
+  margin: 0 0 20px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 27px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.dg-quiz__options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dg-quiz__option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(155, 126, 200, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 16px);
+  line-height: 1.5;
+  text-align: left;
+  color: #2e2040;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease,
+    transform 200ms ease;
+}
+
+.dg-quiz__option:hover:not(:disabled) {
+  border-color: rgba(155, 126, 200, 0.55);
+  background: rgba(155, 126, 200, 0.08);
+  transform: translateX(3px);
+}
+
+.dg-quiz__option:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.dg-quiz__letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.12);
+  font-size: 13px;
+  font-weight: 600;
+  color: #6a4a9c;
+}
+
+.dg-quiz__back {
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  color: rgba(46, 32, 64, 0.6);
+  cursor: pointer;
+}
+
+.dg-quiz__back:hover {
+  color: #6a4a9c;
+}
+
+.dg-quiz__loading,
+.dg-quiz__error {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 15px;
+  text-align: center;
+}
+
+.dg-quiz__loading {
+  color: #6a4a9c;
+}
+
+.dg-quiz__error {
+  color: #b3261e;
+}
+
+/* ---- Resultado ---- */
+.dg-resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.dg-resultado__eyebrow {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6a4a9c;
+}
+
+.dg-resultado__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 4.2vw, 48px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+.dg-resultado__quote {
+  max-width: 560px;
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(18px, 2vw, 23px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #43276f;
+}
+
+.dg-resultado__text {
+  max-width: 620px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+.dg-resultado__pair {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-top: 6px;
+  text-align: left;
+}
+
+.dg-resultado__box {
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+}
+
+.dg-resultado__box-label {
+  margin: 0 0 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6a4a9c;
+}
+
+.dg-resultado__box-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.6;
+  color: #2e2040;
+}
+
+/* El aviso del correo va en panel violeta: es el paso que importa */
+.dg-resultado__mail {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 10px;
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: 20px;
+  border: 1px solid rgba(240, 201, 138, 0.24);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+}
+
+.dg-resultado__mail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.dg-resultado__mail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dg-resultado__mail-label {
+  margin: 0 0 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(19px, 2.2vw, 25px);
+  font-weight: 600;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.dg-resultado__mail-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 16px);
+  line-height: 1.7;
+  color: rgba(249, 245, 240, 0.88);
+}
+
+.dg-resultado__mail-text strong {
+  color: #f9f5f0;
+  font-weight: 600;
+}
+
+/* CTA de WhatsApp: mismo tratamiento que en la página de gracias */
+.dg-resultado__cta {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 8px;
+  padding: 2px;
+  border-radius: 100px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 12px 26px rgba(31, 170, 85, 0.3);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.dg-resultado__cta:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 32px rgba(31, 170, 85, 0.4);
+}
+
+.dg-resultado__cta-border {
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(31, 170, 85, 0.3) 60deg,
+    #4ade80 110deg,
+    #ffffff 130deg,
+    #4ade80 150deg,
+    rgba(31, 170, 85, 0.3) 200deg,
+    transparent 300deg
+  );
+  animation: espera-badge-spin 3s linear infinite;
+}
+
+.dg-resultado__cta-face {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 19px 24px;
+  border-radius: 100px;
+  background: linear-gradient(180deg, #24b95e 0%, #199247 100%);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.dg-resultado__cta-icon {
+  display: inline-flex;
+  font-size: 21px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-resultado__cta-border {
+    animation: none;
+  }
+}
+
+.dg-resultado__note {
+  max-width: 520px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(46, 32, 64, 0.6);
+}
+
+@media (max-width: 700px) {
+  .dg-intro__points,
+  .dg-resultado__pair {
+    grid-template-columns: 1fr;
+  }
+
+  .dg-page__shell {
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .dg-quiz {
+    padding: 24px 20px;
+  }
+
+  .dg-resultado__cta {
+    max-width: none;
+  }
+}
