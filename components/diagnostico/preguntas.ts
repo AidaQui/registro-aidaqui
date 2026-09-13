@@ -1,16 +1,18 @@
 /**
- * Radiografía de tu ADN — preguntas, patrones y cálculo del resultado.
+ * Radiografía de tu ADN — preguntas, códigos y cálculo del resultado.
  *
- * El mapeo es por posición y es el mismo en las cuatro preguntas:
+ * El mapeo es por posición y es el mismo en las seis preguntas cerradas:
  * A→control, B→hiperexigencia, C→escasez, D→validacion,
  * E→supervivencia, F→desconexion, G→autosabotaje.
  *
- * Los identificadores van en minúscula y sin tildes a propósito: son los
- * valores que viajan a MailerLite y contra los que compara la automatización
- * que elige el vídeo. Si alguno llevara tilde, esa rama no coincidiría nunca.
+ * ⚠️ LOS IDENTIFICADORES NO CAMBIAN AUNQUE SÍ LOS NOMBRES VISIBLES.
+ * Son los valores que viajan a MailerLite y contra los que compara la
+ * automatización que elige el vídeo. Renombrarlos obligaría a reconfigurar
+ * las siete ramas del lado del cliente. Los nombres de cara al público
+ * ("Código de Control", etc.) viven en resultados.ts.
  */
 
-export const PATRONES = [
+export const CODIGOS = [
   "control",
   "hiperexigencia",
   "escasez",
@@ -20,10 +22,13 @@ export const PATRONES = [
   "autosabotaje",
 ] as const;
 
-export type Patron = (typeof PATRONES)[number];
+export type Codigo = (typeof CODIGOS)[number];
 
-/** El orden de las opciones dentro de cada pregunta define a qué patrón suman. */
-const ORDEN_PATRONES: Patron[] = [
+/** Compatibilidad con el nombre anterior del tipo. */
+export type Patron = Codigo;
+
+/** El orden de las opciones dentro de cada pregunta define a qué código suman. */
+const ORDEN: Codigo[] = [
   "control",
   "hiperexigencia",
   "escasez",
@@ -36,8 +41,11 @@ const ORDEN_PATRONES: Patron[] = [
 export type Pregunta = {
   id: string;
   enunciado: string;
-  /** En el mismo orden que ORDEN_PATRONES */
-  opciones: string[];
+  /** Ausente en la pregunta abierta */
+  opciones?: string[];
+  /** La séptima es de texto libre: no puntúa */
+  abierta?: boolean;
+  ayuda?: string;
 };
 
 export const PREGUNTAS: Pregunta[] = [
@@ -47,10 +55,10 @@ export const PREGUNTAS: Pregunta[] = [
       "Cuando algo importante no sale como esperabas, ¿qué suele ocurrir primero dentro de ti?",
     opciones: [
       "Empiezo a pensar qué puedo hacer para solucionarlo.",
-      "Me pregunto qué hice mal o si fui suficiente.",
+      "Me pregunto qué hice mal o si podría haber hecho algo mejor.",
       "Me preocupa perder lo que había conseguido.",
-      "Busco la opinión de alguien para saber qué hacer.",
-      "Mi cuerpo se activa y reacciono antes de poder pensarlo.",
+      "Necesito hablarlo con alguien para saber qué hacer.",
+      "Mi cuerpo se activa y reacciono antes de poder procesarlo.",
       "Intento encontrar qué enseñanza o respuesta me falta.",
       "Pierdo impulso y termino volviendo a comportamientos anteriores.",
     ],
@@ -63,7 +71,7 @@ export const PREGUNTAS: Pregunta[] = [
       "Quizá estoy intentando forzar algo que debería aprender a soltar.",
       "Siento que todavía hay algo en mí que necesito trabajar para estar preparada.",
       "Me cuesta confiar en que habrá otra oportunidad o que algo mejor llegará.",
-      "Me pregunto si estoy tomando la decisión correcta y busco referencias fuera.",
+      "Empiezo a cuestionar mi decisión y busco referencias fuera.",
       "Aunque intento confiar, internamente siento amenaza o inseguridad.",
       "Intento encontrar qué enseñanza, señal o mensaje no estoy viendo.",
       "Empiezo a dudar de mí y vuelvo a formas conocidas de actuar.",
@@ -85,70 +93,123 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p4",
-    /* Las opciones venían en otro orden en el documento original; se
-       reordenaron para respetar el mapeo por posición de las demás. */
     enunciado:
       "¿Cuál de estas contradicciones reconoces más profundamente en tu proceso?",
     opciones: [
       "He aprendido a confiar, pero sigo intentando asegurar el resultado.",
       "He aprendido a amarme, pero sigo relacionándome conmigo desde la exigencia.",
       "He trabajado la abundancia, pero todavía hay decisiones que tomo desde la carencia.",
-      "Conozco mi valor, pero todavía hay partes de mí que necesitan verlo reflejado fuera.",
+      "Sé lo que valgo, pero todavía me afecta que otros no lo vean.",
       "Comprendo mis heridas, pero mi cuerpo todavía reacciona desde ellas.",
       "He encontrado muchas respuestas, pero sigo dudando de mi propia verdad.",
       "Sé quién quiero ser, pero sigo volviendo a mi antigua versión.",
     ],
   },
+  {
+    id: "p5",
+    /* En el documento original las opciones venían desordenadas; se
+       reordenaron para respetar el mapeo por posición de las demás. */
+    enunciado:
+      "Cuando alguien importante para ti no responde como esperabas, ¿qué es lo que más te cuesta sostener?",
+    opciones: [
+      "Aceptar que no puedo controlar lo que la otra persona haga.",
+      "No preguntarme qué hice mal o qué debería haber hecho diferente.",
+      "Confiar en que puedo estar bien aunque ese vínculo cambie o termine.",
+      "Mantenerme firme en lo que siento aunque la otra persona no lo comprenda.",
+      "No reaccionar desde experiencias o heridas anteriores.",
+      "Escuchar lo que realmente siento sin necesitar analizarlo o entenderlo todo.",
+      "No volver a dinámicas que sé que ya no quiero repetir.",
+    ],
+  },
+  {
+    id: "p6",
+    enunciado:
+      "Si mañana tu realidad cambiara por completo y recibieras eso que llevas tanto tiempo deseando, ¿qué crees que te costaría más sostener?",
+    opciones: [
+      "Disfrutarlo sin intentar controlar que permanezca.",
+      "Sentir que realmente estoy preparada y soy suficiente para esa realidad.",
+      "Confiar en que puedo tenerlo sin miedo a perderlo.",
+      "Vivirlo sin necesitar demostrar nada ni recibir reconocimiento externo.",
+      "Sentirme segura en una realidad completamente nueva para mí.",
+      "Confiar en mí para transitarla sin buscar constantemente respuestas fuera.",
+      "Sostener la versión de mí capaz de vivir esa realidad sin regresar a lo conocido.",
+    ],
+  },
+  {
+    id: "p7",
+    enunciado:
+      "Si nadie pudiera decepcionarse, juzgarte o cuestionar tus decisiones, ¿qué sentirías que tienes permiso de hacer diferente?",
+    ayuda: "No hay una respuesta correcta. Solo observa lo que aparece.",
+    abierta: true,
+  },
 ];
 
-/** Índice de opción (0-6) → patrón al que suma. */
-export function patronDeOpcion(indice: number): Patron | null {
-  return ORDEN_PATRONES[indice] ?? null;
+/** Las que puntúan: la séptima es abierta y queda fuera del cálculo. */
+export const PREGUNTAS_CERRADAS = PREGUNTAS.filter((p) => !p.abierta);
+
+/** Índice de opción (0-6) → código al que suma. */
+export function codigoDeOpcion(indice: number): Codigo | null {
+  return ORDEN[indice] ?? null;
 }
 
 export type Respuestas = Record<string, number>;
 
 export type Diagnostico = {
-  dominante: Patron;
-  puntajes: Record<Patron, number>;
+  dominante: Codigo;
+  puntajes: Record<Codigo, number>;
   huboEmpate: boolean;
 };
 
 /**
- * Calcula el patrón dominante a partir de las respuestas.
+ * Calcula el código dominante a partir de las respuestas cerradas.
  *
- * Con cuatro preguntas y siete patrones el empate es lo habitual (2-1-1, o
- * incluso 1-1-1-1), así que el desempate no es un caso raro: es parte del
- * funcionamiento normal. Lo resuelve la última pregunta, la de las
- * contradicciones, por ser la más introspectiva de las cuatro.
+ * Con seis preguntas y siete códigos el empate sigue siendo frecuente, así
+ * que el desempate es parte del funcionamiento normal. El orden lo fija el
+ * documento del diagnóstico:
  *
- * Si esa pregunta no está entre las empatadas —o no se respondió— se recurre
- * al orden de PATRONES, que deja el resultado estable ante los mismos datos.
+ *   1. La pregunta 6 —la que proyecta a futuro— manda.
+ *   2. Si no resuelve, la pregunta 5.
+ *   3. Si sigue empatado, la respuesta más reciente entre las empatadas.
+ *
+ * El tercer criterio garantiza que siempre haya un ganador: recorre las
+ * preguntas de atrás hacia adelante y devuelve el primer código empatado que
+ * encuentra.
  */
 export function calcularDiagnostico(respuestas: Respuestas): Diagnostico {
   const puntajes = Object.fromEntries(
-    PATRONES.map((patron) => [patron, 0])
-  ) as Record<Patron, number>;
+    CODIGOS.map((codigo) => [codigo, 0])
+  ) as Record<Codigo, number>;
 
-  for (const pregunta of PREGUNTAS) {
+  for (const pregunta of PREGUNTAS_CERRADAS) {
     const indice = respuestas[pregunta.id];
     if (typeof indice !== "number") continue;
-    const patron = patronDeOpcion(indice);
-    if (patron) puntajes[patron] += 1;
+    const codigo = codigoDeOpcion(indice);
+    if (codigo) puntajes[codigo] += 1;
   }
 
-  const maximo = Math.max(...PATRONES.map((patron) => puntajes[patron]));
-  const empatados = PATRONES.filter((patron) => puntajes[patron] === maximo);
+  const maximo = Math.max(...CODIGOS.map((codigo) => puntajes[codigo]));
+  const empatados = CODIGOS.filter((codigo) => puntajes[codigo] === maximo);
 
   if (empatados.length === 1) {
     return { dominante: empatados[0], puntajes, huboEmpate: false };
   }
 
-  const patronDesempate = patronDeOpcion(respuestas.p4 ?? -1);
-  const dominante =
-    patronDesempate && empatados.includes(patronDesempate)
-      ? patronDesempate
-      : empatados[0];
+  for (const clave of ["p6", "p5"]) {
+    const candidato = codigoDeOpcion(respuestas[clave] ?? -1);
+    if (candidato && empatados.includes(candidato)) {
+      return { dominante: candidato, puntajes, huboEmpate: true };
+    }
+  }
 
-  return { dominante, puntajes, huboEmpate: true };
+  /* Última red: la respuesta más reciente que esté entre las empatadas. */
+  for (let i = PREGUNTAS_CERRADAS.length - 1; i >= 0; i--) {
+    const candidato = codigoDeOpcion(
+      respuestas[PREGUNTAS_CERRADAS[i].id] ?? -1
+    );
+    if (candidato && empatados.includes(candidato)) {
+      return { dominante: candidato, puntajes, huboEmpate: true };
+    }
+  }
+
+  return { dominante: empatados[0], puntajes, huboEmpate: true };
 }

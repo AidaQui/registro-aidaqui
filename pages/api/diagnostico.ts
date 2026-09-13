@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
 import {
-  PREGUNTAS,
+  PREGUNTAS_CERRADAS,
   calcularDiagnostico,
   type Respuestas,
 } from "@/components/diagnostico/preguntas";
@@ -134,7 +134,7 @@ export default async function handler(
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
-  const { name, email, phone, answers } = req.body ?? {};
+  const { name, email, phone, answers, open } = req.body ?? {};
 
   const trimmedName = typeof name === "string" ? name.trim() : "";
   const trimmedEmail =
@@ -151,13 +151,14 @@ export default async function handler(
      objeto o meter claves que después nadie sabría interpretar. */
   const respuestas: Respuestas = {};
   if (typeof answers === "object" && answers !== null) {
-    for (const pregunta of PREGUNTAS) {
+    for (const pregunta of PREGUNTAS_CERRADAS) {
+      const opciones = pregunta.opciones ?? [];
       const valor = (answers as Record<string, unknown>)[pregunta.id];
       if (
         typeof valor === "number" &&
         Number.isInteger(valor) &&
         valor >= 0 &&
-        valor < pregunta.opciones.length
+        valor < opciones.length
       ) {
         respuestas[pregunta.id] = valor;
       }
@@ -174,19 +175,28 @@ export default async function handler(
      el orden o la redacción de una pregunta, los registros antiguos seguirían
      siendo legibles sin tener que reconstruir qué decía cada letra. */
   const columnasRespuestas: Record<string, string> = {};
-  for (const pregunta of PREGUNTAS) {
+  for (const pregunta of PREGUNTAS_CERRADAS) {
     const indice = respuestas[pregunta.id];
-    if (typeof indice === "number") {
+    const opcion = pregunta.opciones?.[indice ?? -1];
+    if (typeof indice === "number" && opcion) {
       const letra = String.fromCharCode(65 + indice);
-      columnasRespuestas[pregunta.id] = `${letra}. ${pregunta.opciones[indice]}`;
+      columnasRespuestas[pregunta.id] = `${letra}. ${opcion}`;
     }
   }
+
+  /* La séptima es de texto libre y no puntúa, pero es la respuesta con más
+     valor cualitativo de todo el cuestionario: es la que se va a leer a mano.
+     Se recorta porque un textarea sin tope es una puerta abierta a guardar
+     cualquier cosa. */
+  const abierta =
+    typeof open === "string" ? open.trim().slice(0, 2000) : "";
 
   const fila = {
     nombre: trimmedName || null,
     email: trimmedEmail,
     telefono: trimmedPhone || null,
     ...columnasRespuestas,
+    p7_abierta: abierta || null,
     patron_dominante: diagnostico.dominante,
     patron_nombre: FICHAS[diagnostico.dominante].titulo,
     puntajes: diagnostico.puntajes,

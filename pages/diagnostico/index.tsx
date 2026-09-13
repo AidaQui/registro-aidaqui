@@ -1,50 +1,102 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Cuestionario from "@/components/diagnostico/Cuestionario";
+import Escaneando from "@/components/diagnostico/Escaneando";
+import FormularioContacto from "@/components/diagnostico/FormularioContacto";
 import Resultado from "@/components/diagnostico/Resultado";
 import { LANDING } from "@/components/diagnostico/resultados";
-import type { Patron } from "@/components/diagnostico/preguntas";
+import type { Codigo } from "@/components/diagnostico/preguntas";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
 
 /*
  * /diagnostico — la Radiografía de tu ADN.
  *
- * SE LLEGA DESDE LA PÁGINA DE GRACIAS DEL REGISTRO, que arrastra los datos en
- * la URL. Por eso aquí no hay formulario: quien llega ya los dejó, y pedirlos
- * otra vez es la forma más rápida de perder a la mitad.
+ * EMBUDO PROPIO, NO UN PASO DE LA LISTA DE ESPERA. Se puede llegar desde
+ * cualquier sitio —anuncio, historia, enlace suelto— y por eso pide los datos
+ * de contacto: no da por hecho que la persona venga de ningún lado.
  *
- * Quien entre sin esos datos ve una invitación a registrarse en vez del
- * cuestionario. No es un control de acceso —la URL no es secreta—, pero evita
- * el caso que sí importa: alguien completando las cuatro preguntas para que el
- * resultado no se le pueda enviar a ninguna parte.
+ * LOS TRES DATOS SE PIDEN EN LA HERO, juntos y de una vez. Quien abandona a
+ * mitad de las siete preguntas deja igualmente nombre, correo y teléfono, así
+ * que sigue siendo alcanzable; con la captura al final, ese mismo abandono se
+ * pierde entero. Y van en una sola pantalla porque tres campos cortos se
+ * rellenan de corrido: partirlos en pasos añade pulsaciones para pedir
+ * exactamente lo mismo.
  *
- * TRES ESTADOS EN UNA SOLA RUTA: presentación, cuestionario y resultado. Sin
- * navegación entre páginas, así el avance es inmediato y no hay ventana para
- * abandonar entre pantalla y pantalla.
+ * CUATRO ESTADOS EN UNA SOLA RUTA: presentación con formulario, cuestionario,
+ * escaneo y resultado. Sin navegación entre páginas, así el avance es
+ * inmediato y no hay ventana para abandonar entre pantalla y pantalla.
  */
 
-type Fase = "intro" | "quiz" | "resultado";
+type Fase = "intro" | "quiz" | "escaneando" | "resultado";
 
-export default function DiagnosticoPage() {
+export default function LeadMagnetPage() {
   const router = useRouter();
   const [fase, setFase] = useState<Fase>("intro");
-  const [patron, setPatron] = useState<Patron | null>(null);
+  const [codigo, setCodigo] = useState<Codigo | null>(null);
   const [datos, setDatos] = useState({ nombre: "", email: "", telefono: "" });
+  const [listo, setListo] = useState(false);
+  const [error, setError] = useState("");
+
+  /* Estable entre renders: el escáner la usa dentro de un efecto, y una
+     función nueva en cada render lo volvería a disparar. */
+  const irAResultado = useCallback(() => setFase("resultado"), []);
 
   /* Los parámetros solo están disponibles cuando el router se hidrata, así
      que la lectura va en un efecto y no en el primer render. */
   useEffect(() => {
     if (!router.isReady) return;
     const { n, e, t } = router.query;
-    setDatos({
-      nombre: typeof n === "string" ? n : "",
-      email: typeof e === "string" ? e : "",
-      telefono: typeof t === "string" ? t : "",
-    });
+    if (typeof n === "string" || typeof e === "string") {
+      setDatos({
+        nombre: typeof n === "string" ? n : "",
+        email: typeof e === "string" ? e : "",
+        telefono: typeof t === "string" ? t : "",
+      });
+    }
   }, [router.isReady, router.query]);
 
-  const tieneEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datos.email);
+  function irA(siguiente: Fase) {
+    setFase(siguiente);
+    window.scrollTo({ top: 0 });
+  }
+
+  /*
+   * El envío arranca a la vez que el escaneo, no después.
+   *
+   * Los cuatro segundos de escaneo cubren la ida y vuelta al servidor: cuando
+   * la animación termina, la respuesta ya suele estar. Encadenar las dos
+   * esperas —primero el servidor, luego la animación— es lo que hacía que
+   * esta pantalla se sintiera larga.
+   */
+  async function enviar(respuestas: Record<string, number>, abierta: string) {
+    setError("");
+    setListo(false);
+    irA("escaneando");
+
+    try {
+      const resp = await fetch("/api/diagnostico", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: datos.nombre,
+          email: datos.email,
+          phone: datos.telefono,
+          answers: respuestas,
+          open: abierta,
+        }),
+      });
+
+      const data = await resp.json();
+      if (!resp.ok || !data.ok) throw new Error("fallo");
+
+      setCodigo(data.patron as Codigo);
+      setListo(true);
+    } catch {
+      setError("Ha habido un problema. Por favor, inténtalo de nuevo.");
+      irA("quiz");
+    }
+  }
 
   return (
     <>
@@ -52,7 +104,6 @@ export default function DiagnosticoPage() {
         <title>Radiografía de tu ADN | Aida Qui</title>
         <meta name="description" content={LANDING.subtitulo} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="noindex" />
       </Head>
 
       <main className="dg-page">
@@ -63,47 +114,24 @@ export default function DiagnosticoPage() {
             <section className="dg-intro">
               <AcademiaBadge />
 
-              <h1 className="dg-intro__title">{LANDING.titulo}</h1>
+              {/* "ADN" va aparte porque es la palabra que tiene que
+                  quedarse: el resto del titular la acompaña. */}
+              <h1 className="dg-intro__title">
+                Radiografía de tu <span className="dg-intro__adn">ADN</span>
+              </h1>
               <p className="dg-intro__subtitle">{LANDING.subtitulo}</p>
               <p className="dg-intro__promise">{LANDING.promesa}</p>
 
-              {tieneEmail ? (
-                <>
-                  <button
-                    type="button"
-                    className="pearl-btn espera-cta"
-                    onClick={() => setFase("quiz")}
-                  >
-                    <div className="pearl-wrap">
-                      <p>
-                        <span className="pearl-star" aria-hidden="true">✦</span>
-                        EMPEZAR MI RADIOGRAFÍA
-                        <span className="pearl-star" aria-hidden="true">✦</span>
-                      </p>
-                    </div>
-                  </button>
-                  <p className="dg-intro__note">
-                    4 preguntas · Menos de 2 minutos
-                  </p>
-                </>
-              ) : (
-                <div className="dg-intro__locked">
-                  <p className="dg-intro__locked-text">
-                    La radiografía es para quienes ya están en la lista de
-                    espera de Academia ADN. Apúntate y podrás hacerla al
-                    instante.
-                  </p>
-                  <a href="/lista-de-espera" className="pearl-btn espera-cta">
-                    <div className="pearl-wrap">
-                      <p>
-                        <span className="pearl-star" aria-hidden="true">✦</span>
-                        IR A LA LISTA DE ESPERA
-                        <span className="pearl-star" aria-hidden="true">✦</span>
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              )}
+              {/* EL FORMULARIO ES LA LLAMADA A LA ACCIÓN: no hay un botón que
+                  lleve a otra pantalla a pedir lo mismo. Rellenarlo y entrar
+                  al test son el mismo gesto. */}
+              <FormularioContacto
+                iniciales={datos}
+                onListo={(contacto) => {
+                  setDatos(contacto);
+                  irA("quiz");
+                }}
+              />
 
               <div className="dg-intro__block">
                 <p className="dg-intro__block-title">{LANDING.bloqueTitulo}</p>
@@ -127,20 +155,28 @@ export default function DiagnosticoPage() {
           )}
 
           {fase === "quiz" && (
-            <Cuestionario
-              nombre={datos.nombre}
-              email={datos.email}
-              telefono={datos.telefono}
-              onResultado={(resultado) => {
-                setPatron(resultado);
-                setFase("resultado");
-                window.scrollTo({ top: 0 });
-              }}
-            />
+            <>
+              {error && (
+                <p
+                  className="dg-quiz__error dg-quiz__error--suelto"
+                  role="alert"
+                >
+                  {error}
+                </p>
+              )}
+              <Cuestionario onFin={enviar} onAtras={() => irA("intro")} />
+            </>
           )}
 
-          {fase === "resultado" && patron && (
-            <Resultado patron={patron} email={datos.email} />
+          {fase === "escaneando" && (
+            /* `listo` llega cuando el servidor responde. El escáner no sale
+               hasta que se cumplen las dos cosas: el tiempo mínimo y la
+               respuesta. */
+            <Escaneando listo={listo} onFin={irAResultado} />
+          )}
+
+          {fase === "resultado" && codigo && (
+            <Resultado patron={codigo} email={datos.email} />
           )}
         </div>
 

@@ -13,8 +13,12 @@ const WhatsAppIcon = () => (
 export default function GraciasSectionEspera() {
   const router = useRouter();
 
-  /* Los datos llegan del modal de registro y se arrastran al diagnóstico,
-     para que no haya que volver a pedirlos allí. */
+  /* Los datos llegan del modal de registro y se arrastran al lead magnet
+     para que no haya que volver a pedirlos allí. El formulario de esa página
+     los da por buenos si vienen, y los pide si no.
+
+     En el primer render router.query viene vacío y se llena tras la
+     hidratación: el enlace se actualiza solo cuando eso ocurre. */
   const { n, e, t } = router.query;
   const enlaceDiagnostico = {
     pathname: "/diagnostico",

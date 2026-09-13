@@ -18,13 +18,20 @@ create table if not exists public.diagnosticos (
   email text not null,
   telefono text,
 
-  -- Una columna por pregunta, con la letra y el texto de la opción elegida.
-  -- Se guarda el texto y no solo el índice para que los registros sigan
-  -- siendo legibles si algún día cambia el orden o la redacción.
+  -- Una columna por pregunta cerrada, con la letra y el texto de la opción
+  -- elegida. Se guarda el texto y no solo el índice para que los registros
+  -- sigan siendo legibles si algún día cambia el orden o la redacción.
   p1 text,
   p2 text,
   p3 text,
   p4 text,
+  p5 text,
+  p6 text,
+
+  -- La séptima es de texto libre y no puntúa. No entra en el cálculo, pero
+  -- es la respuesta con más valor cualitativo del cuestionario: es la que se
+  -- lee a mano para entender con qué palabras habla la audiencia.
+  p7_abierta text,
 
   -- El resultado: es el valor que decide qué vídeo recibe la persona.
   patron_dominante text not null,
@@ -48,6 +55,16 @@ create index if not exists diagnosticos_created_at_idx
 -- RLS activo y sin políticas: nadie entra con las claves públicas.
 -- El endpoint usa la service role key, que las omite por diseño.
 alter table public.diagnosticos enable row level security;
+
+-- Si la tabla se creó con una versión anterior de este archivo (cuatro
+-- preguntas), estas líneas la ponen al día. Son inocuas si ya está creada
+-- con el bloque de arriba: "if not exists" no hace nada cuando ya existen.
+--
+-- IMPORTANTE: sin estas columnas el insert falla ENTERO y se pierde el
+-- diagnóstico completo, no solo las respuestas nuevas.
+alter table public.diagnosticos add column if not exists p5 text;
+alter table public.diagnosticos add column if not exists p6 text;
+alter table public.diagnosticos add column if not exists p7_abierta text;
 
 
 -- ============================================================
@@ -77,7 +94,8 @@ alter table public.diagnosticos enable row level security;
 --   r.email,
 --   r.telefono,
 --   d.patron_dominante,
---   d.p1, d.p2, d.p3, d.p4,
+--   d.p1, d.p2, d.p3, d.p4, d.p5, d.p6,
+--   d.p7_abierta,
 --   d.created_at as diagnostico_en
 -- from public.registros_academia_espera r
 -- left join public.diagnosticos d on d.email = r.email
@@ -90,3 +108,12 @@ alter table public.diagnosticos enable row level security;
 -- select hubo_empate, count(*) as total
 -- from public.diagnosticos
 -- group by hubo_empate;
+
+-- 5) Las respuestas abiertas de la séptima pregunta.
+--    Es material literal para copy: son las palabras exactas con las que la
+--    audiencia describe lo que se permitiría hacer distinto.
+--
+-- select created_at, nombre, patron_nombre, p7_abierta
+-- from public.diagnosticos
+-- where p7_abierta is not null
+-- order by created_at desc;

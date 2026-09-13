@@ -1,16 +1,18 @@
-import type { Patron } from "@/components/diagnostico/preguntas";
+import type { Codigo } from "@/components/diagnostico/preguntas";
 
 /**
- * Contenido de los siete patrones.
+ * Contenido de los siete códigos.
  *
- * En pantalla se muestra la ficha corta: título, frase y descripción. El
- * desarrollo completo —cómo se manifiesta, por qué se repite y el primer
- * paso— llega por correo en el vídeo correspondiente, así que aquí no se
- * duplica.
+ * Los NOMBRES VISIBLES usan la nomenclatura de "código"; los identificadores
+ * técnicos (control, hiperexigencia…) siguen siendo los mismos en
+ * preguntas.ts, porque son los que lee la automatización de MailerLite.
+ *
+ * En pantalla se muestra la ficha corta. El desarrollo completo —cómo se
+ * expresa, el código raíz y lo que hay que integrar— llega por correo en el
+ * vídeo correspondiente, así que aquí no se duplica.
  */
 
-export type FichaPatron = {
-  numero: string;
+export type FichaCodigo = {
   titulo: string;
   frase: string;
   descripcion: string;
@@ -18,10 +20,9 @@ export type FichaPatron = {
   integrar: string;
 };
 
-export const FICHAS: Record<Patron, FichaPatron> = {
+export const FICHAS: Record<Codigo, FichaCodigo> = {
   control: {
-    numero: "01",
-    titulo: "El patrón de control",
+    titulo: "Código de Control",
     frase: "Si no lo controlo, algo puede salir mal.",
     descripcion:
       "Has hecho mucho trabajo interno, pero una parte de ti sigue necesitando anticipar, entender y controlar lo que ocurre para sentirse segura. Puede manifestarse como sobrepensar, dificultad para soltar, querer saber cómo va a suceder todo, exigencia o frustración cuando la realidad no responde como esperabas.",
@@ -30,8 +31,7 @@ export const FICHAS: Record<Patron, FichaPatron> = {
       "Confianza, rendición y capacidad de permanecer en lo desconocido sin volver automáticamente al control.",
   },
   hiperexigencia: {
-    numero: "04",
-    titulo: "El patrón de hiperexigencia",
+    titulo: "Código de Exigencia",
     frase: "Todavía no soy suficiente para estar donde quiero estar.",
     descripcion:
       "Tu crecimiento se ha convertido, sin darte cuenta, en otra forma de exigirte. Siempre existe una versión más evolucionada, más sana, más consciente o más preparada que necesitas alcanzar antes de permitirte sentirte suficiente. Incluso el desarrollo personal puede convertirse en una persecución.",
@@ -39,8 +39,7 @@ export const FICHAS: Record<Patron, FichaPatron> = {
     integrar: "Dejar de utilizar la evolución para rechazarse en el presente.",
   },
   escasez: {
-    numero: "03",
-    titulo: "El patrón de escasez",
+    titulo: "Código de Carencia",
     frase: "Tengo que hacer más para poder recibir más.",
     descripcion:
       "Intelectualmente puedes creer en la abundancia, pero tu sistema sigue funcionando desde la sensación de que nunca hay suficiente: dinero, tiempo, oportunidades, amor o incluso capacidad personal. Por eso haces, fuerzas, acumulas, te preocupas o tienes dificultad para recibir sin sentir que primero tienes que merecerlo.",
@@ -48,8 +47,7 @@ export const FICHAS: Record<Patron, FichaPatron> = {
     integrar: "Suficiencia, merecimiento y apertura a recibir.",
   },
   validacion: {
-    numero: "02",
-    titulo: "El patrón de validación",
+    titulo: "Código de Validación Externa",
     frase: "Sé quién soy… hasta que alguien deja de confirmármelo.",
     descripcion:
       "Puedes haber trabajado mucho tu autoestima y, aun así, seguir midiendo inconscientemente tu valor a través de cómo te perciben los demás. Aparece al compararte, buscar aprobación, necesitar reconocimiento, tener miedo a decepcionar o modificar quién eres para sentirte aceptada.",
@@ -57,8 +55,7 @@ export const FICHAS: Record<Patron, FichaPatron> = {
     integrar: "Validación interna y soberanía.",
   },
   supervivencia: {
-    numero: "05",
-    titulo: "El patrón de supervivencia",
+    titulo: "Código de Supervivencia Emocional",
     frase:
       "Sé que estoy a salvo, pero mi cuerpo todavía vive como si tuviera que protegerme.",
     descripcion:
@@ -68,8 +65,7 @@ export const FICHAS: Record<Patron, FichaPatron> = {
       "Seguridad interna y una nueva respuesta ante aquello que antes representaba una amenaza.",
   },
   desconexion: {
-    numero: "06",
-    titulo: "El patrón de desconexión",
+    titulo: "Código de Búsqueda Infinita",
     frase: "He aprendido tanto de otros que ya no sé qué es verdad para mí.",
     descripcion:
       "Has leído, escuchado, hecho cursos, terapias o procesos espirituales. Tienes muchísimo conocimiento. Pero cuanto más buscas respuestas, más difícil puede volverse escuchar la tuya. Tu siguiente nivel no necesita necesariamente otra respuesta externa.",
@@ -77,8 +73,7 @@ export const FICHAS: Record<Patron, FichaPatron> = {
     integrar: "Conexión con el Ser, intuición y discernimiento interno.",
   },
   autosabotaje: {
-    numero: "07",
-    titulo: "El patrón de autosabotaje",
+    titulo: "Código de Retorno a la Antigua Identidad",
     frase:
       "Quiero cambiar… pero cuando estoy a punto de hacerlo, vuelvo a lo conocido.",
     descripcion:
@@ -89,40 +84,41 @@ export const FICHAS: Record<Patron, FichaPatron> = {
   },
 };
 
-/** Copy de la landing del diagnóstico. */
+/** Copy de la landing del lead magnet. */
 export const LANDING = {
   titulo: "Radiografía de tu ADN",
   subtitulo:
-    "Descubre qué patrón inconsciente sigue dirigiendo tu vida aunque creas que ya lo has trabajado.",
+    "Descubre qué código inconsciente sigue dirigiendo tu vida aunque creas que ya lo has trabajado.",
   promesa:
-    "En menos de 2 minutos, identifica el patrón que está condicionando tu forma de pensar, sentir y actuar, y descubre cuál es el primer paso para empezar a trascenderlo.",
+    "En menos de 2 minutos, identifica el Código Dominante que está condicionando tu forma de pensar, sentir y actuar, y descubre qué necesitas integrar para empezar a trascenderlo.",
+  cta: "EMPEZAR MI RADIOGRAFÍA",
   bloqueTitulo: "Lo que vas a descubrir",
   bloqueSubtitulo:
-    "Al terminar recibirás una lectura personalizada de tu patrón dominante y cómo está operando actualmente en tu vida.",
+    "Al terminar recibirás una lectura personalizada de tu Código Dominante y de cómo está operando actualmente en tu vida.",
   puntos: [
     {
       numero: "01",
-      titulo: "Tu patrón dominante",
+      titulo: "Tu Código Dominante",
       texto:
-        "El patrón inconsciente que hoy tiene más peso sobre tus pensamientos, emociones y decisiones.",
+        "La programación inconsciente que hoy tiene más peso sobre tu forma de pensar, sentir y actuar.",
     },
     {
       numero: "02",
-      titulo: "Cómo se manifiesta en tu vida",
+      titulo: "Cómo se expresa en tu realidad",
       texto:
-        "Las formas en las que puede estar condicionando tu realidad sin que te des cuenta.",
+        "Las formas en las que ese código sigue manifestándose en tu vida, incluso cuando conscientemente crees haberlo trabajado.",
     },
     {
       numero: "03",
-      titulo: "Por qué sigues repitiéndolo",
+      titulo: "El código raíz",
       texto:
-        "Qué hace que vuelvas al mismo lugar incluso después de haberlo comprendido o trabajado.",
+        "La información más profunda que hace que sigas regresando al mismo lugar, aunque mentalmente ya sepas que quieres responder diferente.",
     },
     {
       numero: "04",
-      titulo: "Tu primer paso para trascenderlo",
+      titulo: "Lo que necesitas integrar",
       texto:
-        "El movimiento que necesitas empezar a integrar para dejar de reaccionar desde ese patrón.",
+        "La nueva información que necesitas llevar de la comprensión a la experiencia para empezar a trascender ese código.",
     },
   ],
 };
