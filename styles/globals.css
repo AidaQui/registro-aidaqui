@@ -6647,6 +6647,7 @@ a.pearl-btn {
   background: transparent;
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: 16px;
+  text-align: center;
   color: #2e2040;
 }
 
@@ -8452,6 +8453,1209 @@ a.pearl-btn {
   }
 
   .closing-espera__cta {
+    max-width: none;
+  }
+}
+
+/* ===== Radiografía de tu ADN — diagnóstico ===== */
+
+.dg-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #fffffd;
+}
+
+.dg-page__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/lista-de-espera/bg-2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.dg-page__shell {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(calc(100% - 48px), 860px);
+  margin: 0 auto;
+  padding: clamp(48px, 6vw, 80px) 0;
+}
+
+.dg-page__footer {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  width: min(calc(100% - 48px), 860px);
+  padding: 26px 0 24px;
+  border-top: 1px solid rgba(155, 126, 200, 0.18);
+  text-align: center;
+}
+
+/* Un punto dorado partiendo la línea: cierra el recorrido en vez de
+   cortarlo en seco. */
+.dg-page__footer::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d4a020;
+  box-shadow: 0 0 10px rgba(212, 160, 32, 0.6);
+}
+
+.dg-page__footer p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+/* ---- Presentación ---- */
+.dg-intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+
+.dg-intro .espera-badge {
+  align-self: center;
+}
+
+/* El titular va en violeta y NO en dorado: cuando todo el texto llevaba el
+   degradado, "ADN" no destacaba porque competía de igual a igual con el
+   resto. Ahora el dorado queda reservado para esa palabra. */
+.dg-intro__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #290066;
+}
+
+/* "ADN": dorado con brillo y un subrayado que lo ancla */
+.dg-intro__adn {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(100deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+  filter: drop-shadow(0 2px 14px rgba(212, 160, 32, 0.4));
+}
+
+.dg-intro__adn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.06em;
+  height: 3px;
+  border-radius: 100px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 160, 32, 0) 0%,
+    rgba(212, 160, 32, 0.8) 20%,
+    rgba(240, 201, 138, 1) 50%,
+    rgba(212, 160, 32, 0.8) 80%,
+    rgba(212, 160, 32, 0) 100%
+  );
+}
+
+.dg-intro__subtitle {
+  max-width: 640px;
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(18px, 2vw, 24px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #43276f;
+}
+
+.dg-intro__promise {
+  max-width: 600px;
+  margin: 0 0 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LA CASCADA DE ENTRADA
+   ═══════════════════════════════════════════════════════════════════════
+
+   El motor de todas las animaciones de entrada del embudo. Cada elemento
+   lleva su propio retardo en estilo en línea, y el conjunto se lee como una
+   pantalla que se arma sola en vez de aparecer de golpe.
+
+   `both` es imprescindible: sin él, el elemento se pinta VISIBLE durante su
+   retardo y luego salta a invisible para empezar a animar. Con `both` toma el
+   fotograma inicial desde el principio y el escalonado se ve limpio.
+
+   La curva (0.22, 1, 0.36, 1) arranca rápido y frena al final: es lo que hace
+   que el movimiento se perciba como algo que se posa y no como algo que se
+   desliza. */
+@keyframes dg-sube {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dg-sube {
+  animation: dg-sube 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Con movimiento reducido no se anima nada, pero el elemento tiene que quedar
+   VISIBLE: sin esta regla, `both` dejaría congelado el fotograma inicial
+   —opacidad 0— y la pantalla se vería vacía. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-sube {
+    animation: none;
+  }
+}
+
+/* ---- Formulario de contacto, los tres campos juntos en la hero ----
+
+   ES LA LLAMADA A LA ACCIÓN, no un paso previo a ella: rellenarlo y entrar al
+   test son el mismo gesto, así que el marco tiene que leerse como el bloque
+   de decisión de la página y no como un formulario colgado debajo.
+
+   No reutiliza .mc-form: esa clase es flex con gap propio, y al meter el
+   botón dentro heredaba su espaciado y quedaba descolgado. */
+/* ---- El paso visible, dentro de la hero ----
+
+   Solo cambia el campo: el titular y la promesa de la portada siguen encima,
+   así que este marco no es una pantalla sino la pieza que se renueva dentro
+   de ella. */
+.lm-pasos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 440px;
+  margin: 6px 0 4px;
+}
+
+@media (max-width: 560px) {
+  .lm-pasos {
+    max-width: none;
+  }
+}
+
+.lm-pasos__barra {
+  display: flex;
+  gap: 8px;
+}
+
+.lm-pasos__marca {
+  position: relative;
+  width: 44px;
+  height: 3px;
+  border-radius: 100px;
+  background: rgba(106, 74, 156, 0.18);
+  overflow: hidden;
+}
+
+/* El relleno crece desde la izquierda en vez de encenderse de golpe: el paso
+   completado se lee como un avance y no como un interruptor. */
+.lm-pasos__marca::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: linear-gradient(90deg, #a06c08, #d4a020);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lm-pasos__marca.is-on::after {
+  transform: scaleX(1);
+}
+
+.lm-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: clamp(24px, 3.2vw, 32px);
+  border-radius: 24px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+  box-shadow: 0 18px 44px rgba(41, 0, 102, 0.12);
+}
+
+/* El distintivo dice para qué se pide este dato ANTES de pedirlo, que es lo
+   que quita el reparo a escribirlo: nadie deja su teléfono sin saber para
+   qué. Cambia con el campo. */
+.lm-form__badge {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #a06c08;
+}
+
+/* Con un campo por vez la etiqueta ES el titular del paso: la pregunta que se
+   está respondiendo, no el rótulo de una casilla. */
+.lm-form__label {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(20px, 2.3vw, 26px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.lm-form__field {
+  width: 100%;
+}
+
+.lm-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid rgba(106, 74, 156, 0.28);
+  border-radius: 12px;
+  background: #fff;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 16px;
+  color: #2e2040;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.lm-input::placeholder {
+  color: rgba(46, 32, 64, 0.38);
+}
+
+.lm-input:focus {
+  border-color: rgba(212, 160, 32, 0.65);
+  box-shadow: 0 0 0 3px rgba(212, 160, 32, 0.14);
+}
+
+.lm-phone {
+  width: 100%;
+}
+
+/* La fila de botones: el de atrás es cuadrado y el de avanzar ocupa todo lo
+   que sobra. Es a propósito — si los dos midieran lo mismo, retroceder y
+   avanzar pesarían igual, y solo uno de los dos es el camino. */
+.lm-form__row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.lm-form__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  border: 1px solid rgba(106, 74, 156, 0.28);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  color: rgba(46, 32, 64, 0.6);
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+
+.lm-form__back:hover {
+  border-color: rgba(106, 74, 156, 0.5);
+  background: #fff;
+  color: #6a4a9c;
+}
+
+.lm-form__cta {
+  flex: 1;
+  min-width: 0;
+}
+
+.lm-form__error {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  color: #b3261e;
+}
+
+.dg-intro__locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 520px;
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: 20px;
+  border: 1px solid rgba(155, 126, 200, 0.25);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+}
+
+.dg-intro__locked-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+.dg-intro__block {
+  width: 100%;
+  margin-top: clamp(24px, 3vw, 38px);
+  padding-top: clamp(24px, 3vw, 38px);
+  border-top: 1px solid rgba(155, 126, 200, 0.2);
+}
+
+.dg-intro__block-title {
+  margin: 0 0 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.dg-intro__block-subtitle {
+  max-width: 620px;
+  margin: 0 auto clamp(22px, 3vw, 32px);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 16px);
+  line-height: 1.65;
+  color: #2e2040;
+}
+
+.dg-intro__points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  text-align: left;
+}
+
+.dg-point {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(240, 201, 138, 0.22);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+  box-shadow: 0 14px 30px rgba(41, 0, 102, 0.18);
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 340ms ease, border-color 340ms ease;
+}
+
+/* Un haz que barre la tarjeta al pasar el cursor: es el mismo gesto del
+   escáner de la hélice, aplicado a cada pieza. Va en ::before porque el
+   ::after ya lo ocupa la aurora. */
+.dg-point::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(240, 201, 138, 0) 0%,
+    rgba(240, 201, 138, 0.16) 45%,
+    rgba(255, 255, 253, 0.28) 50%,
+    rgba(240, 201, 138, 0.16) 55%,
+    rgba(240, 201, 138, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.dg-point:hover {
+  transform: translateY(-5px);
+  border-color: rgba(240, 201, 138, 0.45);
+  box-shadow: 0 22px 44px rgba(41, 0, 102, 0.3);
+}
+
+.dg-point:hover::before {
+  opacity: 1;
+  animation: dg-point-sweep 900ms ease-out;
+}
+
+@keyframes dg-point-sweep {
+  from { left: -60%; }
+  to   { left: 130%; }
+}
+
+/* El número se enciende con la tarjeta */
+.dg-point:hover .dg-point__num {
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(240, 201, 138, 0.7);
+  transition: color 300ms ease, text-shadow 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-point,
+  .dg-point:hover {
+    transform: none;
+  }
+
+  .dg-point:hover::before {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.dg-point::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.32;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.dg-point > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dg-point__num {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #f0c98a;
+}
+
+.dg-point__title {
+  margin: 0 0 6px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(17px, 1.7vw, 20px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #f9f5f0;
+}
+
+.dg-point__text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 15px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.82);
+}
+
+/* ---- Cuestionario ---- */
+.dg-quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 24px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: #fffffd;
+  box-shadow: 0 20px 50px rgba(41, 0, 102, 0.12);
+}
+
+.dg-quiz__head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* El contador vive ahora en el pie, junto al botón de volver: encima del
+   enunciado competía con él, y lo primero que se leía en cada pantalla era un
+   número en vez de la pregunta. */
+.dg-quiz__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(155, 126, 200, 0.16);
+}
+
+.dg-quiz__step {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(106, 74, 156, 0.75);
+}
+
+.dg-quiz__bar {
+  height: 4px;
+  border-radius: 100px;
+  background: rgba(155, 126, 200, 0.18);
+  overflow: hidden;
+}
+
+.dg-quiz__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, #a06c08, #d4a020);
+  transition: width 320ms ease;
+}
+
+/* EL CUERPO YA NO SE ANIMA COMO BLOQUE. Cada hijo entra con su propio
+   retardo vía .dg-sube, y una animación en el padre encima de eso duplicaría
+   el movimiento: la pantalla entera subiría y además cada pieza subiría
+   dentro de ella.
+
+   dg-fade-in se conserva porque la usan el escaneo y el resultado. */
+@keyframes dg-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── EL HUECO DEL ENUNCIADO ESTÁ RESERVADO ──
+
+   Los enunciados van de 78 a 150 caracteres, entre dos y cuatro renglones en
+   móvil. En flujo normal eso movería las opciones de sitio en cada pregunta y
+   el test daría un salto en cada pantalla.
+
+   El min-height reserva el alto del más largo y flex-end pega el texto abajo:
+   la distancia entre el enunciado y la primera opción es siempre la misma, y
+   lo que crece lo hace hacia arriba, sobre el aire que ya hay bajo la barra. */
+.dg-quiz__prompt {
+  display: flex;
+  align-items: flex-end;
+  min-height: 6.5rem;
+  margin-bottom: 22px;
+}
+
+@media (min-width: 640px) {
+  .dg-quiz__prompt {
+    min-height: 5.5rem;
+  }
+}
+
+.dg-quiz__question {
+  margin: 0;
+  text-wrap: balance;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 27px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.dg-quiz__options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dg-quiz__option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(155, 126, 200, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 16px);
+  line-height: 1.5;
+  text-align: left;
+  color: #2e2040;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease,
+    transform 200ms ease;
+}
+
+.dg-quiz__option:hover:not(:disabled) {
+  border-color: rgba(155, 126, 200, 0.55);
+  background: rgba(155, 126, 200, 0.08);
+  transform: translateX(3px);
+}
+
+/* Al elegir se deshabilitan TODAS las opciones, la elegida incluida. Sin
+   excluirla aquí, el feedback dorado se vería apagado justo en el momento
+   en que tiene que destacar. */
+.dg-quiz__option:disabled:not(.is-chosen) {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.dg-quiz__text {
+  flex: 1;
+}
+
+/* ---- Opción elegida ----
+
+   La pausa de 420ms en el componente existe para que esto se vea. El borde
+   dorado, el halo y el check son la confirmación de que la respuesta quedó
+   registrada antes de que la pantalla cambie. */
+.dg-quiz__option.is-chosen {
+  border-color: rgba(212, 160, 32, 0.75);
+  background: linear-gradient(
+    100deg,
+    rgba(255, 250, 235, 0.95),
+    rgba(250, 240, 255, 0.95)
+  );
+  box-shadow: 0 0 0 3px rgba(212, 160, 32, 0.14),
+    0 10px 26px rgba(160, 108, 8, 0.16);
+  transform: translateX(3px);
+}
+
+.dg-quiz__letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.12);
+  font-size: 13px;
+  font-weight: 600;
+  color: #6a4a9c;
+  transition: background 220ms ease, color 220ms ease;
+}
+
+.dg-quiz__option.is-chosen .dg-quiz__letter {
+  background: linear-gradient(135deg, #a06c08, #d4a020);
+  color: #fffffd;
+}
+
+/* Ocupa sitio desde el principio aunque esté invisible: si apareciera de la
+   nada, el texto de la opción se reajustaría en el momento del clic. */
+.dg-quiz__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a06c08, #d4a020);
+  color: #fffffd;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.dg-quiz__option.is-chosen .dg-quiz__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Séptima pregunta: texto libre ---- */
+.dg-quiz__open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* El botón de la pregunta abierta ocupa todo el ancho: es la única salida de
+   esa pantalla y no compite con nada. */
+.dg-quiz__send {
+  width: 100%;
+}
+
+/* El error del envío, cuando el cuestionario vuelve atrás tras un fallo de
+   red. Va fuera de la tarjeta, encima de ella. */
+.dg-quiz__error--suelto {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 14px;
+  padding: 12px 16px;
+  border: 1px solid rgba(179, 38, 30, 0.28);
+  border-radius: 12px;
+  background: rgba(179, 38, 30, 0.06);
+  animation: dg-fade-in 320ms ease-out;
+}
+
+.dg-quiz__textarea {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid rgba(106, 74, 156, 0.28);
+  border-radius: 14px;
+  background: #fff;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 16px);
+  line-height: 1.6;
+  color: #2e2040;
+  resize: vertical;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.dg-quiz__textarea::placeholder {
+  color: rgba(46, 32, 64, 0.4);
+}
+
+.dg-quiz__textarea:focus {
+  border-color: rgba(212, 160, 32, 0.6);
+  box-shadow: 0 0 0 3px rgba(212, 160, 32, 0.14);
+}
+
+.dg-quiz__hint {
+  margin: 0;
+  align-self: flex-start;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+.dg-quiz__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px 7px 10px;
+  border: 1px solid rgba(155, 126, 200, 0.24);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  color: rgba(46, 32, 64, 0.62);
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease,
+    transform 200ms ease;
+}
+
+/* Se desplaza hacia la izquierda al pasar por encima: el gesto apunta en la
+   dirección a la que lleva el botón. */
+.dg-quiz__back:hover {
+  border-color: rgba(106, 74, 156, 0.45);
+  background: #fff;
+  color: #6a4a9c;
+  transform: translateX(-2px);
+}
+
+.dg-quiz__error {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 15px;
+  text-align: center;
+}
+
+.dg-quiz__error {
+  color: #b3261e;
+}
+
+/* ---- Escaneo del ADN ---- */
+.dg-scan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  animation: dg-fade-in 420ms ease-out;
+}
+
+.dg-scan__eyebrow {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6a4a9c;
+}
+
+/* ── EL ESCENARIO NO RECORTA ──
+
+   Llevaba overflow:hidden y un radio de 24px, y ese corte a los costados
+   delataba una caja justo donde la hélice tendría que disolverse en el fondo.
+   El recorte lo necesita el haz, no ella: ahora vive en .dg-scan__track. */
+.dg-scan__stage {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.dg-helix {
+  display: block;
+  width: 100%;
+}
+
+/* La pista del haz: SÍ recorta, porque el haz arranca y termina fuera del
+   recorrido. Es lo único que necesitaba el overflow. */
+.dg-scan__track {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* El haz que recorre la hélice de arriba abajo.
+
+   La máscara lateral lo apaga en los extremos: sin ella la línea termina en
+   canto vivo a izquierda y derecha, que es exactamente el corte que se quitó
+   del escenario. */
+.dg-scan__beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 82px;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 18%,
+    #000 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 18%,
+    #000 82%,
+    transparent 100%
+  );
+  background: linear-gradient(
+    180deg,
+    rgba(240, 201, 138, 0) 0%,
+    rgba(240, 201, 138, 0.28) 45%,
+    rgba(255, 255, 253, 0.55) 50%,
+    rgba(240, 201, 138, 0.28) 55%,
+    rgba(240, 201, 138, 0) 100%
+  );
+  animation: dg-beam 2.2s ease-in-out infinite;
+}
+
+@keyframes dg-beam {
+  0%   { top: -82px; }
+  100% { top: 100%; }
+}
+
+/* La clave por fase reinicia esta animación en cada cambio de texto */
+.dg-scan__phase {
+  margin: 0;
+  min-height: 1.6em;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(18px, 2vw, 23px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #43276f;
+  animation: dg-phase-in 420ms ease-out;
+}
+
+@keyframes dg-phase-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dg-scan__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dg-scan__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.2);
+  transition: background 400ms ease, transform 400ms ease;
+}
+
+.dg-scan__dot.is-on {
+  background: #d4a020;
+  transform: scale(1.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-scan,
+  .dg-scan__beam,
+  .dg-scan__phase {
+    animation: none;
+  }
+}
+
+/* ---- Resultado ---- */
+.dg-resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.dg-resultado__eyebrow {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6a4a9c;
+}
+
+.dg-resultado__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 4.2vw, 48px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s linear infinite;
+}
+
+.dg-resultado__quote {
+  max-width: 560px;
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(18px, 2vw, 23px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #43276f;
+}
+
+.dg-resultado__text {
+  max-width: 620px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: #2e2040;
+}
+
+.dg-resultado__pair {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-top: 6px;
+  text-align: left;
+}
+
+.dg-resultado__box {
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+}
+
+.dg-resultado__box-label {
+  margin: 0 0 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6a4a9c;
+}
+
+.dg-resultado__box-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.6;
+  color: #2e2040;
+}
+
+/* El aviso del correo va en panel violeta: es el paso que importa */
+.dg-resultado__mail {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 10px;
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: 20px;
+  border: 1px solid rgba(240, 201, 138, 0.24);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+}
+
+.dg-resultado__mail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/lista-de-espera/fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.dg-resultado__mail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dg-resultado__mail-label {
+  margin: 0 0 8px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(19px, 2.2vw, 25px);
+  font-weight: 600;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.dg-resultado__mail-text {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 16px);
+  line-height: 1.7;
+  color: rgba(249, 245, 240, 0.88);
+}
+
+.dg-resultado__mail-text strong {
+  color: #f9f5f0;
+  font-weight: 600;
+}
+
+/* CTA de WhatsApp: mismo tratamiento que en la página de gracias */
+.dg-resultado__cta {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 8px;
+  padding: 2px;
+  border-radius: 100px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 12px 26px rgba(31, 170, 85, 0.3);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.dg-resultado__cta:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 32px rgba(31, 170, 85, 0.4);
+}
+
+.dg-resultado__cta-border {
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(31, 170, 85, 0.3) 60deg,
+    #4ade80 110deg,
+    #ffffff 130deg,
+    #4ade80 150deg,
+    rgba(31, 170, 85, 0.3) 200deg,
+    transparent 300deg
+  );
+  animation: espera-badge-spin 3s linear infinite;
+}
+
+.dg-resultado__cta-face {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 19px 24px;
+  border-radius: 100px;
+  background: linear-gradient(180deg, #24b95e 0%, #199247 100%);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.dg-resultado__cta-icon {
+  display: inline-flex;
+  font-size: 21px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-resultado__cta-border {
+    animation: none;
+  }
+}
+
+.dg-resultado__note {
+  max-width: 520px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(46, 32, 64, 0.6);
+}
+
+@media (max-width: 700px) {
+  .dg-intro__points,
+  .dg-resultado__pair {
+    grid-template-columns: 1fr;
+  }
+
+  .dg-page__shell {
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .dg-quiz {
+    padding: 24px 20px;
+  }
+
+  .dg-resultado__cta {
     max-width: none;
   }
 }
