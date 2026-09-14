@@ -674,7 +674,11 @@
      se hereda. Las coordenadas de antes lo anclaban dentro de la solapa. */
   .folderBrief {
     width: min(90vw, 430px);
-    margin-top: 2px;
+    /* Sube a solaparse con el sobre. En móvil la carpeta deja un hueco por
+       debajo —su alto sale de la proporción, no del contenido— y la nota
+       quedaba flotando lejos, como un bloque suelto. Montada sobre ese hueco
+       se lee como parte de la misma pieza. */
+    margin-top: -80px;
     padding: 18px 20px;
     border-radius: 18px;
     font-size: 15px;
