@@ -11,7 +11,6 @@ import DiscoveryFolder from "@/components/diagnostico/DiscoveryFolder";
 import TextLoop from "@/components/diagnostico/TextLoop";
 import GradientWaves from "@/components/diagnostico/GradientWaves";
 import MagicRings from "@/components/diagnostico/MagicRings";
-import HelixCanvas from "@/components/diagnostico/HelixCanvas";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
 import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
@@ -140,9 +139,19 @@ export default function LeadMagnetPage() {
             contenido encima, los clics van al contenido. */}
         <div className="dg-page__ondas" aria-hidden="true">
           <GradientWaves
-            horizonColor="#5734df"
-            waveColor="#010102"
-            crestColor="#7f14ff"
+            /* ── LA PALETA VA EN CLARO ──
+
+               waveColor es el cuerpo de la ola y por tanto el color que
+               domina la pantalla: llevaba #010102 —negro— y ahora lleva el
+               crema de la marca, el mismo #fffffd del resto del sitio.
+
+               Los otros dos son las líneas que dibujan el relieve. Sobre
+               fondo oscuro tenían que ser violetas saturados para verse;
+               sobre crema pasa lo contrario, así que bajan a violetas de
+               marca que se leen como sombra y no como neón. */
+            horizonColor="#b79ae8"
+            waveColor="#fffffd"
+            crestColor="#6a4a9c"
             speed={0.5}
             amplitude={2.75}
             waveScale={0.5}
@@ -215,17 +224,13 @@ export default function LeadMagnetPage() {
                 />
               </div>
 
-              {/* LA HÉLICE DE FONDO. Ya existía para la fase de escaneo; aquí
-                  hace de atmósfera y por eso va rebajada y más lenta: a plena
-                  opacidad compite con el titular que tiene encima.
+              {/* ⚠️ AQUÍ IBA LA HÉLICE DE FONDO. Se retiró al pasar el hero a
+                  blanco: estaba calibrada para leerse sobre el violeta
+                  profundo, y sobre crema se convertía en una mancha gris que
+                  competía con el titular sin aportar atmósfera.
 
-                  El alto va en el prop y no en el CSS porque el lienzo se mide
-                  a sí mismo con getBoundingClientRect, y el estilo en línea
-                  gana a la clase. Sin un valor holgado la espiral sale
-                  aplastada. */}
-              <div className="dg-hero__helix" aria-hidden="true">
-                <HelixCanvas height={380} opacity={0.75} speed={0.6} />
-              </div>
+                  La hélice sigue viva en la fase de escaneo, que es donde de
+                  verdad cuenta algo: allí dice "te estamos analizando". */}
 
               <div className="dg-intro dg-hero__inner">
                 {/* ESCRITORIO: TRES PIEZAS EN ESCALERA. MÓVIL: UNA PILA.
@@ -250,10 +255,18 @@ export default function LeadMagnetPage() {
                 <div className="dg-hero__col dg-hero__col--marca">
                   <AcademiaBadge />
 
-                  {/* "ADN" va aparte porque es la palabra que tiene que
-                      quedarse: el resto del titular la acompaña. */}
+                  {/* DOS RENGLONES FIJOS, y no un salto que dependa del ancho:
+                      "Radiografía" arriba y "de tu ADN" abajo. Partido así, la
+                      palabra que tiene que quedarse cierra la frase en vez de
+                      colgar al final de una línea larga.
+
+                      El <span> de ADN va dentro del segundo renglón para que
+                      "de tu" y "ADN" sigan leyéndose como una sola unidad. */}
                   <h1 className="dg-intro__title">
-                    Radiografía de tu <span className="dg-intro__adn">ADN</span>
+                    <span className="dg-intro__linea">Radiografía</span>
+                    <span className="dg-intro__linea">
+                      de tu <span className="dg-intro__adn">ADN</span>
+                    </span>
                   </h1>
                 </div>
 

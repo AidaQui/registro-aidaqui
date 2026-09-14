@@ -46,6 +46,10 @@
   --open-x: 0px;
   --open-y: -260px;
   --open-rotate: 0deg;
+  /* Cada ficha sale con su propia velocidad: ver .paper1-.paper4. Con las
+     cuatro al mismo tiempo el despliegue se lee como UNA pieza que se parte,
+     no como cuatro papeles saliendo de una carpeta. */
+  --open-speed: 1740ms;
 
   position: absolute;
   left: 50%;
@@ -58,16 +62,16 @@
   border: 1px solid rgba(240, 201, 138, 0.52);
   border-top-color: rgba(255, 238, 188, 0.82);
   border-left-color: rgba(255, 255, 255, 0.66);
-  border-bottom-color: rgba(80, 235, 219, 0.3);
+  border-bottom-color: rgba(155, 126, 200, 0.3);
   border-radius: 18px;
   background:
     radial-gradient(120% 86% at -8% -10%, rgba(240, 201, 138, 0.42), transparent 38%),
-    radial-gradient(100% 92% at 104% 0%, rgba(80, 235, 219, 0.28), transparent 46%),
+    radial-gradient(100% 92% at 104% 0%, rgba(155, 126, 200, 0.28), transparent 46%),
     linear-gradient(146deg, rgba(255, 253, 246, 0.97) 0%, rgba(250, 245, 255, 0.94) 52%, rgba(232, 250, 248, 0.94) 100%);
   box-shadow:
     0 20px 38px rgba(20, 8, 43, 0.18),
     0 0 0 1px rgba(255, 255, 255, 0.42) inset,
-    inset 0 -28px 42px rgba(80, 235, 219, 0.06);
+    inset 0 -28px 42px rgba(155, 126, 200, 0.06);
   color: #2e2040;
   opacity: 0;
   transform:
@@ -77,7 +81,10 @@
   transform-origin: 50% 100%;
   transition:
     opacity 980ms ease var(--paper-delay),
-    transform 1740ms cubic-bezier(0.16, 0.86, 0.2, 1) var(--paper-delay),
+    /* El tercer punto por encima de 1 hace que la ficha pase de largo su
+       destino y vuelva: es el rebote de un papel que se asienta. */
+    transform var(--open-speed) cubic-bezier(0.18, 1.08, 0.32, 1)
+      var(--paper-delay),
     box-shadow 360ms ease,
     filter 360ms ease;
   text-align: left;
@@ -94,7 +101,7 @@
     90deg,
     rgba(176, 125, 31, 0.68),
     rgba(240, 201, 138, 0.2) 34%,
-    rgba(80, 235, 219, 0.44) 72%,
+    rgba(155, 126, 200, 0.44) 72%,
     transparent
   );
 }
@@ -126,24 +133,28 @@
   --open-x: -540px;
   --open-y: -258px;
   --open-rotate: -9deg;
+  --open-speed: 1760ms;
 }
 
 .paper2 {
   --open-x: -180px;
   --open-y: -340px;
   --open-rotate: -2deg;
+  --open-speed: 1580ms;
 }
 
 .paper3 {
   --open-x: 180px;
   --open-y: -340px;
   --open-rotate: 4deg;
+  --open-speed: 1640ms;
 }
 
 .paper4 {
   --open-x: 540px;
   --open-y: -258px;
   --open-rotate: 10deg;
+  --open-speed: 1820ms;
 }
 
 .open .paperLayer {
@@ -179,7 +190,7 @@
       scale(1.06);
     box-shadow:
       0 30px 58px rgba(41, 0, 102, 0.22),
-      0 0 34px rgba(80, 235, 219, 0.16),
+      0 0 34px rgba(155, 126, 200, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.94);
   }
 }
@@ -200,7 +211,7 @@
   content: "";
   width: 28px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(212, 160, 32, 0.72), rgba(80, 235, 219, 0.28));
+  background: linear-gradient(90deg, rgba(212, 160, 32, 0.72), rgba(155, 126, 200, 0.28));
 }
 
 .paperTitle {
@@ -252,12 +263,16 @@
 .folderBack {
   inset: 18% 0 0;
   border-radius: 0 28px 32px 32px;
+  border: 1px solid rgba(212, 160, 32, 0.4);
+  /* El cuerpo de la carpeta, en crema. Va un punto más oscuro que las fichas
+     que salen de ella: si fueran del mismo tono, el papel no se despegaría
+     del bolsillo que lo contiene. */
   background:
-    radial-gradient(circle at 78% 18%, rgba(80, 235, 219, 0.34), transparent 32%),
-    linear-gradient(155deg, #26164f 0%, #183d61 52%, #112f42 100%);
+    radial-gradient(circle at 78% 18%, rgba(240, 201, 138, 0.22), transparent 34%),
+    linear-gradient(155deg, #f4ecfa 0%, #ede2f4 52%, #e4d6ee 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 28px 58px rgba(41, 0, 102, 0.24);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 28px 58px rgba(41, 0, 102, 0.18);
 }
 
 .folderBack::before {
@@ -268,17 +283,18 @@
   width: 36%;
   height: 28%;
   border-radius: 20px 20px 0 0;
-  background:
-    linear-gradient(155deg, #32205f 0%, #1e5268 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  /* La pestaña: el mismo crema pero más saturado, para que se lea como una
+     pieza por detrás y no como un recorte del mismo plano. */
+  background: linear-gradient(155deg, #e9dcf3 0%, #dcc9ea 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .folderGlow {
   inset: 16% -5% -9%;
   border-radius: 36px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(240, 201, 138, 0.2), transparent 34%),
-    radial-gradient(circle at 82% 78%, rgba(80, 235, 219, 0.2), transparent 38%);
+    radial-gradient(circle at 20% 20%, rgba(240, 201, 138, 0.28), transparent 34%),
+    radial-gradient(circle at 82% 78%, rgba(155, 126, 200, 0.26), transparent 38%);
   filter: blur(20px);
   opacity: 0.82;
   transform: translateZ(-1px);
@@ -286,19 +302,49 @@
 
 .folderFront {
   bottom: 0;
+  transform-origin: bottom center;
+  backface-visibility: hidden;
   z-index: 3;
   width: 100%;
   height: 68%;
-  border: 1px solid rgba(240, 201, 138, 0.32);
+  /* El trazo sube de 0,32 a 0,7: sobre el violeta de antes un dorado tenue
+     bastaba para marcarse, pero sobre crema se perdía y la tapa quedaba sin
+     contorno, flotando. */
+  border: 1px solid rgba(212, 160, 32, 0.7);
+  /* La tapa delantera, en el crema más claro: es la cara que se mira de
+     frente y la que lleva el texto, así que es la que más luz necesita. */
   background:
-    linear-gradient(95deg, rgba(255, 255, 255, 0.08), transparent 30%),
-    radial-gradient(circle at 32% 22%, rgba(240, 201, 138, 0.22), transparent 28%),
-    linear-gradient(155deg, #3b2369 0%, #4f2a74 45%, #1e6972 100%);
+    linear-gradient(95deg, rgba(255, 255, 255, 0.6), transparent 30%),
+    radial-gradient(circle at 32% 22%, rgba(240, 201, 138, 0.3), transparent 30%),
+    linear-gradient(
+      155deg,
+      rgba(255, 250, 241, 0.94) 0%,
+      rgba(253, 246, 255, 0.9) 45%,
+      rgba(242, 232, 250, 0.92) 100%
+    );
+  /* La luz de canto arriba y una sombra muy contenida abajo. La anterior
+     era violeta y bastante abierta: sobre crema se leía como suciedad en el
+     pie de la tarjeta, no como volumen. */
+  /* ── LA TAPA ES CRISTAL, NO CARTÓN ──
+
+     backdrop-filter desenfoca lo que queda detrás, así que al abrirse las
+     fichas se intuyen a través de ella antes de salir. Es el detalle que
+     separa una solapa opaca de una superficie con material.
+
+     El fondo de arriba baja su opacidad para que ese desenfoque se vea: con
+     un relleno sólido no habría nada que atravesar. */
+  backdrop-filter: blur(7px) saturate(1.15);
+  -webkit-backdrop-filter: blur(7px) saturate(1.15);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -18px 28px rgba(24, 13, 54, 0.22);
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -14px 24px rgba(106, 74, 156, 0.05),
+    0 -6px 26px rgba(41, 0, 102, 0.1),
+    0 -1px 0 rgba(255, 255, 255, 0.7);
   transform-origin: bottom;
-  transition: transform 1640ms cubic-bezier(0.16, 0.86, 0.2, 1);
+  /* cubic-bezier con el tercer punto por encima de 1: la tapa sobrepasa su
+     posición final y retrocede. Ese rebote de un solo golpe es lo que separa
+     un movimiento mecánico de uno con peso. */
+  transition: transform 1280ms cubic-bezier(0.22, 1.12, 0.3, 1);
 }
 
 .folderFrontLeft {
@@ -311,8 +357,19 @@
   display: none;
 }
 
+/* ── LA TAPA SE ABATE, NO SE APLASTA ──
+
+   Hacía scaleY(0.58): la cara se encogía contra sí misma y se leía como un
+   elemento que mengua, no como una solapa que se abre.
+
+   rotateX con el origen abajo la hace girar sobre su propia base, que es lo
+   que hace un sobre de verdad. El escenario ya tiene perspective: 1200px y
+   la carpeta preserve-3d, así que el giro tiene profundidad real.
+
+   La curva lleva un rebote corto al final: la tapa pasa un punto de su
+   destino y vuelve, como una cartulina que se asienta. */
 .open .folderFrontLeft {
-  transform: skew(-1deg) scaleY(0.58) translateY(36px);
+  transform: rotateX(-46deg) skew(-1deg) translateY(10px);
 }
 
 .open .folderFrontRight {
@@ -321,9 +378,17 @@
 
 .folderContent {
   inset: 0;
-  z-index: 5;
+  /* ── POR DELANTE DE LA TAPA, SIEMPRE ──
+
+     Iba en 5 y la tapa en 3, así que en teoría ya ganaba. Pero la tapa lleva
+     backdrop-filter, y esa propiedad CREA UN CONTEXTO DE APILAMIENTO PROPIO:
+     a partir de ahí compite como bloque y el texto quedaba tapado.
+
+     Con 7 el contenido gana en cualquier caso. Es el mismo problema que dio
+     el desenfoque inferior de la lista de espera. */
+  z-index: 7;
   text-align: left;
-  color: #fffaf1;
+  color: #290066;
   transition: transform 1160ms cubic-bezier(0.16, 0.86, 0.2, 1);
 }
 
@@ -339,7 +404,7 @@
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.24em;
-  color: #f0c98a;
+  color: #a06c08;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 780ms ease 520ms, transform 940ms cubic-bezier(0.16, 0.86, 0.2, 1) 520ms;
@@ -361,7 +426,7 @@
   font-size: clamp(40px, 3.7vw, 58px);
   font-weight: 650;
   line-height: 1.02;
-  color: #fffaf1;
+  color: #290066;
   text-align: center;
   transform: translateX(-50%);
   transition:
@@ -385,7 +450,7 @@
   font-size: clamp(15.5px, 1.32vw, 18px);
   font-weight: 600;
   line-height: 1.42;
-  color: rgba(255, 250, 241, 0.86);
+  color: rgba(46, 32, 64, 0.86);
   text-align: center;
   opacity: 0;
   transform: translate(-50%, 12px);

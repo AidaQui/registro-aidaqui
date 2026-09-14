@@ -28,7 +28,15 @@ const FASES = [
 ];
 
 /* Duración total repartida entre las cuatro fases. */
-const DURACION = 4000;
+/* Cinco segundos y no cuatro: el escaneo es lo único que separa la última
+   respuesta del veredicto, y a cuatro se percibía como una pausa técnica.
+   Con cinco hay tiempo de leer las cuatro fases y el resultado llega como
+   algo analizado, no como un formulario que respondió rápido.
+
+   ⚠️ TAMBIÉN CUBRE LA ESPERA REAL DEL SERVIDOR: el envío arranca a la vez
+   que esta animación, así que alargarla da más margen para que la respuesta
+   llegue antes de que termine. */
+const DURACION = 5000;
 const POR_FASE = DURACION / FASES.length;
 
 export default function Escaneando({ listo, onFin }: Props) {

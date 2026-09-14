@@ -43,7 +43,6 @@ const RITMO = {
   enunciado: 60,
   primeraOpcion: 130,
   entreOpciones: 55,
-  pie: 420,
 } as const;
 
 /* Pausa entre elegir y pasar a la siguiente. Sin ella la selección no se
@@ -154,6 +153,18 @@ export default function Cuestionario({ onFin, onAtras }: Props) {
             style={{ width: `${progreso}%` }}
           />
         </div>
+
+        {/* ── EL CONTADOR VA ARRIBA, PEGADO A LA BARRA ──
+
+            Estaba al pie y ahí se perdía: la vista baja del enunciado a las
+            opciones y sale por el botón, sin volver a pasar por abajo.
+
+            Junto a la barra dice lo mismo que ella —cuánto queda— pero con
+            número, y se leen de una sola mirada en vez de en dos sitios. */}
+        <span className="dg-quiz__step">
+          {indice + 1} <span className="dg-quiz__step-de">de</span>{" "}
+          {PREGUNTAS.length}
+        </span>
       </div>
 
       {/* La clave por pregunta reinicia la cascada de entrada en cada paso */}
@@ -313,20 +324,6 @@ export default function Cuestionario({ onFin, onAtras }: Props) {
           </ul>
         )}
 
-        {/* ── EL CONTADOR, AL FINAL ──
-
-            Encima del enunciado competía con él: lo primero que se leía en
-            cada pantalla era un número y no la pregunta. Al final es lo que
-            tiene que ser, una referencia para saber cuánto queda, que se
-            consulta después de leer. Entra el último, por lo mismo. */}
-        <div
-          className="dg-quiz__foot dg-sube"
-          style={{ animationDelay: `${RITMO.pie}ms` }}
-        >
-          <span className="dg-quiz__step">
-            Pregunta {indice + 1} de {PREGUNTAS.length}
-          </span>
-        </div>
       </div>
     </div>
   );

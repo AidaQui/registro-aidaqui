@@ -7725,7 +7725,13 @@ a.pearl-btn {
   padding: 26px 16px;
   border-radius: 18px;
   border: 1px solid rgba(240, 201, 138, 0.22);
-  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+  /* ── EL HERO ES BLANCO Y EL CORTE LO DA LA CINTA ──
+
+     Llevaba un violeta profundo. Ahora la página se parte en dos planos: el
+     titular y la promesa sobre crema, y de la cinta de palabras hacia abajo
+     el campo de ondas violeta. La cinta ES la división, así que no hace falta
+     ninguna línea divisoria. */
+  background: #fffffd;
   box-shadow: 0 14px 30px rgba(41, 0, 102, 0.18);
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: clamp(15px, 1.4vw, 17px);
@@ -8554,34 +8560,48 @@ a.pearl-btn {
 }
 
 /* "ADN": dorado con brillo y un subrayado que lo ancla */
+/* Cada renglón del titular es un bloque propio: así el salto no depende del
+   ancho de la ventana y "de tu ADN" nunca queda partido. */
+.dg-intro__linea {
+  display: block;
+}
+
+/* ── "ADN": VIOLETA DE BASE, DORADO QUE LO RECORRE ──
+
+   Iba en dorado puro, que sobre el violeta profundo de antes se leía solo.
+   Sobre el crema del hero blanco el dorado pierde contraste: es un color
+   claro sobre un fondo claro.
+
+   Por eso el degradado ARRANCA Y TERMINA EN VIOLETA y solo lleva dorado en
+   el centro. El violeta es lo que garantiza que la palabra se lea siempre;
+   el dorado es el destello que la cruza, no su color.
+
+   background-size: 200% deja la mitad del degradado fuera de la caja en cada
+   momento, y la animación lo desplaza: eso es lo que hace que la luz viaje
+   en vez de quedarse quieta.
+
+   ⚠️ EL COLOR DEPENDE DEL FONDO PARA VERSE. Con background-clip: text el
+   texto es transparente y lo que se ve a través de él es este degradado. Si
+   alguien le pone un `color` a este elemento, el degradado desaparece y queda
+   un texto plano — sin romper nada, que es lo peor. */
 .dg-intro__adn {
   position: relative;
   display: inline-block;
-  background: linear-gradient(100deg, #a06c08, #d4a020, #f0c98a, #d4a020, #a06c08);
+  background: linear-gradient(
+    100deg,
+    #290066 0%,
+    #6a4a9c 22%,
+    #d4a020 46%,
+    #f0c98a 52%,
+    #d4a020 58%,
+    #6a4a9c 80%,
+    #290066 100%
+  );
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   animation: gold-shimmer 5s linear infinite;
-  filter: drop-shadow(0 2px 14px rgba(212, 160, 32, 0.4));
-}
-
-.dg-intro__adn::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.06em;
-  height: 3px;
-  border-radius: 100px;
-  background: linear-gradient(
-    90deg,
-    rgba(212, 160, 32, 0) 0%,
-    rgba(212, 160, 32, 0.8) 20%,
-    rgba(240, 201, 138, 1) 50%,
-    rgba(212, 160, 32, 0.8) 80%,
-    rgba(212, 160, 32, 0) 100%
-  );
 }
 
 .dg-intro__subtitle {
@@ -8873,11 +8893,11 @@ a.pearl-btn {
 }
 
 .dg-point {
-  --dg-point-glow: 0, 220, 255;
+  --dg-point-glow: 155, 126, 200;
   --dg-point-accent: 240, 201, 138;
   --dg-point-soul: 155, 126, 200;
   --dg-point-core: #1b1647;
-  --dg-point-edge: #0f4656;
+  --dg-point-edge: #4f2a74;
 
   position: relative;
   overflow: hidden;
@@ -8907,7 +8927,7 @@ a.pearl-btn {
 }
 
 .dg-point:nth-child(2) {
-  --dg-point-glow: 80, 235, 219;
+  --dg-point-glow: 240, 201, 138;
   --dg-point-accent: 245, 166, 214;
   --dg-point-soul: 183, 154, 232;
   --dg-point-core: #172452;
@@ -8915,15 +8935,15 @@ a.pearl-btn {
 }
 
 .dg-point:nth-child(3) {
-  --dg-point-glow: 128, 226, 255;
+  --dg-point-glow: 183, 154, 232;
   --dg-point-accent: 240, 201, 138;
   --dg-point-soul: 112, 92, 216;
   --dg-point-core: #21144b;
-  --dg-point-edge: #123f5f;
+  --dg-point-edge: #3b2369;
 }
 
 .dg-point:nth-child(4) {
-  --dg-point-glow: 32, 216, 194;
+  --dg-point-glow: 212, 160, 32;
   --dg-point-accent: 232, 180, 255;
   --dg-point-soul: 240, 201, 138;
   --dg-point-core: #161d4a;
@@ -9089,16 +9109,6 @@ a.pearl-btn {
 /* El contador vive ahora en el pie, junto al botón de volver: encima del
    enunciado competía con él, y lo primero que se leía en cada pantalla era un
    número en vez de la pregunta. */
-.dg-quiz__foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 26px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(155, 126, 200, 0.16);
-}
-
 .dg-quiz__step {
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: 12px;
@@ -9337,12 +9347,18 @@ a.pearl-btn {
   align-items: center;
   gap: 5px;
   padding: 7px 14px 7px 10px;
-  border: 1px solid rgba(155, 126, 200, 0.24);
+  /* ── VIOLETA SÓLIDO, NO UN FANTASMA ──
+
+     Iba en blanco translúcido con el texto al 62 %: sobre el crema del panel
+     se leía como un elemento desactivado, y quien quería corregir una
+     respuesta no encontraba por dónde. Ahora es una pieza con color propio. */
+  border: 1px solid rgba(106, 74, 156, 0.45);
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(106, 74, 156, 0.1);
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: 13px;
-  color: rgba(46, 32, 64, 0.62);
+  font-weight: 600;
+  color: #6a4a9c;
   cursor: pointer;
   transition: border-color 200ms ease, color 200ms ease, background 200ms ease,
     transform 200ms ease;
@@ -9350,10 +9366,10 @@ a.pearl-btn {
 
 /* Se desplaza hacia la izquierda al pasar por encima: el gesto apunta en la
    dirección a la que lleva el botón. */
-.dg-quiz__back:hover {
-  border-color: rgba(106, 74, 156, 0.45);
-  background: #fff;
-  color: #6a4a9c;
+.dg-quiz__back:hover:not(:disabled) {
+  border-color: #6a4a9c;
+  background: #6a4a9c;
+  color: #fffffd;
   transform: translateX(-2px);
 }
 
@@ -9780,27 +9796,6 @@ a.pearl-btn {
 
    La máscara evita el corte en seco contra los bordes del hero: sin ella la
    espiral termina en una línea recta que delata la caja del lienzo. */
-.dg-hero__helix {
-  z-index: 1;
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  user-select: none;
-  -webkit-mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    #000 35%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    #000 35%,
-    transparent 100%
-  );
-}
-
 .dg-hero__inner {
   position: relative;
   z-index: 2;
@@ -9949,7 +9944,7 @@ a.pearl-btn {
    sobre oscuro destaca más. Era la única palabra que no tenía problema. */
 .dg-hero .dg-intro__title {
   font-size: clamp(38px, 5.4vw, 76px);
-  color: #fffffd;
+  color: #290066;
 }
 
 .dg-hero .dg-intro__subtitle {
@@ -9963,7 +9958,7 @@ a.pearl-btn {
      hacía competir con el titular cuando la columna era estrecha. */
   font-size: clamp(20px, 2.2vw, 30px);
   line-height: 1.32;
-  color: #f4eeff;
+  color: #43276f;
 }
 
 /* La promesa va un escalón por debajo del subtítulo, igual que antes: es el
@@ -9973,7 +9968,7 @@ a.pearl-btn {
      qué va todo, y estaba puesto como si fuera una nota al pie. */
   font-size: clamp(17px, 1.9vw, 23px);
   line-height: 1.65;
-  color: rgba(255, 255, 253, 0.9);
+  color: rgba(46, 32, 64, 0.88);
 }
 
 /* ══ EL HERO: PILA CENTRADA, COMO LA LANDING DE REFERENCIA ══
@@ -10157,8 +10152,18 @@ a.pearl-btn {
   background-color: transparent;
 }
 
+/* ── EL HERO ES BLANCO: ES LA ÚLTIMA REGLA Y POR ESO ES LA QUE MANDA ──
+
+   ⚠️ HAY OTRA .dg-hero MÁS ARRIBA con el gradiente violeta. No se borra
+   porque conserva el resto de su maquetación; lo que se pinta es ESTO, que
+   viene después en la hoja. Si alguien cambia el fondo allí arriba no verá
+   ningún efecto: el sitio es este.
+
+   La página queda partida en dos planos: el titular y la promesa sobre
+   crema, y de la cinta de palabras hacia abajo el campo de ondas violeta.
+   La cinta ES la división, así que no hace falta ninguna línea. */
 .dg-hero {
-  background: transparent;
+  background: #fffffd;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -10248,28 +10253,24 @@ a.pearl-btn {
     0 0 70px -38px rgba(240, 201, 138, 0.55);
 }
 
-/* EL FILO DORADO.
-
-   La técnica: un relleno de 1px con degradado, y una máscara que descuenta el
-   interior para que sólo quede el anillo. Es la única forma de tener un borde
-   con degradado direccional; `border-image` no respeta el border-radius.
-
-   El degradado va de dorado vivo arriba-izquierda a casi nada abajo-derecha:
-   la luz de la página cae desde el hero, y un filo uniforme delataría que es
-   un contorno dibujado en vez de un reflejo. */
+/* El filo dorado recorre la ficha completa. Se dibuja en una sola capa
+   enmascarada para conservar el degradado y el border-radius sin duplicar
+   reglas ni depender de un border plano. */
 .dg-panel__inner .lm-form::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   padding: 1px;
   border-radius: inherit;
   pointer-events: none;
   background: linear-gradient(
     148deg,
-    rgba(240, 201, 138, 0.7) 0%,
-    rgba(212, 160, 32, 0.28) 26%,
-    rgba(155, 126, 200, 0.16) 58%,
-    rgba(160, 108, 8, 0.06) 100%
+    rgba(240, 201, 138, 0.95) 0%,
+    rgba(212, 160, 32, 0.6) 28%,
+    rgba(160, 108, 8, 0.5) 55%,
+    rgba(212, 160, 32, 0.62) 78%,
+    rgba(240, 201, 138, 0.85) 100%
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -10400,16 +10401,6 @@ a.pearl-btn {
 
 /* El filo, un punto más encendido en la esquina que recibe la luz: en la
    primera prueba era tan tenue que se perdía contra el vidrio. */
-.dg-panel__inner .lm-form::before {
-  background: linear-gradient(
-    148deg,
-    rgba(240, 201, 138, 0.9) 0%,
-    rgba(212, 160, 32, 0.35) 24%,
-    rgba(155, 126, 200, 0.18) 58%,
-    rgba(160, 108, 8, 0.06) 100%
-  );
-}
-
 /* FOCO VISIBLE CON TECLADO.
 
    .pearl-btn lleva `outline: none` y no se puede tocar —lo comparten once
@@ -10521,10 +10512,6 @@ a.pearl-btn {
 .dg-panel__inner .lm-form > * {
   position: relative;
   z-index: 1;
-}
-
-.dg-panel__inner .lm-form::before {
-  z-index: 2;
 }
 
 .dg-panel__inner .lm-form__badge {
@@ -10935,6 +10922,29 @@ a.pearl-btn {
   gap: 14px;
 }
 
+/* ── EL CONTADOR, JUNTO A LA BARRA ──
+
+   Dice lo mismo que la barra —cuánto queda— pero con número. Al ir pegados,
+   se leen de una sola mirada en vez de en dos sitios de la pantalla.
+
+   tabular-nums fija el ancho de los dígitos: sin ello la caja cambia de
+   tamaño al pasar de 1 a 7 y la barra se movería de sitio en cada pregunta. */
+.dg-quiz__head .dg-quiz__step {
+  flex-shrink: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: #6a4a9c;
+  text-transform: none;
+}
+
+.dg-quiz__step-de {
+  font-weight: 500;
+  opacity: 0.6;
+}
+
 /* La barra se come el resto de la fila. min-width 0 es lo que la deja
    encogerse dentro del flex: sin eso, en móvil empujaría al botón fuera. */
 .dg-quiz__head .dg-quiz__bar {
@@ -10962,10 +10972,6 @@ a.pearl-btn {
 
 /* El contador queda solo al pie y pasa al centro: sin el botón al lado,
    alineado a la derecha quedaba colgando de una esquina. */
-.dg-quiz__foot {
-  justify-content: center;
-}
-
 /* ══ LAS OPCIONES, AL PASAR EL CURSOR ══
 
    Antes sólo cambiaban al elegirlas. Sin respuesta al pasar por encima, una
@@ -11003,29 +11009,6 @@ a.pearl-btn {
   .dg-quiz__option:hover {
     transform: none;
   }
-}
-
-/* ══ LA FICHA, CON EL FILO DORADO COMPLETO ══
-
-   El filo iba de encendido arriba-izquierda a casi nada abajo-derecha, imitando
-   una luz lateral. Sobre el fondo de ondas ese apagado se leía como un borde a
-   medio dibujar: la mitad inferior de la ficha quedaba sin contorno y la pieza
-   perdía forma justo donde está el botón.
-
-   Ahora el degradado recorre el dorado entero —hondo, vivo, hondo— así que el
-   filo se ve en las cuatro esquinas y sigue sin ser plano: el tono cambia a lo
-   largo del recorrido en vez de desaparecer.
-
-   Los botones y los iconos no se tocan. */
-.dg-panel__inner .lm-form::before {
-  background: linear-gradient(
-    148deg,
-    rgba(240, 201, 138, 0.95) 0%,
-    rgba(212, 160, 32, 0.6) 28%,
-    rgba(160, 108, 8, 0.5) 55%,
-    rgba(212, 160, 32, 0.62) 78%,
-    rgba(240, 201, 138, 0.85) 100%
-  );
 }
 
 /* El campo también lleva su borde dorado a la vista. Estaba al 16 % y sobre el
@@ -11078,33 +11061,21 @@ a.pearl-btn {
   display: none;
 }
 
-/* ══ LA PANTALLA DE RESULTADO, LEGIBLE SOBRE EL FONDO OSCURO ══
+/* ══ LA PANTALLA DE RESULTADO, LEGIBLE SOBRE LA FICHA CLARA ══
 
-   Igual que le pasaba al escaneo: esta pantalla conserva los colores de cuando
-   la página era crema, y sobre el campo de ondas hay texto que directamente no
-   se ve.
-
-   Los cuatro que estaban del lado equivocado del contraste:
-
-   - __text en #2e2040. Es la descripción del patrón, el párrafo más largo y el
-     que explica el resultado entero. Era el más oscuro de todos.
-   - __quote en #43276f, la frase entrecomillada bajo el título.
-   - __eyebrow en #6a4a9c, el rótulo de arriba.
-   - __note en violeta al 60 %, el aviso bajo el botón de WhatsApp.
-
-   NO SE TOCAN __box-label NI __box-text: esos dos viven dentro de las cajas
-   claras ("lo que hay detrás", "lo que necesita integrar"), donde el violeta
-   oscuro es el color correcto. Cambiarlos los volvería ilegibles a ellos. */
+   La ficha comparte la superficie crema del formulario. El rótulo conserva
+   el lenguaje dorado en un tono profundo y la frase y la descripción vuelven
+   al violeta, para que los tres mantengan contraste sobre todo el degradado. */
 .dg-page__shell .dg-resultado__eyebrow {
-  color: #d4a020;
+  color: #805600;
 }
 
 .dg-page__shell .dg-resultado__quote {
-  color: rgba(255, 255, 253, 0.8);
+  color: #43276f;
 }
 
 .dg-page__shell .dg-resultado__text {
-  color: rgba(255, 255, 253, 0.88);
+  color: #2e2040;
 }
 
 .dg-page__shell .dg-resultado__note {
@@ -11137,16 +11108,30 @@ a.pearl-btn {
   padding: clamp(44px, 5vw, 60px) clamp(24px, 3.4vw, 48px)
     clamp(32px, 4vw, 44px);
   border-radius: 30px;
+  /* ── LA FICHA DEL RESULTADO VA EN CLARO ──
+
+     Era violeta oscuro translúcido, heredado de cuando toda la página lo
+     era. Con la portada en crema, el recorrido terminaba en un plano que no
+     se parecía a nada de lo anterior: la persona pasaba de un formulario
+     claro a un veredicto oscuro sin que ese cambio significara nada.
+
+     ES LA MISMA SUPERFICIE QUE EL PANEL DEL FORMULARIO, y esa repetición es
+     deliberada: el sitio donde se escribe y el sitio donde se recibe son el
+     mismo material, así que el embudo se lee como una pieza continua.
+
+     El blur se mantiene —el campo de ondas sigue vivo por detrás— pero con
+     un velo claro encima, así el movimiento se intuye sin restar legibilidad
+     al texto, que aquí es lo único que importa. */
   background: linear-gradient(
     155deg,
-    rgba(46, 26, 82, 0.68) 0%,
-    rgba(24, 12, 50, 0.76) 100%
+    rgba(253, 250, 245, 0.94) 0%,
+    rgba(244, 236, 250, 0.92) 100%
   );
   -webkit-backdrop-filter: blur(22px) saturate(140%);
   backdrop-filter: blur(22px) saturate(140%);
   box-shadow:
-    0 40px 90px -30px rgba(8, 3, 22, 0.92),
-    0 0 70px -38px rgba(240, 201, 138, 0.5);
+    0 40px 90px -34px rgba(41, 0, 102, 0.3),
+    0 0 70px -38px rgba(212, 160, 32, 0.45);
 }
 
 .dg-page__shell .dg-resultado__ficha::before {
@@ -11197,7 +11182,7 @@ a.pearl-btn {
   margin: 0;
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: clamp(15px, 1.5vw, 17px);
-  color: rgba(255, 255, 253, 0.66);
+  color: rgba(46, 32, 64, 0.72);
 }
 
 /* EL NOMBRE DEL PATRÓN, EN CUERPO GRANDE. Es el veredicto: si compite en
@@ -11230,13 +11215,13 @@ a.pearl-btn {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 253, 0.72);
+  color: rgba(46, 32, 64, 0.72);
 }
 
 .dg-page__shell .dg-resultado__chip--vivo {
   border-color: rgba(212, 160, 32, 0.5);
   background: rgba(212, 160, 32, 0.12);
-  color: #f0c98a;
+  color: #a06c08;
 }
 
 /* ══ 3. EL CIERRE, EN DOS TARJETAS A LA PAR ══
@@ -11267,7 +11252,7 @@ a.pearl-btn {
   margin: 0 auto 4px;
   border-radius: 50%;
   font-size: 21px;
-  color: #f0c98a;
+  color: #a06c08;
   border: 1px solid rgba(240, 201, 138, 0.35);
   background: rgba(212, 160, 32, 0.12);
 }
@@ -11277,7 +11262,7 @@ a.pearl-btn {
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: 12.5px;
   line-height: 1.55;
-  color: rgba(255, 255, 253, 0.5);
+  color: rgba(46, 32, 64, 0.55);
 }
 
 /* LA TARJETA DE LA COMUNIDAD ES LA QUE PIDE ALGO, así que es la que lleva
@@ -11305,7 +11290,7 @@ a.pearl-btn {
   font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(21px, 2.2vw, 27px);
   font-weight: 600;
-  color: #fffffd;
+  color: #290066;
 }
 
 /* La nota deja de ser un pie suelto y pasa a ser el texto de esta tarjeta. */
@@ -11371,10 +11356,6 @@ a.pearl-btn {
    para que el degradado entero se coma la ficha.
 
    En 0 hace lo que tiene que hacer: dibujar el borde por detrás de todo. */
-.dg-panel__inner .lm-form::before {
-  z-index: 0;
-}
-
 /* ══ EL TEXTO BAJO "LO QUE VAS A DESCUBRIR", MÁS GRANDE ══
 
    Iba en clamp(15.5px, 1.32vw, 18px) dentro de la carpeta. Es la frase que
@@ -11428,11 +11409,6 @@ a.pearl-btn {
    estilo EN LÍNEA (lo necesita para medirse a sí mismo), y un estilo en línea
    sólo se puede vencer así. El prop `height` que recibe pasa a ser el valor de
    reserva para antes de que aplique esta regla. */
-.dg-hero__helix .dg-helix {
-  height: 100% !important;
-}
-
-
 /* ══ EL CAMPO DE ONDAS DEL FONDO ══
 
    position: fixed y no absolute: el campo se queda quieto mientras la página
@@ -11449,6 +11425,17 @@ a.pearl-btn {
      Quitar esta línea devuelve el fondo claro de la primera prueba. */
   background: #14082b;
   position: fixed;
+
+  /* ── VUELVE A CUBRIR LA VENTANA ENTERA ──
+
+     ⚠️ AQUÍ ARRANCABA A LA ALTURA DEL HERO con top: var(--dg-corte), y era un
+     error: con position: fixed ese borde se mide contra LA VENTANA y no
+     contra el documento, así que la costura entre el blanco y el violeta
+     quedaba clavada a la pantalla y acompañaba al visitante al desplazarse.
+
+     El campo cubre otra vez todo y quien recorta es el hero, que lleva su
+     propio blanco opaco y SÍ se desplaza con la página. El violeta aparece
+     donde el hero termina, que es justo donde está la cinta. */
   inset: 0;
   z-index: 0;
 }
@@ -11730,25 +11717,25 @@ a.pearl-btn {
    ── LA DIFERENCIA CON "ADN" ──
 
    Allí el degradado es dorado de punta a punta, así que la palabra ES dorada.
-   Aquí la frase tiene que seguir leyéndose en crema: el degradado es crema en
-   casi todo su recorrido y sólo lleva una franja dorada estrecha en el medio.
+   Aquí la frase tiene que seguir leyéndose en violeta: el degradado es violeta
+   en casi todo su recorrido y sólo lleva una franja dorada oscura en el medio.
    Lo que se ve entonces no es un texto dorado, sino una luz cruzándolo.
 
    background-size 260% es lo que estrecha esa franja respecto al texto: a 100%
    el destello ocuparía media frase y dejaría de leerse como un reflejo.
 
    El recorte a las letras obliga a color: transparent, que hay que declarar
-   después del color crema de la regla de contraste o ganaría aquél. */
+   después del color violeta de la regla de contraste o ganaría aquél. */
 .dg-page__shell .dg-resultado__quote {
   background: linear-gradient(
     100deg,
-    rgba(255, 255, 253, 0.8) 0%,
-    rgba(255, 255, 253, 0.8) 38%,
-    rgba(240, 201, 138, 0.95) 46%,
-    #f0c98a 50%,
-    rgba(240, 201, 138, 0.95) 54%,
-    rgba(255, 255, 253, 0.8) 62%,
-    rgba(255, 255, 253, 0.8) 100%
+    #43276f 0%,
+    #43276f 38%,
+    #805600 46%,
+    #7a4f00 50%,
+    #805600 54%,
+    #43276f 62%,
+    #43276f 100%
   );
   background-size: 260% auto;
   -webkit-background-clip: text;
@@ -11757,12 +11744,12 @@ a.pearl-btn {
   animation: gold-shimmer 6s linear infinite;
 }
 
-/* Sin movimiento, la frase vuelve a ser crema plana: un degradado detenido a
+/* Sin movimiento, la frase vuelve a ser violeta plana: un degradado detenido a
    mitad de recorrido dejaría media frase de otro color sin motivo. */
 @media (prefers-reduced-motion: reduce) {
   .dg-page__shell .dg-resultado__quote {
     background: none;
-    color: rgba(255, 255, 253, 0.8);
+    color: #43276f;
     animation: none;
   }
 }
@@ -11912,9 +11899,10 @@ a.pearl-btn {
    reemplaza la suya entera, así que hay que volver a nombrarlas o el titular
    dejaría de viajar y saltaría de sitio. */
 #lo-que-vas-a-descubrir div > strong {
-  text-shadow:
-    0 0 22px rgba(20, 8, 43, 0.55),
-    0 0 44px rgba(94, 214, 214, 0.12);
+  /* ⚠️ AQUÍ IBA UN HALO DE CUATRO CAPAS. Tenía sentido sobre la carpeta
+     oscura: separaba el titular del fondo. Con la tapa en crema, un
+     resplandor oscuro detrás de un texto violeta no separa nada — lo
+     ensucia, que es justo lo contrario de lo que buscaba. */
   transition:
     bottom 1320ms cubic-bezier(0.16, 0.86, 0.2, 1),
     transform 1320ms cubic-bezier(0.16, 0.86, 0.2, 1),
@@ -11923,10 +11911,8 @@ a.pearl-btn {
 }
 
 #lo-que-vas-a-descubrir:has([aria-hidden="false"]) div > strong {
-  text-shadow:
-    0 0 18px rgba(20, 8, 43, 0.5),
-    0 0 38px rgba(94, 214, 214, 0.55),
-    0 0 82px rgba(155, 126, 200, 0.45);
+  /* Solo queda el gesto de las letras separándose: acompaña al titular que
+     sube, sin añadirle luz que sobre crema no hace falta. */
   letter-spacing: 0.012em;
 }
 
@@ -11959,21 +11945,6 @@ a.pearl-btn {
     min-height: 620px;
     transition: min-height 1100ms cubic-bezier(0.16, 0.86, 0.2, 1);
   }
-}
-
-/* ══ EL HALO DEL TITULAR, MÁS PRESENTE ══
-
-   El primero era demasiado tímido: sobre el degradado de la carpeta apenas se
-   distinguía del propio fondo y el efecto pasaba desapercibido. Sube el
-   brillo y el radio de las dos capas de color, y se le suma una tercera en
-   blanco muy abierta que es la que hace que las letras parezcan tener luz
-   propia y no un contorno de color detrás. */
-#lo-que-vas-a-descubrir:has([aria-hidden="false"]) div > strong {
-  text-shadow:
-    0 0 16px rgba(20, 8, 43, 0.55),
-    0 0 34px rgba(94, 214, 214, 0.85),
-    0 0 70px rgba(155, 126, 200, 0.7),
-    0 0 120px rgba(255, 255, 253, 0.35);
 }
 
 /* ABIERTA, EL ESCENARIO RECUPERA SU ALTO.
