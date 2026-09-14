@@ -319,12 +319,21 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid rgba(212, 160, 32, 0.6);
-  background: linear-gradient(150deg, #fffaf1, #f0e2c8);
-  color: #a06c08;
+  border: 1px solid #f0d9a0;
+  /* El dorado va de claro arriba a hondo abajo: es lo que se lee como una
+     superficie curva y no como un círculo plano. */
+  background: linear-gradient(165deg, #fff6e2 0%, #e8c877 45%, #b98519 100%);
+  color: #4a2f04;
+  /* Cinco sombras con trabajos distintos: brillo en el canto de arriba,
+     sombra propia debajo, un aro interior que lo separa del relleno, la
+     sombra proyectada sobre la solapa, y un halo que arranca apagado y se
+     enciende al pasar el cursor. */
   box-shadow:
-    0 6px 18px rgba(41, 0, 102, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    inset 0 2px 3px rgba(255, 255, 255, 0.8),
+    inset 0 -3px 6px rgba(120, 82, 8, 0.4),
+    inset 0 0 0 4px rgba(212, 160, 32, 0.18),
+    0 6px 16px rgba(41, 0, 102, 0.28),
+    0 0 0 0 rgba(240, 201, 138, 0);
   transform: translate(-50%, 50%);
   transition:
     opacity 520ms ease,
@@ -335,6 +344,53 @@
 .folderSeal svg {
   width: 19px;
   height: 19px;
+}
+
+/* El glifo y su caja son piezas separadas a proposito: la flecha gira y la
+   caja se desplaza, y si ambos transform vivieran en el mismo elemento el
+   ultimo borraria al anterior. */
+.folderSeal svg {
+  width: 19px;
+  height: 19px;
+  transition: transform 420ms cubic-bezier(0.22, 1.12, 0.3, 1);
+}
+
+/* ── AL PASAR EL CURSOR ──
+
+   El sello se enciende, la flecha se endereza y el glifo empieza a empujar
+   hacia la derecha en bucle: los tres dicen lo mismo —esto lleva a algun
+   sitio— por vias distintas. */
+.stage:not(.open) .folder:hover .folderSeal {
+  background: linear-gradient(165deg, #fffdf6 0%, #f0c98a 45%, #d4a020 100%);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.9),
+    inset 0 -3px 6px rgba(120, 82, 8, 0.45),
+    inset 0 0 0 4px rgba(212, 160, 32, 0.24),
+    0 10px 26px rgba(41, 0, 102, 0.34),
+    0 0 30px 6px rgba(240, 201, 138, 0.45);
+  animation: seal-llama 1.1s ease-in-out infinite;
+}
+
+.stage:not(.open) .folder:hover .folderSeal svg {
+  transform: rotate(45deg);
+}
+
+/* Un empujon corto hacia la derecha, en bucle: apunta a donde lleva el clic
+   sin necesidad de escribirlo. */
+@keyframes seal-llama {
+  0%,
+  100% {
+    transform: translate(-50%, 50%);
+  }
+  50% {
+    transform: translate(-46%, 50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage:not(.open) .folder:hover .folderSeal {
+    animation: none;
+  }
 }
 
 .open .folderSeal {
@@ -392,6 +448,19 @@
   transform-origin: bottom center;
   backface-visibility: hidden;
   z-index: 3;
+
+  /* ── EL PICO QUE LA CONVIERTE EN SOBRE ──
+
+     Era un rectángulo, y por eso la pieza se leía como una caja. La V es la
+     silueta que dice "sobre" sin escribirlo.
+
+     BAJA SOLO HASTA EL 18 %. En la referencia llega al 32 %, pero allí el
+     sobre está vacío; aquí el subtítulo vive a un 10 % del borde inferior de
+     esta misma solapa, y un pico más hondo lo cortaría por la mitad.
+
+     ⚠️ SI EL TEXTO DE DENTRO CRECE hay que subir ese 18 %, o la V volverá a
+     morderlo. */
+  clip-path: polygon(0 0, 50% 18%, 100% 0, 100% 100%, 0 100%);
   width: 100%;
   height: 68%;
   /* El trazo sube de 0,32 a 0,7: sobre el violeta de antes un dorado tenue
@@ -427,11 +496,37 @@
     inset 0 -14px 24px rgba(106, 74, 156, 0.05),
     0 -6px 26px rgba(41, 0, 102, 0.1),
     0 -1px 0 rgba(255, 255, 255, 0.7);
-  transform-origin: bottom;
   /* cubic-bezier con el tercer punto por encima de 1: la tapa sobrepasa su
      posición final y retrocede. Ese rebote de un solo golpe es lo que separa
      un movimiento mecánico de uno con peso. */
   transition: transform 1280ms cubic-bezier(0.22, 1.12, 0.3, 1);
+}
+
+/* ── EL PLIEGUE, EN DOS CARAS ──
+
+   Dos triángulos con degradados opuestos que se encuentran en el centro. Es
+   lo que convierte el recorte en un doblez: una cara recibe la luz y la otra
+   queda en sombra, como un papel plegado de verdad. Sin ellos el pico es una
+   silueta recortada y nada más.
+
+   Van en los pseudo-elementos de la propia solapa: no añaden nodos al DOM ni
+   interceptan clics. */
+.folderFront::before,
+.folderFront::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.folderFront::before {
+  background: linear-gradient(150deg, rgba(106, 74, 156, 0.11), transparent 62%);
+  clip-path: polygon(0 0, 55% 40%, 0 100%);
+}
+
+.folderFront::after {
+  background: linear-gradient(230deg, rgba(41, 0, 102, 0.09), transparent 62%);
+  clip-path: polygon(100% 0, 45% 40%, 100% 100%);
 }
 
 .folderFrontLeft {
