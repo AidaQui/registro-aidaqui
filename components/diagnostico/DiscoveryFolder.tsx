@@ -264,19 +264,29 @@ export default function DiscoveryFolder({
           <div className={styles.folderContent}>
             <span className={styles.folderKicker}>LECTURA</span>
             <strong className={styles.folderTitle}>{title}</strong>
-            {/* Las DOS versiones van al DOM y el CSS decide cuál se ve. No se
-                elige en JS con un ancho medido: eso se resolvería después de
-                la hidratación y el móvil vería un instante la frase larga
-                —justo el choque que esto viene a evitar—. */}
-            <p className={styles.folderBrief}>
-              <span className={styles.folderBriefLong}>{subtitle}</span>
-              <span className={styles.folderBriefShort}>
-                {subtitleShort ?? subtitle}
-              </span>
-            </p>
           </div>
         </div>
       </div>
+
+      {/* ── EL PIE, FUERA DEL SOBRE ──
+
+          Vivía dentro de la solapa y ahí no se leía: la tapa lleva
+          backdrop-filter, que crea contexto de apilamiento propio, y las
+          fichas suben al pasar el cursor. Pelear ese z-index era insistir en
+          un sitio que no le corresponde.
+
+          Fuera del sobre el texto no compite con nada y se lee siempre, que
+          es lo único que se le pedía.
+
+          Las DOS versiones van al DOM y el CSS decide cuál se ve: elegirlo
+          en JS con un ancho medido se resolvería tras la hidratación, y el
+          móvil vería un instante la frase larga. */}
+      <p className={styles.folderBrief}>
+        <span className={styles.folderBriefLong}>{subtitle}</span>
+        <span className={styles.folderBriefShort}>
+          {subtitleShort ?? subtitle}
+        </span>
+      </p>
     </section>
   );
 }
