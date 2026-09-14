@@ -43,6 +43,11 @@ export default function LeadMagnetPage() {
   const [datos, setDatos] = useState({ nombre: "", email: "", telefono: "" });
   const [listo, setListo] = useState(false);
   const [error, setError] = useState("");
+  /* El grosor de la cinta depende del ancho: la banda escala con la ventana,
+     así que el trazo que en escritorio es un remate en móvil se ve como un
+     hilo. Arranca en 70 —el valor de escritorio— para que el servidor y el
+     primer render pinten lo mismo y no haya aviso de hidratación. */
+  const [anchoCinta, setAnchoCinta] = useState(70);
 
   /* Estable entre renders: el escáner la usa dentro de un efecto, y una
      función nueva en cada render lo volvería a disparar. */
@@ -70,6 +75,14 @@ export default function LeadMagnetPage() {
       };
     }
   }, [router.isReady, router.query]);
+
+  useEffect(() => {
+    const consulta = window.matchMedia("(max-width: 700px)");
+    const aplicar = () => setAnchoCinta(consulta.matches ? 92 : 70);
+    aplicar();
+    consulta.addEventListener("change", aplicar);
+    return () => consulta.removeEventListener("change", aplicar);
+  }, []);
 
   function irA(siguiente: Fase) {
     setFase(siguiente);
@@ -313,7 +326,11 @@ export default function LeadMagnetPage() {
                    de llegar a los 256 px que medía a 1920. */
                 maxHeight={110}
                 curviness={15}
-                ribbonWidth={70}
+                /* 70 en escritorio y 92 por debajo de 700 px: la banda escala
+                   con el ancho, así que en móvil el mismo trazo se ve como un
+                   hilo. El texto va dentro, de modo que engrosarla es lo que
+                   le devuelve aire. */
+                ribbonWidth={anchoCinta}
                 /* El violeta del hero, no el de las tarjetas: la cinta tiene
                    que leerse como el final de la banda oscura. */
                 ribbonColor="#2e1a52"
@@ -360,13 +377,10 @@ export default function LeadMagnetPage() {
 
                     aria-hidden: es una raya. No aporta nada a quien escucha la
                     página, y el rombo se leería como un carácter suelto. */}
-                <div className="dg-separador" aria-hidden="true">
-                  ✦
-                </div>
-
-                <DiscoveryFolder
+<DiscoveryFolder
                   title={LANDING.bloqueTitulo}
                   subtitle={LANDING.bloqueSubtitulo}
+                  subtitleShort={LANDING.bloqueSubtituloCorto}
                   items={LANDING.puntos}
                 />
               </div>

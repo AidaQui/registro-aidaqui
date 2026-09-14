@@ -10104,6 +10104,19 @@ a.pearl-btn {
   margin: 10px 0 2px;
 }
 
+/* En móvil el bloque entero se aprieta: el formulario reparte su alto con
+   gap, y a ancho de teléfono esa misma separación deja el titular flotando
+   lejos de la barra que tiene debajo. */
+@media (max-width: 700px) {
+  .dg-panel__inner .lm-form {
+    gap: 9px;
+  }
+
+  .dg-panel__inner .lm-form .lm-pasos__barra {
+    margin: 2px 0 0;
+  }
+}
+
 
 
 
@@ -11189,7 +11202,12 @@ a.pearl-btn {
    tamaño con la frase que lo presenta, deja de serlo. */
 .dg-page__shell .dg-resultado__title {
   font-size: clamp(34px, 5vw, 62px);
-  line-height: 1.05;
+  /* 1.05 cercenaba las colas de las letras: en "Código de Control" la g
+     quedaba cortada por abajo. 1.2 les devuelve el espacio que piden, y el
+     relleno inferior cubre el descendente cuando el titular ocupa una sola
+     línea y no hay renglón siguiente que le haga sitio. */
+  line-height: 1.2;
+  padding-bottom: 0.08em;
 }
 
 .dg-page__shell .dg-resultado__text {
@@ -11262,7 +11280,10 @@ a.pearl-btn {
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: 12.5px;
   line-height: 1.55;
-  color: rgba(46, 32, 64, 0.55);
+  /* ⚠️ ESTA TARJETA SIGUE EN VIOLETA OSCURO, así que el texto va en claro.
+     Estaba en rgba(46,32,64,.55) —violeta sobre violeta— y no se leía nada:
+     quedó así al aclarar la ficha que la contiene sin aclararla a ella. */
+  color: rgba(255, 255, 253, 0.72);
 }
 
 /* LA TARJETA DE LA COMUNIDAD ES LA QUE PIDE ALGO, así que es la que lleva
@@ -11276,12 +11297,23 @@ a.pearl-btn {
   gap: 12px;
   padding: clamp(26px, 3vw, 36px) clamp(20px, 2.6vw, 32px);
   border-radius: 24px;
-  border: 1px solid rgba(240, 201, 138, 0.22);
+  /* ── ES LA ACCIÓN MÁS IMPORTANTE DE LA PÁGINA ──
+
+     Iba con el mismo peso que la tarjeta del correo, que sólo informa. Esta
+     pide algo, así que sube: el filo dorado se hace visible, el fondo gana
+     cuerpo y una luz dorada la separa de lo que tiene alrededor.
+
+     El resplandor es dorado y no verde: el verde es del botón, y repetirlo
+     detrás lo dejaría plano contra su propio halo. */
+  border: 1px solid rgba(240, 201, 138, 0.55);
   background: linear-gradient(
     160deg,
-    rgba(46, 26, 82, 0.55),
-    rgba(20, 8, 43, 0.62)
+    rgba(58, 33, 102, 0.85),
+    rgba(26, 11, 56, 0.9)
   );
+  box-shadow:
+    0 22px 54px -26px rgba(8, 3, 22, 0.8),
+    0 0 60px -30px rgba(240, 201, 138, 0.65);
   text-align: center;
 }
 
@@ -11290,7 +11322,8 @@ a.pearl-btn {
   font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(21px, 2.2vw, 27px);
   font-weight: 600;
-  color: #290066;
+  /* Misma situación que la nota del mail: la tarjeta es oscura. */
+  color: #fffffd;
 }
 
 /* La nota deja de ser un pie suelto y pasa a ser el texto de esta tarjeta. */
@@ -11438,52 +11471,6 @@ a.pearl-btn {
      donde el hero termina, que es justo donde está la cinta. */
   inset: 0;
   z-index: 0;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   EL SEPARADOR: LÍNEA CON EL ROMBO EN MEDIO
-   ═══════════════════════════════════════════════════════════════════════════
-
-   Una sola pieza para los dos sitios donde hace falta separar —entre el
-   formulario y las tarjetas, y encima del pie— para que la página no acabe
-   con dos recursos parecidos haciendo lo mismo.
-
-   Las dos mitades de la línea son pseudo-elementos que crecen con `flex: 1`,
-   así que el rombo queda centrado solo, mida lo que mida el contenedor. No
-   hace falta calcular un hueco ni tapar la línea con un chip opaco —que sobre
-   este fondo animado no funcionaría, porque no hay un color sólido detrás que
-   imitar.
-
-   Las líneas se desvanecen hacia fuera: cortadas en seco parecerían el borde
-   de una caja invisible. */
-.dg-separador {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  /* El gap de .dg-panel__inner ya deja clamp(28px, 4vw, 44px) a cada lado, o
-     sea la misma distancia arriba y abajo y siempre por encima de los 15px
-     pedidos. Por eso aquí no se añade margen: hacerlo rompería la simetría. */
-  font-size: 13px;
-  line-height: 1;
-  color: #d4a020;
-  text-shadow: 0 0 10px rgba(212, 160, 32, 0.55);
-  user-select: none;
-}
-
-.dg-separador::before,
-.dg-separador::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-}
-
-.dg-separador::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 253, 0.22));
-}
-
-.dg-separador::after {
-  background: linear-gradient(90deg, rgba(255, 255, 253, 0.22), transparent);
 }
 
 /* ══ EL MISMO DIBUJO ENCIMA DEL PIE ══

@@ -17,6 +17,8 @@ type DiscoveryItem = {
 type DiscoveryFolderProps = {
   title: string;
   subtitle: string;
+  /** Versión corta para móvil: la larga se encima con el titular del sobre. */
+  subtitleShort?: string;
   items: DiscoveryItem[];
 };
 
@@ -29,9 +31,11 @@ type PaperStyle = CSSProperties & {
 export default function DiscoveryFolder({
   title,
   subtitle,
+  subtitleShort,
   items,
 }: DiscoveryFolderProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -80,6 +84,8 @@ export default function DiscoveryFolder({
 
     return () => observer.disconnect();
   }, []);
+
+
 
   function openFolder() {
     setOpen(true);
@@ -137,6 +143,82 @@ export default function DiscoveryFolder({
     );
   }
 
+  /*
+   * ARRASTRE DEL CARRUSEL EN MÓVIL.
+   *
+   * Las fichas se desplazan solas con una animación de CSS. Aquí se le da al
+   * visitante el control: al apoyar el dedo la animación se congela, al mover
+   * el dedo el carril sigue la mano, y al soltar vuelve a correr sola.
+   *
+   * ── POR QUÉ SE LEE LA POSICIÓN ANTES DE CONGELAR ──
+   *
+   * La animación vive en CSS, así que el navegador conoce la posición real
+   * pero el DOM no. Si se pausara sin más y luego se aplicara un transform
+   * propio, el carril saltaría de golpe al punto de partida. Por eso se lee la
+   * matriz con getComputedStyle y el arrastre parte de ahí.
+   *
+   * ── POR QUÉ SE DEVUELVE EL CONTROL AL SOLTAR ──
+   *
+   * Se borra el transform propio y la animación retoma. El desplazamiento
+   * queda donde lo dejó la animación, no donde lo dejó el dedo: es el precio
+   * de no reimplementar el bucle entero en JS, y a cambio el movimiento nunca
+   * se detiene, que es lo que se pidió.
+   *
+   * Punteros y no touch: el mismo código sirve para dedo, ratón y lápiz.
+   */
+  useEffect(() => {
+    const carril = trackRef.current;
+    if (!carril) return;
+    if (!window.matchMedia("(max-width: 900px)").matches) return;
+
+    let arrastrando = false;
+    let inicioX = 0;
+    let base = 0;
+
+    const leerX = () => {
+      const t = getComputedStyle(carril).transform;
+      if (!t || t === "none") return 0;
+      return new DOMMatrixReadOnly(t).m41;
+    };
+
+    const bajar = (e: PointerEvent) => {
+      arrastrando = true;
+      inicioX = e.clientX;
+      base = leerX();
+      carril.style.animationPlayState = "paused";
+      carril.style.transform = "translateX(" + base + "px)";
+      carril.classList.add(styles.dragging);
+    };
+
+    const mover = (e: PointerEvent) => {
+      if (!arrastrando) return;
+      const dx = e.clientX - inicioX;
+      carril.style.transform = "translateX(" + (base + dx) + "px)";
+    };
+
+    /* Se borra el transform propio para que vuelva a mandar la animación:
+       dejarlo puesto la anularía, porque gana el estilo en línea. */
+    const soltar = () => {
+      if (!arrastrando) return;
+      arrastrando = false;
+      carril.style.transform = "";
+      carril.style.animationPlayState = "";
+      carril.classList.remove(styles.dragging);
+    };
+
+    carril.addEventListener("pointerdown", bajar);
+    window.addEventListener("pointermove", mover);
+    window.addEventListener("pointerup", soltar);
+    window.addEventListener("pointercancel", soltar);
+
+    return () => {
+      carril.removeEventListener("pointerdown", bajar);
+      window.removeEventListener("pointermove", mover);
+      window.removeEventListener("pointerup", soltar);
+      window.removeEventListener("pointercancel", soltar);
+    };
+  }, [open]);
+
   return (
     <section
       id="lo-que-vas-a-descubrir"
@@ -145,7 +227,7 @@ export default function DiscoveryFolder({
     >
       <div className={`${styles.stage} ${open ? styles.open : ""}`}>
         <div className={styles.paperLayer} aria-hidden={!open}>
-          <div className={styles.paperTrack}>
+          <div className={styles.paperTrack} ref={trackRef}>
             <div className={styles.paperSet}>
               {items.map((item, index) => renderPaper(item, index))}
             </div>
@@ -182,7 +264,16 @@ export default function DiscoveryFolder({
           <div className={styles.folderContent}>
             <span className={styles.folderKicker}>LECTURA</span>
             <strong className={styles.folderTitle}>{title}</strong>
-            <p className={styles.folderBrief}>{subtitle}</p>
+            {/* Las DOS versiones van al DOM y el CSS decide cuál se ve. No se
+                elige en JS con un ancho medido: eso se resolvería después de
+                la hidratación y el móvil vería un instante la frase larga
+                —justo el choque que esto viene a evitar—. */}
+            <p className={styles.folderBrief}>
+              <span className={styles.folderBriefLong}>{subtitle}</span>
+              <span className={styles.folderBriefShort}>
+                {subtitleShort ?? subtitle}
+              </span>
+            </p>
           </div>
         </div>
       </div>

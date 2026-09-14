@@ -107,6 +107,11 @@ export const LANDING = {
   bloqueTitulo: "Lo que vas a descubrir",
   bloqueSubtitulo:
     "Al terminar recibirás una lectura personalizada de tu Código Dominante y de cómo está operando actualmente en tu vida.",
+  /* En móvil la frase larga se encima con el titular del sobre. Esta versión
+     dice lo mismo sin el arranque: el "al terminar" ya se entiende por dónde
+     está puesta, y quitarlo libera el renglón que provocaba el choque. */
+  bloqueSubtituloCorto:
+    "Una lectura personalizada de tu Código Dominante y de cómo está operando en tu vida.",
   puntos: [
     {
       numero: "01",

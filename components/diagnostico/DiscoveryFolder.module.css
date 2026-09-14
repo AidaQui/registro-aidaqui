@@ -16,7 +16,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(100%, 1280px);
+  /* 1200 y no 1280: es el ancho de contenido del sitio, y es el marco que
+     las fichas no pueden pasar. Ver --brazo justo debajo. */
+  --brazo: min(540px, calc((min(100vw, 1200px) / 2) - 205px));
+  --brazo-corto: calc(var(--brazo) * 0.34);
+  width: min(100%, 1200px);
   min-height: clamp(740px, 64vw, 880px);
   margin: 0 auto;
   isolation: isolate;
@@ -129,29 +133,44 @@
   z-index: 1;
 }
 
+/* ── HASTA DÓNDE SE ABREN LAS FICHAS ──
+
+   --brazo es la distancia del centro al eje de la ficha más externa, y se
+   calcula en vez de fijarse: min() toma el menor entre el reparto ideal y lo
+   que la ventana permite de verdad.
+
+   LA CUENTA: el ancho útil es el menor entre 1200px y la ventana. A la
+   ficha externa hay que dejarle media anchura propia (185px) más un respiro
+   de 20px contra el canto. De ahí sale el tope real.
+
+   Con 540px fijos, la ficha externa pedía 1450px de ventana: en un portátil
+   de 1366 se salía por los lados. Ahora se repliega sola.
+
+   ⚠️ SI CAMBIA EL ANCHO DE .paper hay que revisar el 205px (185 de media
+   ficha + 20 de margen): los dos describen la misma holgura. */
 .paper1 {
-  --open-x: -540px;
+  --open-x: calc(var(--brazo) * -1);
   --open-y: -258px;
   --open-rotate: -9deg;
   --open-speed: 1760ms;
 }
 
 .paper2 {
-  --open-x: -180px;
+  --open-x: calc(var(--brazo-corto) * -1);
   --open-y: -340px;
   --open-rotate: -2deg;
   --open-speed: 1580ms;
 }
 
 .paper3 {
-  --open-x: 180px;
+  --open-x: var(--brazo-corto);
   --open-y: -340px;
   --open-rotate: 4deg;
   --open-speed: 1640ms;
 }
 
 .paper4 {
-  --open-x: 540px;
+  --open-x: var(--brazo);
   --open-y: -258px;
   --open-rotate: 10deg;
   --open-speed: 1820ms;
@@ -377,16 +396,24 @@
 }
 
 .folderContent {
-  inset: 0;
-  /* ── POR DELANTE DE LA TAPA, SIEMPRE ──
+  inset: 0;  /* ── POR DELANTE DE TODO LO QUE SE MUEVE ──
 
-     Iba en 5 y la tapa en 3, así que en teoría ya ganaba. Pero la tapa lleva
-     backdrop-filter, y esa propiedad CREA UN CONTEXTO DE APILAMIENTO PROPIO:
-     a partir de ahí compite como bloque y el texto quedaba tapado.
+     Tres cosas compiten con este texto y las tres ganaban:
 
-     Con 7 el contenido gana en cualquier caso. Es el mismo problema que dio
-     el desenfoque inferior de la lista de espera. */
-  z-index: 7;
+       .folderFront          lleva backdrop-filter, y esa propiedad CREA UN
+                             CONTEXTO DE APILAMIENTO propio, así que compite
+                             como bloque aunque su z-index sea menor.
+       .paperLayer al hover  sube a 8 para que la ficha señalada pase por
+                             delante de sus hermanas.
+       .paper:hover          sube a 9 por lo mismo.
+
+     Las dos últimas solo existen en escritorio —en un móvil no hay puntero—,
+     y por eso el texto se leía bien en el teléfono y quedaba tapado en el
+     ordenador en cuanto el cursor rozaba una ficha.
+
+     Con 10 el contenido del sobre gana siempre. ⚠️ Si alguien añade un
+     z-index mayor a las fichas, este número tiene que subir con él. */
+  z-index: 10;
   text-align: left;
   color: #290066;
   transition: transform 1160ms cubic-bezier(0.16, 0.86, 0.2, 1);
@@ -436,6 +463,28 @@
 
 .open .folderTitle {
   bottom: calc(22% + 50px);
+}
+
+/* ── DOS VERSIONES DEL MISMO TEXTO, UNA POR ANCHO ──
+
+   Ambas están en el DOM y aquí se decide cuál se ve. En escritorio manda la
+   larga; por debajo de 900 px la corta, porque la larga se encima con el
+   titular del sobre.
+
+   El corte coincide con el de .paperLayer más abajo, que es donde la carpeta
+   deja de tener sitio para el texto completo. */
+.folderBriefShort {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .folderBriefLong {
+    display: none;
+  }
+
+  .folderBriefShort {
+    display: inline;
+  }
 }
 
 .folderBrief {
@@ -655,6 +704,23 @@
   .paperTrack {
     animation: none;
   }
+}
+
+/* ── MIENTRAS SE ARRASTRA ──
+
+   touch-action: pan-y deja que la página siga desplazándose en vertical
+   mientras el carril se queda con el gesto horizontal. Sin esto el navegador
+   se lleva el arrastre entero y el carril no se entera.
+
+   La selección se desactiva porque arrastrar sobre texto lo seleccionaría en
+   vez de mover la pieza. */
+.paperTrack {
+  touch-action: pan-y;
+}
+
+.dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 @keyframes discovery-folder-carousel {
