@@ -46,11 +46,21 @@ export type Pregunta = {
   /** La séptima es de texto libre: no puntúa */
   abierta?: boolean;
   ayuda?: string;
+  /**
+   * Ilustración de la situación, en /public/diagnostico/img/img-preguntas.
+   *
+   * La ruta va escrita en cada pregunta y NO se deduce del índice.
+   * Deducirla (imagen = indice + 1) parece más corto y es una trampa: el
+   * día que se reordenen o se intercale una pregunta, cada situación
+   * quedaría ilustrada con la escena de otra sin que nada falle ni avise.
+   */
+  imagen?: string;
 };
 
 export const PREGUNTAS: Pregunta[] = [
   {
     id: "p1",
+    imagen: "/diagnostico/img/img-preguntas/1.png",
     enunciado:
       "Cuando algo importante no sale como esperabas, ¿qué suele ocurrir primero dentro de ti?",
     opciones: [
@@ -65,6 +75,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p2",
+    imagen: "/diagnostico/img/img-preguntas/2.png",
     enunciado:
       "Cuando algo que deseas profundamente no se manifiesta como esperabas, ¿qué interpretación aparece primero?",
     opciones: [
@@ -79,6 +90,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p3",
+    imagen: "/diagnostico/img/img-preguntas/3.png",
     enunciado:
       "¿En cuál de estas situaciones sientes que pierdes más fácilmente tu centro?",
     opciones: [
@@ -93,6 +105,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p4",
+    imagen: "/diagnostico/img/img-preguntas/4.png",
     enunciado:
       "¿Cuál de estas contradicciones reconoces más profundamente en tu proceso?",
     opciones: [
@@ -107,6 +120,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p5",
+    imagen: "/diagnostico/img/img-preguntas/5.png",
     /* En el documento original las opciones venían desordenadas; se
        reordenaron para respetar el mapeo por posición de las demás. */
     enunciado:
@@ -123,6 +137,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p6",
+    imagen: "/diagnostico/img/img-preguntas/6.png",
     enunciado:
       "Si mañana tu realidad cambiara por completo y recibieras eso que llevas tanto tiempo deseando, ¿qué crees que te costaría más sostener?",
     opciones: [
@@ -137,6 +152,7 @@ export const PREGUNTAS: Pregunta[] = [
   },
   {
     id: "p7",
+    imagen: "/diagnostico/img/img-preguntas/7.png",
     enunciado:
       "Si nadie pudiera decepcionarse, juzgarte o cuestionar tus decisiones, ¿qué sentirías que tienes permiso de hacer diferente?",
     ayuda: "No hay una respuesta correcta. Solo observa lo que aparece.",

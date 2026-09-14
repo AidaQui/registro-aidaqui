@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Artefactos de QA con navegador (perfiles de Chrome y capturas).
+# Van ignorados además de por ruido: Tailwind escanea el árbol del proyecto en
+# busca de clases, y dentro de estos perfiles hay CSS de extensiones que le
+# hace generar utilidades con rutas que no existen. Eso rompe el build.
+.atl/

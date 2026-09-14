@@ -1,4 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Mail,
+  MessageCircle,
+  UserRound,
+} from "lucide-react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
@@ -90,6 +97,12 @@ export default function FormularioContacto({ iniciales, onListo }: Props) {
   const montado = useRef(false);
 
   const actual = PASOS[paso];
+  const StepIcon =
+    actual.id === "email"
+      ? Mail
+      : actual.id === "telefono"
+        ? MessageCircle
+        : UserRound;
 
   useEffect(() => {
     if (!montado.current) {
@@ -151,24 +164,24 @@ export default function FormularioContacto({ iniciales, onListo }: Props) {
 
   return (
     <div className="lm-pasos">
-      {/* La barra dice cuánto queda: tres pasos cortos se sostienen; tres
-          pasos sin final visible, no. */}
-      <div className="lm-pasos__barra" aria-hidden="true">
-        {PASOS.map((_, i) => (
-          <span
-            key={i}
-            className={`lm-pasos__marca${i <= paso ? " is-on" : ""}`}
-          />
-        ))}
-      </div>
-
       {/* La clave por paso reinicia la cascada de entrada en cada campo */}
-      <form noValidate className="lm-form" onSubmit={avanzar} key={paso}>
+      <form
+        noValidate
+        className="lm-form"
+        data-step={actual.id}
+        onSubmit={avanzar}
+        key={paso}
+      >
+        <div className="lm-form__image" aria-hidden="true" />
+
         <p
           className="lm-form__badge dg-sube"
           style={{ animationDelay: `${RITMO.distintivo}ms` }}
         >
-          {actual.distintivo}
+          <span className="lm-form__badge-icon" aria-hidden="true">
+            <StepIcon size={16} strokeWidth={1.8} />
+          </span>
+          <span className="lm-form__badge-text">{actual.distintivo}</span>
         </p>
 
         <label
@@ -180,47 +193,57 @@ export default function FormularioContacto({ iniciales, onListo }: Props) {
         </label>
 
         <div
-          className="lm-form__field dg-sube"
+          className={`lm-form__field lm-form__field--${actual.id} dg-sube`}
           style={{ animationDelay: `${RITMO.campo}ms` }}
         >
           {paso === 0 && (
-            <input
-              ref={campoRef}
-              id="lm-nombre"
-              name="nombre"
-              type="text"
-              inputMode="text"
-              autoComplete="name"
-              placeholder={actual.placeholder}
-              className="lm-input"
-              value={nombre}
-              aria-invalid={error ? true : undefined}
-              aria-describedby={error ? idError : undefined}
-              onChange={(ev) => {
-                setNombre(ev.target.value);
-                if (error) setError("");
-              }}
-            />
+            <div className="lm-form__input-shell">
+              <span className="lm-form__field-icon" aria-hidden="true">
+                <StepIcon size={18} strokeWidth={1.75} />
+              </span>
+              <input
+                ref={campoRef}
+                id="lm-nombre"
+                name="nombre"
+                type="text"
+                inputMode="text"
+                autoComplete="name"
+                placeholder={actual.placeholder}
+                className="lm-input"
+                value={nombre}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? idError : undefined}
+                onChange={(ev) => {
+                  setNombre(ev.target.value);
+                  if (error) setError("");
+                }}
+              />
+            </div>
           )}
 
           {paso === 1 && (
-            <input
-              ref={campoRef}
-              id="lm-email"
-              name="email"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              placeholder={actual.placeholder}
-              className="lm-input"
-              value={email}
-              aria-invalid={error ? true : undefined}
-              aria-describedby={error ? idError : undefined}
-              onChange={(ev) => {
-                setEmail(ev.target.value);
-                if (error) setError("");
-              }}
-            />
+            <div className="lm-form__input-shell">
+              <span className="lm-form__field-icon" aria-hidden="true">
+                <StepIcon size={18} strokeWidth={1.75} />
+              </span>
+              <input
+                ref={campoRef}
+                id="lm-email"
+                name="email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                placeholder={actual.placeholder}
+                className="lm-input"
+                value={email}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? idError : undefined}
+                onChange={(ev) => {
+                  setEmail(ev.target.value);
+                  if (error) setError("");
+                }}
+              />
+            </div>
           )}
 
           {paso === 2 && (
@@ -267,21 +290,7 @@ export default function FormularioContacto({ iniciales, onListo }: Props) {
               }}
               aria-label="Volver al paso anterior"
             >
-              <svg
-                width="17"
-                height="17"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M15 5l-7 7 7 7"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowLeft size={18} strokeWidth={1.9} aria-hidden="true" />
             </button>
           )}
 
@@ -289,15 +298,32 @@ export default function FormularioContacto({ iniciales, onListo }: Props) {
             <div className="pearl-wrap">
               <p>
                 <span className="pearl-star" aria-hidden="true">
-                  ✦
+                  {"\u2726"}
                 </span>
-                {actual.boton}
-                <span className="pearl-star" aria-hidden="true">
-                  ✦
-                </span>
+                <span className="lm-form__cta-label">{actual.boton}</span>
+                <ArrowRight
+                  className="lm-form__cta-arrow"
+                  size={18}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
               </p>
             </div>
           </button>
+        </div>
+
+        {/* La barra dice cuánto queda: tres pasos cortos se sostienen; tres
+            pasos sin final visible, no. */}
+        <div className="lm-pasos__barra" aria-hidden="true">
+          {PASOS.map((_, i) => (
+            <span
+              key={i}
+              className={`lm-pasos__marca${i <= paso ? " is-on" : ""}`}
+            />
+          ))}
+          <span className="lm-pasos__cuenta">
+            {paso + 1} DE {PASOS.length}
+          </span>
         </div>
       </form>
     </div>

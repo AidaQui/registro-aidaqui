@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "../.atl";
 
 @theme inline {
   /* Colors */
@@ -4318,7 +4319,8 @@ a.pearl-btn {
   /* En una columna el glow ya no aporta; suaviza el fondo entero */
   .hero-adn-glow {
     left: 50%;
-    transform: translate(-50%, -50%);
+    font-size: 14px;
+    transform: translate(-50%, calc(-50% + 25px));
     width: 120%;
   }
 }
@@ -8871,61 +8873,110 @@ a.pearl-btn {
 }
 
 .dg-point {
+  --dg-point-glow: 0, 220, 255;
+  --dg-point-accent: 240, 201, 138;
+  --dg-point-soul: 155, 126, 200;
+  --dg-point-core: #1b1647;
+  --dg-point-edge: #0f4656;
+
   position: relative;
   overflow: hidden;
   padding: 22px 20px;
   border-radius: 18px;
   border: 1px solid rgba(240, 201, 138, 0.22);
-  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+  background:
+    radial-gradient(
+      circle at 88% -18%,
+      rgba(var(--dg-point-glow), 0.22),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 12% 112%,
+      rgba(var(--dg-point-accent), 0.18),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      var(--dg-point-core) 0%,
+      #251657 48%,
+      var(--dg-point-edge) 100%
+    );
   box-shadow: 0 14px 30px rgba(41, 0, 102, 0.18);
   transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 340ms ease, border-color 340ms ease;
 }
 
-/* Un haz que barre la tarjeta al pasar el cursor: es el mismo gesto del
-   escáner de la hélice, aplicado a cada pieza. Va en ::before porque el
-   ::after ya lo ocupa la aurora. */
+.dg-point:nth-child(2) {
+  --dg-point-glow: 80, 235, 219;
+  --dg-point-accent: 245, 166, 214;
+  --dg-point-soul: 183, 154, 232;
+  --dg-point-core: #172452;
+  --dg-point-edge: #3d2462;
+}
+
+.dg-point:nth-child(3) {
+  --dg-point-glow: 128, 226, 255;
+  --dg-point-accent: 240, 201, 138;
+  --dg-point-soul: 112, 92, 216;
+  --dg-point-core: #21144b;
+  --dg-point-edge: #123f5f;
+}
+
+.dg-point:nth-child(4) {
+  --dg-point-glow: 32, 216, 194;
+  --dg-point-accent: 232, 180, 255;
+  --dg-point-soul: 240, 201, 138;
+  --dg-point-core: #161d4a;
+  --dg-point-edge: #44235f;
+}
+
+/* Borde prismatico interno: da profundidad sin sumar el reflejo blanco anterior. */
 .dg-point::before {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -60%;
-  width: 45%;
-  z-index: 2;
+  inset: 0;
+  z-index: 0;
+  width: auto;
+  padding: 1px;
+  border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(
-    100deg,
-    rgba(240, 201, 138, 0) 0%,
-    rgba(240, 201, 138, 0.16) 45%,
-    rgba(255, 255, 253, 0.28) 50%,
-    rgba(240, 201, 138, 0.16) 55%,
-    rgba(240, 201, 138, 0) 100%
+  background: conic-gradient(
+    from 215deg at 50% 50%,
+    rgba(var(--dg-point-accent), 0.7),
+    rgba(var(--dg-point-glow), 0.4),
+    rgba(var(--dg-point-soul), 0.25),
+    transparent 42%,
+    transparent 72%,
+    rgba(var(--dg-point-accent), 0.55)
   );
-  opacity: 0;
-  transition: opacity 200ms ease;
+  opacity: 0.62;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: opacity 340ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dg-point:hover {
   transform: translateY(-5px);
-  border-color: rgba(240, 201, 138, 0.45);
-  box-shadow: 0 22px 44px rgba(41, 0, 102, 0.3);
+  border-color: rgba(var(--dg-point-accent), 0.54);
+  box-shadow:
+    0 20px 44px rgba(41, 0, 102, 0.24),
+    0 0 34px rgba(var(--dg-point-glow), 0.13);
 }
 
 .dg-point:hover::before {
-  opacity: 1;
-  animation: dg-point-sweep 900ms ease-out;
-}
-
-@keyframes dg-point-sweep {
-  from { left: -60%; }
-  to   { left: 130%; }
+  opacity: 0.94;
+  transform: scale(1.015) rotate(1.5deg);
 }
 
 /* El número se enciende con la tarjeta */
 .dg-point:hover .dg-point__num {
-  color: #ffffff;
-  text-shadow: 0 0 14px rgba(240, 201, 138, 0.7);
+  color: #fff7dd;
+  text-shadow:
+    0 0 12px rgba(var(--dg-point-accent), 0.78),
+    0 0 22px rgba(var(--dg-point-glow), 0.3);
   transition: color 300ms ease, text-shadow 300ms ease;
 }
 
@@ -8936,8 +8987,12 @@ a.pearl-btn {
   }
 
   .dg-point:hover::before {
+    opacity: 0.62;
+    transform: none;
+  }
+
+  .dg-point::after {
     animation: none;
-    opacity: 0;
   }
 }
 
@@ -8945,17 +9000,42 @@ a.pearl-btn {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("/lista-de-espera/fondo.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.32;
-  mix-blend-mode: screen;
+  z-index: 0;
+  border-radius: inherit;
   pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(var(--dg-point-accent), 0.32) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 78% 66%, rgba(var(--dg-point-glow), 0.28) 0 1.2px, transparent 2px),
+    linear-gradient(
+      118deg,
+      transparent 0 34%,
+      rgba(var(--dg-point-glow), 0.08) 43%,
+      rgba(var(--dg-point-accent), 0.07) 52%,
+      transparent 62%
+    ),
+    repeating-linear-gradient(
+      96deg,
+      transparent 0 22px,
+      rgba(var(--dg-point-soul), 0.06) 22px 23px,
+      transparent 23px 46px
+    );
+  background-size: 86px 68px, 124px 92px, 100% 100%, 100% 100%;
+  opacity: 0.74;
+  animation: dg-point-constellation 12s linear infinite;
 }
 
-.dg-point > * {
+@keyframes dg-point-constellation {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 86px -68px, -124px 92px, 0 0, 0 0;
+  }
+}
+
+.dg-point > :not(.dg-point__spot) {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .dg-point__num {
@@ -9657,5 +9737,2259 @@ a.pearl-btn {
 
   .dg-resultado__cta {
     max-width: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LANDING DE /diagnostico — HERO SANGRADO + PANEL ELEVADO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   La estructura sigue la de la landing de referencia: una banda superior que
+   llega a los bordes con la promesa encima de una animación, y un panel que
+   sube por delante con las esquinas redondeadas, donde vive la acción.
+
+   El corte entre las dos es lo que hace el trabajo: arriba se lee, abajo se
+   rellena. Con todo en una columna plana, el formulario era un bloque más. */
+
+.dg-hero {
+  /* EL VIOLETA PROFUNDO DEL HERO, y no es decoración: el panel de abajo
+     lleva las esquinas superiores redondeadas y por esos dos picos se ve
+     lo que haya detrás. Con el hero en claro, el panel crema sobre crema
+     no despegaba y el redondeo no se leía como un plano por delante.
+
+     Comparte el mismo universo cromatico de las tarjetas de "lo que vas a
+     descubrir", sin competir con su textura prismatico-profunda. */
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 55%, #341f5e 100%);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* EL ALTO MÍNIMO ES LO QUE LE DA SITIO A LA HÉLICE. El lienzo se mide a sí
+     mismo, y sin un mínimo el hero quedaría del alto del texto: la espiral
+     saldría aplastada y dejaría de leerse como una hélice. */
+  min-height: clamp(26rem, 62vh, 34rem);
+  padding: clamp(40px, 6vw, 72px) 24px clamp(56px, 7vw, 88px);
+}
+
+/* LA HÉLICE VA PRIMERO EN EL DOCUMENTO Y SIN z-index NEGATIVO. El contenido
+   viene después y lleva posición, así que gana el orden de pintado sin más.
+   Un -z-10 aquí parecería lo natural y es frágil: en cuanto un ancestro cree
+   un contexto de apilado, el fondo se iría detrás de la página entera.
+
+   La máscara evita el corte en seco contra los bordes del hero: sin ella la
+   espiral termina en una línea recta que delata la caja del lienzo. */
+.dg-hero__helix {
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 35%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 35%,
+    transparent 100%
+  );
+}
+
+.dg-hero__inner {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 860px);
+}
+
+/* EL PANEL.
+
+   `flex: 1` para que crezca: en una pantalla alta con poco contenido, sin el
+   crecimiento quedaría una franja del fondo de la página entre el panel y el
+   pie, y el corte redondeado perdería el sentido.
+
+   El degradado y el borde son los que ya tenía `.dg-intro__locked`, que quedó
+   huérfano al revertirse el montaje anterior. Reutilizarlos evita introducir
+   un color nuevo en una paleta que ya estaba cerrada. */
+.dg-panel {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  border-top: 1px solid rgba(155, 126, 200, 0.25);
+  border-radius: 2.5rem 2.5rem 0 0;
+  background: linear-gradient(180deg, #fdfaf5 0%, #f4ecfa 100%);
+  padding: clamp(36px, 5vw, 64px) 24px clamp(48px, 6vw, 80px);
+}
+
+@media (min-width: 768px) {
+  .dg-panel {
+    border-radius: 5rem 5rem 0 0;
+  }
+}
+
+.dg-panel__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(28px, 4vw, 44px);
+  width: min(100%, 860px);
+  margin: 0 auto;
+}
+
+/* LA TARJETA DE "LO QUE VAS A DESCUBRIR".
+
+   Va en claro porque las piezas que contiene —los cuatro puntos— son violeta
+   oscuro: sobre un fondo también oscuro se perderían los bordes de cada una.
+
+   El centrado se declara aquí y no se hereda: antes este bloque vivía dentro
+   de `.dg-intro`, que ya centraba. Fuera de él, sin esta línea los titulares
+   se irían a la izquierda. */
+.dg-card {
+  width: 100%;
+  padding: clamp(24px, 3.2vw, 36px);
+  border-radius: 24px;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: #fffffd;
+  box-shadow: 0 20px 50px rgba(41, 0, 102, 0.08);
+  text-align: center;
+}
+
+/* Foco cromatico que sigue al cursor. Va en un hijo para convivir con el
+   borde prismatico y la textura sutil de la tarjeta. */
+.dg-point .dg-point__spot {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 420ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(var(--dg-point-glow), 0.26) 0%,
+      rgba(var(--dg-point-accent), 0.16) 18%,
+      rgba(var(--dg-point-soul), 0.1) 34%,
+      transparent 62%
+    ),
+    conic-gradient(
+      from 110deg at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      transparent 0deg,
+      rgba(var(--dg-point-glow), 0.16) 80deg,
+      rgba(var(--dg-point-accent), 0.1) 145deg,
+      transparent 230deg
+    );
+  mix-blend-mode: screen;
+}
+
+/* focus-within además de hover: quien navega con el teclado llega a la tarjeta
+   sin pasar el ratón por encima, y sin esto no vería nada encenderse. */
+.dg-point:hover .dg-point__spot,
+.dg-point:focus-within .dg-point__spot {
+  opacity: 0.88;
+  transform: scale(1.02);
+}
+
+/* Sin movimiento: el foco aparece igual, pero sin el desvanecido. Es una
+   ayuda para saber sobre qué tarjeta estás, no una animación decorativa. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-point .dg-point__spot {
+    transition: none;
+  }
+}
+
+/* ══ LOS ANILLOS DEL HERO: LA CAPA DE ATRÁS ══
+
+   Tres planos en el hero: anillos (0), hélice (1) y contenido (2). El orden
+   se declara con z-index y no se deja al orden del documento porque los tres
+   son hijos posicionados del mismo contenedor y ahí un cambio de orden en el
+   JSX bastaría para cruzarlos sin que nadie lo note.
+
+   LA MÁSCARA ES MÁS ABIERTA QUE LA DE LA HÉLICE. Los anillos son círculos
+   completos: si se recortan con el mismo óvalo cerrado, se ven como arcos
+   sueltos en vez de anillos. Se difumina sólo el borde. */
+.dg-hero__rings {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 80% at 50% 50%,
+    #000 55%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 80% at 50% 50%,
+    #000 55%,
+    transparent 100%
+  );
+}
+
+.dg-hero__rings-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* ══ EL TEXTO DEL HERO, INVERTIDO ══
+
+   Los tres textos estaban en violeta sobre crema. Con el hero en oscuro ese
+   violeta desaparece contra el fondo, así que pasan a crema.
+
+   VAN ACOTADOS A .dg-hero. Las mismas clases las usa el resto de la página
+   —el panel, la tarjeta— sobre fondo claro, y ahí el violeta sigue siendo el
+   correcto. Sin este ámbito, arreglar el hero rompería todo lo demás.
+
+   "ADN" NO SE TOCA: su degradado dorado ya estaba pensado para destacar, y
+   sobre oscuro destaca más. Era la única palabra que no tenía problema. */
+.dg-hero .dg-intro__title {
+  font-size: clamp(38px, 5.4vw, 76px);
+  color: #fffffd;
+}
+
+.dg-hero .dg-intro__subtitle {
+  /* FUERA LA CURSIVA. En claro sobre crema se leía bien; sobre el fondo
+     oscuro y con la animación detrás, una cursiva serif es lo más difícil
+     de leer que hay: los trazos finos se confunden con el fondo. La serif
+     se queda —es la voz de la marca— pero recta y con más cuerpo. */
+  font-style: normal;
+  /* El techo sube junto con el contenedor: con la columna a 1180px de base
+     el subtítulo cabe en 30px sin pasar a cinco líneas, que era lo que le
+     hacía competir con el titular cuando la columna era estrecha. */
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.32;
+  color: #f4eeff;
+}
+
+/* La promesa va un escalón por debajo del subtítulo, igual que antes: es el
+   texto largo, y a plena luz competiría con las dos líneas que tiene encima. */
+.dg-hero .dg-intro__promise {
+  /* Sube de 15-17px a 17-23px y gana opacidad. Es el texto que explica de
+     qué va todo, y estaba puesto como si fuera una nota al pie. */
+  font-size: clamp(17px, 1.9vw, 23px);
+  line-height: 1.65;
+  color: rgba(255, 255, 253, 0.9);
+}
+
+/* ══ EL HERO: PILA CENTRADA, COMO LA LANDING DE REFERENCIA ══
+
+   Se probaron dos columnas y una escalera. Se vuelve a la pila centrada, que
+   es la composición de la referencia y la que se eligió tras ver las tres.
+
+   LA CLAVE NO ES QUE ESTÉ APILADO, ES EL ANCHO. Lo que hacía pesada la pila
+   original no era el orden vertical: era que el texto ocupaba todo el ancho
+   disponible. Líneas larguísimas, cuatro bloques con el mismo peso aparente y
+   ningún sitio donde descansar la vista.
+
+   Cada bloque es más estrecho que el anterior —titular, subtítulo, promesa—.
+   Ese estrechamiento progresivo es lo que da forma de embudo y hace que la
+   mirada baje por el centro en vez de barrer de lado a lado en cada línea. */
+.dg-hero__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  /* EL HERO NO COMPARTE EL ANCHO DEL PANEL, y es deliberado. El panel son
+     cajas que tienen que alinearse entre sí; el hero es un bloque de texto
+     centrado, y a 1180 px le salían líneas de mil y pico píxeles de largo.
+
+     Va con doble clase para ganarle en especificidad a la regla que agrupa
+     .dg-hero__inner con .dg-panel__inner más abajo en el archivo: si dependiera
+     del orden, bastaría mover un bloque para que el hero volviera a 1180 sin
+     que nadie entendiera por qué. */
+  .dg-hero .dg-hero__inner {
+    width: min(100%, 880px);
+  }
+
+  /* Reparte las líneas para que no quede una huérfana de dos palabras al
+     final. En un titular centrado ese desequilibrio se ve de inmediato. */
+  .dg-hero .dg-intro__title,
+  .dg-hero .dg-intro__subtitle {
+    text-wrap: balance;
+  }
+
+  /* El embudo: 880 el bloque, 700 el subtítulo, 640 la promesa. */
+  .dg-hero__sub {
+    max-width: 700px;
+  }
+
+  .dg-hero__prom {
+    max-width: 640px;
+  }
+
+  .dg-hero .dg-intro {
+    gap: 22px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ESCRITORIO ANCHO — la landing estaba encajonada en 860 px
+   ═══════════════════════════════════════════════════════════════════════════
+
+   En un monitor de 1920 el contenido ocupaba menos de la mitad de la pantalla
+   y el resto eran márgenes vacíos. El hero se leía como una franja estrecha
+   flotando en medio de la nada.
+
+   Y las dos cajas del panel no compartían ancho —el formulario topado a 440 px
+   y la tarjeta a 860—, así que no había una vertical común a la que agarrarse:
+   cada bloque empezaba y terminaba en un sitio distinto.
+
+   UNA SOLA MEDIDA PARA TODO: 1180 px. Hero y panel comparten contenedor y las
+   dos cajas lo llenan entero, así que la página tiene un único borde izquierdo
+   y uno derecho de arriba abajo. */
+.dg-hero__inner,
+.dg-panel__inner {
+  width: min(100%, 1180px);
+}
+
+/* El relleno lateral crece con la ventana: con el contenido más ancho, 24 px
+   fijos dejan el texto pegado al canto en pantallas grandes. */
+.dg-hero,
+.dg-panel {
+  padding-inline: clamp(24px, 5.5vw, 88px);
+}
+
+/* ══ LAS DOS CAJAS DEL PANEL, AL MISMO ANCHO ══
+
+   Se le quita al formulario el tope de 440 px y pasa a llenar el panel igual
+   que la tarjeta de abajo.
+
+   LO QUE NO SE ESTIRA ES SU CONTENIDO. Un campo de 1100 px de ancho para
+   escribir un nombre es peor que uno de 480, por grande que sea la caja que lo
+   rodea: el ojo tiene que recorrer todo ese vacío para llegar al cursor. Los
+   hijos del formulario se topan y se centran, así que la caja crece y el
+   formulario sigue siendo cómodo de rellenar. */
+.dg-panel__inner .lm-pasos {
+  max-width: 100%;
+}
+
+.dg-panel__inner .lm-form > * {
+  max-width: 480px;
+}
+
+/* ══ LA TIPOGRAFÍA DEL PANEL, AL NIVEL DEL NUEVO ANCHO ══
+
+   Los textos de las tarjetas estaban en 14-15 px. A 1180 px de ancho eso se
+   lee como un pie de foto, y son cuatro piezas con su propio párrafo. */
+.dg-card .dg-intro__block-title {
+  font-size: clamp(24px, 2.7vw, 38px);
+}
+
+.dg-card .dg-intro__block-subtitle {
+  max-width: 760px;
+  font-size: clamp(16px, 1.5vw, 19px);
+}
+
+.dg-card .dg-point__title {
+  font-size: clamp(18px, 1.8vw, 23px);
+}
+
+.dg-card .dg-point__text {
+  font-size: clamp(15px, 1.45vw, 17px);
+}
+
+/* Las tarjetas crecen con su texto: el relleno de 22px que servía a 15px de
+   letra aprieta el contenido cuando la letra sube a 17. */
+.dg-card .dg-point {
+  padding: clamp(22px, 2.2vw, 32px) clamp(20px, 2vw, 30px);
+}
+
+/* La barra de progreso, ya dentro del formulario, necesita separarse del campo
+   que tiene encima: pegada al borde del input se lee como parte de él —un
+   subrayado— y no como el contador de pasos que es. */
+.dg-panel__inner .lm-form .lm-pasos__barra {
+  margin: 10px 0 2px;
+}
+
+
+
+
+
+/* ══ LA CINTA, CENTRADA SOBRE LA COSTURA DEL HERO Y EL PANEL ══
+
+   Se sube media cinta con margin-top, y con margin-bottom se sube el panel otro
+   tanto: la cinta queda partida exactamente por el corte entre las dos bandas.
+
+   LOS MÁRGENES VAN EN PORCENTAJE Y NO EN PÍXELES, y eso es justo lo que hace
+   que funcione a cualquier ancho. Un margen en porcentaje se calcula sobre el
+   ANCHO del contenedor, y el alto de la cinta también depende del ancho —es un
+   SVG que escala con su viewBox—. Alto = ancho x 160/1200 = 13,333 %. La mitad
+   es 6,6667 %, y esa mitad es siempre la misma proporción mida lo que mida la
+   ventana. Con un valor en píxeles habría que corregirlo en cada tamaño.
+
+   ⚠️ ESTE CÁLCULO ESTÁ ATADO A DOS PROPS DEL COMPONENTE: viewHeight={160}
+   da el 13,3333 % (160/1200) y maxHeight={110} da el tope. El min() es lo
+   que replica en CSS lo que el componente hace en JS: por debajo del ancho
+   donde se alcanza el tope manda el porcentaje, y a partir de ahí, los
+   110 px. Si se cambia cualquiera de los dos props, hay que cambiarlo aquí.
+   */
+.dg-tira-costura {
+  position: relative;
+  /* Por encima del panel, que va en z-index 1. Sin esto el panel se pinta sobre
+     la mitad inferior de la cinta y la corta en seco por el medio. */
+  z-index: 3;
+  width: 100%;
+  margin-top: calc(min(13.3333%, 110px) * -0.5);
+  margin-bottom: calc(min(13.3333%, 110px) * -0.5);
+}
+
+/* ══ LO QUE HAY QUE DESTAPAR PARA QUE EL FONDO SE VEA ══
+
+   Estos dos llevaban color propio y opaco, así que el campo de ondas quedaba
+   detrás sin que se viera un solo píxel.
+
+   .dg-page tenía el crema de la página entera; .dg-hero, el degradado violeta
+   que le pusimos al oscurecerlo. Los dos pasan a transparente y el fondo lo
+   pone ahora el shader.
+
+   EL PANEL NO SE TOCA: sigue en crema opaco. Es donde vive el formulario, y un
+   campo de texto sobre un fondo que se mueve es ilegible. La página queda con
+   el fondo vivo arriba y una superficie quieta donde hay que trabajar. */
+.dg-page {
+  background-color: transparent;
+}
+
+.dg-hero {
+  background: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL PANEL DEJA DE TAPAR EL FONDO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   El crema del panel era lo único que separaba las ondas del resto de la
+   página: cubría todo lo que hay bajo la cinta. Al quitarlo, el campo pasa a
+   ser el fondo de la página entera y no sólo el del hero.
+
+   LAS DOS CAJAS NO SE TOCAN. El formulario y la tarjeta de "lo que vas a
+   descubrir" conservan su fondo propio y quedan flotando sobre las ondas, que
+   es justo lo que hace falta: un campo de texto sobre un fondo en movimiento
+   no se puede rellenar.
+
+   SE VAN TAMBIÉN EL BORDE Y EL REDONDEO. Sin fondo que recortar, el
+   border-radius no dibuja nada y el border-top quedaría como una raya suelta
+   cruzando el campo de ondas. Los dos existían para que el panel se leyera
+   como un plano por delante del hero; ese trabajo lo hace ahora la cinta. */
+.dg-panel {
+  background: transparent;
+  border-top: none;
+  border-radius: 0;
+}
+
+/* ══ EL PIE, LEGIBLE OTRA VEZ ══
+
+   El pie es hermano del panel, no hijo: nunca estuvo sobre el crema, sino
+   sobre el fondo de la página. Mientras ese fondo era claro, un violeta al
+   55 % se leía bien. Con el campo de ondas detrás quedó texto oscuro sobre
+   fondo oscuro.
+
+   Pasa a crema con la misma discreción que tenía: sigue siendo el aviso de
+   copyright y no tiene que competir con nada. Lo único que cambia es de qué
+   lado del contraste está. */
+.dg-page__footer {
+  border-top-color: rgba(255, 255, 253, 0.16);
+}
+
+.dg-page__footer p {
+  color: rgba(255, 255, 253, 0.58);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA FICHA DEL FORMULARIO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Era un bloque crema plano. Sobre el campo de ondas se leía como un papel
+   pegado encima de la escena: el único elemento de la página que no pertenecía
+   al mismo mundo que el resto.
+
+   LA IDEA: no es una tarjeta, es el panel donde se calibra la lectura. Vidrio
+   violeta oscuro que deja pasar el fondo desenfocado, con un filo dorado
+   encendido arriba —como si le diera la luz del hero— y apagándose hacia
+   abajo. Un objeto DENTRO de la escena, no encima de ella.
+
+   Todas las reglas van bajo .dg-panel__inner. Las clases lm- las usa
+   únicamente FormularioContacto, pero el ámbito deja claro dónde aplica y
+   evita sorpresas si algún día se reutilizan.
+
+   No se introduce ni un color nuevo: el violeta es el de las tarjetas y el
+   hero, el dorado es el de "ADN". */
+.dg-panel__inner .lm-form {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(30px, 3.6vw, 44px) clamp(24px, 3.2vw, 40px)
+    clamp(28px, 3.4vw, 40px);
+  /* El filo lo dibuja el ::before, no un border: un borde plano no puede ir de
+     encendido a apagado a lo largo del recorrido. */
+  border: 0;
+  border-radius: 28px;
+  background: linear-gradient(
+    155deg,
+    rgba(46, 26, 82, 0.66) 0%,
+    rgba(24, 12, 50, 0.74) 100%
+  );
+  /* El desenfoque es lo que ata la ficha al fondo: las ondas siguen ahí detrás,
+     legibles como movimiento pero no como forma. Sin esto sería una caja
+     opaca cualquiera y volveríamos al papel pegado. */
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  /* Dos sombras con trabajos distintos: la primera asienta la ficha sobre el
+     fondo; la segunda es un rescoldo dorado que la separa sin dibujar un
+     contorno. Es lo que hace que destaque sin gritar. */
+  box-shadow:
+    0 40px 90px -30px rgba(8, 3, 22, 0.92),
+    0 0 70px -38px rgba(240, 201, 138, 0.55);
+}
+
+/* EL FILO DORADO.
+
+   La técnica: un relleno de 1px con degradado, y una máscara que descuenta el
+   interior para que sólo quede el anillo. Es la única forma de tener un borde
+   con degradado direccional; `border-image` no respeta el border-radius.
+
+   El degradado va de dorado vivo arriba-izquierda a casi nada abajo-derecha:
+   la luz de la página cae desde el hero, y un filo uniforme delataría que es
+   un contorno dibujado en vez de un reflejo. */
+.dg-panel__inner .lm-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    148deg,
+    rgba(240, 201, 138, 0.7) 0%,
+    rgba(212, 160, 32, 0.28) 26%,
+    rgba(155, 126, 200, 0.16) 58%,
+    rgba(160, 108, 8, 0.06) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* EL RÓTULO, COMO ETIQUETA DE INSTRUMENTO.
+
+   Las dos rayas que lo flanquean no son adorno: convierten una línea de texto
+   suelta en un encabezado, y dan al ojo dónde empieza la ficha. Se desvanecen
+   hacia fuera para no cerrar una caja dentro de otra caja. */
+.dg-panel__inner .lm-form__badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  letter-spacing: 0.22em;
+  color: #d4a020;
+}
+
+.dg-panel__inner .lm-form__badge::before,
+.dg-panel__inner .lm-form__badge::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+}
+
+.dg-panel__inner .lm-form__badge::before {
+  background: linear-gradient(90deg, transparent, rgba(212, 160, 32, 0.5));
+}
+
+.dg-panel__inner .lm-form__badge::after {
+  background: linear-gradient(90deg, rgba(212, 160, 32, 0.5), transparent);
+}
+
+/* La pregunta crece y pasa a crema: es lo único que hay que leer aquí. */
+.dg-panel__inner .lm-form__label {
+  font-size: clamp(22px, 2.5vw, 30px);
+  color: #fffffd;
+}
+
+/* EL CAMPO ES UN HUECO, NO UNA PASTILLA.
+
+   En claro era una caja blanca sobre crema. Aquí va más oscuro que la propia
+   ficha: se lee como un rebaje donde se escribe, y el cursor parpadeando en
+   crema es lo más vivo de la pieza mientras se rellena. */
+.dg-panel__inner .lm-input {
+  padding: 17px 20px;
+  border: 1px solid rgba(240, 201, 138, 0.16);
+  border-radius: 14px;
+  background: rgba(10, 4, 24, 0.5);
+  color: #fffffd;
+}
+
+.dg-panel__inner .lm-input::placeholder {
+  color: rgba(255, 255, 253, 0.34);
+}
+
+/* El foco se marca en dorado y con halo, no sólo cambiando el borde: sobre
+   fondo oscuro un cambio de borde de un píxel no se ve. */
+.dg-panel__inner .lm-input:focus {
+  border-color: rgba(240, 201, 138, 0.55);
+  box-shadow: 0 0 0 4px rgba(212, 160, 32, 0.13);
+}
+
+/* Las marcas de paso: la apagada pasa a blanco tenue —sobre oscuro, el violeta
+   al 18 % era invisible— y la encendida gana brillo en el dorado. */
+.dg-panel__inner .lm-pasos__marca {
+  background: rgba(255, 255, 253, 0.14);
+}
+
+.dg-panel__inner .lm-pasos__marca::after {
+  background: linear-gradient(90deg, #d4a020, #f0c98a);
+}
+
+/* El botón de volver, en vidrio: es una salida secundaria y no tiene que
+   competir con el de avanzar. */
+.dg-panel__inner .lm-form__back {
+  border-color: rgba(240, 201, 138, 0.18);
+  background: rgba(255, 255, 253, 0.06);
+  color: rgba(255, 255, 253, 0.62);
+}
+
+.dg-panel__inner .lm-form__back:hover {
+  border-color: rgba(240, 201, 138, 0.45);
+  background: rgba(255, 255, 253, 0.12);
+  color: #fffffd;
+}
+
+/* El rojo de error no se lee sobre violeta oscuro: pasa a un coral claro, que
+   mantiene la señal de alarma con el contraste del lado correcto. */
+.dg-panel__inner .lm-form__error {
+  color: #ffab9f;
+}
+
+/* EL BOTÓN, EN EL DORADO DE "ADN".
+
+   No se toca .pearl-btn: lo comparten once componentes de otras tres landings.
+   El botón ya se pinta con la variable --pearl-bg, así que basta con
+   cambiarla aquí dentro. La variante dorada existía ya en el sistema
+   (.espera-cta--gold); esto usa su mismo valor sin tener que añadir una clase
+   en el JSX.
+
+   POR QUÉ DORADO Y NO VIOLETA: sobre una ficha violeta, un botón violeta se
+   hunde. Y el dorado es el color que la página reserva para la palabra "ADN":
+   pulsar aquí es justamente lo que lleva a leer el tuyo. */
+.dg-panel__inner .lm-form__cta {
+  --pearl-bg: #b07d1f;
+}
+
+/* LA FICHA SE CIÑE A SU CONTENIDO.
+
+   Estaba a 1180 px para igualar el ancho de la tarjeta crema que había debajo.
+   Esa tarjeta ya no existe —la sustituyó una carpeta con ancho propio— así que
+   el ancho grande no igualaba nada: sólo dejaba una columna de 480 px de
+   contenido flotando en medio de una losa vacía. Media ficha era aire.
+
+   A 620 px el marco abraza lo que contiene y la pieza se lee como un panel
+   sólido en vez de como un fondo con algo escrito en medio. */
+.dg-panel__inner .lm-pasos {
+  max-width: 620px;
+}
+
+/* El filo, un punto más encendido en la esquina que recibe la luz: en la
+   primera prueba era tan tenue que se perdía contra el vidrio. */
+.dg-panel__inner .lm-form::before {
+  background: linear-gradient(
+    148deg,
+    rgba(240, 201, 138, 0.9) 0%,
+    rgba(212, 160, 32, 0.35) 24%,
+    rgba(155, 126, 200, 0.18) 58%,
+    rgba(160, 108, 8, 0.06) 100%
+  );
+}
+
+/* FOCO VISIBLE CON TECLADO.
+
+   .pearl-btn lleva `outline: none` y no se puede tocar —lo comparten once
+   componentes—, así que quien navega con tabulador llegaba al botón principal
+   sin ninguna señal de dónde estaba. Se repone aquí dentro, en dorado y con
+   halo, igual que el campo de texto.
+
+   :focus-visible y no :focus: el anillo aparece al tabular, no al hacer clic
+   con el ratón, que es cuando estorbaría. */
+.dg-panel__inner .lm-form__cta:focus-visible,
+.dg-panel__inner .lm-form__back:focus-visible {
+  outline: 2px solid rgba(240, 201, 138, 0.85);
+  outline-offset: 3px;
+}
+
+/* ══ LA SECCIÓN DE "LO QUE VAS A DESCUBRIR", SIN FONDO PROPIO ══
+
+   Su módulo CSS le pone un degradado crema y, como la sección sangra a 100vw,
+   eso tapa una franja entera del campo de ondas de lado a lado.
+
+   ── POR QUÉ VA AQUÍ Y NO EN EL MÓDULO ──
+
+   Ya se corrigió una vez dentro de DiscoveryFolder.module.css y se perdió: ese
+   archivo se regeneró y volvió el degradado. Cualquier arreglo escrito allí
+   dura hasta la próxima vez que se reescriba el componente.
+
+   Se ancla al id del <section>, que vive en el JSX y no en la hoja de estilos,
+   así que sobrevive a que el módulo se regenere. Y un id (1,0,0) le gana en
+   especificidad a la clase del módulo (0,1,0) sin necesidad de !important.
+
+   Si algún día la sección tiene que volver a tener fondo, se borra esta regla
+   —no hay que buscar nada dentro del módulo. */
+#lo-que-vas-a-descubrir {
+  background: transparent;
+}
+
+/* ══ EL CAMPO DE TELÉFONO ══
+
+   Va aparte de .lm-input porque lo dibuja react-phone-number-input: el
+   contenedor es .espera-phone y el <input> real es .PhoneInputInput.
+
+   TODO SE ANCLA A .lm-phone, que es la clase propia de este formulario.
+   .espera-phone sola la comparte el modal de la lista de espera, y allí la
+   tarjeta sigue siendo clara: cambiarla rompería esa landing.
+
+   ── EL NÚMERO, A LA IZQUIERDA ──
+
+   Venía centrado. Con prefijo automático eso se ve mal: el "+34" aparece
+   flotando en medio del campo, lejísimos de la bandera que lo justifica, y al
+   escribir el número entero se va desplazando solo. Pegado a la izquierda,
+   bandera y prefijo se leen como una sola pieza y el texto crece hacia la
+   derecha como en cualquier campo. */
+.dg-panel__inner .lm-phone .PhoneInputInput {
+  text-align: left;
+  color: #fffffd;
+}
+
+.dg-panel__inner .lm-phone .PhoneInputInput::placeholder {
+  color: rgba(255, 255, 253, 0.34);
+}
+
+/* El resto es ponerlo al día con los otros pasos: al rediseñar la ficha, el
+   nombre y el correo pasaron a hueco oscuro, pero éste se quedó en blanco
+   porque no usa .lm-input. En pantalla, el tercer paso parecía de otra web. */
+.dg-panel__inner .lm-phone {
+  padding: 0 18px;
+  border: 1px solid rgba(240, 201, 138, 0.16);
+  border-radius: 14px;
+  background: rgba(10, 4, 24, 0.5);
+}
+
+.dg-panel__inner .lm-phone:focus-within {
+  border-color: rgba(240, 201, 138, 0.55);
+  box-shadow: 0 0 0 4px rgba(212, 160, 32, 0.13);
+}
+
+/* La flecha del selector, en dorado tenue: el violeta que tenía se perdía
+   contra el hueco oscuro. */
+.dg-panel__inner .lm-phone .PhoneInputCountrySelectArrow {
+  color: #f0c98a;
+  opacity: 0.75;
+}
+
+.lm-form__image {
+  display: none;
+}
+
+.lm-pasos__cuenta,
+.lm-form__badge-icon,
+.lm-form__field-icon,
+.lm-form__cta-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dg-panel__inner .lm-form {
+  --lm-step-image: url("/masterclass/aida-1-mobile.jpg");
+}
+
+.dg-panel__inner .lm-form[data-step="email"] {
+  --lm-step-image: url("/lista-de-espera/fondo.jpg");
+}
+
+.dg-panel__inner .lm-form[data-step="telefono"] {
+  --lm-step-image: url("/masterclass/aida-2-mobile.jpg");
+}
+
+.dg-panel__inner .lm-form > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dg-panel__inner .lm-form::before {
+  z-index: 2;
+}
+
+.dg-panel__inner .lm-form__badge {
+  justify-content: center;
+}
+
+.dg-panel__inner .lm-form__badge-icon {
+  flex: 0 0 auto;
+  color: #f0c98a;
+}
+
+.dg-panel__inner .lm-form__badge-text {
+  text-wrap: balance;
+}
+
+.dg-panel__inner .lm-form__field {
+  position: relative;
+}
+
+.dg-panel__inner .lm-form__input-shell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 20px;
+  border: 1px solid rgba(240, 201, 138, 0.16);
+  border-radius: 14px;
+  background: rgba(10, 4, 24, 0.5);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.dg-panel__inner .lm-form__input-shell:focus-within {
+  border-color: rgba(240, 201, 138, 0.55);
+  box-shadow: 0 0 0 4px rgba(212, 160, 32, 0.13);
+}
+
+.dg-panel__inner .lm-form__field-icon {
+  position: static;
+  flex: 0 0 auto;
+  color: rgba(240, 201, 138, 0.82);
+  pointer-events: none;
+  transform: none;
+}
+
+.dg-panel__inner .lm-form__input-shell .lm-input {
+  flex: 1;
+  min-width: 0;
+  padding: 17px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dg-panel__inner .lm-form__input-shell .lm-input:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.dg-panel__inner .lm-form__row {
+  align-items: center;
+  gap: 14px;
+}
+
+.dg-panel__inner .lm-form__back {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 253, 0.045);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 253, 0.06),
+    0 14px 28px rgba(8, 3, 22, 0.24);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    background 220ms ease;
+}
+
+.dg-panel__inner .lm-form__back:hover {
+  transform: translateX(-2px);
+}
+
+.dg-panel__inner .lm-form__cta {
+  --pearl-bg: #fffaf1;
+  min-height: 58px;
+  max-width: none;
+  background-color: #fffaf1;
+  color: #290066;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -10px 22px rgba(240, 201, 138, 0.16),
+    0 20px 34px rgba(8, 3, 22, 0.25);
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap {
+  padding: 17px 34px;
+  color: #290066;
+  font-size: clamp(14px, 1.35vw, 17px);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap p {
+  gap: 10px;
+  text-shadow: none;
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap::before {
+  left: 6%;
+  right: 6%;
+  top: 10%;
+  bottom: 52%;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.86),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap::after {
+  left: 7%;
+  right: 7%;
+  top: auto;
+  bottom: 10%;
+  height: 34%;
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    rgba(212, 160, 32, 0.18),
+    transparent 68%
+  );
+  box-shadow: none;
+}
+
+.dg-panel__inner .lm-form__cta:hover {
+  background-color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -12px 24px rgba(240, 201, 138, 0.2),
+    0 22px 38px rgba(8, 3, 22, 0.28);
+}
+
+.dg-panel__inner .lm-form__cta:hover .pearl-wrap::before,
+.dg-panel__inner .lm-form__cta:hover .pearl-wrap::after,
+.dg-panel__inner .lm-form__cta:hover .pearl-wrap p {
+  transform: none;
+}
+
+.dg-panel__inner .lm-form__cta-label {
+  min-width: 0;
+  text-align: center;
+}
+
+.dg-panel__inner .lm-form__cta-arrow {
+  flex: 0 0 auto;
+  color: #4f2a74;
+}
+
+.dg-panel__inner .lm-form .lm-pasos__barra {
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0 0;
+}
+
+.dg-panel__inner .lm-pasos__cuenta {
+  margin-left: 12px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 253, 0.42);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .dg-panel__inner .lm-pasos {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dg-panel__inner .lm-form {
+    width: min(calc(100vw - 36px), 390px);
+    max-width: 390px;
+    gap: 13px;
+    padding: 18px;
+    overflow: hidden;
+    border-radius: 30px;
+    background:
+      linear-gradient(180deg, rgba(255, 250, 241, 0.94) 0 19%, transparent 19%),
+      linear-gradient(158deg, rgba(35, 20, 76, 0.95) 0%, rgba(11, 56, 70, 0.94) 100%);
+    -webkit-backdrop-filter: blur(18px) saturate(132%);
+    backdrop-filter: blur(18px) saturate(132%);
+    box-shadow:
+      0 28px 70px -30px rgba(8, 3, 22, 0.9),
+      0 0 0 1px rgba(255, 255, 253, 0.52) inset;
+  }
+
+  .dg-panel__inner .lm-form > * {
+    max-width: none;
+  }
+
+  .dg-panel__inner .lm-form__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.38;
+    margin-bottom: 3px;
+    border-radius: 22px;
+    background-image:
+      linear-gradient(180deg, rgba(20, 8, 43, 0.02), rgba(20, 8, 43, 0.68)),
+      var(--lm-step-image);
+    background-position: center;
+    background-size: cover;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 16px 34px rgba(8, 3, 22, 0.26);
+  }
+
+  .dg-panel__inner .lm-form__badge {
+    gap: 8px;
+    width: 100%;
+    margin-top: 2px;
+    font-size: 10.5px;
+    line-height: 1.1;
+    letter-spacing: 0.18em;
+    color: #fffaf1;
+  }
+
+  .dg-panel__inner .lm-form__badge::before,
+  .dg-panel__inner .lm-form__badge::after {
+    display: none;
+  }
+
+  .dg-panel__inner .lm-form__label {
+    width: min(100%, 320px);
+    font-size: clamp(24px, 7.2vw, 32px);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  .dg-panel__inner .lm-form__input-shell {
+    min-height: 54px;
+    padding: 0 15px;
+    border-color: rgba(255, 255, 253, 0.24);
+    border-radius: 12px;
+    background: rgba(255, 255, 253, 0.08);
+  }
+
+  .dg-panel__inner .lm-form__input-shell .lm-input {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .dg-panel__inner .lm-form__field-icon {
+    color: rgba(255, 255, 253, 0.68);
+  }
+
+  .dg-panel__inner .lm-phone {
+    min-height: 54px;
+    padding: 0 14px;
+    border-color: rgba(255, 255, 253, 0.24);
+    background: rgba(255, 255, 253, 0.08);
+  }
+
+  .dg-panel__inner .lm-form__row {
+    gap: 14px;
+    margin-top: 3px;
+  }
+
+  .dg-panel__inner .lm-form__back {
+    width: 48px;
+    height: 48px;
+    color: rgba(255, 250, 241, 0.82);
+  }
+
+  .dg-panel__inner .lm-form__cta {
+    min-height: 50px;
+  }
+
+  .dg-panel__inner .lm-form__cta .pearl-wrap {
+    padding: 14px 20px;
+    font-size: clamp(12.5px, 3.8vw, 15px);
+    letter-spacing: 0.03em;
+  }
+
+  .dg-panel__inner .lm-form__cta .pearl-wrap p {
+    gap: 8px;
+  }
+
+  .dg-panel__inner .lm-pasos__marca {
+    width: 28px;
+    height: 5px;
+    background: rgba(255, 255, 253, 0.2);
+  }
+
+  .dg-panel__inner .lm-pasos__cuenta {
+    margin-left: 10px;
+    font-size: 10px;
+    color: rgba(255, 250, 241, 0.38);
+  }
+}
+
+/* ══ LA ESCENA DE CADA PREGUNTA ══
+
+   ALTO FIJO, Y ES LO IMPORTANTE. El enunciado ya reserva su alto con un
+   min-height para que las opciones no cambien de sitio entre preguntas; una
+   imagen de alto variable encima habría deshecho ese trabajo. La banda mide
+   siempre lo mismo y la imagen se recorta dentro.
+
+   El recorte se ancla arriba porque en las siete escenas la figura está en la
+   mitad superior: centrado, el recorte les cortaría la cabeza.
+
+   El velo inferior funde la imagen con el blanco de la tarjeta del test (no con
+   el violeta del fondo: la tarjeta del cuestionario sigue siendo clara), para
+   que la escena se disuelva hacia el enunciado en vez de cortarse en seco. */
+.dg-quiz__escena {
+  position: relative;
+  width: 100%;
+  /* Subido desde clamp(132px,19vh,208px): a ese alto la escena se recortaba
+     tanto que no se distinguía qué mostraba. La proporción de la banda pasa a
+     ser ~2:1 sobre la tarjeta de 680px, que es donde la figura se lee entera
+     sin empujar las opciones fuera de vista. */
+  height: clamp(260px, 42vh, 440px);
+  margin-bottom: clamp(14px, 2vw, 22px);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.dg-quiz__escena-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.dg-quiz__escena::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 80%,
+    rgba(255, 255, 253, 0.35) 93%,
+    rgba(255, 255, 253, 0.8) 100%
+  );
+}
+
+/* ══ LA PANTALLA DE ESCANEO, AL DERECHO ══
+
+   Esta pantalla se quedó con los colores de cuando el fondo era crema, y sobre
+   el campo de ondas quedó medio invisible:
+
+   - el texto de fase iba en #43276f, violeta oscuro sobre violeta oscuro. No
+     es que se leyera mal: directamente no se veía, y es la única frase que
+     explica qué está pasando mientras se espera.
+   - el rótulo en #6a4a9c, al borde de lo legible.
+   - los puntos apagados en violeta al 20 %, invisibles. Se veían encenderse
+     pero no cuántos faltaban, que es justo lo que un indicador de progreso
+     tiene que decir.
+
+   El dorado del rótulo lo alinea con el resto de rótulos de la página. */
+.dg-page__shell .dg-scan__eyebrow {
+  color: #d4a020;
+}
+
+.dg-page__shell .dg-scan__phase {
+  color: #fffffd;
+}
+
+.dg-page__shell .dg-scan__dot {
+  background: rgba(255, 255, 253, 0.18);
+}
+
+/* El punto encendido gana halo: sobre oscuro, un cambio de color sin brillo se
+   lee como un punto más. */
+.dg-page__shell .dg-scan__dot.is-on {
+  box-shadow: 0 0 12px rgba(212, 160, 32, 0.7);
+}
+
+/* Un rescoldo detrás de la hélice. La espera es la pantalla más vacía del
+   recorrido —no hay nada que leer ni que pulsar— y sin nada alrededor la
+   hélice flotaba suelta en el medio. El halo le da un centro. */
+.dg-page__shell .dg-scan__stage::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(420px, 90%);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(212, 160, 32, 0.13) 0%,
+    rgba(106, 74, 156, 0.1) 45%,
+    transparent 72%
+  );
+}
+
+/* ══ LA CABECERA DEL TEST: ATRÁS + BARRA EN UNA FILA ══ */
+.dg-quiz__head {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+
+/* La barra se come el resto de la fila. min-width 0 es lo que la deja
+   encogerse dentro del flex: sin eso, en móvil empujaría al botón fuera. */
+.dg-quiz__head .dg-quiz__bar {
+  flex: 1;
+  min-width: 0;
+}
+
+/* El botón ya no vive al pie, así que pierde el aire que tenía allí y se
+   compacta para caber en la fila sin robarle ancho a la barra. */
+.dg-quiz__head .dg-quiz__back {
+  flex-shrink: 0;
+  padding: 7px 13px 7px 9px;
+}
+
+/* Deshabilitado en la primera pregunta: se atenúa pero NO se esconde, para que
+   la barra mida siempre lo mismo. */
+.dg-quiz__head .dg-quiz__back:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.dg-quiz__head .dg-quiz__back:disabled:hover {
+  background: transparent;
+}
+
+/* El contador queda solo al pie y pasa al centro: sin el botón al lado,
+   alineado a la derecha quedaba colgando de una esquina. */
+.dg-quiz__foot {
+  justify-content: center;
+}
+
+/* ══ LAS OPCIONES, AL PASAR EL CURSOR ══
+
+   Antes sólo cambiaban al elegirlas. Sin respuesta al pasar por encima, una
+   lista de siete opciones no da ninguna señal de cuál se está a punto de
+   pulsar, y en una pantalla donde lo único que se hace es elegir, eso es la
+   interacción principal.
+
+   Tres cosas a la vez y ninguna brusca: el borde se enciende, la tarjeta se
+   levanta un pelo y la letra pasa a dorado. El desplazamiento es de 2px: lo
+   justo para notarse sin que la lista entera parezca temblar. */
+.dg-quiz__option {
+  transition: border-color 200ms ease, background 200ms ease,
+    box-shadow 200ms ease, transform 200ms ease;
+}
+
+.dg-quiz__option:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 160, 32, 0.55);
+  box-shadow: 0 10px 24px -14px rgba(41, 0, 102, 0.45);
+}
+
+.dg-quiz__option:hover .dg-quiz__letter {
+  background: rgba(212, 160, 32, 0.16);
+  color: #a06c08;
+}
+
+/* Con teclado, el mismo trato: quien tabula por las opciones ve exactamente
+   lo mismo que quien pasa el ratón. */
+.dg-quiz__option:focus-visible {
+  outline: 2px solid rgba(212, 160, 32, 0.75);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-quiz__option:hover {
+    transform: none;
+  }
+}
+
+/* ══ LA FICHA, CON EL FILO DORADO COMPLETO ══
+
+   El filo iba de encendido arriba-izquierda a casi nada abajo-derecha, imitando
+   una luz lateral. Sobre el fondo de ondas ese apagado se leía como un borde a
+   medio dibujar: la mitad inferior de la ficha quedaba sin contorno y la pieza
+   perdía forma justo donde está el botón.
+
+   Ahora el degradado recorre el dorado entero —hondo, vivo, hondo— así que el
+   filo se ve en las cuatro esquinas y sigue sin ser plano: el tono cambia a lo
+   largo del recorrido en vez de desaparecer.
+
+   Los botones y los iconos no se tocan. */
+.dg-panel__inner .lm-form::before {
+  background: linear-gradient(
+    148deg,
+    rgba(240, 201, 138, 0.95) 0%,
+    rgba(212, 160, 32, 0.6) 28%,
+    rgba(160, 108, 8, 0.5) 55%,
+    rgba(212, 160, 32, 0.62) 78%,
+    rgba(240, 201, 138, 0.85) 100%
+  );
+}
+
+/* El campo también lleva su borde dorado a la vista. Estaba al 16 % y sobre el
+   hueco oscuro no se distinguía dónde empezaba y dónde terminaba: se veía la
+   mancha más oscura, no un campo. */
+.dg-panel__inner .lm-input,
+.dg-panel__inner .lm-phone {
+  border-color: rgba(212, 160, 32, 0.42);
+}
+
+/* ══ EL ENUNCIADO, CENTRADO Y ARRIBA ══
+
+   La pregunta pasa a ir sobre la imagen, como en la referencia: primero se lee
+   qué se pregunta y después se mira la escena que lo ilustra. Con la imagen
+   delante, el ojo se detenía en ella y la pregunta llegaba tarde.
+
+   Centrado porque ahora encabeza la pantalla. Alineado a la izquierda mandaba
+   la mirada a un canto y desde ahí había que volver al centro para la imagen y
+   otra vez a la izquierda para las opciones: tres cambios de eje en una
+   pantalla que sólo hace una pregunta.
+
+   LAS OPCIONES NO SE CENTRAN. Son filas con letra, texto y marca de elegida;
+   centrarlas dejaría cada línea empezando en un sitio distinto y la lista se
+   volvería imposible de recorrer. */
+.dg-quiz__prompt,
+.dg-quiz__question {
+  text-align: center;
+}
+
+.dg-quiz__prompt {
+  justify-content: center;
+}
+
+/* La escena, ya debajo del enunciado, separa de él y no de la barra. */
+.dg-quiz__escena {
+  margin-top: clamp(4px, 1vw, 10px);
+}
+
+/* ══ FUERA LAS IMÁGENES DE LA FICHA DE CONTACTO ══
+
+   Cada paso del formulario traía una foto de fondo por variable CSS
+   (--lm-step-image). Se retiran: la ficha ya tiene atmósfera propia —el vidrio,
+   el filo dorado y las ondas detrás— y una foto encima le quitaba sitio a lo
+   único que se hace ahí, que es escribir tres datos.
+
+   Se apaga desde aquí y no borrando el <div> del componente: ese archivo lo
+   reescribe la otra sesión y el div volvería. Los iconos y los botones no se
+   tocan. */
+.dg-panel__inner .lm-form__image {
+  display: none;
+}
+
+/* ══ LA PANTALLA DE RESULTADO, LEGIBLE SOBRE EL FONDO OSCURO ══
+
+   Igual que le pasaba al escaneo: esta pantalla conserva los colores de cuando
+   la página era crema, y sobre el campo de ondas hay texto que directamente no
+   se ve.
+
+   Los cuatro que estaban del lado equivocado del contraste:
+
+   - __text en #2e2040. Es la descripción del patrón, el párrafo más largo y el
+     que explica el resultado entero. Era el más oscuro de todos.
+   - __quote en #43276f, la frase entrecomillada bajo el título.
+   - __eyebrow en #6a4a9c, el rótulo de arriba.
+   - __note en violeta al 60 %, el aviso bajo el botón de WhatsApp.
+
+   NO SE TOCAN __box-label NI __box-text: esos dos viven dentro de las cajas
+   claras ("lo que hay detrás", "lo que necesita integrar"), donde el violeta
+   oscuro es el color correcto. Cambiarlos los volvería ilegibles a ellos. */
+.dg-page__shell .dg-resultado__eyebrow {
+  color: #d4a020;
+}
+
+.dg-page__shell .dg-resultado__quote {
+  color: rgba(255, 255, 253, 0.8);
+}
+
+.dg-page__shell .dg-resultado__text {
+  color: rgba(255, 255, 253, 0.88);
+}
+
+.dg-page__shell .dg-resultado__note {
+  color: rgba(255, 255, 253, 0.55);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA PANTALLA DE RESULTADO, CON LA ARQUITECTURA DE LA REFERENCIA
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Era una columna corrida: rótulo, título, frase, párrafo, cajas, correo,
+   botón y nota, todo con el mismo peso y sin más jerarquía que el tamaño de
+   letra. Pasa a tres bloques con trabajos distintos. */
+
+/* ══ 1. LA FICHA ══
+
+   Todo lo que identifica el resultado va dentro de una sola pieza, y por eso
+   la pieza tiene cuerpo: vidrio oscuro, filo dorado y rescoldo, el mismo
+   lenguaje de la ficha del formulario. Las dos son los momentos que importan
+   del recorrido —el que abre y el que cierra— y conviene que se reconozcan
+   como parientes. */
+.dg-page__shell .dg-resultado__ficha {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: clamp(44px, 5vw, 60px) clamp(24px, 3.4vw, 48px)
+    clamp(32px, 4vw, 44px);
+  border-radius: 30px;
+  background: linear-gradient(
+    155deg,
+    rgba(46, 26, 82, 0.68) 0%,
+    rgba(24, 12, 50, 0.76) 100%
+  );
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  box-shadow:
+    0 40px 90px -30px rgba(8, 3, 22, 0.92),
+    0 0 70px -38px rgba(240, 201, 138, 0.5);
+}
+
+.dg-page__shell .dg-resultado__ficha::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    148deg,
+    rgba(240, 201, 138, 0.95) 0%,
+    rgba(212, 160, 32, 0.6) 28%,
+    rgba(160, 108, 8, 0.5) 55%,
+    rgba(212, 160, 32, 0.62) 78%,
+    rgba(240, 201, 138, 0.85) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* EL SELLO. Va montado sobre el canto superior, medio dentro y medio fuera:
+   así remata la ficha en vez de ser su primer renglón. */
+.dg-page__shell .dg-resultado__sello {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  font-size: 26px;
+  color: #2e1a52;
+  background: linear-gradient(140deg, #f0c98a, #d4a020 55%, #a06c08);
+  box-shadow: 0 12px 30px -12px rgba(212, 160, 32, 0.8);
+}
+
+.dg-page__shell .dg-resultado__lead {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: rgba(255, 255, 253, 0.66);
+}
+
+/* EL NOMBRE DEL PATRÓN, EN CUERPO GRANDE. Es el veredicto: si compite en
+   tamaño con la frase que lo presenta, deja de serlo. */
+.dg-page__shell .dg-resultado__title {
+  font-size: clamp(34px, 5vw, 62px);
+  line-height: 1.05;
+}
+
+.dg-page__shell .dg-resultado__text {
+  max-width: 620px;
+}
+
+/* LAS ETIQUETAS. Dicen por otra vía lo que dice el sello: que esto salió de
+   las respuestas dadas y que el proceso terminó. */
+.dg-page__shell .dg-resultado__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dg-page__shell .dg-resultado__chip {
+  padding: 7px 15px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 253, 0.18);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 253, 0.72);
+}
+
+.dg-page__shell .dg-resultado__chip--vivo {
+  border-color: rgba(212, 160, 32, 0.5);
+  background: rgba(212, 160, 32, 0.12);
+  color: #f0c98a;
+}
+
+/* ══ 3. EL CIERRE, EN DOS TARJETAS A LA PAR ══
+
+   Una fila desde 760px: el correo confirma lo que ya pasó, la comunidad
+   propone lo que sigue. Lado a lado se ve que son dos cosas distintas y que
+   sólo una pide actuar. Apiladas parecían dos pasos del mismo trámite. */
+.dg-page__shell .dg-resultado__cierre {
+  display: grid;
+  gap: clamp(14px, 2vw, 20px);
+  width: 100%;
+  margin-top: clamp(6px, 1.4vw, 14px);
+}
+
+@media (min-width: 760px) {
+  .dg-page__shell .dg-resultado__cierre {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.dg-page__shell .dg-resultado__medallon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 4px;
+  border-radius: 50%;
+  font-size: 21px;
+  color: #f0c98a;
+  border: 1px solid rgba(240, 201, 138, 0.35);
+  background: rgba(212, 160, 32, 0.12);
+}
+
+.dg-page__shell .dg-resultado__mail-nota {
+  margin: 10px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 253, 0.5);
+}
+
+/* LA TARJETA DE LA COMUNIDAD ES LA QUE PIDE ALGO, así que es la que lleva
+   contorno propio y el botón. La del correo se queda en un tono por debajo:
+   informa, no reclama. */
+.dg-page__shell .dg-resultado__comunidad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: clamp(26px, 3vw, 36px) clamp(20px, 2.6vw, 32px);
+  border-radius: 24px;
+  border: 1px solid rgba(240, 201, 138, 0.22);
+  background: linear-gradient(
+    160deg,
+    rgba(46, 26, 82, 0.55),
+    rgba(20, 8, 43, 0.62)
+  );
+  text-align: center;
+}
+
+.dg-page__shell .dg-resultado__comunidad-title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(21px, 2.2vw, 27px);
+  font-weight: 600;
+  color: #fffffd;
+}
+
+/* La nota deja de ser un pie suelto y pasa a ser el texto de esta tarjeta. */
+.dg-page__shell .dg-resultado__note {
+  margin: 0;
+  max-width: 34ch;
+}
+
+.dg-page__shell .dg-resultado__cta {
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA FICHA EN MÓVIL — SE DEVUELVE A LA PALETA DE LA PÁGINA
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Por debajo de 700px la ficha se estaba pintando con otro fondo:
+
+     linear-gradient(180deg, rgba(255,250,241,.94) 0 19%, transparent 19%),
+     linear-gradient(158deg, rgba(35,20,76,.95), rgba(11,56,70,.94));
+
+   Dos problemas. La primera capa es una franja crema en el 19% superior: era
+   el respaldo de la foto que iba ahí arriba, y al retirar la foto quedó
+   tapando el rótulo —texto dorado sobre crema, ilegible—. Y la segunda va de
+   violeta a VERDE AZULADO (11,56,70), que no es un color de esta página: ese
+   azul verdoso es de la referencia, no de aquí.
+
+   Se repone el mismo vidrio violeta del resto: una sola capa, sin franja, y
+   con el filo dorado haciendo el contorno en vez de un reborde blanco. */
+@media (max-width: 700px) {
+  .dg-panel__inner .lm-form {
+    background: linear-gradient(
+      155deg,
+      rgba(46, 26, 82, 0.72) 0%,
+      rgba(24, 12, 50, 0.8) 100%
+    );
+    /* overflow: hidden recortaba el filo justo en las esquinas redondeadas,
+       que es donde más se ve. */
+    overflow: visible;
+    padding: clamp(22px, 6vw, 30px) clamp(18px, 5vw, 24px);
+    box-shadow:
+      0 28px 70px -30px rgba(8, 3, 22, 0.9),
+      0 0 60px -34px rgba(240, 201, 138, 0.5);
+  }
+
+  /* El rótulo recupera sus dos rayas: sin la franja crema detrás vuelven a
+     tener sitio, y son las que lo convierten en encabezado. */
+  .dg-panel__inner .lm-form__badge::before,
+  .dg-panel__inner .lm-form__badge::after {
+    display: block;
+  }
+
+  .dg-panel__inner .lm-form__badge {
+    color: #d4a020;
+  }
+}
+
+/* EL FILO, POR DEBAJO DEL CONTENIDO.
+
+   Le habían puesto z-index 2 y los hijos van en 1, así que el anillo pasaba
+   por encima del texto. Sobre las esquinas no se nota, pero es un elemento
+   decorativo tapando contenido y basta que la máscara falle en un navegador
+   para que el degradado entero se coma la ficha.
+
+   En 0 hace lo que tiene que hacer: dibujar el borde por detrás de todo. */
+.dg-panel__inner .lm-form::before {
+  z-index: 0;
+}
+
+/* ══ EL TEXTO BAJO "LO QUE VAS A DESCUBRIR", MÁS GRANDE ══
+
+   Iba en clamp(15.5px, 1.32vw, 18px) dentro de la carpeta. Es la frase que
+   explica qué se recibe al terminar, y quedaba por debajo del cuerpo de
+   lectura normal justo donde hace falta leerla.
+
+   ── POR QUÉ ESTE SELECTOR Y NO LA CLASE ──
+
+   El texto lo pinta DiscoveryFolder.module.css, y las clases de un módulo
+   llevan hash: `.folderBrief` no existe como tal en el CSS final, así que no
+   se puede alcanzar desde aquí. Y escribirlo dentro del módulo no dura: ese
+   archivo ya se ha regenerado dos veces y se llevó por delante los cambios.
+
+   Se ancla a la estructura, que sí es estable: dentro de la sección —que
+   tiene id propio en el JSX— la frase es el <p> que va justo después del
+   <strong> del título. El id aporta además especificidad de sobra para
+   ganarle al módulo sin !important. */
+#lo-que-vas-a-descubrir strong + p {
+  font-size: clamp(17px, 1.7vw, 22px);
+  line-height: 1.45;
+  width: min(84%, 640px);
+  max-width: 640px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA HÉLICE LLENA EL HERO — Y ASÍ LA CINTA DEJA DE MOVERSE
+   ═══════════════════════════════════════════════════════════════════════════
+
+   ── POR QUÉ SE MOVÍA ──
+
+   La hélice era un lienzo de alto FIJO (380px) centrado dentro del hero. El
+   hero mide clamp(26rem, 62vh, 34rem), o sea que depende del alto de la
+   ventana. Y la cinta va pegada al corte entre el hero y el panel.
+
+   Con eso, el final de la animación caía siempre en `altoHero/2 + 190px`,
+   mientras que el corte estaba en `altoHero`. La distancia entre los dos es
+   `altoHero/2 - 190`, que CRECE con la ventana: unos 18px en una pantalla
+   baja y cerca de 90 en una alta. La cinta no se movía sola — se movía el
+   final de la animación respecto al corte.
+
+   Por eso ningún margen fijo podía arreglarlo: acertaba en el tamaño donde se
+   ajustaba y fallaba en todos los demás. El -2.35 que hubo en móvil era eso.
+
+   ── EL ARREGLO ──
+
+   Que la hélice mida lo mismo que el hero. Si llena la banda entera, su final
+   ES el corte, y la cinta centrada ahí queda siempre al final de la animación
+   pase lo que pase con la ventana.
+
+   El !important es necesario y no es pereza: HelixCanvas fija el alto con un
+   estilo EN LÍNEA (lo necesita para medirse a sí mismo), y un estilo en línea
+   sólo se puede vencer así. El prop `height` que recibe pasa a ser el valor de
+   reserva para antes de que aplique esta regla. */
+.dg-hero__helix .dg-helix {
+  height: 100% !important;
+}
+
+
+/* ══ EL CAMPO DE ONDAS DEL FONDO ══
+
+   position: fixed y no absolute: el campo se queda quieto mientras la página
+   se desplaza por delante. Con absolute se arrastraría con el documento y
+   dejaría de leerse como fondo para pasar a ser una sección más.
+
+   z-index 0 lo deja por debajo de todo: el hero va en 1, el panel en 1 y la
+   cinta en 3. */
+.dg-page__ondas {
+  /* UN PLANO OSCURO DEBAJO DEL LIENZO. El shader sale con opacity 0.7, o sea
+     que NO es opaco: compone sobre lo que tenga detrás. Con el body en blanco
+     el resultado salía lavado y el subtítulo blanco del hero dejaba de leerse.
+     Con este violeta casi negro debajo, el shader recupera su rango.
+     Quitar esta línea devuelve el fondo claro de la primera prueba. */
+  background: #14082b;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL SEPARADOR: LÍNEA CON EL ROMBO EN MEDIO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Una sola pieza para los dos sitios donde hace falta separar —entre el
+   formulario y las tarjetas, y encima del pie— para que la página no acabe
+   con dos recursos parecidos haciendo lo mismo.
+
+   Las dos mitades de la línea son pseudo-elementos que crecen con `flex: 1`,
+   así que el rombo queda centrado solo, mida lo que mida el contenedor. No
+   hace falta calcular un hueco ni tapar la línea con un chip opaco —que sobre
+   este fondo animado no funcionaría, porque no hay un color sólido detrás que
+   imitar.
+
+   Las líneas se desvanecen hacia fuera: cortadas en seco parecerían el borde
+   de una caja invisible. */
+.dg-separador {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  /* El gap de .dg-panel__inner ya deja clamp(28px, 4vw, 44px) a cada lado, o
+     sea la misma distancia arriba y abajo y siempre por encima de los 15px
+     pedidos. Por eso aquí no se añade margen: hacerlo rompería la simetría. */
+  font-size: 13px;
+  line-height: 1;
+  color: #d4a020;
+  text-shadow: 0 0 10px rgba(212, 160, 32, 0.55);
+  user-select: none;
+}
+
+.dg-separador::before,
+.dg-separador::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+}
+
+.dg-separador::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 253, 0.22));
+}
+
+.dg-separador::after {
+  background: linear-gradient(90deg, rgba(255, 255, 253, 0.22), transparent);
+}
+
+/* ══ EL MISMO DIBUJO ENCIMA DEL PIE ══
+
+   El pie traía un punto dorado de 5px montado sobre su border-top. Pasa al
+   rombo, que es el símbolo que ya usan el botón y los separadores de la cinta.
+
+   Se cambia el border-top por un degradado de fondo con un HUECO en el medio:
+   así el rombo se apoya en el vacío en vez de taparla, y no hace falta un
+   fondo sólido detrás. */
+.dg-page__footer {
+  border-top: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 253, 0.16) 10%,
+    rgba(255, 255, 253, 0.16) calc(50% - 17px),
+    transparent calc(50% - 17px),
+    transparent calc(50% + 17px),
+    rgba(255, 255, 253, 0.16) calc(50% + 17px),
+    rgba(255, 255, 253, 0.16) 90%,
+    transparent 100%
+  );
+  background-size: 100% 1px;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.dg-page__footer::before {
+  content: "✦";
+  top: 0;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 13px;
+  line-height: 1;
+  color: #d4a020;
+  text-shadow: 0 0 10px rgba(212, 160, 32, 0.55);
+}
+
+/* ══ EL RESULTADO, MÁS ANCHO EN ESCRITORIO ══
+
+   El tope estaba en .dg-resultado (max-width: 700px), no en el contenedor. A
+   ese ancho, en un monitor grande, los tres bloques quedaban en una columna
+   estrecha y las dos tarjetas de abajo —que van a la mitad cada una— se
+   quedaban en unos 340px: texto centrado partido en muchas líneas cortas.
+
+   ── POR QUÉ HACEN FALTA LOS MÁRGENES NEGATIVOS ──
+
+   El contenedor que lo envuelve, .dg-page__shell, mide min(100% - 48px, 860px).
+   Subir el max-width por encima de eso no serviría de nada: el hijo no puede
+   ser más ancho que su contenedor. Los márgenes negativos lo ensanchan hacia
+   los dos lados por igual, así que sigue centrado.
+
+   El cálculo sale solo: el margen es la mitad de lo que le falta al contenedor
+   para llegar al ancho deseado, en negativo. Si se cambia el 1040, el margen se
+   recalcula con él porque los dos leen el mismo valor. */
+@media (min-width: 960px) {
+  .dg-page__shell .dg-resultado {
+    max-width: none;
+    width: min(100vw - 96px, 1040px);
+    margin-inline: calc((100% - min(100vw - 96px, 1040px)) / 2);
+    gap: 20px;
+  }
+
+  /* LAS DOS TARJETAS DE ABAJO, DESCOMPRIMIDAS.
+
+     Con el bloque más ancho ya les toca más sitio, pero el relleno y el cuerpo
+     venían calibrados para una tarjeta estrecha: el texto seguía tocando los
+     bordes y la letra quedaba pequeña para la distancia a la que ahora se lee. */
+  .dg-page__shell .dg-resultado__mail,
+  .dg-page__shell .dg-resultado__comunidad {
+    padding: clamp(32px, 3.4vw, 44px) clamp(28px, 3vw, 40px);
+  }
+
+  .dg-page__shell .dg-resultado__mail-text {
+    font-size: clamp(16px, 1.25vw, 18px);
+    line-height: 1.75;
+  }
+
+  .dg-page__shell .dg-resultado__mail-nota {
+    margin-top: 14px;
+    font-size: 13.5px;
+  }
+
+  /* El tope de 34ch venía de cuando la tarjeta era estrecha: mantenerlo aquí
+     dejaría la mitad del ancho ganado sin usar. */
+  .dg-page__shell .dg-resultado__note {
+    max-width: 42ch;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.7;
+  }
+
+  /* Las dos cajas de claves siguen el mismo criterio: más aire dentro. */
+  .dg-page__shell .dg-resultado__box {
+    padding: clamp(24px, 2.6vw, 32px);
+  }
+}
+
+/* La ficha no llevaba ancho propio y .dg-resultado es un flex centrado, así
+   que se encogía a su contenido: quedaba más estrecha que las dos filas de
+   abajo, que sí van al 100%. Los tres bloques tienen que compartir borde
+   izquierdo y derecho. */
+.dg-page__shell .dg-resultado__ficha {
+  width: 100%;
+}
+
+/* ══ LAS DOS ETIQUETAS PULSAN, POR TURNOS ══
+
+   ── ES UN LATIDO, NO UN PARPADEO ──
+
+   Un pulso simple —crecer y volver— se lee como un elemento que titila, que es
+   lo que hace un aviso de error. Aquí van DOS golpes seguidos y una pausa
+   larga: el patrón de una pulsación. Dice "esto está vivo", no "esto falla".
+
+   El segundo golpe es más corto que el primero y no baja del todo entre los
+   dos, que es lo que separa un latido de dos toques sueltos.
+
+   ── EL REPOSO ES LO QUE PERMITE TURNARSE ──
+
+   El latido ocupa el primer cuarto del ciclo; el resto es quietud. Sin esa
+   pausa, las dos estarían siempre moviéndose y desfasadas, que no es turnarse:
+   se leería como dos cosas temblando a la vez.
+
+   5,6s de ciclo: la pulsación dura ~1,4s y quedan más de cuatro de calma. A
+   menos de eso deja de sentirse como un pulso y empieza a inquietar.
+
+   ── EL DESFASE VA EN NEGATIVO ──
+
+   Un animation-delay negativo arranca la animación ya empezada. Con retardo
+   positivo, la segunda etiqueta se quedaría parada 2,8s antes de entrar y el
+   primer ciclo se vería cojo. */
+@keyframes dg-chip-pulso {
+  0% {
+    transform: scale(1);
+    border-color: rgba(255, 255, 253, 0.18);
+    box-shadow: 0 0 0 rgba(212, 160, 32, 0);
+  }
+  6% {
+    transform: scale(1.075);
+    border-color: rgba(240, 201, 138, 0.9);
+    box-shadow: 0 0 20px rgba(212, 160, 32, 0.5);
+  }
+  13% {
+    transform: scale(1.015);
+    border-color: rgba(240, 201, 138, 0.5);
+    box-shadow: 0 0 10px rgba(212, 160, 32, 0.25);
+  }
+  19% {
+    transform: scale(1.055);
+    border-color: rgba(240, 201, 138, 0.8);
+    box-shadow: 0 0 16px rgba(212, 160, 32, 0.4);
+  }
+  27% {
+    transform: scale(1);
+    border-color: rgba(255, 255, 253, 0.18);
+    box-shadow: 0 0 0 rgba(212, 160, 32, 0);
+  }
+  100% {
+    transform: scale(1);
+    border-color: rgba(255, 255, 253, 0.18);
+    box-shadow: 0 0 0 rgba(212, 160, 32, 0);
+  }
+}
+
+/* La dorada vuelve a SU propio borde entre golpe y golpe: con el blanco de la
+   otra se apagaría al terminar cada pulso. */
+@keyframes dg-chip-pulso-oro {
+  0% {
+    transform: scale(1);
+    border-color: rgba(212, 160, 32, 0.5);
+    box-shadow: 0 0 0 rgba(212, 160, 32, 0);
+  }
+  6% {
+    transform: scale(1.075);
+    border-color: rgba(240, 201, 138, 1);
+    box-shadow: 0 0 24px rgba(212, 160, 32, 0.6);
+  }
+  13% {
+    transform: scale(1.015);
+    border-color: rgba(212, 160, 32, 0.7);
+    box-shadow: 0 0 12px rgba(212, 160, 32, 0.3);
+  }
+  19% {
+    transform: scale(1.055);
+    border-color: rgba(240, 201, 138, 0.92);
+    box-shadow: 0 0 18px rgba(212, 160, 32, 0.48);
+  }
+  27% {
+    transform: scale(1);
+    border-color: rgba(212, 160, 32, 0.5);
+    box-shadow: 0 0 0 rgba(212, 160, 32, 0);
+  }
+  100% {
+    transform: scale(1);
+    border-color: rgba(212, 160, 32, 0.5);
+    box-shadow: 0 0 0 rgba(212, 160, 32, 0);
+  }
+}
+
+.dg-page__shell .dg-resultado__chip {
+  animation: dg-chip-pulso 5.6s ease-in-out infinite;
+}
+
+.dg-page__shell .dg-resultado__chip--vivo {
+  animation-name: dg-chip-pulso-oro;
+}
+
+/* Media vuelta de desfase: pulsa mientras la otra descansa. */
+.dg-page__shell .dg-resultado__chips > :nth-child(2) {
+  animation-delay: -2.8s;
+}
+
+/* Sin movimiento se quedan quietas: lo que comunican —de dónde sale el
+   resultado y que terminó— ya está escrito en el texto. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-page__shell .dg-resultado__chip {
+    animation: none;
+  }
+}
+
+/* ══ LA LUZ DORADA CRUZANDO LA FRASE ══
+
+   Misma técnica que la palabra "ADN": un degradado recortado a la silueta de
+   las letras (background-clip: text) que se desplaza con el mismo keyframe
+   gold-shimmer que ya existe.
+
+   ── LA DIFERENCIA CON "ADN" ──
+
+   Allí el degradado es dorado de punta a punta, así que la palabra ES dorada.
+   Aquí la frase tiene que seguir leyéndose en crema: el degradado es crema en
+   casi todo su recorrido y sólo lleva una franja dorada estrecha en el medio.
+   Lo que se ve entonces no es un texto dorado, sino una luz cruzándolo.
+
+   background-size 260% es lo que estrecha esa franja respecto al texto: a 100%
+   el destello ocuparía media frase y dejaría de leerse como un reflejo.
+
+   El recorte a las letras obliga a color: transparent, que hay que declarar
+   después del color crema de la regla de contraste o ganaría aquél. */
+.dg-page__shell .dg-resultado__quote {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 253, 0.8) 0%,
+    rgba(255, 255, 253, 0.8) 38%,
+    rgba(240, 201, 138, 0.95) 46%,
+    #f0c98a 50%,
+    rgba(240, 201, 138, 0.95) 54%,
+    rgba(255, 255, 253, 0.8) 62%,
+    rgba(255, 255, 253, 0.8) 100%
+  );
+  background-size: 260% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 6s linear infinite;
+}
+
+/* Sin movimiento, la frase vuelve a ser crema plana: un degradado detenido a
+   mitad de recorrido dejaría media frase de otro color sin motivo. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-page__shell .dg-resultado__quote {
+    background: none;
+    color: rgba(255, 255, 253, 0.8);
+    animation: none;
+  }
+}
+
+/* ══ LA TARJETA DE LA COMUNIDAD, EN MÓVIL ══
+
+   El texto terminaba con "ADN." solo en su propia línea. Una palabra suelta al
+   final de un párrafo corto se lee como un error de maquetación.
+
+   Dos cambios que atacan la misma causa por lados distintos:
+
+   - Más sitio: menos relleno lateral y un tope de línea más ancho, así caben
+     más palabras por renglón.
+   - text-wrap: balance reparte el texto entre las líneas disponibles en vez de
+     llenar cada una hasta el borde. Es lo que impide que quede una huérfana
+     aunque el texto cambie más adelante — lo de arriba sólo lo evita para este
+     texto concreto y este ancho. */
+@media (max-width: 759px) {
+  .dg-page__shell .dg-resultado__comunidad {
+    padding: clamp(28px, 6vw, 34px) clamp(16px, 4vw, 22px);
+  }
+
+  .dg-page__shell .dg-resultado__note {
+    max-width: 40ch;
+    text-wrap: balance;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOS TEXTOS DE LA CARPETA
+   ═══════════════════════════════════════════════════════════════════════════
+
+   ── CÓMO SE DISTINGUE ABIERTA DE CERRADA DESDE AQUÍ ──
+
+   La clase que marca el estado abierto vive en el módulo y lleva hash, así que
+   no se puede nombrar. Pero el componente pone `aria-hidden={!open}` en la capa
+   de fichas: cerrada es "true", abierta es "false". Ese atributo está en el
+   JSX, no en la hoja de estilos, así que sobrevive a que el módulo se
+   regenere —cosa que ya pasó dos veces—.
+
+   De ahí sale `:has([aria-hidden="false"])`: sólo encaja con la carpeta
+   abierta.
+
+   ── EL RÓTULO Y EL PÁRRAFO NO SE VEN CERRADOS ──
+
+   El rótulo llegó a llevar opacity: 1 cuando se pidió que estuviera "fijo".
+   Se retira: con la carpeta cerrada no tienen que verse ninguno de los dos.
+   Al quitarlo vuelve a mandar el módulo, que ya los aparece al abrir. */
+
+/* ══ EL RÓTULO ══ */
+@media (min-width: 901px) {
+  /* CENTRADO EN LA PESTAÑA SIN USAR transform.
+
+     La pestaña ocupa del 0% al 36% del ancho, así que dejando el rótulo de
+     `left: 0` a `right: 64%` y centrando el texto dentro, queda en su mitad.
+     Con transform también se podía, pero el transform lo usa el módulo para la
+     entrada del rótulo y pisarlo le quitaba el deslizamiento. */
+  #lo-que-vas-a-descubrir div > span {
+    left: 0;
+    right: 64%;
+    top: 14%;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* En móvil se centra sobre todo el ancho de la carpeta, no sobre la pestaña,
+     y se ancla al pie para seguir al párrafo: si el párrafo baja, el rótulo
+     baja con él y la separación de 74px no cambia. */
+  #lo-que-vas-a-descubrir div > span {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: calc(1% + 74px);
+    text-align: center;
+    font-size: 11.5px;
+  }
+
+  #lo-que-vas-a-descubrir strong + p {
+    bottom: 1%;
+  }
+}
+
+/* ══ EL TITULAR: CENTRADO CERRADO, ARRIBA ABIERTO ══
+
+   Cerrado no hay nada más en la carpeta, así que el titular se pone en el
+   centro. Al abrirse sube para dejar sitio al rótulo y al párrafo que
+   aparecen debajo.
+
+   LOS DOS ESTADOS USAN `bottom`, Y ESO NO ES CASUAL. El módulo transiciona
+   `bottom` y `transform`, no `top`. Centrando con `top: 50%` el cambio de
+   estado sería un salto en seco; con `bottom: 50%` y medio alto de
+   corrección en el transform, el mismo centro se consigue con las dos
+   propiedades que sí están animadas, y el titular viaja. */
+#lo-que-vas-a-descubrir div > strong {
+  /* 34% Y NO 50%.
+
+     El titular se centraba sobre el elemento entero, que incluye la
+     pestaña de arriba: por eso quedaba alto respecto al cuerpo, que es
+     lo que se ve como la tarjeta.
+
+     El cuerpo (.folderFront) va en `bottom: 0; height: 68%`, o sea del
+     32% al 100%. Su centro está en el 66% desde arriba, que contado
+     desde abajo —que es como hay que expresarlo aquí— son 34%.
+
+     Vale para móvil también: allí cambia la proporción general de la
+     carpeta, pero el cuerpo sigue siendo el 68% de su alto. */
+  bottom: 34%;
+  transform: translate(-50%, 50%);
+}
+
+#lo-que-vas-a-descubrir:has([aria-hidden="false"]) div > strong {
+  bottom: calc(24% + 75px);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 900px) {
+  #lo-que-vas-a-descubrir:has([aria-hidden="false"]) div > strong {
+    bottom: calc(24% + 75px);
+  }
+}
+
+/* ══ EL TITULAR SE ENCIENDE AL ABRIRSE LA CARPETA ══
+
+   ── POR QUÉ NO OTRO DESTELLO DORADO ──
+
+   El dorado ya aparece en "ADN", en la frase del resultado, en las estrellas
+   de la cinta y en los chips. Un quinto uso lo convertiría en el color de
+   fondo de la página en vez de en su acento.
+
+   La carpeta es la única pieza con paleta propia —turquesa hacia violeta— y
+   el titular vive sobre ella. El halo sale de esos dos colores, así que la luz
+   parece venir de la carpeta y no de un efecto añadido encima.
+
+   ── SE ATA A UN HECHO, NO AL RELOJ ──
+
+   No late ni parpadea solo: se enciende cuando la carpeta se abre. Cerrada, un
+   halo mínimo que sólo la despega del fondo; abierta, el halo crece y las
+   letras se separan un punto. El gesto acompaña a lo que ya está pasando —el
+   titular subiendo para dejar sitio— en vez de competir con ello.
+
+   ── LA TRANSICIÓN REPITE bottom Y transform A PROPÓSITO ──
+
+   El módulo ya las anima con esos tiempos. Al declarar `transition` aquí se
+   reemplaza la suya entera, así que hay que volver a nombrarlas o el titular
+   dejaría de viajar y saltaría de sitio. */
+#lo-que-vas-a-descubrir div > strong {
+  text-shadow:
+    0 0 22px rgba(20, 8, 43, 0.55),
+    0 0 44px rgba(94, 214, 214, 0.12);
+  transition:
+    bottom 1320ms cubic-bezier(0.16, 0.86, 0.2, 1),
+    transform 1320ms cubic-bezier(0.16, 0.86, 0.2, 1),
+    text-shadow 1100ms ease,
+    letter-spacing 1100ms cubic-bezier(0.16, 0.86, 0.2, 1);
+}
+
+#lo-que-vas-a-descubrir:has([aria-hidden="false"]) div > strong {
+  text-shadow:
+    0 0 18px rgba(20, 8, 43, 0.5),
+    0 0 38px rgba(94, 214, 214, 0.55),
+    0 0 82px rgba(155, 126, 200, 0.45);
+  letter-spacing: 0.012em;
+}
+
+/* Sin movimiento, el halo se queda en su estado encendido y no transiciona:
+   lo que aporta —separar el titular del fondo de la carpeta— no depende de
+   que se vea aparecer. */
+@media (prefers-reduced-motion: reduce) {
+  #lo-que-vas-a-descubrir div > strong {
+    transition: none;
+  }
+}
+
+/* ══ EL HUECO SOBRE LA CARPETA, EN ESCRITORIO ══
+
+   El escenario (.stage) lleva `min-height: clamp(740px, 64vw, 880px)` con la
+   carpeta centrada dentro. A 1300px eso son 832px de caja para una carpeta de
+   unos 504px: quedaban ~164px de vacío por encima, mientras que entre el
+   formulario y la línea separadora hay ~44px. La línea no partía nada por el
+   medio, estaba pegada arriba.
+
+   Se recorta el escenario a 620px. La carpeta sube y las dos distancias se
+   parecen.
+
+   EL ALTO SOBRANTE NO ERA CAPRICHO: al abrirse, las fichas se despliegan por
+   encima de la carpeta y necesitan sitio. Pero la carpeta ya baja 118px al
+   abrirse (.open .folder), así que ese hueco se crea justo cuando hace falta,
+   en vez de estar reservado todo el rato. */
+@media (min-width: 901px) {
+  #lo-que-vas-a-descubrir > div {
+    min-height: 620px;
+    transition: min-height 1100ms cubic-bezier(0.16, 0.86, 0.2, 1);
+  }
+}
+
+/* ══ EL HALO DEL TITULAR, MÁS PRESENTE ══
+
+   El primero era demasiado tímido: sobre el degradado de la carpeta apenas se
+   distinguía del propio fondo y el efecto pasaba desapercibido. Sube el
+   brillo y el radio de las dos capas de color, y se le suma una tercera en
+   blanco muy abierta que es la que hace que las letras parezcan tener luz
+   propia y no un contorno de color detrás. */
+#lo-que-vas-a-descubrir:has([aria-hidden="false"]) div > strong {
+  text-shadow:
+    0 0 16px rgba(20, 8, 43, 0.55),
+    0 0 34px rgba(94, 214, 214, 0.85),
+    0 0 70px rgba(155, 126, 200, 0.7),
+    0 0 120px rgba(255, 255, 253, 0.35);
+}
+
+/* ABIERTA, EL ESCENARIO RECUPERA SU ALTO.
+
+   Recortarlo a 620px fijos dejaba las fichas cortadas por arriba al
+   desplegarse: se abren por encima de la carpeta y ahí es donde necesitan el
+   sitio que se les quitó.
+
+   Con los dos estados, el hueco existe sólo cuando hace falta: cerrada la
+   carpeta sube y la línea separadora queda a una distancia parecida de las dos
+   piezas; abierta, el escenario crece y las fichas caben enteras.
+
+   La transición va sobre min-height para que ese crecimiento acompañe a la
+   apertura en vez de dar un salto. */
+@media (min-width: 901px) {
+  #lo-que-vas-a-descubrir:has([aria-hidden="false"]) > div {
+    min-height: clamp(740px, 64vw, 880px);
   }
 }

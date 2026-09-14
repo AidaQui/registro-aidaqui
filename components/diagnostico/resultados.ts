@@ -91,6 +91,18 @@ export const LANDING = {
     "Descubre qué código inconsciente sigue dirigiendo tu vida aunque creas que ya lo has trabajado.",
   promesa:
     "En menos de 2 minutos, identifica el Código Dominante que está condicionando tu forma de pensar, sentir y actuar, y descubre qué necesitas integrar para empezar a trascenderlo.",
+  /* Las palabras clave de la promesa, para la cinta que separa el
+     formulario de las tarjetas.
+
+     Son los conceptos del párrafo que antes vivía en el hero: los dos
+     minutos, el código dominante, los tres verbos que nombra y los dos
+     movimientos que propone. El párrafo se retiró de la portada; esto
+     es lo que queda de él, reducido a lo que se recuerda.
+
+     El separador NO va aquí: lo pone la cinta entre vuelta y vuelta, y
+     duplicarlo dejaría dos seguidos en la costura. */
+  palabrasClave:
+    "2 minutos ✦ Código Dominante ✦ Pensar ✦ Sentir ✦ Actuar ✦ Integrar ✦ Trascender",
   cta: "EMPEZAR MI RADIOGRAFÍA",
   bloqueTitulo: "Lo que vas a descubrir",
   bloqueSubtitulo:

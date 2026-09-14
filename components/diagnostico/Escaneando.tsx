@@ -84,7 +84,9 @@ export default function Escaneando({ listo, onFin }: Props) {
           recorrido por arriba y por abajo. Por eso lleva pista propia: recorta
           lo que hay que recortar sin arrastrar a la hélice. */}
       <div className="dg-scan__stage">
-        <HelixCanvas height={300} />
+        {/* Más alta que antes (300): sobre el fondo oscuro la hélice necesita
+            cuerpo para leerse como una hélice y no como puntos sueltos. */}
+        <HelixCanvas height={360} opacity={0.95} />
 
         {/* La línea que recorre la hélice de arriba abajo: es lo que dice
             "esto te está midiendo" sin escribirlo. */}

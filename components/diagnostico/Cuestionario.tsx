@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { PREGUNTAS } from "@/components/diagnostico/preguntas";
 
@@ -108,7 +109,39 @@ export default function Cuestionario({ onFin, onAtras }: Props) {
 
   return (
     <div className="dg-quiz">
+      {/* LA CABECERA: VOLVER Y BARRA EN LA MISMA FILA.
+
+          El botón de volver estaba al pie, debajo de las opciones. Ahí obliga a
+          recorrer toda la lista para encontrarlo, y aparece justo donde se está
+          eligiendo respuesta, compitiendo con la acción principal.
+
+          Arriba, junto a la barra, dice otra cosa: esto es navegación, no una
+          opción más. Quien quiere retroceder lo ve sin bajar, y quien no, no lo
+          cruza de camino a su respuesta.
+
+          En la primera pregunta se queda deshabilitado pero SIGUE OCUPANDO SU
+          HUECO: si desapareciera, la barra cambiaría de largo al pasar de la 1
+          a la 2 y el salto se vería en pantalla. */}
       <div className="dg-quiz__head">
+        <button
+          type="button"
+          className="dg-quiz__back"
+          onClick={volver}
+          disabled={indice === 0}
+          aria-label="Volver a la pregunta anterior"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M15 5l-7 7 7 7"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          Atrás
+        </button>
+
         <div
           className="dg-quiz__bar"
           role="progressbar"
@@ -148,6 +181,43 @@ export default function Cuestionario({ onFin, onAtras }: Props) {
             {pregunta.enunciado}
           </h2>
         </div>
+
+        {/* LA ESCENA DE LA SITUACIÓN.
+
+            Va DESPUÉS del enunciado, como en la referencia: primero se lee la
+            pregunta y después se mira la escena que la ilustra. Con la imagen
+            delante, el ojo se detenía en ella y la pregunta llegaba tarde.
+
+            ── ALTO FIJO, IGUAL QUE EL ENUNCIADO ──
+
+            Las originales son cuadradas de 1254px. Puestas a su proporción
+            ocuparían la pantalla entera y empujarían las opciones fuera de
+            vista. Y, sobre todo, romperían lo mismo que el min-height del
+            enunciado protege: si cada imagen midiera distinto, las opciones
+            saltarían de sitio en cada pregunta.
+
+            Por eso la banda tiene alto fijo y la imagen se recorta con
+            object-fit. Todas las escenas tienen a la mujer descentrada hacia
+            arriba, así que el recorte se ancla arriba (object-position) para no
+            decapitarla.
+
+            `priority` no: son siete y solo se ve una a la vez. Cargarlas todas
+            de golpe pelearía con el shader del fondo. */}
+        {pregunta.imagen && (
+          <div
+            className="dg-quiz__escena dg-sube"
+            style={{ animationDelay: `${RITMO.enunciado}ms` }}
+          >
+            <Image
+              src={pregunta.imagen}
+              alt=""
+              width={1254}
+              height={1254}
+              sizes="(max-width: 700px) 100vw, 700px"
+              className="dg-quiz__escena-img"
+            />
+          </div>
+        )}
 
         {pregunta.abierta ? (
           <form className="dg-quiz__open" onSubmit={enviarAbierta}>
@@ -253,19 +323,6 @@ export default function Cuestionario({ onFin, onAtras }: Props) {
           className="dg-quiz__foot dg-sube"
           style={{ animationDelay: `${RITMO.pie}ms` }}
         >
-          <button type="button" className="dg-quiz__back" onClick={volver}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M15 5l-7 7 7 7"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Volver
-          </button>
-
           <span className="dg-quiz__step">
             Pregunta {indice + 1} de {PREGUNTAS.length}
           </span>

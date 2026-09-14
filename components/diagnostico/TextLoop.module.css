@@ -1,0 +1,27 @@
+/* El recorte es lo que deja que el trazado se salga del lienzo sin ensanchar
+   la página: las letras entran y salen de cuadro en vez de aparecer de golpe
+   en los bordes. */
+.textLoop {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.text {
+  user-select: none;
+  font-family: var(--font-jost), Arial, sans-serif;
+}
+
+/* El <text> que sólo existe para medir el ancho real de una vuelta. Va oculto
+   con visibility y no con display:none: sin caja no se puede medir. */
+.measure {
+  visibility: hidden;
+  pointer-events: none;
+  font-family: var(--font-jost), Arial, sans-serif;
+}

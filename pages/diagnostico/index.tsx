@@ -7,7 +7,14 @@ import FormularioContacto from "@/components/diagnostico/FormularioContacto";
 import Resultado from "@/components/diagnostico/Resultado";
 import { LANDING } from "@/components/diagnostico/resultados";
 import type { Codigo } from "@/components/diagnostico/preguntas";
+import DiscoveryFolder from "@/components/diagnostico/DiscoveryFolder";
+import TextLoop from "@/components/diagnostico/TextLoop";
+import GradientWaves from "@/components/diagnostico/GradientWaves";
+import MagicRings from "@/components/diagnostico/MagicRings";
+import HelixCanvas from "@/components/diagnostico/HelixCanvas";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
+import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
+import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
 /*
  * /diagnostico — la Radiografía de tu ADN.
@@ -48,11 +55,20 @@ export default function LeadMagnetPage() {
     if (!router.isReady) return;
     const { n, e, t } = router.query;
     if (typeof n === "string" || typeof e === "string") {
-      setDatos({
+      let activo = true;
+      const datosDeUrl = {
         nombre: typeof n === "string" ? n : "",
         email: typeof e === "string" ? e : "",
         telefono: typeof t === "string" ? t : "",
+      };
+
+      queueMicrotask(() => {
+        if (activo) setDatos(datosDeUrl);
       });
+
+      return () => {
+        activo = false;
+      };
     }
   }, [router.isReady, router.query]);
 
@@ -106,79 +122,275 @@ export default function LeadMagnetPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
+      <SmoothScroll />
+
       <main className="dg-page">
-        <div className="dg-page__bg" aria-hidden="true" />
+        {/* EL FONDO DE TODA LA PÁGINA.
 
-        <div className="dg-page__shell">
-          {fase === "intro" && (
-            <section className="dg-intro">
-              <AcademiaBadge />
+            Sustituye a la imagen fija que había aquí (.dg-page__bg, cuya regla
+            queda sin usar en globals.css).
 
-              {/* "ADN" va aparte porque es la palabra que tiene que
-                  quedarse: el resto del titular la acompaña. */}
-              <h1 className="dg-intro__title">
-                Radiografía de tu <span className="dg-intro__adn">ADN</span>
-              </h1>
-              <p className="dg-intro__subtitle">{LANDING.subtitulo}</p>
-              <p className="dg-intro__promise">{LANDING.promesa}</p>
+            VA EN position: fixed, no absolute: así el campo de ondas se queda
+            quieto mientras la página se desplaza por delante, en vez de
+            arrastrarse con ella. Un fondo que scrollea a la misma velocidad que
+            el contenido deja de leerse como fondo.
 
-              {/* EL FORMULARIO ES LA LLAMADA A LA ACCIÓN: no hay un botón que
-                  lleve a otra pantalla a pedir lo mismo. Rellenarlo y entrar
-                  al test son el mismo gesto. */}
-              <FormularioContacto
-                iniciales={datos}
-                onListo={(contacto) => {
-                  setDatos(contacto);
-                  irA("quiz");
-                }}
-              />
+            NO LLEVA pointer-events: none. El parallax del shader necesita los
+            eventos del puntero, y estando detrás de todo no estorba: donde hay
+            contenido encima, los clics van al contenido. */}
+        <div className="dg-page__ondas" aria-hidden="true">
+          <GradientWaves
+            horizonColor="#5734df"
+            waveColor="#010102"
+            crestColor="#7f14ff"
+            speed={0.5}
+            amplitude={2.75}
+            waveScale={0.5}
+            waveRatio={0.3}
+            swell={35}
+            turbulence={20}
+            tilt={1.14}
+            zoom={1}
+            height={6}
+            fogDepth={24}
+            detail="medium"
+            brightness={1}
+            opacity={0.7}
+            mouseInteraction
+            parallaxStrength={0.5}
+            grain
+            grainIntensity={0.05}
+          />
+        </div>
 
-              <div className="dg-intro__block">
-                <p className="dg-intro__block-title">{LANDING.bloqueTitulo}</p>
-                <p className="dg-intro__block-subtitle">
-                  {LANDING.bloqueSubtitulo}
+        {/* LA INTRO NO VA DENTRO DEL SHELL, y las otras tres fases sí.
+            El hero y el panel sangran de canto a canto: una banda con fondo
+            propio que no llegue a los bordes se lee como una tarjeta enorme,
+            no como una sección. Los 860 px dejan de envolver la página y
+            pasan a ser el ancho del contenido de cada bloque. */}
+        {fase === "intro" ? (
+          <>
+            <section className="dg-hero">
+              {/* ══ CAPA DE ATRÁS: LOS ANILLOS ══
+
+                  Tres planos en el hero, de atrás hacia delante: los anillos,
+                  la hélice y el contenido. Los anillos van los últimos en
+                  profundidad porque son los que menos tienen que decir: marcan
+                  un pulso que se expande, y esa es toda su función.
+
+                  ES EL MISMO GESTO QUE UNA RADIOGRAFÍA. Un pulso que sale del
+                  centro y se expande es lo que hace un escáner, y esta página
+                  se llama "Radiografía de tu ADN". Por eso los anillos y no
+                  cualquier otro fondo animado.
+
+                  LOS COLORES SON LOS DE LA MARCA: el violeta del titular
+                  abriendo y el dorado de "ADN" cerrando. El degradado va de uno
+                  a otro según se aleja el anillo del centro.
+
+                  LA OPACIDAD ES BAJA Y LA VELOCIDAD LENTA a propósito. Detrás
+                  de un titular, un fondo que se mueve rápido obliga a leer dos
+                  veces. */}
+              <div className="dg-hero__rings" aria-hidden="true">
+                <MagicRings
+                  className="dg-hero__rings-canvas"
+                  color="#b79ae8"
+                  colorTwo="#f0c98a"
+                  ringCount={5}
+                  speed={0.5}
+                  attenuation={12}
+                  lineThickness={1.6}
+                  baseRadius={0.32}
+                  radiusStep={0.12}
+                  scaleRate={0.12}
+                  opacity={0.55}
+                  /* El ruido del original se ve como suciedad sobre el crema:
+                     está pensado para dar grano sobre negro. Casi anulado. */
+                  noiseAmount={0.03}
+                  ringGap={1.5}
+                  fadeIn={0.7}
+                  fadeOut={0.5}
+                  followMouse={false}
+                  parallax={0.04}
+                  clickBurst={false}
+                />
+              </div>
+
+              {/* LA HÉLICE DE FONDO. Ya existía para la fase de escaneo; aquí
+                  hace de atmósfera y por eso va rebajada y más lenta: a plena
+                  opacidad compite con el titular que tiene encima.
+
+                  El alto va en el prop y no en el CSS porque el lienzo se mide
+                  a sí mismo con getBoundingClientRect, y el estilo en línea
+                  gana a la clase. Sin un valor holgado la espiral sale
+                  aplastada. */}
+              <div className="dg-hero__helix" aria-hidden="true">
+                <HelixCanvas height={380} opacity={0.75} speed={0.6} />
+              </div>
+
+              <div className="dg-intro dg-hero__inner">
+                {/* ESCRITORIO: TRES PIEZAS EN ESCALERA. MÓVIL: UNA PILA.
+
+                    No son dos columnas enfrentadas. El titular ancla arriba a
+                    la izquierda, el subtítulo entra arriba a la derecha, y la
+                    promesa cae debajo pero corrida hacia el centro, sin
+                    alinearse con ninguno de los dos.
+
+                    ESE DESALINEO ES EL PUNTO. Con todo cuadrado en dos
+                    columnas el ojo lee dos bloques y se detiene. En escalera
+                    tiene que bajar en diagonal —titular, subtítulo, promesa—
+                    y ese recorrido es el que sostiene la mirada dentro del
+                    hero hasta el final del texto.
+
+                    Los tres son hijos directos de la rejilla y cada uno se
+                    coloca por columnas, así que el desplazamiento se declara
+                    en un solo sitio y no con márgenes sueltos por pieza.
+
+                    En móvil no hay ancho para una escalera y vuelve a la
+                    pila, que ahí es lo que corresponde. */}
+                <div className="dg-hero__col dg-hero__col--marca">
+                  <AcademiaBadge />
+
+                  {/* "ADN" va aparte porque es la palabra que tiene que
+                      quedarse: el resto del titular la acompaña. */}
+                  <h1 className="dg-intro__title">
+                    Radiografía de tu <span className="dg-intro__adn">ADN</span>
+                  </h1>
+                </div>
+
+                <p className="dg-intro__subtitle dg-hero__sub">
+                  {LANDING.subtitulo}
                 </p>
-
-                <ul className="dg-intro__points">
-                  {LANDING.puntos.map((punto) => (
-                    <li key={punto.numero} className="dg-point">
-                      <span className="dg-point__num" aria-hidden="true">
-                        {punto.numero}
-                      </span>
-                      <p className="dg-point__title">{punto.titulo}</p>
-                      <p className="dg-point__text">{punto.texto}</p>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </section>
-          )}
 
-          {fase === "quiz" && (
-            <>
-              {error && (
-                <p
-                  className="dg-quiz__error dg-quiz__error--suelto"
-                  role="alert"
-                >
-                  {error}
-                </p>
-              )}
-              <Cuestionario onFin={enviar} onAtras={() => irA("intro")} />
-            </>
-          )}
+            {/* LA CINTA DE PALABRAS CLAVE, MONTADA SOBRE LA COSTURA.
 
-          {fase === "escaneando" && (
-            /* `listo` llega cuando el servidor responde. El escáner no sale
-               hasta que se cumplen las dos cosas: el tiempo mínimo y la
-               respuesta. */
-            <Escaneando listo={listo} onFin={irAResultado} />
-          )}
+                Va justo en el borde donde el violeta del hero se corta contra
+                el crema del panel, con media cinta a cada lado. Ese corte es la
+                línea más marcada de la página: poner la cinta encima la
+                convierte en el remate de la portada en lugar de un bloque más
+                dentro del panel.
 
-          {fase === "resultado" && codigo && (
-            <Resultado patron={codigo} email={datos.email} />
-          )}
-        </div>
+                Aquí vivía un párrafo en el hero que enumeraba todo esto en
+                prosa. Nadie lee tres líneas de texto corrido en una portada
+                cuando lo que tiene delante es un campo para escribir: se retiró
+                y quedaron sus palabras, que es lo único que se recordaba.
+
+                SALE DEL PANEL Y DEL HERO para poder ocupar el ancho completo.
+                La costura llega de canto a canto, y una cinta que se detuviera
+                en los 1180 px del contenido dejaría el corte a la vista por los
+                dos lados.
+
+                Se detiene al pasar el cursor: es texto, y un texto que se mueve
+                sin poder pararlo no se puede leer. */}
+            <div className="dg-tira-costura">
+              <TextLoop
+                text={LANDING.palabrasClave}
+                label={LANDING.promesa}
+                shape="wave"
+                /* 160 y no los 520 del original: a ancho completo, 520 serían
+                   más de 800 px de alto. Esto es un remate, no una sección.
+
+                   ⚠️ Si se cambia este valor hay que recalcular el margen
+                   negativo de .dg-tira-costura: los dos describen la misma
+                   altura desde sitios distintos. */
+                viewHeight={160}
+                /* Tope real: en móvil la banda sigue escalando con el ancho
+                   (52 px a 390), y en escritorio deja de crecer aquí en vez
+                   de llegar a los 256 px que medía a 1920. */
+                maxHeight={110}
+                curviness={15}
+                ribbonWidth={70}
+                /* El violeta del hero, no el de las tarjetas: la cinta tiene
+                   que leerse como el final de la banda oscura. */
+                ribbonColor="#2e1a52"
+                color="#fffffd"
+                fontSize={29}
+                fontWeight={600}
+                letterSpacing={2}
+                speed={55}
+                separator="✦"
+                /* Las estrellas en el mismo dorado que la palabra "ADN"
+                   del hero: las mismas cinco paradas de su degradado. Es
+                   el único acento dorado de la página y conviene que
+                   aparezca siempre con la misma receta. */
+                starGradient={["#a06c08", "#d4a020", "#f0c98a", "#d4a020", "#a06c08"]}
+                pauseOnHover
+              />
+            </div>
+
+            {/* EL PANEL SUBE SOBRE EL HERO con las esquinas superiores
+                redondeadas. Es lo que separa la promesa de la acción: arriba
+                se lee, aquí se rellena. */}
+            <div className="dg-panel">
+              <div className="dg-panel__inner">
+                {/* EL FORMULARIO ES LA LLAMADA A LA ACCIÓN: no hay un botón que
+                    lleve a otra pantalla a pedir lo mismo. Rellenarlo y entrar
+                    al test son el mismo gesto. */}
+                <FormularioContacto
+                  iniciales={datos}
+                  onListo={(contacto) => {
+                    setDatos(contacto);
+                    irA("quiz");
+                  }}
+                />
+
+                {/* SEPARADOR ENTRE EL FORMULARIO Y LAS TARJETAS.
+
+                    Dos piezas seguidas, las dos con fondo propio, se leían como
+                    una sola pila; el separador dice que son dos cosas: arriba
+                    se da el dato, abajo se explica qué se recibe.
+
+                    Es el mismo dibujo que el de encima del pie —línea con el
+                    rombo en medio— para que la página use un solo recurso de
+                    separación y no dos parecidos.
+
+                    aria-hidden: es una raya. No aporta nada a quien escucha la
+                    página, y el rombo se leería como un carácter suelto. */}
+                <div className="dg-separador" aria-hidden="true">
+                  ✦
+                </div>
+
+                <DiscoveryFolder
+                  title={LANDING.bloqueTitulo}
+                  subtitle={LANDING.bloqueSubtitulo}
+                  items={LANDING.puntos}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="dg-page__shell">
+            {fase === "quiz" && (
+              <>
+                {error && (
+                  <p
+                    className="dg-quiz__error dg-quiz__error--suelto"
+                    role="alert"
+                  >
+                    {error}
+                  </p>
+                )}
+                <Cuestionario onFin={enviar} onAtras={() => irA("intro")} />
+              </>
+            )}
+
+            {fase === "escaneando" && (
+              /* `listo` llega cuando el servidor responde. El escáner no sale
+                 hasta que se cumplen las dos cosas: el tiempo mínimo y la
+                 respuesta. */
+              <Escaneando listo={listo} onFin={irAResultado} />
+            )}
+
+            {fase === "resultado" && codigo && (
+              <Resultado
+                patron={codigo}
+                email={datos.email}
+                nombre={datos.nombre}
+              />
+            )}
+          </div>
+        )}
 
         <footer className="dg-page__footer">
           <p>
@@ -187,6 +399,24 @@ export default function LeadMagnetPage() {
           </p>
         </footer>
       </main>
+
+      {/* EL DESENFOQUE DEL CANTO INFERIOR, SOLO EN LA PORTADA.
+
+          En la intro tiene sentido: hay recorrido por debajo y el velo
+          insinúa que la página sigue más allá del borde.
+
+          En el test, el escaneo y el resultado hace lo contrario. Esas
+          tres pantallas terminan donde se ven, y ahí el velo no insinúa
+          continuidad: emborrona la última opción, la última línea del
+          resultado y el pie. Lo que tapaba era contenido, no un borde. */}
+      {fase === "intro" && (
+        <GradualBlur
+          height="3.25rem"
+          strength={1.35}
+          divCount={5}
+          opacity={0.78}
+        />
+      )}
     </>
   );
 }
