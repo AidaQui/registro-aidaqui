@@ -36,6 +36,7 @@ export default function DiscoveryFolder({
 }: DiscoveryFolderProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const folderRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -86,6 +87,42 @@ export default function DiscoveryFolder({
   }, []);
 
 
+
+  /*
+   * EL SOBRE SIGUE AL PUNTERO.
+   *
+   * Un giro muy corto —seis grados como mucho— en la dirección del cursor.
+   * Lo que aporta no es el giro en sí sino que la pieza deje de ser plana:
+   * con perspective ya puesta en el escenario, basta un par de grados para
+   * que se lea como un objeto con caras y no como un dibujo.
+   *
+   * VA EN VARIABLES CSS Y NO EN style.transform: el sobre ya tiene su propio
+   * transform —el translateY de cuando se abre—, y escribir transform desde
+   * aquí lo pisaría. Con variables, el CSS compone las dos cosas.
+   *
+   * Se ignora en pantallas sin puntero fino: en un móvil no hay cursor que
+   * seguir, y el toque dispararía un giro que nadie pidió.
+   */
+  function seguirPuntero(e: MouseEvent<HTMLDivElement>) {
+    const sobre = folderRef.current;
+    if (!sobre) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const caja = sobre.getBoundingClientRect();
+    /* -0.5 a 0.5 desde el centro de la pieza. */
+    const x = (e.clientX - caja.left) / caja.width - 0.5;
+    const y = (e.clientY - caja.top) / caja.height - 0.5;
+    sobre.style.setProperty("--giro-y", (x * 6).toFixed(2) + "deg");
+    sobre.style.setProperty("--giro-x", (y * -4).toFixed(2) + "deg");
+  }
+
+  /* Al salir vuelve a plano: dejarlo girado congelaría el último gesto. */
+  function soltarPuntero() {
+    const sobre = folderRef.current;
+    if (!sobre) return;
+    sobre.style.setProperty("--giro-y", "0deg");
+    sobre.style.setProperty("--giro-x", "0deg");
+  }
 
   function openFolder() {
     setOpen(true);
@@ -247,12 +284,15 @@ export default function DiscoveryFolder({
         </div>
 
         <div
+          ref={folderRef}
           className={styles.folder}
           role="button"
           tabIndex={0}
           aria-expanded={open}
           aria-label={open ? "Cerrar carpeta" : "Abrir carpeta"}
           onMouseEnter={openFolder}
+          onMouseMove={seguirPuntero}
+          onMouseLeave={soltarPuntero}
           onFocus={openFolder}
           onClick={toggleFolder}
           onKeyDown={handleKeyDown}
@@ -261,6 +301,19 @@ export default function DiscoveryFolder({
           <div className={styles.folderGlow} aria-hidden="true" />
           <div className={`${styles.folderFront} ${styles.folderFrontLeft}`} />
           <div className={`${styles.folderFront} ${styles.folderFrontRight}`} />
+
+          {/* EL SELLO DICE QUE ESTO SE ABRE.
+
+              Un sobre cerrado no anuncia que sea interactivo: la flecha en
+              diagonal es el gesto que lo convierte en algo que se pulsa.
+
+              aria-hidden porque el <div> que lo contiene ya es role="button"
+              con su propia etiqueta: leerlo otra vez sería repetir. */}
+          <span className={styles.folderSeal} aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
+              <path d="M6 18 18 6M6 6h12v12" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
           <div className={styles.folderContent}>
             <span className={styles.folderKicker}>LECTURA</span>
             <strong className={styles.folderTitle}>{title}</strong>
