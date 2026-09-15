@@ -1,19 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import AvisoFlotante from "@/components/diagnostico/AvisoFlotante";
 import Cuestionario from "@/components/diagnostico/Cuestionario";
 import Escaneando from "@/components/diagnostico/Escaneando";
 import FormularioContacto from "@/components/diagnostico/FormularioContacto";
 import Resultado from "@/components/diagnostico/Resultado";
 import { LANDING } from "@/components/diagnostico/resultados";
 import type { Codigo } from "@/components/diagnostico/preguntas";
-import DiscoveryFolder from "@/components/diagnostico/DiscoveryFolder";
 import TextLoop from "@/components/diagnostico/TextLoop";
 import GradientWaves from "@/components/diagnostico/GradientWaves";
 import MagicRings from "@/components/diagnostico/MagicRings";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
-import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
+import { Dna, Eye, LockKeyhole, Play, Puzzle, Sparkles, Sprout } from "lucide-react";
 
 /*
  * /diagnostico — la Radiografía de tu ADN.
@@ -36,6 +37,47 @@ import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
 type Fase = "intro" | "quiz" | "escaneando" | "resultado";
 
+const SOCIAL_PROOF_AVATARS = [
+  "/lista-de-espera/testimonios/Emilie Lahera Villa.png",
+  "/lista-de-espera/testimonios/fabianadelafuente.png",
+  "/lista-de-espera/testimonios/Bre Dlg.png",
+  "/lista-de-espera/testimonios/Mafe Ellingboe.png",
+] as const;
+
+/*
+ * UN ICONO POR PUNTO, EN EL SITIO DONDE ANTES IBA EL NÚMERO.
+ *
+ * El 01-04 numeraba una lista que no tiene orden: no hay que hacer el primero
+ * antes que el segundo, son las cuatro partes de una misma lectura. Lo que sí
+ * hace cada icono es adelantar de qué va cada una antes de leerla.
+ *
+ * Por qué estos cuatro, y no cuatro cualesquiera: el código es la hélice; lo
+ * que se expresa en tu realidad es lo que se VE; la raíz es lo que está debajo
+ * y sostiene; integrar es encajar la pieza que falta.
+ *
+ * El componente viaja en la constante —de ahí la mayúscula, que es lo que JSX
+ * exige para tratarlo como componente y no como etiqueta HTML—, así el texto y
+ * su icono se declaran juntos y no hay un segundo array que mantener en orden.
+ */
+const RECURSO_PUNTOS = [
+  {
+    Icono: Dna,
+    titulo: "Tu código dominante",
+  },
+  {
+    Icono: Eye,
+    titulo: "Cómo se expresa en tu realidad",
+  },
+  {
+    Icono: Sprout,
+    titulo: "El código raíz detrás de él",
+  },
+  {
+    Icono: Puzzle,
+    titulo: "Lo que necesitas integrar",
+  },
+] as const;
+
 export default function LeadMagnetPage() {
   const router = useRouter();
   const [fase, setFase] = useState<Fase>("intro");
@@ -43,6 +85,11 @@ export default function LeadMagnetPage() {
   const [datos, setDatos] = useState({ nombre: "", email: "", telefono: "" });
   const [listo, setListo] = useState(false);
   const [error, setError] = useState("");
+  const [videoBloqueado, setVideoBloqueado] = useState(false);
+  /* Separado de `videoBloqueado` porque duran cosas distintas: el candado sobre
+     la imagen vive 2,1 s y el aviso 3 s más su salida. Atados al mismo estado,
+     uno de los dos se cortaría a destiempo. */
+  const [avisoVisible, setAvisoVisible] = useState(false);
   /* El grosor de la cinta depende del ancho: la banda escala con la ventana,
      así que el trazo que en escritorio es un remate en móvil se ve como un
      hilo. Arranca en 70 —el valor de escritorio— para que el servidor y el
@@ -83,6 +130,17 @@ export default function LeadMagnetPage() {
     consulta.addEventListener("change", aplicar);
     return () => consulta.removeEventListener("change", aplicar);
   }, []);
+
+  useEffect(() => {
+    if (!videoBloqueado) return;
+    const timer = window.setTimeout(() => setVideoBloqueado(false), 2100);
+    return () => window.clearTimeout(timer);
+  }, [videoBloqueado]);
+
+  /* Estable entre renders: el aviso la recibe como prop y la usa dentro de un
+     efecto. Una función nueva en cada render volvería a disparar ese efecto y
+     reiniciaría la cuenta atrás en bucle. */
+  const cerrarAviso = useCallback(() => setAvisoVisible(false), []);
 
   function irA(siguiente: Fase) {
     setFase(siguiente);
@@ -134,56 +192,48 @@ export default function LeadMagnetPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <SmoothScroll />
+      {/* EL SCROLL SUAVIZADO VIVE SÓLO EN LA PORTADA.
 
-      <main className="dg-page">
-        {/* EL FONDO DE TODA LA PÁGINA.
+          Antes se montaba para las cuatro fases. En la portada es lo que se
+          busca —una página que se recorre—, pero de la segunda en adelante no
+          hay nada que recorrer: el cuestionario cambia de pregunta en el sitio
+          y el escaneo no tiene scroll. Lo único que aportaba allí era retrasar
+          el `window.scrollTo` con el que cada fase vuelve arriba, así que al
+          avanzar se veía la pantalla nueva deslizándose desde el medio.
 
-            Sustituye a la imagen fija que había aquí (.dg-page__bg, cuya regla
-            queda sin usar en globals.css).
+          Al desmontarse, Lenis restituye el scroll nativo en su limpieza. */}
+      {fase === "intro" && <SmoothScroll />}
 
-            VA EN position: fixed, no absolute: así el campo de ondas se queda
-            quieto mientras la página se desplaza por delante, en vez de
-            arrastrarse con ella. Un fondo que scrollea a la misma velocidad que
-            el contenido deja de leerse como fondo.
+      {/* DOS FONDOS, UNO POR MOMENTO.
 
-            NO LLEVA pointer-events: none. El parallax del shader necesita los
-            eventos del puntero, y estando detrás de todo no estorba: donde hay
-            contenido encima, los clics van al contenido. */}
-        <div className="dg-page__ondas" aria-hidden="true">
-          <GradientWaves
-            /* ── LA PALETA VA EN CLARO ──
+          La portada lleva la retícula sobre crema; el cuestionario, el escaneo
+          y el resultado recuperan el violeta con el campo de ondas que tenían.
 
-               waveColor es el cuerpo de la ola y por tanto el color que
-               domina la pantalla: llevaba #010102 —negro— y ahora lleva el
-               crema de la marca, el mismo #fffffd del resto del sitio.
+          Y es una distinción de fondo, no un capricho: la portada se lee y se
+          recorre —texto largo sobre claro, que es donde se lee mejor—, mientras
+          que las otras tres son el diagnóstico en sí, y ahí el violeta oscuro
+          con algo moviéndose detrás es lo que sostiene que está pasando algo. */}
+      <main
+        className={`dg-page${fase === "intro" ? "" : " dg-page--proceso"}`}
+      >
+        {/* EL FONDO DE TODA LA PÁGINA: UNA CUADRÍCULA, NO UN CAMPO DE ONDAS.
 
-               Los otros dos son las líneas que dibujan el relieve. Sobre
-               fondo oscuro tenían que ser violetas saturados para verse;
-               sobre crema pasa lo contrario, así que bajan a violetas de
-               marca que se leen como sombra y no como neón. */
-            horizonColor="#b79ae8"
-            waveColor="#fffffd"
-            crestColor="#6a4a9c"
-            speed={0.5}
-            amplitude={2.75}
-            waveScale={0.5}
-            waveRatio={0.3}
-            swell={35}
-            turbulence={20}
-            tilt={1.14}
-            zoom={1}
-            height={6}
-            fogDepth={24}
-            detail="medium"
-            brightness={1}
-            opacity={0.7}
-            mouseInteraction
-            parallaxStrength={0.5}
-            grain
-            grainIntensity={0.05}
-          />
-        </div>
+            AQUÍ VIVÍA UN SHADER (GradientWaves) y se retiró entero. El fondo
+            que dejaba era una masa violeta en movimiento que ocupaba la página
+            de arriba abajo, y con el hero ya en violeta pasó a competir con él:
+            dos violetas distintos separados por la cinta, cuando la cinta
+            existe precisamente para marcar UN corte —el violeta de la portada
+            contra el claro del cuerpo—. Al quitarlo, ese corte vuelve a ser el
+            único de la página.
+
+            Lo sustituye una retícula de líneas violetas sobre crema, y va en
+            CSS —dos degradados repetidos, ver .dg-page en globals.css— y no en
+            un lienzo: es un dibujo estático y regular, exactamente lo que un
+            background-image resuelve sin pedir WebGL, sin un contexto gráfico
+            por pestaña y sin un fotograma de trabajo por segundo.
+
+            NO HAY ELEMENTO PROPIO: la retícula es el fondo de .dg-page. El div
+            que había aquí sólo existía para alojar el lienzo del shader. */}
 
         {/* LA INTRO NO VA DENTRO DEL SHELL, y las otras tres fases sí.
             El hero y el panel sangran de canto a canto: una banda con fondo
@@ -286,6 +336,26 @@ export default function LeadMagnetPage() {
                 <p className="dg-intro__subtitle dg-hero__sub">
                   {LANDING.subtitulo}
                 </p>
+
+                <div
+                  className="dg-social-proof dg-sube"
+                  style={{ animationDelay: "180ms" }}
+                >
+                  <div className="dg-social-proof__avatars" aria-hidden="true">
+                    {SOCIAL_PROOF_AVATARS.map((src) => (
+                      <Image
+                        key={src}
+                        className="dg-social-proof__avatar"
+                        src={src}
+                        alt=""
+                        width={40}
+                        height={40}
+                        sizes="40px"
+                      />
+                    ))}
+                  </div>
+                  <p>Súmate y descubre tu código como ellas</p>
+                </div>
               </div>
             </section>
 
@@ -357,66 +427,222 @@ export default function LeadMagnetPage() {
                 {/* EL FORMULARIO ES LA LLAMADA A LA ACCIÓN: no hay un botón que
                     lleve a otra pantalla a pedir lo mismo. Rellenarlo y entrar
                     al test son el mismo gesto. */}
-                <FormularioContacto
-                  iniciales={datos}
-                  onListo={(contacto) => {
-                    setDatos(contacto);
-                    irA("quiz");
-                  }}
-                />
+                {/* El id es el destino al que baja el aviso del vídeo. Va en un
+                    envoltorio y no en el <form>, que lo pinta un componente
+                    compartido: así el ancla pertenece a esta página, que es
+                    quien la usa. */}
+                <div id="empezar" className="dg-ancla-form">
+                  <FormularioContacto
+                    iniciales={datos}
+                    onListo={(contacto) => {
+                      setDatos(contacto);
+                      irA("quiz");
+                    }}
+                  />
+                </div>
 
-                {/* SEPARADOR ENTRE EL FORMULARIO Y LAS TARJETAS.
+                {/* La entrega final toma la estructura de Pilar: copy breve,
+                    puntos chiquitos en blanco y video bloqueado como preview. */}
+                <section
+                  id="lo-que-vas-a-recibir"
+                  className="dg-resource"
+                  aria-labelledby="dg-resource-title"
+                >
+                  <div className="dg-resource__copy">
+                    <span className="dg-resource__badge">
+                      <Sparkles size={15} strokeWidth={1.8} />
+                      Tu lectura personalizada
+                    </span>
+                    <h2 id="dg-resource-title">LO QUE VAS A RECIBIR</h2>
+                    <p>
+                      Un diagnóstico de Aida para detectar el código que dirige
+                      tu vida y cómo pasar de comprenderlo a transformarlo de
+                      verdad.
+                    </p>
 
-                    Dos piezas seguidas, las dos con fondo propio, se leían como
-                    una sola pila; el separador dice que son dos cosas: arriba
-                    se da el dato, abajo se explica qué se recibe.
+                    <ul className="dg-resource__list">
+                      {RECURSO_PUNTOS.map(({ Icono, titulo }) => (
+                        <li key={titulo}>
+                          {/* aria-hidden: el icono repite lo que dice el texto
+                              que tiene al lado, y un lector de pantalla no
+                              tiene por qué anunciarlo dos veces. */}
+                          <span
+                            className="dg-resource__list-icon"
+                            aria-hidden="true"
+                          >
+                            <Icono size={15} strokeWidth={2} />
+                          </span>
+                          <span>{titulo}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                    Es el mismo dibujo que el de encima del pie —línea con el
-                    rombo en medio— para que la página use un solo recurso de
-                    separación y no dos parecidos.
+                  </div>
 
-                    aria-hidden: es una raya. No aporta nada a quien escucha la
-                    página, y el rombo se leería como un carácter suelto. */}
-<DiscoveryFolder
-                  title={LANDING.bloqueTitulo}
-                  subtitle={LANDING.bloqueSubtitulo}
-                  subtitleShort={LANDING.bloqueSubtituloCorto}
-                  items={LANDING.puntos}
-                />
+                  <button
+                    type="button"
+                    className={`dg-resource__video${
+                      videoBloqueado ? " is-locked" : ""
+                    }`}
+                    aria-label="Vista previa bloqueada. Completa el diagnóstico para recibir el video por email."
+                    onClick={() => {
+                      setVideoBloqueado(true);
+                      setAvisoVisible(true);
+                    }}
+                  >
+                    <Image
+                      className="dg-resource__poster"
+                      src="/diagnostico/img/main/portada-video.jpg"
+                      alt="Vista previa del video personalizado de Aida"
+                      width={640}
+                      height={480}
+                      loading="eager"
+                      sizes="(max-width: 980px) calc(100vw - 84px), 640px"
+                    />
+                    <span className="dg-resource__preview">Vista previa</span>
+                    <span className="dg-resource__play" aria-hidden="true">
+                      <Play size={34} strokeWidth={0} fill="currentColor" />
+                    </span>
+                    <span
+                      className="dg-resource__locked"
+                      aria-live="polite"
+                      aria-hidden={!videoBloqueado}
+                    >
+                      <span className="dg-resource__lock-icon" aria-hidden="true">
+                        <LockKeyhole size={28} strokeWidth={1.8} />
+                      </span>
+                      <span>Completa el diagnóstico para desbloquearlo</span>
+                    </span>
+                  </button>
+                </section>
               </div>
             </div>
-          </>
-        ) : (
-          <div className="dg-page__shell">
-            {fase === "quiz" && (
-              <>
-                {error && (
-                  <p
-                    className="dg-quiz__error dg-quiz__error--suelto"
-                    role="alert"
-                  >
-                    {error}
-                  </p>
-                )}
-                <Cuestionario onFin={enviar} onAtras={() => irA("intro")} />
-              </>
-            )}
 
-            {fase === "escaneando" && (
-              /* `listo` llega cuando el servidor responde. El escáner no sale
-                 hasta que se cumplen las dos cosas: el tiempo mínimo y la
-                 respuesta. */
-              <Escaneando listo={listo} onFin={irAResultado} />
-            )}
+            {/* EL REMATE DIFUMINADO DEL BORDE INFERIOR.
 
-            {fase === "resultado" && codigo && (
-              <Resultado
-                patron={codigo}
-                email={datos.email}
-                nombre={datos.nombre}
+                Una banda fija al fondo de la ventana que desenfoca lo que pasa
+                por debajo. Lo que hay más abajo deja de competir con lo que se
+                está leyendo, y el corte contra el borde del navegador deja de
+                ser una línea recta.
+
+                VA FIJA A LA VENTANA, no al final del documento: su trabajo es
+                rematar el BORDE DE LA PANTALLA, y anclada al final sólo
+                aparecería al llegar al pie.
+
+                pointer-events: none es imprescindible —cruza por encima del
+                formulario y sin eso se comería los clics del último campo—. Y
+                sólo está en la portada: en el cuestionario taparía las
+                respuestas de abajo. */}
+            <div className="dg-fundido-inferior" aria-hidden="true" />
+
+            {/* EL AVISO DEL VÍDEO.
+
+                Sale al pulsar la vista previa y, a los 3 segundos, baja al
+                formulario y se va. El candado de la imagen dice que el vídeo
+                está bloqueado; esto dice cómo desbloquearlo, que es lo que le
+                falta a quien acaba de pulsar "reproducir".
+
+                Montado y desmontado por `avisoVisible`, no escondido con CSS:
+                sus dos temporizadores viven en el componente y sólo se limpian
+                al desmontarlo de verdad. */}
+            {avisoVisible && (
+              <AvisoFlotante
+                texto="El video se desbloquea con tu diagnóstico. Te llevo al formulario para empezarlo."
+                destino="empezar"
+                alCerrar={cerrarAviso}
               />
             )}
-          </div>
+          </>
+        ) : (
+          <>
+            {/* EL CAMPO DE ONDAS, DE VUELTA Y SÓLO AQUÍ.
+
+                Es el fondo que tenían estas tres pantallas. Se retiró de la
+                página entera al pasar la portada a la retícula, pero el motivo
+                de aquello era que competía CON EL HERO: dos violetas separados
+                por la cinta. Aquí no hay hero ni cinta, así que el problema no
+                existe y lo que aporta —una pantalla que respira mientras se
+                responde y mientras se calcula— sí.
+
+                VA DENTRO DE LA RAMA, no fuera: montado arriba seguiría vivo
+                durante la portada, gastando un contexto WebGL y un fotograma
+                por segundo detrás de un fondo opaco que lo tapa entero.
+
+                Los parámetros son los que ya tenía, sin tocar: la paleta está
+                calibrada para leerse sobre el violeta de .dg-page--proceso.
+
+                ⚠️ VA FUERA DE .dg-page__shell, COMO HERMANO. Metido dentro, el
+                lienzo teñía de violeta la tarjeta del cuestionario y el
+                enunciado, y los dejaba ilegibles.
+
+                El motivo es el orden de pintado de CSS, que NO es el orden del
+                documento: primero van los fondos de los elementos SIN
+                `position`, después el texto, y al final los POSICIONADOS. El
+                lienzo va en `fixed` —posicionado—, así que se pintaba después
+                del fondo crema de .dg-quiz y después del enunciado, por encima
+                de los dos; al 62 % de opacidad no los tapaba, los teñía. Las
+                opciones se salvaban por llevar `position` ellas mismas, y por
+                eso el fallo parecía cosa de los colores del texto.
+
+                Fuera del shell son dos hermanos posicionados y manda el orden
+                del documento, con el shell además en z-index 1: el lienzo
+                queda detrás de TODO el contenido, no sólo de parte. */}
+            <div className="dg-page__ondas" aria-hidden="true">
+              <GradientWaves
+                horizonColor="#fffaf1"
+                waveColor="#2e1a52"
+                crestColor="#b79ae8"
+                speed={0.5}
+                amplitude={2.75}
+                waveScale={0.5}
+                waveRatio={0.3}
+                swell={35}
+                turbulence={20}
+                tilt={1.14}
+                zoom={1}
+                height={6}
+                fogDepth={24}
+                detail="medium"
+                brightness={1}
+                opacity={0.66}
+                mouseInteraction
+                parallaxStrength={0.5}
+                grain
+                grainIntensity={0.045}
+              />
+            </div>
+
+            <div className="dg-page__shell">
+              {fase === "quiz" && (
+                <>
+                  {error && (
+                    <p
+                      className="dg-quiz__error dg-quiz__error--suelto"
+                      role="alert"
+                    >
+                      {error}
+                    </p>
+                  )}
+                  <Cuestionario onFin={enviar} onAtras={() => irA("intro")} />
+                </>
+              )}
+
+              {fase === "escaneando" && (
+                /* `listo` llega cuando el servidor responde. El escáner no sale
+                   hasta que se cumplen las dos cosas: el tiempo mínimo y la
+                   respuesta. */
+                <Escaneando listo={listo} onFin={irAResultado} />
+              )}
+
+              {fase === "resultado" && codigo && (
+                <Resultado
+                  patron={codigo}
+                  email={datos.email}
+                  nombre={datos.nombre}
+                />
+              )}
+            </div>
+          </>
         )}
 
         <footer className="dg-page__footer">
@@ -427,23 +653,6 @@ export default function LeadMagnetPage() {
         </footer>
       </main>
 
-      {/* EL DESENFOQUE DEL CANTO INFERIOR, SOLO EN LA PORTADA.
-
-          En la intro tiene sentido: hay recorrido por debajo y el velo
-          insinúa que la página sigue más allá del borde.
-
-          En el test, el escaneo y el resultado hace lo contrario. Esas
-          tres pantallas terminan donde se ven, y ahí el velo no insinúa
-          continuidad: emborrona la última opción, la última línea del
-          resultado y el pie. Lo que tapaba era contenido, no un borde. */}
-      {fase === "intro" && (
-        <GradualBlur
-          height="3.25rem"
-          strength={1.35}
-          divCount={5}
-          opacity={0.78}
-        />
-      )}
     </>
   );
 }

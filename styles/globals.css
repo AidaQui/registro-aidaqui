@@ -11972,3 +11972,2511 @@ a.pearl-btn {
     min-height: clamp(740px, 64vw, 880px);
   }
 }
+
+/* ===== /diagnostico: layout estilo referencia Pilar, paleta Aida ===== */
+.dg-page {
+  background-color: #fffffd;
+}
+
+.dg-page__ondas {
+  background: #fffffd;
+}
+
+.dg-page__ondas canvas {
+  opacity: 0.48;
+}
+
+.dg-hero {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(240, 201, 138, 0.2), transparent 34%),
+    rgba(255, 255, 253, 0.94);
+}
+
+.dg-social-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  max-width: min(100%, 520px);
+  margin-top: 2px;
+  padding: 8px 18px 8px 10px;
+  border: 1px solid rgba(106, 74, 156, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 253, 0.86);
+  box-shadow:
+    0 16px 34px -24px rgba(41, 0, 102, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(14px) saturate(125%);
+}
+
+.dg-social-proof__avatars {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-left: 4px;
+}
+
+.dg-social-proof__avatar {
+  width: 40px;
+  height: 40px;
+  margin-left: -10px;
+  border: 2px solid #fffffd;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 7px 16px rgba(41, 0, 102, 0.18);
+}
+
+.dg-social-proof__avatar:first-child {
+  margin-left: 0;
+}
+
+.dg-social-proof p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.18vw, 16px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #43276f;
+  text-align: left;
+}
+
+.dg-panel {
+  border-top: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(249, 245, 240, 0.9)),
+    transparent;
+  padding-top: clamp(52px, 6vw, 88px);
+}
+
+.dg-panel__inner {
+  gap: clamp(44px, 5.4vw, 72px);
+}
+
+.dg-panel__inner .lm-pasos {
+  max-width: 620px;
+}
+
+.dg-panel__inner .lm-form {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(30px, 3.8vw, 46px) clamp(24px, 3.5vw, 42px);
+  border: 1px solid rgba(106, 74, 156, 0.16);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(240, 201, 138, 0.28), transparent 28%),
+    linear-gradient(160deg, rgba(255, 255, 253, 0.98), rgba(246, 239, 251, 0.96));
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow:
+    0 24px 70px -34px rgba(41, 0, 102, 0.38),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.dg-panel__inner .lm-form::before {
+  background: linear-gradient(
+    140deg,
+    rgba(240, 201, 138, 0.78),
+    rgba(155, 126, 200, 0.22) 42%,
+    rgba(106, 74, 156, 0.28)
+  );
+}
+
+.dg-panel__inner .lm-form__badge {
+  color: #6a4a9c;
+}
+
+.dg-panel__inner .lm-form__badge::before {
+  background: linear-gradient(90deg, transparent, rgba(106, 74, 156, 0.22));
+}
+
+.dg-panel__inner .lm-form__badge::after {
+  background: linear-gradient(90deg, rgba(106, 74, 156, 0.22), transparent);
+}
+
+.dg-panel__inner .lm-form__badge-icon,
+.dg-panel__inner .lm-form__field-icon {
+  color: #8a68bd;
+}
+
+.dg-panel__inner .lm-form__label {
+  color: #290066;
+}
+
+.dg-panel__inner .lm-form__input-shell,
+.dg-panel__inner .lm-phone {
+  border-color: rgba(106, 74, 156, 0.18);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.dg-panel__inner .lm-form__input-shell:focus-within,
+.dg-panel__inner .lm-phone:focus-within {
+  border-color: rgba(106, 74, 156, 0.42);
+  box-shadow:
+    0 0 0 4px rgba(155, 126, 200, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.dg-panel__inner .lm-input,
+.dg-panel__inner .lm-phone .PhoneInputInput {
+  color: #2e2040;
+}
+
+.dg-panel__inner .lm-input::placeholder,
+.dg-panel__inner .lm-phone .PhoneInputInput::placeholder {
+  color: rgba(46, 32, 64, 0.38);
+}
+
+.dg-panel__inner .lm-phone .PhoneInputCountrySelectArrow {
+  color: #6a4a9c;
+}
+
+.dg-panel__inner .lm-pasos__marca {
+  background: rgba(106, 74, 156, 0.14);
+}
+
+.dg-panel__inner .lm-pasos__marca::after {
+  background: linear-gradient(90deg, #6a4a9c, #d4a020);
+}
+
+.dg-panel__inner .lm-pasos__cuenta {
+  color: rgba(46, 32, 64, 0.46);
+}
+
+.dg-panel__inner .lm-form__back {
+  border-color: rgba(106, 74, 156, 0.18);
+  background: rgba(255, 255, 255, 0.68);
+  color: rgba(67, 39, 111, 0.74);
+  box-shadow: 0 12px 24px rgba(41, 0, 102, 0.1);
+}
+
+.dg-panel__inner .lm-form__back:hover {
+  border-color: rgba(106, 74, 156, 0.36);
+  background: #ffffff;
+  color: #290066;
+}
+
+.dg-panel__inner .lm-form__error {
+  color: #b3261e;
+}
+
+.dg-panel__inner .lm-form__cta {
+  --pearl-bg: #5b3aa0;
+  background-color: #5b3aa0;
+  color: #fffffd;
+  box-shadow:
+    inset 0 0.25rem 0.7rem rgba(255, 255, 255, 0.22),
+    inset 0 -0.3rem 0.85rem rgba(41, 0, 102, 0.45),
+    0 18px 34px -16px rgba(41, 0, 102, 0.58);
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap {
+  color: #fffffd;
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap::before {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.dg-panel__inner .lm-form__cta:hover {
+  background-color: #6a4a9c;
+}
+
+.dg-panel__inner .lm-form__cta-arrow {
+  color: #f0c98a;
+}
+
+.dg-discovery {
+  width: 100%;
+  scroll-margin-top: 24px;
+}
+
+@media (min-width: 901px) {
+  #lo-que-vas-a-descubrir > div,
+  #lo-que-vas-a-descubrir:has([aria-hidden="false"]) > div {
+    min-height: 0;
+    transition: none;
+  }
+}
+
+.dg-section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 760px;
+  margin: 0 auto clamp(24px, 3.4vw, 40px);
+  text-align: center;
+}
+
+.dg-section-kicker,
+.dg-resource__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  border: 1px solid rgba(106, 74, 156, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 253, 0.78);
+  color: #6a4a9c;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.dg-section-kicker {
+  padding: 9px 14px;
+}
+
+.dg-section-head h2,
+.dg-resource__copy h2 {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(34px, 4.2vw, 58px);
+  font-weight: 650;
+  line-height: 1.02;
+  color: #290066;
+  text-wrap: balance;
+}
+
+.dg-section-head p,
+.dg-resource__copy > p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.45vw, 19px);
+  font-weight: 500;
+  line-height: 1.65;
+  color: rgba(46, 32, 64, 0.76);
+  text-wrap: balance;
+}
+
+.dg-discovery__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.5vw, 20px);
+}
+
+.dg-discovery-card {
+  position: relative;
+  min-height: clamp(178px, 15vw, 220px);
+  padding: clamp(22px, 2.4vw, 30px);
+  overflow: hidden;
+  border: 1px solid rgba(106, 74, 156, 0.16);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(240, 201, 138, 0.34), transparent 38%),
+    radial-gradient(circle at 100% 0%, rgba(201, 179, 232, 0.46), transparent 42%),
+    linear-gradient(150deg, rgba(255, 255, 253, 0.98), rgba(247, 240, 252, 0.96));
+  box-shadow:
+    0 24px 52px -34px rgba(41, 0, 102, 0.54),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  text-align: left;
+}
+
+.dg-discovery-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 18px 16px 18px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 160, 32, 0.5),
+    rgba(106, 74, 156, 0.16),
+    transparent
+  );
+}
+
+.dg-discovery-card__number {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+  color: #a06c08;
+}
+
+.dg-discovery-card__number::after {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 160, 32, 0.72), transparent);
+}
+
+.dg-discovery-card h3 {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(23px, 2vw, 30px);
+  font-weight: 650;
+  line-height: 1.08;
+  color: #290066;
+  text-wrap: balance;
+}
+
+.dg-resource {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.25fr);
+  gap: clamp(28px, 4vw, 54px);
+  align-items: center;
+  width: 100%;
+  padding: clamp(28px, 4.5vw, 54px);
+  border: 1px solid rgba(240, 201, 138, 0.4);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(240, 201, 138, 0.2), transparent 34%),
+    linear-gradient(150deg, #2e1a52 0%, #43276f 54%, #271447 100%);
+  box-shadow:
+    0 34px 80px -42px rgba(41, 0, 102, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.dg-resource__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.dg-resource__badge {
+  padding: 10px 16px;
+  border-color: rgba(255, 255, 253, 0.2);
+  background: rgba(255, 255, 253, 0.08);
+  color: #fffffd;
+}
+
+.dg-resource__copy h2 {
+  color: #fffffd;
+}
+
+.dg-resource__copy > p {
+  max-width: 520px;
+  color: rgba(255, 255, 253, 0.78);
+  text-align: left;
+}
+
+.dg-resource__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(100%, 460px);
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dg-resource__list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding: 13px 18px 13px 14px;
+  border: 1px solid rgba(255, 255, 253, 0.6);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 253, 0.96), rgba(250, 245, 255, 0.92));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  color: #43276f;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.22vw, 17px);
+  font-weight: 500;
+  line-height: 1.28;
+}
+
+.dg-resource__list-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #6a4a9c;
+  color: #fffffd;
+}
+
+.dg-resource__video {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 253, 0.18);
+  border-radius: 22px;
+  background: #1c0f34;
+  box-shadow:
+    0 28px 60px -32px rgba(8, 3, 22, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.dg-resource__poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.96) contrast(0.98);
+}
+
+.dg-resource__video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(41, 0, 102, 0.22), transparent 42%),
+    radial-gradient(circle at 50% 50%, transparent 0 58px, rgba(20, 8, 43, 0.18) 120px);
+  pointer-events: none;
+}
+
+.dg-resource__preview {
+  position: absolute;
+  left: 22px;
+  top: 18px;
+  z-index: 1;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 253, 0.78);
+  color: #43276f;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.dg-resource__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(70px, 7vw, 92px);
+  height: clamp(70px, 7vw, 92px);
+  border-radius: 999px;
+  background: #fffaf1;
+  color: #290066;
+  box-shadow:
+    0 18px 42px rgba(8, 3, 22, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translate(-50%, -50%);
+}
+
+.dg-page__footer {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(106, 74, 156, 0.16) 10%,
+    rgba(106, 74, 156, 0.16) calc(50% - 17px),
+    transparent calc(50% - 17px),
+    transparent calc(50% + 17px),
+    rgba(106, 74, 156, 0.16) calc(50% + 17px),
+    rgba(106, 74, 156, 0.16) 90%,
+    transparent 100%
+  );
+}
+
+.dg-page__footer p {
+  color: rgba(46, 32, 64, 0.58);
+}
+
+@media (max-width: 980px) {
+  .dg-discovery__grid,
+  .dg-resource {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dg-resource {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .dg-hero {
+    min-height: auto;
+    padding-top: clamp(42px, 12vw, 62px);
+    padding-bottom: clamp(58px, 14vw, 76px);
+  }
+
+  .dg-social-proof {
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 8px;
+  }
+
+  .dg-social-proof__avatar {
+    width: 34px;
+    height: 34px;
+    margin-left: -9px;
+  }
+
+  .dg-social-proof p {
+    max-width: 180px;
+    font-size: 12.5px;
+  }
+
+  .dg-panel {
+    padding: 44px 18px 64px;
+  }
+
+  .dg-panel__inner {
+    gap: 44px;
+  }
+
+  .dg-panel__inner .lm-form {
+    width: min(calc(100vw - 36px), 420px);
+    max-width: 420px;
+    overflow: visible;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 8% 0%, rgba(240, 201, 138, 0.28), transparent 30%),
+      linear-gradient(160deg, rgba(255, 255, 253, 0.98), rgba(246, 239, 251, 0.96));
+    box-shadow:
+      0 24px 62px -34px rgba(41, 0, 102, 0.42),
+      0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  }
+
+  .dg-panel__inner .lm-form__image {
+    display: none;
+  }
+
+  .dg-panel__inner .lm-form__badge {
+    color: #6a4a9c;
+  }
+
+  .dg-panel__inner .lm-form__badge::before,
+  .dg-panel__inner .lm-form__badge::after {
+    display: block;
+  }
+
+  .dg-panel__inner .lm-form__label {
+    color: #290066;
+  }
+
+  .dg-panel__inner .lm-form__input-shell,
+  .dg-panel__inner .lm-phone {
+    min-height: 54px;
+    border-color: rgba(106, 74, 156, 0.18);
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  .dg-panel__inner .lm-form__field-icon {
+    color: #8a68bd;
+  }
+
+  .dg-panel__inner .lm-form__back {
+    color: rgba(67, 39, 111, 0.74);
+  }
+
+  .dg-panel__inner .lm-pasos__marca {
+    width: 30px;
+    height: 4px;
+    background: rgba(106, 74, 156, 0.14);
+  }
+
+  .dg-panel__inner .lm-pasos__cuenta {
+    color: rgba(46, 32, 64, 0.46);
+  }
+
+  .dg-discovery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dg-discovery-card {
+    min-height: 132px;
+    border-radius: 16px;
+  }
+
+  .dg-discovery-card__number {
+    margin-bottom: 16px;
+  }
+
+  .dg-resource {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .dg-resource__copy {
+    align-items: flex-start;
+  }
+
+  .dg-resource__copy h2 {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+
+  .dg-resource__list li {
+    min-height: 54px;
+    padding-right: 14px;
+  }
+
+  .dg-resource__preview {
+    left: 14px;
+    top: 14px;
+  }
+}
+
+/* ===== /diagnostico: ajustes finales de la referencia Pilar ===== */
+.dg-page,
+.dg-page__ondas {
+  background: #2e1a52;
+}
+
+.dg-page__ondas canvas {
+  opacity: 0.62;
+}
+
+.dg-hero {
+  color: #fffaf1;
+  background:
+    radial-gradient(circle at 52% 24%, rgba(240, 201, 138, 0.16), transparent 34%),
+    radial-gradient(circle at 78% 18%, rgba(183, 154, 232, 0.2), transparent 28%),
+    linear-gradient(160deg, rgba(46, 26, 82, 0.98), rgba(67, 39, 111, 0.96) 58%, rgba(31, 16, 60, 0.98));
+}
+
+.dg-hero .dg-intro__title {
+  color: #fffffd;
+  letter-spacing: 0;
+  text-shadow: 0 20px 48px rgba(8, 3, 22, 0.28);
+}
+
+.dg-hero .dg-intro__adn {
+  background: linear-gradient(100deg, #fffaf1 0%, #f0c98a 42%, #d4a020 58%, #fffaf1 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.dg-hero .dg-intro__subtitle {
+  color: rgba(255, 250, 241, 0.84);
+  text-shadow: 0 14px 34px rgba(8, 3, 22, 0.26);
+}
+
+.dg-hero .espera-badge {
+  color: #fffaf1;
+}
+
+.dg-hero .espera-badge__inner {
+  border-color: rgba(255, 250, 241, 0.2);
+  background: rgba(255, 250, 241, 0.1);
+  color: #fffaf1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.dg-social-proof {
+  border-color: rgba(255, 250, 241, 0.18);
+  background: rgba(255, 250, 241, 0.1);
+  box-shadow:
+    0 16px 34px -24px rgba(8, 3, 22, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.dg-social-proof__avatar {
+  border-color: #2e1a52;
+}
+
+.dg-social-proof p {
+  color: rgba(255, 250, 241, 0.9);
+}
+
+.dg-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 253, 0.98), rgba(255, 255, 253, 0.96) 46%, rgba(250, 246, 240, 0.92)),
+    transparent;
+}
+
+.dg-panel__inner {
+  gap: clamp(36px, 4.6vw, 60px);
+}
+
+.dg-panel__inner .lm-form {
+  border-color: rgba(255, 250, 241, 0.22);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(240, 201, 138, 0.2), transparent 30%),
+    radial-gradient(circle at 92% 8%, rgba(183, 154, 232, 0.22), transparent 34%),
+    linear-gradient(152deg, #2e1a52 0%, #43276f 58%, #271447 100%);
+  color: #fffaf1;
+  box-shadow:
+    0 30px 72px -34px rgba(41, 0, 102, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.dg-panel__inner .lm-form::before {
+  background: linear-gradient(135deg, rgba(240, 201, 138, 0.7), rgba(255, 250, 241, 0.12) 44%, rgba(183, 154, 232, 0.36));
+}
+
+.dg-panel__inner .lm-form__badge,
+.dg-panel__inner .lm-form__label {
+  color: #fffaf1;
+}
+
+.dg-panel__inner .lm-form__badge::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 250, 241, 0.28));
+}
+
+.dg-panel__inner .lm-form__badge::after {
+  background: linear-gradient(90deg, rgba(255, 250, 241, 0.28), transparent);
+}
+
+.dg-panel__inner .lm-form__badge-icon,
+.dg-panel__inner .lm-form__field-icon {
+  color: #f0c98a;
+}
+
+.dg-panel__inner .lm-form__input-shell,
+.dg-panel__inner .lm-phone {
+  border-color: rgba(255, 250, 241, 0.24);
+  background: rgba(255, 255, 253, 0.94);
+  box-shadow:
+    0 16px 30px -26px rgba(8, 3, 22, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.dg-panel__inner .lm-form__input-shell:focus-within,
+.dg-panel__inner .lm-phone:focus-within {
+  border-color: rgba(240, 201, 138, 0.8);
+  box-shadow:
+    0 0 0 4px rgba(240, 201, 138, 0.16),
+    0 18px 30px -26px rgba(8, 3, 22, 0.78),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.dg-panel__inner .lm-input,
+.dg-panel__inner .lm-phone .PhoneInputInput {
+  color: #2e2040;
+}
+
+.dg-panel__inner .lm-input::placeholder,
+.dg-panel__inner .lm-phone .PhoneInputInput::placeholder {
+  color: rgba(46, 32, 64, 0.42);
+}
+
+.dg-panel__inner .lm-pasos__marca {
+  background: rgba(255, 250, 241, 0.22);
+}
+
+.dg-panel__inner .lm-pasos__marca::after {
+  background: linear-gradient(90deg, #f0c98a, #fffffd);
+}
+
+.dg-panel__inner .lm-pasos__cuenta {
+  color: rgba(255, 250, 241, 0.68);
+}
+
+.dg-panel__inner .lm-form__back {
+  border-color: rgba(255, 250, 241, 0.24);
+  background: rgba(255, 250, 241, 0.1);
+  color: rgba(255, 250, 241, 0.82);
+  box-shadow: 0 12px 24px rgba(8, 3, 22, 0.2);
+}
+
+.dg-panel__inner .lm-form__back:hover {
+  border-color: rgba(255, 250, 241, 0.42);
+  background: rgba(255, 250, 241, 0.16);
+  color: #fffffd;
+}
+
+.dg-panel__inner .lm-form__cta {
+  --pearl-bg: #fffaf1;
+  background-color: #fffaf1;
+  color: #290066;
+  box-shadow:
+    inset 0 0.25rem 0.7rem rgba(255, 255, 255, 0.7),
+    inset 0 -0.3rem 0.85rem rgba(240, 201, 138, 0.42),
+    0 18px 34px -16px rgba(8, 3, 22, 0.68);
+}
+
+.dg-panel__inner .lm-form__cta:hover {
+  background-color: #ffffff;
+}
+
+.dg-panel__inner .lm-form__cta .pearl-wrap {
+  color: #290066;
+}
+
+.dg-panel__inner .lm-form__cta-arrow {
+  color: #6a4a9c;
+}
+
+.dg-resource {
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.28fr);
+  border-color: rgba(255, 250, 241, 0.22);
+  background:
+    radial-gradient(circle at 92% 12%, rgba(240, 201, 138, 0.18), transparent 34%),
+    radial-gradient(circle at 12% 100%, rgba(183, 154, 232, 0.16), transparent 34%),
+    linear-gradient(150deg, #2e1a52 0%, #43276f 54%, #271447 100%);
+}
+
+.dg-resource__copy {
+  gap: 16px;
+}
+
+.dg-resource__badge {
+  padding: 9px 15px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.dg-resource__copy h2 {
+  color: #fffffd;
+  letter-spacing: 0;
+}
+
+.dg-resource__copy > p {
+  color: rgba(255, 250, 241, 0.78);
+}
+
+.dg-resource__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: min(100%, 520px);
+  margin-top: 2px;
+}
+
+.dg-resource__list li {
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border-color: rgba(255, 255, 253, 0.68);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 253, 0.97), rgba(250, 245, 255, 0.93));
+  color: #43276f;
+  font-size: clamp(12.5px, 1vw, 14px);
+  font-weight: 600;
+}
+
+.dg-resource__list-number {
+  flex: 0 0 auto;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #a06c08;
+}
+
+.dg-resource__copy > .dg-resource__note {
+  margin-top: 0;
+  max-width: 510px;
+  color: rgba(255, 250, 241, 0.72);
+  font-size: clamp(12.5px, 1vw, 14px);
+  line-height: 1.45;
+}
+
+button.dg-resource__video {
+  display: block;
+  padding: 0;
+  border: 1px solid rgba(255, 250, 241, 0.2);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dg-resource__poster {
+  transition:
+    transform 520ms ease,
+    filter 520ms ease;
+}
+
+.dg-resource__video:hover .dg-resource__poster {
+  transform: scale(1.015);
+  filter: saturate(1.02) contrast(1.02) brightness(0.92);
+}
+
+.dg-resource__video:focus-visible {
+  outline: 3px solid rgba(240, 201, 138, 0.82);
+  outline-offset: 5px;
+}
+
+.dg-resource__play {
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+.dg-resource__locked {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  padding: 22px;
+  background: rgba(20, 8, 43, 0.52);
+  color: #fffaf1;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.28vw, 16px);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.94);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.dg-resource__lock-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(255, 250, 241, 0.38);
+  border-radius: 999px;
+  background: rgba(255, 250, 241, 0.14);
+  box-shadow:
+    0 16px 34px rgba(8, 3, 22, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.dg-resource__video.is-locked {
+  animation: dg-video-locked-shake 560ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.dg-resource__video.is-locked .dg-resource__poster {
+  transform: scale(1.03);
+  filter: saturate(0.92) brightness(0.7);
+}
+
+.dg-resource__video.is-locked .dg-resource__play {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.82);
+}
+
+.dg-resource__video.is-locked .dg-resource__locked {
+  opacity: 1;
+  transform: scale(1);
+  animation: dg-lock-pop 1500ms ease both;
+}
+
+@keyframes dg-video-locked-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  16%,
+  48%,
+  80% {
+    transform: translateX(-6px);
+  }
+  32%,
+  64% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes dg-lock-pop {
+  0% {
+    filter: brightness(1);
+  }
+  16% {
+    filter: brightness(1.15);
+  }
+  38%,
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@media (max-width: 980px) {
+  .dg-resource__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .dg-panel__inner .lm-form {
+    background:
+      radial-gradient(circle at 8% 0%, rgba(240, 201, 138, 0.2), transparent 30%),
+      radial-gradient(circle at 92% 8%, rgba(183, 154, 232, 0.22), transparent 34%),
+      linear-gradient(152deg, #2e1a52 0%, #43276f 58%, #271447 100%);
+  }
+
+  .dg-resource__list {
+    grid-template-columns: 1fr;
+  }
+
+  .dg-resource__copy > .dg-resource__note {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-resource__video.is-locked,
+  .dg-resource__video.is-locked .dg-resource__locked {
+    animation: none;
+  }
+
+  .dg-resource__poster,
+  .dg-resource__play,
+  .dg-resource__locked {
+    transition: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .dg-resource {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .dg-hero {
+    padding-inline: 18px;
+  }
+
+  .dg-hero .dg-hero__inner {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dg-hero .dg-intro__title {
+    max-width: 320px;
+    margin-inline: auto;
+    font-size: clamp(40px, 11vw, 48px);
+  }
+
+  .dg-hero .dg-intro__subtitle {
+    max-width: min(100%, 310px);
+    font-size: clamp(19px, 5.5vw, 22px);
+  }
+
+  .dg-social-proof {
+    width: min(100%, 310px);
+    max-width: calc(100vw - 36px);
+  }
+
+  .dg-social-proof p {
+    max-width: 124px;
+    font-size: 12px;
+  }
+
+  .dg-panel {
+    padding-inline: 16px;
+  }
+
+  .dg-panel__inner .lm-form {
+    width: min(100%, 358px);
+  }
+
+  .dg-resource {
+    width: min(100%, 358px);
+    padding: 24px 22px;
+    overflow: hidden;
+  }
+
+  .dg-resource__copy,
+  .dg-resource__copy > p,
+  .dg-resource__copy > .dg-resource__note,
+  .dg-resource__video {
+    max-width: 100%;
+  }
+
+  .dg-resource__copy h2 {
+    font-size: clamp(38px, 13vw, 50px);
+  }
+
+  .dg-resource__list li {
+    min-height: 50px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   /diagnostico — LA CUADRÍCULA, LA COSTURA LIMPIA Y LA ESCALA DE TEXTO
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*
+  ── EL FONDO: UNA RETÍCULA DE LÍNEAS VIOLETAS SOBRE CREMA ──
+
+  Sustituye al campo de ondas (GradientWaves), que se retiró del TSX. Aquel
+  fondo era violeta y ocupaba la página entera; con el hero ya en violeta, la
+  página tenía dos violetas distintos y la cinta dejaba de separar nada. Ahora
+  el violeta vive sólo en la portada y el cuerpo es claro.
+
+  UNA SOLA RETÍCULA: LA DE 96 px. Aquí hubo un segundo juego de líneas cada
+  8 px que hacía de grano de papel cuadriculado, y se retiró: a esa distancia
+  las líneas dejan de leerse una a una y lo que llega al ojo es una textura
+  gris: ensuciaba el crema y, al competir por el mismo sitio, le quitaba
+  presencia justo a las líneas que sí tienen que verse.
+
+  CON UNA CAPA MENOS, LA QUE QUEDA PUEDE CRECER. Sin la trama fina debajo, la
+  línea de 96 px sube a 2 px y su alfa a 0,20: el doble de grosor y bastante
+  más color del que tenía. Es lo que hace que se lea VIOLETA y no como un gris
+  cualquiera —a 0,14 sobre un píxel, el tono se diluye contra el crema y el
+  violeta se pierde—.
+
+  El desplazamiento de -1 px mete la primera línea fuera del lienzo: sin él,
+  arriba y a la izquierda queda una línea a medio grosor contra el borde.
+
+  VA EN background-image Y NO EN UN LIENZO: es un dibujo estático y regular.
+  Un canvas costaría un contexto WebGL por pestaña y un fotograma por segundo
+  para pintar algo que no cambia.
+*/
+.dg-page {
+  background-color: #fffdf7;
+  background-image:
+    linear-gradient(rgba(46, 26, 82, 0.2) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(46, 26, 82, 0.2) 2px, transparent 2px);
+  background-size: 96px 96px, 96px 96px;
+  background-position: -1px -1px;
+}
+
+/*
+  ── LA CINTA VUELVE A SER EL ÚNICO CORTE ──
+
+  El panel llegaba con las esquinas superiores redondeadas (2,5rem, y 5rem por
+  encima de 768 px) y con crema propio, sobre una página que era violeta. Por
+  esas dos curvas asomaba el violeta del fondo, y lo que se veía bajo la cinta
+  no era una transición sino una FRANJA violeta con dos esquinas: el corte
+  ocurría dos veces, una en la cinta y otra unos píxeles más abajo.
+
+  Sin redondeo y sin fondo propio, el panel deja de ser un plano por delante y
+  pasa a ser lo que ya era en el documento: el cuerpo de la página. La retícula
+  de .dg-page se ve a través de él y la cinta queda como única costura entre el
+  violeta de la portada y el claro del cuerpo.
+
+  EL BORDE SUPERIOR SE VA CON ELLAS: dibujaba el filo del plano que ya no hay,
+  y a ancho completo se leería como una raya cruzando la página justo debajo de
+  la cinta, que es precisamente lo que se está quitando.
+*/
+.dg-panel {
+  border-top: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (min-width: 768px) {
+  .dg-panel {
+    border-radius: 0;
+  }
+}
+
+/*
+  ── LA ESCALA DE TEXTO, TRAÍDA DE LA LANDING DE REFERENCIA ──
+
+  Los tamaños venían de un clamp cuyo mínimo (34 px para el titular, 34 px para
+  los h2) era MAYOR que el tamaño que la referencia usa en escritorio. En un
+  móvil de 390 px el titular salía a 34 px contra los 27 de la referencia, y los
+  h2 de sección a 34 contra 24: el cuerpo de la página entraba casi al tamaño de
+  la portada y todo pesaba igual.
+
+  Cada clamp de aquí reproduce los tres escalones de la referencia —móvil, 640
+  px y 768 px— con una rampa continua en vez de saltos:
+
+    titular   1,7rem -> 2,1rem -> 2,6rem   (27 / 34 / 42)
+    subtítulo 0,98rem -> 1,125rem          (16 / 18)
+    h2        1,5rem -> 1,875rem           (24 / 30)
+    párrafo   0,98rem                      (15-16)
+
+  El tramo medio de cada uno es `calc(vw + px)` y no un `vw` suelto: un vw puro
+  que pase por los dos extremos tiene que ser tan inclinado que el salto ocurra
+  todo en 200 px de ancho. Con el término fijo, la rampa cruza los tres
+  escalones en su sitio.
+*/
+.dg-hero .dg-intro__title {
+  font-size: clamp(27px, 5.4vw, 42px);
+  line-height: 1.2;
+}
+
+.dg-hero .dg-intro__subtitle {
+  font-size: clamp(16px, calc(1.2vw + 11px), 18px);
+  line-height: 1.6;
+}
+
+.dg-section-head h2,
+.dg-resource__copy h2 {
+  font-size: clamp(24px, calc(2.2vw + 14px), 30px);
+  line-height: 1.22;
+}
+
+.dg-section-head p,
+.dg-resource__copy > p {
+  font-size: clamp(15px, calc(0.6vw + 12.6px), 16.5px);
+  line-height: 1.6;
+}
+
+/*
+  Los dos que no encajaban con la referencia tras igualar titulares:
+
+  · EL PÁRRAFO DE SECCIÓN subía a 16,5 px en escritorio, y en la referencia es
+    0,98rem plano en todos los anchos. Es texto de apoyo bajo un h2: si crece
+    con la ventana acaba pesando lo mismo que el titular que lo presenta.
+
+  · LAS FICHAS 01-04 se quedaban en 12,5 px en móvil contra los 14 de la
+    referencia. Son el contenido de la promesa —lo que la persona va a recibir—
+    y entraban por debajo del pie de página. Van a 14 px planos, como allí.
+*/
+.dg-section-head p,
+.dg-resource__copy > p {
+  font-size: 0.98rem;
+}
+
+.dg-resource__list li {
+  font-size: 14px;
+}
+
+/*
+  ── EL HERO TAPA LA RETÍCULA; EL CUERPO LA ENSEÑA ──
+
+  El degradado del hero venía con alfa (0,98 y 0,96) de cuando el fondo de la
+  página era un shader y se buscaba que asomara por debajo. Con la retícula
+  detrás, ese 2 % deja pasar las líneas y se ven CRUZANDO la portada: el hero
+  deja de ser un plano liso y la cinta pierde la mitad de su trabajo, porque
+  arriba y abajo se parecen.
+
+  Los mismos tres violetas, opacos. La retícula queda donde tiene que estar:
+  del corte para abajo.
+*/
+.dg-hero {
+  background:
+    radial-gradient(circle at 52% 24%, rgba(240, 201, 138, 0.16), transparent 34%),
+    radial-gradient(circle at 78% 18%, rgba(183, 154, 232, 0.2), transparent 28%),
+    linear-gradient(160deg, #2e1a52 0%, #43276f 58%, #1f103c 100%);
+}
+
+/*
+  ── "TU LECTURA PERSONALIZADA" VA CENTRADO ──
+
+  La columna de texto alinea todo a la izquierda, y la etiqueta la heredaba. Va
+  en align-self y no en text-align porque es un inline-flex que se ajusta a su
+  contenido: centrar su texto no movería la cápsula, sólo lo de dentro, y la
+  cápsula seguiría pegada a la izquierda.
+*/
+.dg-resource__badge {
+  align-self: center;
+}
+
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  EL FILO GIRATORIO DE "ACADEMIA ADN" LLEGA HASTA LA ESQUINA
+  ═══════════════════════════════════════════════════════════════════════════
+
+  EL FALLO: la luz recorría el borde y al llegar a los extremos se apagaba,
+  dejando las dos puntas de la cápsula sin barrer.
+
+  POR QUÉ. El filo es un conic-gradient girando dentro del ::before, y ese
+  ::before llevaba `inset: -150%`. Sobre una cápsula —unos 205 x 34 px— ese
+  inset no da un cuadrado sino un rectángulo muy apaisado (≈820 x 240). Un
+  cónico reparte sus paradas por ÁNGULO alrededor del centro, así que en una
+  caja apaisada los grados se concentran arriba y abajo —que es donde el borde
+  está cerca— y los extremos izquierdo y derecho se despachan en unos pocos
+  grados. El tramo `transparent 300deg → 0deg` caía justo ahí: la luz no es que
+  llegara débil, es que en las puntas no pasaba.
+
+  EL ARREGLO: que el ::before sea CUADRADO y centrado. Con los grados
+  repartidos por igual en las cuatro direcciones, el barrido recorre el
+  perímetro entero a velocidad pareja y entra en las puntas como en los lados.
+
+  150% + aspect-ratio en vez de una medida fija para que siga sirviendo cuando
+  la cápsula cambie de tamaño: en móvil el texto encoge y la caja con él.
+
+  `translate` es propiedad propia, no `transform`: el keyframe anima
+  `transform: rotate()` y escribir aquí un transform con el centrado lo
+  pisaría, dejando el filo quieto o descentrado.
+
+  VA BAJO .dg-hero A PROPÓSITO. La misma cápsula vive en /academia,
+  /lista-de-espera, /masterclass y /activacion, donde el filo lleva su
+  geometría original; el encargo era esta landing y no se toca lo que allí ya
+  está dado por bueno.
+*/
+.dg-hero .espera-badge::before {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: max(150%, 220px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+}
+
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  EL REMATE DIFUMINADO DEL BORDE INFERIOR
+  ═══════════════════════════════════════════════════════════════════════════
+
+  La referencia resuelve este borde con un fundido de color —un degradado al
+  color del pie— y aquí no sirve: aquello va contra un pie verde opaco, y esta
+  página termina en una retícula sobre crema. Un degradado al crema borraría
+  las líneas en una franja y se leería como una banda blanca pegada abajo.
+
+  Se difumina en vez de teñir: el desenfoque deja pasar el color y la retícula
+  —siguen ahí, sólo que fuera de foco— y el crema que se suma es el mínimo para
+  que el texto que cruza por debajo no se lea a medias.
+
+  ── POR QUÉ HACEN FALTA LA MÁSCARA Y EL DEGRADADO A LA VEZ ──
+
+  El backdrop-filter no admite un desenfoque progresivo: es la misma cantidad
+  en toda la caja. Sin máscara, su borde superior sería un canto recto de foco
+  a desenfoque cruzando la pantalla —exactamente la línea que se quiere quitar—.
+  La máscara hace que la capa ENTERA aparezca de forma gradual, y con ella el
+  desenfoque.
+
+  ── LA DOSIS ──
+
+  6 px de desenfoque y 64-88 px de alto. Es un remate: tiene que notarse al
+  llegar abajo y no mientras se lee. Por encima de ~10 px deja de leerse como
+  profundidad de campo y se convierte en un cristal esmerilado.
+
+  z-index 4: por delante del contenido (hero 1, panel 1, cinta 3) y por detrás
+  de cualquier diálogo, que vive muy por encima.
+*/
+.dg-fundido-inferior {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  height: clamp(64px, 8vh, 88px);
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 253, 247, 0) 0%,
+    rgba(255, 253, 247, 0.42) 100%
+  );
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 68%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 68%);
+}
+
+/* Sin desenfoque, la banda sería un velo crema plano sobre la retícula: peor
+   que no poner nada. Quien pide menos movimiento no pide menos contraste. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .dg-fundido-inferior {
+    display: none;
+  }
+}
+
+/*
+  EL PIE PASA POR DELANTE DEL REMATE.
+
+  La banda va fija a la ventana, así que al llegar al final del documento se
+  queda encima del pie y lo deja desenfocado de forma permanente: el aviso de
+  copyright, que es lo último que hay, no se podía leer.
+
+  Subiéndolo por encima (5 contra 4), el desenfoque hace su trabajo mientras la
+  página se recorre —difumina lo que todavía está por venir— y desaparece justo
+  cuando lo que hay debajo es el final. Necesita `position` para que el
+  z-index cuente.
+*/
+.dg-page__footer {
+  position: relative;
+  z-index: 5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   /diagnostico — ICONOS, EL SELECTOR DE PAÍS Y EL FONDO DE LAS TRES PANTALLAS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*
+  ── EL DISCO DEL ICONO, A LA MEDIDA DE LA FICHA ──
+
+  El disco venía de 32 px, de cuando las fichas medían 58 de alto. Hoy miden 48
+  y con el disco original quedaban 8 px de aire arriba y abajo: el círculo
+  tocaba los bordes y la ficha parecía un botón.
+
+  26 px dejan el doble de margen y el icono sigue leyéndose —un trazo de 2 px en
+  15 px de caja es lo que aguanta sin empastarse—.
+
+  El violeta es el mismo del disco anterior; el dorado que llevaba el número se
+  va con él: era para distinguir CUATRO CIFRAS a tamaño mínimo, y un icono en
+  crema sobre violeta ya tiene todo el contraste que necesita.
+*/
+.dg-resource__list-icon {
+  width: 26px;
+  height: 26px;
+  background: #6a4a9c;
+  color: #fffffd;
+}
+
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  EL DESPLEGABLE DE PAÍSES, LEGIBLE
+  ═══════════════════════════════════════════════════════════════════════════
+
+  EL FALLO: al abrir el selector de país, la lista salía en blanco sobre blanco
+  y no se distinguía un país de otro.
+
+  POR QUÉ. El <select> de react-phone-number-input va superpuesto y transparente
+  sobre la bandera, y se le dio `color: #fffaf1` para que su texto no asomara
+  contra el violeta de la ficha. Las <option> HEREDAN ese color —y sólo ese: el
+  desplegable lo pinta el sistema operativo, con su propio fondo claro—. Crema
+  sobre blanco del sistema: invisible.
+
+  EL ARREGLO: las <option> declaran su propio par de colores. Se pintan contra
+  el fondo del sistema, no contra la ficha, así que van en violeta sobre crema
+  —los mismos de la página— y no heredan nada.
+
+  ⚠️ EL FONDO ES NECESARIO ADEMÁS DEL COLOR. En Windows, un <select> al que se
+  le ha tocado cualquier color deja de usar el tema nativo del desplegable y
+  pasa a pintar el fondo que tenga heredado, que aquí es transparente: sin esta
+  línea, el arreglo funciona en el resto de sistemas y en Windows deja el texto
+  sobre un fondo indefinido.
+*/
+.dg-panel__inner .lm-phone .PhoneInputCountrySelect option {
+  background-color: #fffdf7;
+  color: #2e1a52;
+}
+
+/*
+  ── EL VIOLETA DE LAS TRES PANTALLAS DEL DIAGNÓSTICO ──
+
+  .dg-page pinta la retícula sobre crema, que es de la portada. El modificador
+  la revoca para el cuestionario, el escaneo y el resultado, donde el fondo lo
+  pone el campo de ondas y debajo va el violeta plano.
+
+  background-image: none Y background-color a la vez: con sólo cambiar el color,
+  los cuatro degradados de la retícula seguirían pintados encima y se verían las
+  líneas cruzando el violeta.
+*/
+.dg-page--proceso {
+  background-color: #2e1a52;
+  background-image: none;
+}
+
+/* El lienzo va fijo y por detrás de todo: el campo se queda quieto mientras la
+   pantalla se desplaza por delante. Sin z-index negativo —basta el orden de
+   pintado— para no depender de qué contexto de apilado haya por encima. */
+.dg-page--proceso .dg-page__ondas {
+  position: fixed;
+  inset: 0;
+  background: #2e1a52;
+}
+
+.dg-page--proceso .dg-page__ondas canvas {
+  opacity: 0.62;
+}
+
+/* El contenido del diagnóstico va por delante del lienzo. Sin esto, las
+   preguntas quedan debajo del fondo y la pantalla se ve vacía. */
+.dg-page--proceso .dg-page__shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sobre violeta, el pie vuelve al crema: el violeta oscuro que usa sobre la
+   retícula clara sería texto oscuro sobre fondo oscuro. */
+.dg-page--proceso .dg-page__footer {
+  border-top-color: rgba(255, 255, 253, 0.16);
+}
+
+.dg-page--proceso .dg-page__footer p {
+  color: rgba(255, 255, 253, 0.58);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL DIAGNÓSTICO VELADO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   El resultado se enseña tapado: se ve que existe y cuánto ocupa, pero no se
+   lee. Lo que se lee es dónde está, y eso es el correo.
+
+   ── EL DESENFOQUE VA EN `em`, NO EN PÍXELES ──
+
+   Los tres bloques tienen tamaños muy distintos —el nombre del patrón ronda los
+   40 px y la descripción los 15—. Un blur fijo que borrase la descripción
+   dejaría el nombre perfectamente legible, y uno que borrase el nombre
+   convertiría la descripción en una mancha gris sin forma.
+
+   En `em` el desenfoque se mide contra el tamaño de letra de cada bloque: 0,32
+   veces la altura de la fuente, sea cual sea. Todos quedan igual de ilegibles y
+   todos conservan la misma cantidad de silueta.
+
+   ── SELECCIÓN DESACTIVADA ──
+
+   Un texto borroso se lee subrayándolo y copiándolo, o dejando el cursor
+   encima. Sin `user-select` la cortina dura lo que tarde alguien en arrastrar
+   el ratón.
+
+   ── EL BLOQUE NO SE ENCOGE ──
+
+   `filter` no cambia la caja: el desenfoque desborda sus límites unos píxeles.
+   El padding-inline le da ese aire para que la mancha no llegue al canto de la
+   ficha y parezca cortada.
+*/
+.dg-resultado__velado {
+  filter: blur(0.32em);
+  padding-inline: 6px;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+/* Lo único legible de la zona, y lo que sustituye al diagnóstico: dice qué
+   pasa y adónde ir. Va en el crema vivo de la ficha —no atenuado— porque
+   compite con tres bloques que, aun borrosos, tienen mucha masa. */
+.dg-resultado__velo-nota {
+  margin: 14px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13.5px, 1.1vw, 15px);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #6a4a9c;
+}
+
+/* En la ficha sobre violeta el mismo texto necesita el contraste invertido. */
+.dg-page__shell .dg-resultado__velo-nota {
+  color: rgba(46, 26, 82, 0.86);
+}
+
+/*
+  ⚠️ EL DESENFOQUE VA EN CADA BLOQUE, NO EN EL CONTENEDOR.
+
+  Puesto en el contenedor, `blur(0.32em)` se resuelve UNA sola vez contra el
+  tamaño de letra del propio contenedor —16 px— y sale un blur de 5,12 px
+  aplicado por igual a los tres. Eso borra la descripción, que va a 15 px, y
+  deja el nombre del patrón, que ronda los 55, perfectamente legible: se leía
+  "Código de Control" sin esfuerzo, que es justo lo que no puede pasar.
+
+  Aplicado a cada hijo, el `em` se mide contra SU tamaño: el nombre recibe ~18
+  px de desenfoque, la frase ~6 y la descripción ~5. Los tres quedan igual de
+  ilegibles y conservan la misma silueta, que era la idea desde el principio.
+*/
+.dg-resultado__velado {
+  filter: none;
+}
+
+.dg-resultado__velado > * {
+  filter: blur(0.32em);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL VELO, AHORA PARCIAL
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Antes se velaba el bloque entero —nombre incluido— y la pantalla no entregaba
+   nada. Ahora el nombre del patrón va en claro y se vela sólo lo que lo
+   desarrolla: la frase y la descripción a partir de su arranque.
+
+   .dg-resultado__velado queda sin uso; su regla se anula aquí para que no
+   reaparezca si alguien vuelve a poner la clase en el marcado.
+*/
+.dg-resultado__velado,
+.dg-resultado__velado > * {
+  filter: none;
+}
+
+/* LA FRASE, VELADA ENTERA. Es un bloque, así que puede llevar `filter`: el
+   desenfoque se calcula sobre toda la caja y desborda sus bordes sin cortarse.
+   En `em` para que escale con el tamaño de letra, como el resto. */
+.dg-resultado__quote.dg-velado {
+  filter: blur(0.3em);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/*
+  EL RESTO DE LA DESCRIPCIÓN, VELADO DENTRO DEL PÁRRAFO.
+
+  ⚠️ AQUÍ NO SIRVE `filter`, Y ESA ES LA RAZÓN DE QUE ESTO SEA text-shadow.
+
+  El fragmento velado es un <span> EN LÍNEA que ocupa varios renglones. Un
+  `filter` sobre un elemento en línea se aplica por FRAGMENTO —uno por renglón—
+  y recorta el desenfoque en el canto de cada uno: se ven las costuras entre
+  líneas, que es peor que no velar.
+
+  El texto transparente con su sombra difusa no tiene ese problema: la sombra la
+  dibuja cada glifo por su cuenta, así que cruza los saltos de línea sin juntas.
+
+  El color es el mismo #2e2040 del párrafo; lo que se ve es su propia mancha.
+  0,4em de radio deja la silueta de las palabras —se adivina el ritmo y la
+  longitud— sin que ninguna llegue a leerse.
+*/
+.dg-resultado__velo-inline {
+  color: transparent;
+  text-shadow: 0 0 0.4em rgba(46, 32, 64, 0.88);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Sobre el violeta del embudo el párrafo mantiene su color, así que la sombra
+   también. Se declara aparte para que quede junto a su contexto y no se pierda
+   si algún día cambia el color del texto ahí. */
+.dg-page__shell .dg-resultado__velo-inline {
+  text-shadow: 0 0 0.4em rgba(46, 32, 64, 0.88);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL CIERRE: LA MANCHA FUERA, LA LUZ EN EL BORDE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*
+  ── LA TARJETA DEL CORREO PIERDE LA MANCHA ──
+
+  Llevaba encima una FOTO —la de la lista de espera— al 35 % y en `screen`, que
+  es un modo de fusión que sólo suma luz. De ahí el brochazo claro cruzándola en
+  diagonal: no era un degradado que se pudiera ajustar, era el reflejo de una
+  imagen que no pinta nada aquí, y caía justo sobre el texto.
+
+  Se quita la capa entera y queda el degradado violeta que ya tenía debajo, que
+  siempre fue el fondo real de la tarjeta.
+*/
+.dg-resultado__mail::after {
+  display: none;
+}
+
+/*
+  ── LA LUZ QUE RECORRE EL BORDE DE LA TARJETA DE WHATSAPP ──
+
+  @property es lo que permite animarla. Sin registrar la variable, para el
+  navegador `--dg-giro` es una cadena de texto: no sabe interpolar de "0deg" a
+  "360deg" y el degradado saltaría de golpe en vez de girar.
+*/
+@property --dg-giro {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes dg-giro {
+  to {
+    --dg-giro: 360deg;
+  }
+}
+
+/*
+  El degradado se pinta aquí y la tarjeta de dentro lleva fondo opaco, así que
+  sólo asoma por el píxel de relleno: eso es el borde. Un `border-image` no
+  admite redondeo y cuatro fondos con `background-clip` no se pueden animar.
+
+  El tramo de luz es corto —de 250° a 360°, el resto transparente— y el color va
+  por debajo: lo que se ve fuera del tramo es ese violeta, y donde pasa la luz,
+  crema. Un cónico completo daría un aro girando; esto es un destello dando
+  vueltas, que es lo que se pidió.
+*/
+.dg-resultado__marco {
+  position: relative;
+  display: flex;
+  padding: 1px;
+  /* El de la tarjeta (24px) + el relleno. Igualados, la curva de fuera cae por
+     dentro de la de dentro y el filo adelgaza en las esquinas. */
+  border-radius: 25px;
+  background:
+    conic-gradient(
+      from var(--dg-giro, 0deg),
+      transparent 0deg,
+      transparent 250deg,
+      rgba(255, 250, 241, 0.45) 320deg,
+      #fffffd 340deg,
+      rgba(255, 250, 241, 0.45) 356deg,
+      transparent 360deg
+    ),
+    rgba(240, 201, 138, 0.42);
+  animation: dg-giro 4.5s linear infinite;
+}
+
+/* El halo: el mismo degradado por detrás, ampliado y desenfocado, para que la
+   luz no termine en seco contra el fondo. `inherit` evita repetir la
+   declaración y que las dos se desincronicen al retocar una. */
+.dg-resultado__marco::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(9px);
+  opacity: 0.45;
+}
+
+/* La tarjeta ocupa el marco entero: sin esto mide su contenido y el relleno de
+   1px se ve como una franja suelta por abajo. El box-shadow dorado se va —el
+   borde ya ilumina, y los dos juntos emborronan el contorno. */
+.dg-page__shell .dg-resultado__marco .dg-resultado__comunidad {
+  width: 100%;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Quien pide menos movimiento recibe la luz quieta en una esquina, no un borde
+   apagado: el remate que tendría si nunca hubiera girado. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-resultado__marco {
+    animation: none;
+    --dg-giro: 320deg;
+  }
+}
+
+/*
+  ── EL BOTÓN DEJA DE QUEDAR TAN ABAJO ──
+
+  En una columna, la tarjeta del correo y la de WhatsApp se apilaban con tres
+  aires sumados —el margen superior del correo, el hueco de la rejilla y el
+  relleno generoso de la tarjeta de abajo—, y el botón terminaba a una pantalla
+  de distancia de lo que lo justifica.
+
+  La rejilla se queda como está en escritorio, donde van en paralelo; lo que se
+  recorta es el apilado.
+*/
+@media (max-width: 759px) {
+  .dg-page__shell .dg-resultado__cierre {
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .dg-page__shell .dg-resultado__mail {
+    margin-top: 0;
+  }
+
+  .dg-page__shell .dg-resultado__marco .dg-resultado__comunidad {
+    gap: 10px;
+    padding: 22px 18px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MENOS VELO, Y LA LUZ SÓLO EN EL FILO
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*
+  ── EL VELO, A LA MITAD ──
+
+  0,2em contra los 0,4 de antes en el texto, y 0,15 contra 0,3 en la frase. La
+  silueta de las palabras se marca bastante más: se ve que hay lenguaje ahí y
+  cuánto ocupa, que es lo que engancha, sin que ninguna llegue a leerse de
+  corrido.
+*/
+.dg-resultado__quote.dg-velado {
+  filter: blur(0.15em);
+}
+
+.dg-resultado__velo-inline,
+.dg-page__shell .dg-resultado__velo-inline {
+  text-shadow: 0 0 0.2em rgba(46, 32, 64, 0.88);
+}
+
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  EL RAYO QUE CRUZABA POR EL MEDIO
+  ═══════════════════════════════════════════════════════════════════════════
+
+  EL FALLO: en la tarjeta de WhatsApp y en la cápsula de "ACADEMIA ADN", el
+  destello no se quedaba en el contorno, salía del centro hacia fuera.
+
+  POR QUÉ. Los dos son la misma construcción: un degradado cónico girando por
+  DETRÁS y, encima, una pieza que debería taparlo salvo por el píxel del borde.
+  Sólo que esa pieza de encima era semitransparente —0,85 y 0,9 de alfa en la
+  tarjeta; 0,1 en la cápsula—, así que el cónico se veía A TRAVÉS de ella. Lo
+  que parecía un rayo saliendo del medio era el degradado entero, visto por
+  debajo de un cristal.
+
+  EL ARREGLO: opacar la pieza de encima. Es como lo resuelve la referencia —su
+  tarjeta lleva un fondo sólido— y es lo que hace que el recurso funcione: el
+  degradado sigue ahí detrás, entero y girando, y de él sólo se ve lo que
+  asoma por el borde.
+
+  No se toca el degradado ni su animación: el efecto es el mismo, deja de
+  atravesar el relleno.
+*/
+.dg-page__shell .dg-resultado__marco .dg-resultado__comunidad {
+  background: linear-gradient(160deg, #3a2166 0%, #1a0b38 100%);
+}
+
+/*
+  La cápsula conserva su aire de vidrio violeta: el color es el que ya componía
+  —el violeta del hero con un 10 % de crema encima—, ahora declarado de una vez
+  en vez de resultar de una transparencia. Mismo aspecto, sin nada que se vea
+  por debajo.
+
+  El degradado vertical y el brillo interior superior son los que tenía: son
+  ellos los que dan el relieve, no la transparencia.
+*/
+.dg-hero .espera-badge__inner {
+  background: linear-gradient(180deg, #4a3370 0%, #3d2a60 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LAS DOS TARJETAS DE LA PORTADA, DEL MISMO ANCHO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   La del formulario medía 620 y la de la entrega 1180, las dos centradas en la
+   misma columna: dos cajas del mismo color, una encima de otra, con la de
+   arriba a la mitad de ancho. Sin una rejilla que lo explique, eso no se lee
+   como jerarquía, se lee como descuadre.
+
+   QUIEN MANDABA ERA .lm-pasos —el envoltorio del formulario, con max-width 620—
+   y no el formulario, que siempre estuvo al 100 % de lo que le dieran.
+
+   ⚠️ LA CAJA CRECE; LA LÍNEA DE ESCRITURA NO. Un campo de texto de 1100 px de
+   ancho es incómodo de rellenar y de leer —el ojo pierde el punto de partida—,
+   así que los hijos del formulario conservan su medida y se centran dentro. Lo
+   que se iguala es la TARJETA, que es lo que se ve.
+
+   Sólo de 900 px para arriba: por debajo las dos ya ocupan el ancho disponible
+   y son iguales sin hacer nada.
+*/
+@media (min-width: 900px) {
+  .dg-panel__inner .lm-pasos {
+    max-width: 100%;
+  }
+
+  .dg-panel__inner .lm-form > * {
+    max-width: 520px;
+  }
+}
+
+/*
+  ── EL ENCABEZADO DE "LO QUE VAS A RECIBIR" SE CENTRA EN ESCRITORIO ──
+
+  La columna de texto alinea a la izquierda, que es lo que quieren las fichas
+  01-04: son cuatro cajas en rejilla y con el texto centrado perderían el canto
+  común por el que se leen en columna.
+
+  Se centran sólo el titular y el párrafo que lo acompaña —align-self para la
+  caja, text-align para los renglones—, que es lo que se pidió. La etiqueta de
+  arriba ya iba centrada.
+
+  A partir de 981 px, que es donde .dg-resource deja de ser una columna: por
+  debajo el bloque ocupa todo el ancho y centrar dejaría los renglones bailando
+  respecto a las fichas.
+*/
+@media (min-width: 981px) {
+  .dg-resource__copy h2,
+  .dg-resource__copy > p {
+    align-self: center;
+    text-align: center;
+  }
+}
+
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  LOS AVATARES: SE DESTACA EL QUE SE TOCA Y LOS DEMÁS SE APAGAN
+  ═══════════════════════════════════════════════════════════════════════════
+
+  El mismo gesto que en la referencia. Al apuntar a una cara, ESA crece y se
+  pone delante; las otras tres pierden el color y se oscurecen.
+
+  ── NADIE SE MUEVE DE SITIO ──
+
+  Lo que responde es la escala y el apilado, no la disposición: los márgenes
+  negativos se quedan como están, la fila mide siempre lo mismo y el texto de
+  al lado no se entera. Abrir la fila entera —que fue la primera idea de la
+  referencia— movía cuatro elementos para responder a un gesto dirigido a uno.
+
+  ── EL GRIS SE APLICA DESDE LA FILA Y SE CANCELA EN EL PROPIO HOVER ──
+
+  Apuntar a un hijo es apuntar también al contenedor, así que la regla de la
+  fila alcanza a los cuatro, incluido el que tiene el cursor encima. El
+  `:hover` que va después lo devuelve a color sólo en ése. Esa pareja es lo que
+  produce "uno vivo, tres apagados"; sin la segunda, se apagan los cuatro.
+
+  ── CRECER SIN SUBIR DE CAPA NO SIRVE ──
+
+  Los círculos se solapan, así que el que crece lo hace POR DEBAJO del
+  siguiente y se ve cortado por la mitad. De ahí el z-index, que necesita
+  `position` para contar: por eso el avatar pasa a relative.
+
+  ⚠️ SE ANIMA `scale`, LA PROPIEDAD, NO `transform`. Son independientes: poner
+  aquí un transform y transicionar `scale` —o al revés— no mueve nada, y falla
+  en silencio. Se comprueba con getComputedStyle(el).scale, no .transform.
+*/
+.dg-social-proof__avatar {
+  position: relative;
+  transition:
+    scale 500ms ease-out,
+    filter 500ms ease-out;
+}
+
+.dg-social-proof__avatars:hover .dg-social-proof__avatar {
+  filter: grayscale(1) brightness(0.65);
+}
+
+.dg-social-proof__avatars .dg-social-proof__avatar:hover {
+  z-index: 10;
+  scale: 1.25;
+  filter: none;
+}
+
+/* Sin movimiento no hay destacado: la fila se queda como está. El apagado
+   también se retira —es la mitad de un efecto que ya no ocurre—. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-social-proof__avatars:hover .dg-social-proof__avatar,
+  .dg-social-proof__avatars .dg-social-proof__avatar:hover {
+    scale: 1;
+    filter: none;
+  }
+}
+
+/*
+  ── EL VELO DE LA DESCRIPCIÓN SUBE AL 75 % ──
+
+  0,3em contra los 0,4 originales. Al 50 % (0,2em) el párrafo se leía de
+  corrido y dejaba de velar nada; a 0,3 vuelve a ser ilegible conservando más
+  silueta que al principio.
+
+  LA FRASE ENTRECOMILLADA SE QUEDA COMO ESTÁ, en 0,15em. Es un renglón corto y
+  suelto: ahí la silueta ya no delata las palabras, y subirla lo convertiría en
+  una mancha sin forma.
+*/
+.dg-resultado__velo-inline,
+.dg-page__shell .dg-resultado__velo-inline {
+  text-shadow: 0 0 0.3em rgba(46, 32, 64, 0.88);
+}
+
+/*
+  ── LAS DOS TARJETAS DEL CIERRE, A LA MISMA ALTURA ──
+
+  En dos columnas, la del correo salía 10 px más corta que la de WhatsApp: las
+  dos terminaban en la misma línea de abajo, pero la del correo empezaba más
+  abajo. Los 10 px eran exactos, y eran su `margin-top`.
+
+  Ese margen venía de cuando la tarjeta iba suelta y necesitaba despegarse de lo
+  que tuviera encima. Dentro de una rejilla ya no separa: la rejilla reparte con
+  su `gap`, y el margen sólo encoge a uno de los dos hermanos —`stretch` estira
+  la CAJA, y el margen se come su parte de arriba—.
+
+  En una columna ya estaba quitado; esto lo quita también en dos.
+*/
+.dg-page__shell .dg-resultado__mail {
+  margin-top: 0;
+}
+
+/*
+  ── EL AVISO DEL SPAM, EN GRIS ──
+
+  Va sobre la tarjeta violeta, así que "gris" aquí es un crema desaturado y
+  bajado de opacidad, no un gris neutro: un gris de verdad sobre violeta se ve
+  sucio, como texto apagado por error.
+
+  Baja de 0,72 a 0,52 y pierde el tono cálido del crema. Es una instrucción de
+  apoyo —qué hacer si el correo no aparece— y no tiene por qué competir con el
+  mensaje que la precede; sigue holgadamente por encima del contraste mínimo
+  para texto pequeño sobre este fondo.
+*/
+.dg-page__shell .dg-resultado__mail-nota {
+  color: rgba(226, 222, 233, 0.52);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL AVISO FLOTANTE DEL VÍDEO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   La banda ocupa el ancho de la ventana para centrar la tarjeta. Va SIN eventos
+   de puntero: si no, esa franja invisible se comería los clics de todo lo que
+   tenga debajo durante los tres segundos que dura. La tarjeta se los devuelve
+   para sí misma.
+
+   El relleno inferior respeta la zona segura del teléfono —la barra de gestos
+   de iOS—: sin ella, el aviso queda medio tapado justo donde se lee.
+
+   z-index 60: por delante del remate difuminado (4) y de la cinta (3), por
+   detrás de cualquier diálogo.
+*/
+.dg-aviso {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px max(16px, env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.dg-aviso__caja {
+  width: min(100%, 430px);
+  overflow: hidden;
+  border: 1px solid rgba(240, 201, 138, 0.38);
+  border-radius: 18px;
+  background: linear-gradient(160deg, #2e1a52 0%, #241040 100%);
+  box-shadow: 0 24px 60px -20px rgba(8, 3, 22, 0.85);
+  pointer-events: auto;
+  animation: dg-aviso-entra 460ms cubic-bezier(0.34, 1.42, 0.64, 1) both;
+}
+
+/* El rebote de entrada no sirve para salir: lo que sube pide atención, lo que
+   se va no debe pedirla. Salida más corta y sin rebote. */
+.dg-aviso__caja[data-saliendo="true"] {
+  animation: dg-aviso-sale 320ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes dg-aviso-entra {
+  from {
+    opacity: 0;
+    transform: translateY(120%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dg-aviso-sale {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(120%) scale(0.96);
+  }
+}
+
+.dg-aviso__cuerpo {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 15px 16px;
+}
+
+.dg-aviso__icono {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f0c98a 0%, #d4a020 100%);
+  color: #3b2200;
+}
+
+.dg-aviso__texto {
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #fffaf1;
+}
+
+/* La cuenta atrás, a ras del canto inferior. Dice en pantalla lo mismo que el
+   temporizador de JS: sin ella el aviso desaparece de golpe y el salto parece
+   provocado por otra cosa. */
+.dg-aviso__pista {
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 250, 241, 0.14);
+}
+
+.dg-aviso__barra {
+  height: 100%;
+  /* transform-origin a la izquierda: la barra se vacía en el sentido en que se
+     lee, no desde el centro. */
+  transform-origin: left center;
+  background: linear-gradient(90deg, #a06c08 0%, #f0c98a 100%);
+  animation: dg-aviso-barra linear both;
+}
+
+@keyframes dg-aviso-barra {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* Sin movimiento el aviso aparece puesto y se va sin deslizarse; la barra se
+   queda llena, porque animarla sería el mismo movimiento por otra vía. El
+   temporizador sigue corriendo: la función no depende de la animación. */
+@media (prefers-reduced-motion: reduce) {
+  .dg-aviso__caja,
+  .dg-aviso__caja[data-saliendo="true"] {
+    animation: none;
+  }
+
+  .dg-aviso__barra {
+    animation: none;
+  }
+}
+
+/*
+  ── EL AVISO DEL SPAM, EN GRIS ──
+
+  Sobre la tarjeta violeta "gris" es un crema desaturado y con menos opacidad,
+  no un gris neutro: un gris de verdad sobre violeta tira a sucio y se lee como
+  texto apagado por error, no como texto secundario.
+
+  Baja de 0,72 a 0,52. Es una instrucción de apoyo —qué hacer si el correo no
+  aparece— y no tiene por qué competir con el mensaje que la precede.
+*/
+.dg-page__shell .dg-resultado__mail-nota {
+  color: rgba(228, 224, 236, 0.52);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL ANCLA DEL FORMULARIO NO PUEDE ENCOGERLO
+   ═══════════════════════════════════════════════════════════════════════════
+
+   El <div id="empezar"> se añadió para que el aviso del vídeo tenga adónde
+   bajar, y al meterlo pasó a ser ÉL el hijo de .dg-panel__inner —un flex en
+   columna con align-items: center—. Un bloque en esa posición no se estira: se
+   encoge a su contenido. El formulario, que medía lo que le diera su padre,
+   pasó a medir lo que el envoltorio le dejara, y quedó más estrecho que la
+   tarjeta de abajo.
+
+   Con width 100% el envoltorio vuelve a ser lo que pretendía ser: un ancla
+   invisible que no toca la disposición.
+*/
+.dg-ancla-form {
+  width: 100%;
+}
+
+/*
+  ── Y LAS DOS TARJETAS MIDEN LO MISMO TAMBIÉN EN ESTRECHO ──
+
+  Arriba de 900 px ya se habían igualado. Por debajo seguían sin coincidir: el
+  formulario llevaba un tope propio —`min(100vw - 36px, 390px)`— que lo dejaba
+  clavado en 315-390 px mientras la tarjeta de la entrega crecía con el panel.
+  Dos cajas del mismo color, una sobre otra, con distinto ancho y sin nada que
+  lo explique.
+
+  Las dos pasan a medir el panel. El tope venía de cuando el formulario vivía
+  en una columna estrecha y necesitaba no estirarse; hoy el panel ya le pone su
+  propio límite, así que sobra.
+*/
+@media (max-width: 899px) {
+  .dg-panel__inner .lm-pasos,
+  .dg-panel__inner .lm-form {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL FONDO: MANCHAS BAJO LA RETÍCULA
+   ═══════════════════════════════════════════════════════════════════════════
+
+   La retícula sola deja la página muy seca: líneas rectas y nada más, la misma
+   densidad de arriba abajo. Cuatro manchas difusas por debajo le dan zonas —una
+   parte más cálida, otra más fría, un respiro en medio— sin dibujar nada que se
+   reconozca como forma.
+
+   ── VAN DEBAJO DE LAS LÍNEAS, NO ENCIMA ──
+
+   En `background-image` el primer valor se pinta ARRIBA del todo, así que las
+   manchas van después de la retícula en la lista. Al revés emborronarían las
+   líneas y se perdería el papel cuadriculado.
+
+   ── SON MUY TENUES A PROPÓSITO ──
+
+   Entre 0,05 y 0,09 de alfa. Lo que tiene que notarse es que el fondo NO es
+   plano; en cuanto una mancha se percibe como mancha, compite con las tarjetas
+   —que es donde hay que mirar— y la página se ensucia.
+
+   Violeta y dorado, los dos de la marca, más un violeta claro para el centro.
+   Nada de colores nuevos: esto es atmósfera, no un elemento.
+
+   ── background-attachment: fixed SÓLO PARA LAS MANCHAS ──
+
+   Así el degradado se mide contra la ventana y no contra el documento entero:
+   un radial al 30 % de una página de 1600 px queda fuera de la primera
+   pantalla y no se vería nunca. La retícula sigue desplazándose con la página,
+   que es lo que la hace parecer papel.
+*/
+.dg-page {
+  background-image:
+    linear-gradient(rgba(46, 26, 82, 0.2) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(46, 26, 82, 0.2) 2px, transparent 2px),
+    radial-gradient(
+      52rem 40rem at 12% 8%,
+      rgba(106, 74, 156, 0.09),
+      transparent 70%
+    ),
+    radial-gradient(
+      46rem 34rem at 92% 26%,
+      rgba(212, 168, 85, 0.07),
+      transparent 68%
+    ),
+    radial-gradient(
+      58rem 44rem at 78% 82%,
+      rgba(106, 74, 156, 0.08),
+      transparent 72%
+    ),
+    radial-gradient(
+      40rem 30rem at 6% 70%,
+      rgba(240, 201, 138, 0.05),
+      transparent 70%
+    );
+  background-size:
+    96px 96px,
+    96px 96px,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+  background-position: -1px -1px, -1px -1px, 0 0, 0 0, 0 0, 0 0;
+  background-attachment: scroll, scroll, fixed, fixed, fixed, fixed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL PIE, EN VIOLETA Y DISUELTO HACIA ARRIBA
+   ═══════════════════════════════════════════════════════════════════════════
+
+   El pie era el claro de la página con una raya encima. Ahora es violeta, y no
+   empieza: APARECE. El degradado sube desde el violeta pleno de abajo hasta
+   transparente, así que la retícula clara se va apagando dentro de él y no hay
+   ningún canto donde el color cambie de golpe.
+
+   Ese canto era el problema: un corte recto a lo ancho de la página, en la
+   última línea, compitiendo con el único corte que sí tiene que verse, que es
+   la cinta de la portada.
+
+   ── EL RELLENO SUPERIOR ES LO QUE LE DA SITIO AL DEGRADADO ──
+
+   Sin altura no hay disolución posible: el degradado necesita recorrido para
+   pasar de transparente a opaco. Los ~110 px de arriba son eso, no aire
+   decorativo.
+
+   ── SE VA EL BORDE ──
+
+   Dibujaba el filo del plano que ya no existe. Con la disolución puesta, una
+   raya encima sería justo lo que se está quitando.
+*/
+.dg-page__footer {
+  border-top: none;
+  padding-top: clamp(84px, 11vw, 130px);
+  background: linear-gradient(
+    180deg,
+    rgba(46, 26, 82, 0) 0%,
+    rgba(46, 26, 82, 0.55) 46%,
+    rgba(46, 26, 82, 0.92) 74%,
+    #2e1a52 100%
+  );
+}
+
+/* Sobre violeta el texto vuelve al crema. En el embudo ya iba así; esto lo
+   lleva también a la portada, donde antes estaba en violeta oscuro porque el
+   pie era claro. */
+.dg-page__footer p {
+  color: rgba(255, 253, 247, 0.62);
+}
+
+/*
+  Y la tarjeta de la entrega suelta su propio tope.
+
+  Llevaba `width: min(100%, 358px)` por debajo de 700 px. Ese 358 estaba puesto
+  para un móvil estrecho, donde coincide con el ancho disponible y no se nota;
+  entre 430 y 700 px, en cambio, el panel crece y la tarjeta se queda quieta
+  —justo el desajuste contrario al que tenía el formulario—.
+
+  Con las dos al 100 % del panel, el ancho lo decide un solo sitio: el panel.
+*/
+@media (max-width: 700px) {
+  .dg-resource {
+    width: 100%;
+  }
+}
+
+/*
+  ⚠️ Y EL PIE PASA A OCUPAR TODO EL ANCHO.
+
+  Medía `min(100% - 48px, 860px)`, centrado. Con el pie antiguo —texto y una
+  línea fina encima— eso era lo correcto: la línea marcaba el ancho del
+  contenido y se leía como un remate.
+
+  Con el violeta difuminado encima, ese ancho se convierte en un defecto: la
+  banda de color sale como una COLUMNA de 860 px en medio de la página, con el
+  claro asomando a los dos lados. Un fondo que no llega a los bordes no se lee
+  como fondo.
+
+  La caja se va a los bordes y el que conserva la medida es el texto, que es
+  quien la necesitaba: un renglón de 1440 px no se lee.
+*/
+.dg-page__footer {
+  width: 100%;
+  padding-inline: 24px;
+}
+
+.dg-page__footer p {
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA RETÍCULA SE DISUELVE CON LAS MANCHAS
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Hasta aquí eran dos cosas apiladas: manchas difusas abajo y, por delante, una
+   retícula perfecta e igual de marcada en toda la página. Se veía justo así
+   —una rejilla impecable con niebla por detrás— en vez de un solo fondo.
+
+   Para que las líneas se disuelvan donde hay mancha, la retícula necesita capa
+   propia: los fondos de un mismo elemento no se pueden enmascarar por separado,
+   la máscara se aplica al conjunto. Pasa a un pseudoelemento y las manchas se
+   quedan en .dg-page.
+
+   ── LA MÁSCARA ES LO QUE LAS MEZCLA ──
+
+   Dos radiales CENTRADOS EN LAS MISMAS POSICIONES que dos de las manchas, y
+   compuestos con `intersect`, que multiplica: donde los dos son tenues la
+   máscara casi se apaga y la retícula desaparece; en el resto vale 1 y las
+   líneas están enteras. El resultado es una rejilla que respira —marcada en
+   unas zonas, casi ausente en otras— y que se apaga justo donde el color se
+   acumula.
+
+   Ningún radial baja de 0,12: a cero quedarían agujeros redondos sin líneas,
+   que se leen como una mancha con forma. Se trata de atenuar, no de recortar.
+
+   ── VA EN fixed, Y ESO LA DEJA QUIETA ──
+
+   Es el precio, y se paga a gusto: las manchas ya iban en `fixed` —medidas
+   contra la ventana, o un radial al 30 % de una página de 1700 px caería fuera
+   de la primera pantalla—. Si la retícula se desplazara y la máscara no, las
+   zonas apagadas viajarían por encima de las líneas y el efecto se delataría
+   al primer scroll. Las dos capas en el mismo sistema de referencia es lo que
+   hace que se lean como UN fondo.
+
+   ── z-index 0, POR DETRÁS DE TODO ──
+
+   El hero, el panel y el pie van en 1 y la cinta en 3, así que una capa en 0
+   queda debajo de todo el contenido. `pointer-events: none` porque cubre la
+   ventana entera y sin eso se comería cada clic de la página.
+*/
+.dg-page {
+  position: relative;
+  background-image:
+    radial-gradient(
+      52rem 40rem at 12% 8%,
+      rgba(106, 74, 156, 0.1),
+      transparent 70%
+    ),
+    radial-gradient(
+      46rem 34rem at 92% 26%,
+      rgba(212, 168, 85, 0.08),
+      transparent 68%
+    ),
+    radial-gradient(
+      58rem 44rem at 78% 82%,
+      rgba(106, 74, 156, 0.09),
+      transparent 72%
+    ),
+    radial-gradient(
+      40rem 30rem at 6% 70%,
+      rgba(240, 201, 138, 0.06),
+      transparent 70%
+    );
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-attachment: fixed;
+}
+
+.dg-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(46, 26, 82, 0.2) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(46, 26, 82, 0.2) 2px, transparent 2px);
+  background-size: 96px 96px;
+  background-position: -1px -1px;
+  -webkit-mask-image:
+    radial-gradient(52rem 40rem at 12% 8%, rgba(0, 0, 0, 0.12), #000 68%),
+    radial-gradient(58rem 44rem at 78% 82%, rgba(0, 0, 0, 0.16), #000 70%);
+  mask-image:
+    radial-gradient(52rem 40rem at 12% 8%, rgba(0, 0, 0, 0.12), #000 68%),
+    radial-gradient(58rem 44rem at 78% 82%, rgba(0, 0, 0, 0.16), #000 70%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Sobre el violeta del cuestionario no hay retícula que disolver: la capa
+   sobra y, si se quedara, dibujaría líneas claras sobre el fondo oscuro. */
+.dg-page--proceso::before {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA VISTA PREVIA: ATENUADA EN REPOSO, SE ENCIENDE AL PASAR EL RATÓN
+   ═══════════════════════════════════════════════════════════════════════════
+
+   EL PROBLEMA: la foto está tomada en un jardín a pleno sol y la tarjeta que la
+   contiene es violeta oscuro. Sin atenuar, el fotograma es un rectángulo
+   luminoso que se lleva toda la mirada y se lee como UNA FOTO PUESTA AHÍ, no
+   como la vista previa de algo que todavía no se puede ver. Además le come el
+   contraste al botón de reproducir, que es lo que hay que pulsar.
+
+   ── EL VELO ES DE COLOR, NO UN NEGRO ──
+
+   Violeta de marca al 42 %. Un gris neutro apagaría la foto y ya; el violeta la
+   mete dentro de la tarjeta —comparten tono— y por eso deja de leerse como un
+   recorte pegado encima.
+
+   ── Y EL HOVER SE INVIERTE ──
+
+   Estaba en `brightness(0.92)`: la foto se OSCURECÍA al pasar el ratón, que es
+   lo contrario de lo que un cursor encima debería sugerir. Ahora el velo se
+   retira a poco más de la mitad y el brillo sube a 1: la imagen se enciende, se
+   acerca un punto y el gesto dice "esto se puede abrir".
+
+   Los 520 ms se conservan: es un fondo grande, y a menos tiempo el cambio de
+   luz de toda la caja se percibe como un parpadeo.
+*/
+.dg-resource__poster {
+  filter: saturate(0.88) contrast(0.98) brightness(0.84);
+}
+
+.dg-resource__video::after {
+  background:
+    linear-gradient(90deg, rgba(41, 0, 102, 0.22), transparent 42%),
+    radial-gradient(circle at 50% 50%, transparent 0 58px, rgba(20, 8, 43, 0.18) 120px),
+    linear-gradient(0deg, rgba(46, 26, 82, 0.42), rgba(46, 26, 82, 0.42));
+  transition: opacity 520ms ease;
+}
+
+.dg-resource__video:hover::after {
+  opacity: 0.55;
+}
+
+.dg-resource__video:hover .dg-resource__poster {
+  transform: scale(1.02);
+  filter: saturate(1.04) contrast(1.02) brightness(1);
+}
+
+/*
+  ⚠️ CON EL VÍDEO BLOQUEADO EL VELO SE RETIRA.
+
+  Ahí ya oscurece el propio filtro del poster —brightness(0.7)— y sumar los dos
+  dejaría el fotograma casi negro, con el candado flotando sobre nada. Es lo
+  mismo que hace la referencia por el mismo motivo.
+*/
+.dg-resource__video.is-locked::after {
+  opacity: 0.25;
+}
+
+/*
+  ⚠️ brightness(1.02) Y NO brightness(1).
+
+  Escrito como `brightness(1)`, el compilador de CSS lo da por redundante —es el
+  valor por defecto del filtro— y lo deja en `brightness()`, sin argumento. Esa
+  forma no la acepta el navegador dentro de la lista, así que descarta la
+  declaración ENTERA: el poster se quedaba con el filtro de reposo y el hover no
+  hacía nada, aunque la regla estuviera en la hoja.
+
+  1,02 dice lo mismo a efectos prácticos —un 2 % de luz sobre el original— y no
+  se puede simplificar, así que sobrevive a la compilación.
+*/
+.dg-resource__video:hover .dg-resource__poster {
+  filter: saturate(1.04) contrast(1.02) brightness(1.02);
+}

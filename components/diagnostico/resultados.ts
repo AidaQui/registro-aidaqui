@@ -12,6 +12,30 @@ import type { Codigo } from "@/components/diagnostico/preguntas";
  * vídeo correspondiente, así que aquí no se duplica.
  */
 
+/*
+ * LOS DOBLES CORCHETES DE `descripcion` MARCAN LO QUE SE VELA EN PANTALLA.
+ *
+ * La pantalla de resultado no entrega el diagnóstico: lo enseña tapado para que
+ * la lectura completa siga siendo motivo para abrir el correo. Pero velar el
+ * párrafo entero no engancha a nadie —un bloque borroso se salta con la
+ * vista—, así que se vela POR TRAMOS: se leen los conectores y se tapa lo que
+ * concreta.
+ *
+ *   "…pero una parte de ti sigue necesitando [[anticipar, entender y
+ *    controlar…]]. Puede manifestarse como [[sobrepensar, dificultad para
+ *    soltar…]]"
+ *
+ * Lo que queda a la vista va dirigido a la persona y no dice nada que se pueda
+ * llevar; lo tapado es el contenido. El corte es el gancho.
+ *
+ * Se marca AQUÍ, en el texto, y no con un recuento de palabras en el
+ * componente: dónde empieza a decirse algo revelador depende de cada
+ * redacción, y quien escriba una ficha nueva decide su propio corte sin tocar
+ * código. Sin corchetes, la descripción se lee entera.
+ *
+ * ⚠️ Los corchetes son marcas, no texto: Resultado.tsx los quita antes de
+ * pintar. No usarlos para nada más dentro de `descripcion`.
+ */
 export type FichaCodigo = {
   titulo: string;
   frase: string;
@@ -25,7 +49,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     titulo: "Código de Control",
     frase: "Si no lo controlo, algo puede salir mal.",
     descripcion:
-      "Has hecho mucho trabajo interno, pero una parte de ti sigue necesitando anticipar, entender y controlar lo que ocurre para sentirse segura. Puede manifestarse como sobrepensar, dificultad para soltar, querer saber cómo va a suceder todo, exigencia o frustración cuando la realidad no responde como esperabas.",
+      "Has hecho mucho trabajo interno, pero una parte de ti sigue necesitando [[anticipar, entender y controlar lo que ocurre para sentirse segura]]. Puede manifestarse como [[sobrepensar, dificultad para soltar, querer saber cómo va a suceder todo, exigencia o frustración cuando la realidad no responde como esperabas]].",
     detras: "Necesidad de seguridad.",
     integrar:
       "Confianza, rendición y capacidad de permanecer en lo desconocido sin volver automáticamente al control.",
@@ -34,7 +58,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     titulo: "Código de Exigencia",
     frase: "Todavía no soy suficiente para estar donde quiero estar.",
     descripcion:
-      "Tu crecimiento se ha convertido, sin darte cuenta, en otra forma de exigirte. Siempre existe una versión más evolucionada, más sana, más consciente o más preparada que necesitas alcanzar antes de permitirte sentirte suficiente. Incluso el desarrollo personal puede convertirse en una persecución.",
+      "Tu crecimiento se ha convertido, sin darte cuenta, en otra forma de [[exigirte]]. Siempre existe [[una versión más evolucionada, más sana, más consciente o más preparada que necesitas alcanzar antes de permitirte sentirte suficiente]]. Incluso el desarrollo personal puede convertirse en [[una persecución]].",
     detras: "Asociación entre valor y desempeño.",
     integrar: "Dejar de utilizar la evolución para rechazarse en el presente.",
   },
@@ -42,7 +66,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     titulo: "Código de Carencia",
     frase: "Tengo que hacer más para poder recibir más.",
     descripcion:
-      "Intelectualmente puedes creer en la abundancia, pero tu sistema sigue funcionando desde la sensación de que nunca hay suficiente: dinero, tiempo, oportunidades, amor o incluso capacidad personal. Por eso haces, fuerzas, acumulas, te preocupas o tienes dificultad para recibir sin sentir que primero tienes que merecerlo.",
+      "Intelectualmente puedes creer en la abundancia, pero tu sistema sigue funcionando desde [[la sensación de que nunca hay suficiente: dinero, tiempo, oportunidades, amor o incluso capacidad personal]]. Por eso [[haces, fuerzas, acumulas, te preocupas o tienes dificultad para recibir sin sentir que primero tienes que merecerlo]].",
     detras: "Miedo a que no haya suficiente.",
     integrar: "Suficiencia, merecimiento y apertura a recibir.",
   },
@@ -50,7 +74,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     titulo: "Código de Validación Externa",
     frase: "Sé quién soy… hasta que alguien deja de confirmármelo.",
     descripcion:
-      "Puedes haber trabajado mucho tu autoestima y, aun así, seguir midiendo inconscientemente tu valor a través de cómo te perciben los demás. Aparece al compararte, buscar aprobación, necesitar reconocimiento, tener miedo a decepcionar o modificar quién eres para sentirte aceptada.",
+      "Puedes haber trabajado mucho tu autoestima y, aun así, seguir midiendo inconscientemente [[tu valor a través de cómo te perciben los demás]]. Aparece al [[compararte, buscar aprobación, necesitar reconocimiento, tener miedo a decepcionar o modificar quién eres para sentirte aceptada]].",
     detras: "Asociación entre aceptación y seguridad o pertenencia.",
     integrar: "Validación interna y soberanía.",
   },
@@ -59,7 +83,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     frase:
       "Sé que estoy a salvo, pero mi cuerpo todavía vive como si tuviera que protegerme.",
     descripcion:
-      "Tu mente puede haber comprendido muchísimas cosas que tu cuerpo todavía no ha integrado. Por eso determinadas situaciones siguen activando respuestas automáticas: huir, bloquearte, reaccionar, cerrarte, defenderte o volver a comportamientos que creías superados.",
+      "Tu mente puede haber comprendido muchísimas cosas que tu cuerpo todavía no [[ha integrado]]. Por eso determinadas situaciones siguen activando [[respuestas automáticas: huir, bloquearte, reaccionar, cerrarte, defenderte o volver a comportamientos que creías superados]].",
     detras: "Protección.",
     integrar:
       "Seguridad interna y una nueva respuesta ante aquello que antes representaba una amenaza.",
@@ -68,7 +92,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     titulo: "Código de Búsqueda Infinita",
     frase: "He aprendido tanto de otros que ya no sé qué es verdad para mí.",
     descripcion:
-      "Has leído, escuchado, hecho cursos, terapias o procesos espirituales. Tienes muchísimo conocimiento. Pero cuanto más buscas respuestas, más difícil puede volverse escuchar la tuya. Tu siguiente nivel no necesita necesariamente otra respuesta externa.",
+      "Has leído, escuchado, hecho cursos, terapias o procesos espirituales. Tienes muchísimo conocimiento. Pero cuanto más [[buscas respuestas, más difícil puede volverse escuchar la tuya]]. Tu siguiente nivel [[no necesita necesariamente otra respuesta externa]].",
     detras: "Desconfianza en la propia guía.",
     integrar: "Conexión con el Ser, intuición y discernimiento interno.",
   },
@@ -77,7 +101,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     frase:
       "Quiero cambiar… pero cuando estoy a punto de hacerlo, vuelvo a lo conocido.",
     descripcion:
-      "Hay una parte consciente de ti que desea una nueva realidad y otra que sigue identificando lo conocido como seguro. Por eso puedes avanzar muchísimo y, justo cuando llega el momento de sostener una nueva versión de ti, procrastinas, dudas, retrocedes o recreas circunstancias conocidas.",
+      "Hay una parte consciente de ti que desea una nueva realidad y otra que sigue [[identificando lo conocido como seguro]]. Por eso puedes avanzar muchísimo y, justo cuando llega el momento de sostener una nueva versión de ti, [[procrastinas, dudas, retrocedes o recreas circunstancias conocidas]].",
     detras: "Fidelidad a la identidad conocida.",
     integrar:
       "Capacidad de sostener una nueva identidad incluso cuando todavía se siente desconocida.",

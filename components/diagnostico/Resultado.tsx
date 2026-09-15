@@ -78,9 +78,46 @@ type Props = {
  * El vídeo no se reproduce aquí a propósito: la entrega por correo es lo que
  * confirma la dirección y lo que deja el canal abierto.
  */
+/*
+ * PARTE LA DESCRIPCIÓN EN TRAMOS A LA VISTA Y TRAMOS VELADOS.
+ *
+ * Los tramos a velar vienen marcados con [[dobles corchetes]] en el texto de
+ * resultados.ts —ver allí por qué se marca en el texto y no aquí—. Esto sólo
+ * los separa.
+ *
+ * El paréntesis de captura en el `split` es lo que hace el trabajo: con él, el
+ * resultado conserva TAMBIÉN los trozos que coinciden, y no sólo lo que queda
+ * entre ellos. Así la lista sale alternando —claro, velado, claro, velado…— y
+ * basta mirar si el trozo empezaba por corchete para saber cuál es cuál.
+ *
+ * Una descripción sin marcas devuelve un solo tramo, en claro: quitar los
+ * corchetes de una ficha la deja legible entera, sin tocar este archivo.
+ */
+/* `[\s\S]` y no `.` con el flag `s`: ese flag exige ES2018 y el tsconfig del
+   proyecto apunta por debajo, así que el type check del build lo rechaza. La
+   clase de caracteres hace exactamente lo mismo —incluido el salto de línea—
+   sin pedir nada al compilador. */
+const MARCA_VELADA = /\[\[([\s\S]+?)\]\]/g;
+
+function partirDescripcion(texto: string) {
+  return texto
+    .split(/(\[\[[\s\S]+?\]\])/g)
+    .filter(Boolean)
+    .map((trozo, i) => ({
+      /* La clave es el índice porque un mismo texto puede repetirse en dos
+         tramos y React necesita distinguirlos. La lista es fija: se calcula del
+         mismo string en cada render y nunca se reordena. */
+      clave: i,
+      velado: trozo.startsWith("[["),
+      texto: trozo.replace(MARCA_VELADA, "$1"),
+    }));
+}
+
 export default function Resultado({ patron, email, nombre }: Props) {
   const ficha = FICHAS[patron];
   const respondidas = PREGUNTAS.length;
+
+  const tramos = partirDescripcion(ficha.descripcion);
 
   return (
     <div className="dg-resultado">
@@ -102,11 +139,57 @@ export default function Resultado({ patron, email, nombre }: Props) {
             tener. Partidos, el nombre queda solo y manda. */}
         <p className="dg-resultado__lead">Tu patrón dominante es</p>
 
+        {/* ══ SE DA EL NOMBRE; SE VELA LO QUE LO EXPLICA ══
+
+            EL NOMBRE DEL PATRÓN VA EN CLARO. Es lo que se ha ganado por
+            responder, y sin él la pantalla no entrega nada: "tu patrón
+            dominante es" seguido de una mancha no es intriga, es un error.
+            Además lo hace suyo —ya tiene nombre— y da algo que contar.
+
+            LO QUE SE VELA ES EL DESARROLLO: la frase entera y, de la
+            descripción, todo menos su arranque. Ahí es donde se dice CÓMO se
+            manifiesta y QUÉ hacer con ello, que es exactamente lo que promete
+            el correo. Leído aquí, el correo pierde su motivo.
+
+            LAS PRIMERAS PALABRAS SÍ SE LEEN. Un bloque borroso entero se salta
+            con la vista; un párrafo que empieza a hablarle a la persona —"Has
+            hecho mucho trabajo interno, pero una parte de ti sigue
+            necesitando…"— y se difumina justo donde iba a concretar, se queda
+            enganchado. El corte es el gancho.
+
+            aria-hidden en lo velado: para un lector de pantalla el desenfoque
+            no existe, y leería en voz alta justo lo que se está tapando. Lo
+            que sí anuncia es la nota de debajo, en texto plano.
+
+            Y la cortina no es una caja fuerte: el texto está en el HTML y quien
+            abra el inspector lo verá. `user-select: none` frena el camino
+            corto —subrayar y copiar—, que es como se lee un borroso sin
+            despeinarse. */}
         <h1 className="dg-resultado__title">{ficha.titulo}</h1>
 
-        <p className="dg-resultado__quote">«{ficha.frase}»</p>
+        <p className="dg-resultado__quote dg-velado" aria-hidden="true">
+          «{ficha.frase}»
+        </p>
 
-        <p className="dg-resultado__text">{ficha.descripcion}</p>
+        <p className="dg-resultado__text">
+          {tramos.map((tramo) =>
+            tramo.velado ? (
+              <span
+                key={tramo.clave}
+                className="dg-resultado__velo-inline"
+                aria-hidden="true"
+              >
+                {tramo.texto}
+              </span>
+            ) : (
+              <span key={tramo.clave}>{tramo.texto}</span>
+            ),
+          )}
+        </p>
+
+        <p className="dg-resultado__velo-nota">
+          Tu lectura completa te espera en el correo.
+        </p>
 
         {/* Las dos etiquetas dicen lo mismo que el sello por otra vía: que
             esto salió de las respuestas dadas y que el proceso terminó. */}
@@ -120,28 +203,41 @@ export default function Resultado({ patron, email, nombre }: Props) {
         </div>
       </section>
 
-      {/* ══ 2. LAS DOS CLAVES ══ */}
-      <div className="dg-resultado__pair">
-        <div className="dg-resultado__box">
-          <p className="dg-resultado__box-label">Lo que hay detrás</p>
-          <p className="dg-resultado__box-text">{ficha.detras}</p>
-        </div>
-        <div className="dg-resultado__box">
-          <p className="dg-resultado__box-label">Lo que necesita integrar</p>
-          <p className="dg-resultado__box-text">{ficha.integrar}</p>
-        </div>
-      </div>
+      {/* ⚠️ AQUÍ IBAN "LO QUE HAY DETRÁS" Y "LO QUE NECESITA INTEGRAR".
 
-      {/* ══ 3. EL CIERRE ══ */}
+          Se retiraron enteras. Eran las dos únicas piezas de la pantalla que
+          entregaban el contenido en claro —la raíz del patrón y la salida—, y
+          justo por eso no podían quedarse: con el diagnóstico velado arriba y
+          estas dos legibles debajo, lo que se tapaba en un sitio se regalaba en
+          el otro, y quien las leyera ya no necesitaba abrir el correo.
+
+          Son lo que se promete en el email, no el anticipo. Su texto sigue en
+          `ficha.detras` y `ficha.integrar` (resultados.ts), intacto y listo por
+          si vuelven a hacer falta aquí. */}
+
+      {/* ══ 2. EL CIERRE ══ */}
       <div className="dg-resultado__cierre">
         <section className="dg-resultado__mail">
           <span className="dg-resultado__medallon" aria-hidden="true">
             <MailIcon />
           </span>
+          {/* EN PLURAL Y SIN "EN VÍDEO".
+
+              "Ya te envié" hablaba en primera persona del singular, como si lo
+              mandara Aida a mano; el envío es de la marca y va en plural.
+
+              "En vídeo" se cae porque compromete un formato concreto: si la
+              lectura llega en texto, esta línea deja de ser cierta y la
+              promesa se rompe en el peor sitio, que es el correo que la
+              persona acaba de esperar.
+
+              "Este código" y no "este patrón": es el término con el que la
+              página lleva llamándolo desde el hero —"tu código dominante"—, y
+              cambiarlo justo aquí hace dudar de si se habla de lo mismo. */}
           <p className="dg-resultado__mail-text">
-            Ya te envié a <strong>{email}</strong> tu lectura completa en vídeo:
-            cómo se manifiesta este patrón en tu vida, por qué sigues
-            repitiéndolo y cuál es tu primer paso para trascenderlo.
+            Ya enviamos a <strong>{email}</strong> tu lectura completa. Cómo se
+            manifiesta este código en tu vida, por qué sigues repitiendo ese
+            patrón y cuál es tu primer paso para trascenderlo.
           </p>
           {/* El aviso del spam va aquí y no al pie: es una instrucción sobre
               este correo concreto, y lejos de él no se entendería de qué
@@ -152,29 +248,47 @@ export default function Resultado({ patron, email, nombre }: Props) {
           </p>
         </section>
 
-        <section className="dg-resultado__comunidad">
-          <h2 className="dg-resultado__comunidad-title">Un último paso</h2>
-          <p className="dg-resultado__note">
-            En la comunidad de WhatsApp recibirás novedades y serás de las
-            primeras personas en saber cuándo abrimos las plazas de Academia
-            ADN.
-          </p>
+        {/* EL MARCO DE LA LUZ QUE GIRA.
 
-          <a
-            href={whatsappGroupUrl}
-            className="dg-resultado__cta"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="dg-resultado__cta-border" aria-hidden="true" />
-            <span className="dg-resultado__cta-face">
-              <span className="dg-resultado__cta-icon" aria-hidden="true">
-                <WhatsAppIcon />
+            Es un envoltorio y no un `border` de la propia tarjeta porque lo que
+            recorre el contorno es un degradado cónico animado, y un borde no
+            puede llevar degradado con redondeo. El truco: el degradado se pinta
+            en ESTE div, la tarjeta de dentro lleva su fondo opaco, y del
+            degradado sólo asoma el píxel de relleno que los separa.
+
+            No es el mismo recurso que un borde encendido fijo. Un tramo corto
+            de luz dando vueltas no dice "esto importa", dice "esto te está
+            esperando", y esta tarjeta es lo único que queda por hacer en toda
+            la página.
+
+            ⚠️ Su redondeo es el de la tarjeta + 1px (el relleno). Con el mismo
+            valor, la curva de fuera cae por dentro de la de dentro y el filo se
+            ve más fino en las esquinas que en los lados. */}
+        <div className="dg-resultado__marco">
+          <section className="dg-resultado__comunidad">
+            <h2 className="dg-resultado__comunidad-title">Un último paso</h2>
+            <p className="dg-resultado__note">
+              En la comunidad de WhatsApp recibirás novedades y serás de las
+              primeras personas en saber cuándo abrimos las plazas de Academia
+              ADN.
+            </p>
+
+            <a
+              href={whatsappGroupUrl}
+              className="dg-resultado__cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="dg-resultado__cta-border" aria-hidden="true" />
+              <span className="dg-resultado__cta-face">
+                <span className="dg-resultado__cta-icon" aria-hidden="true">
+                  <WhatsAppIcon />
+                </span>
+                Unirme a la comunidad
               </span>
-              Unirme a la comunidad
-            </span>
-          </a>
-        </section>
+            </a>
+          </section>
+        </div>
       </div>
     </div>
   );
