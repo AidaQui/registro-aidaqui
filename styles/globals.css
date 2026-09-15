@@ -11355,10 +11355,15 @@ a.pearl-btn {
    con el filo dorado haciendo el contorno en vez de un reborde blanco. */
 /* ── AJUSTES DE MÓVIL EN LA PORTADA ── */
 @media (max-width: 700px) {
-  /* La portada ocupaba más de la mitad de la pantalla antes de que se viera
-     nada de lo que hay debajo. 45vh deja el formulario a un golpe de pulgar. */
+  /* ── EL REPARTO ENTRE LAS DOS BANDAS ──
+
+     No es una altura elegida por sí misma: es la mitad blanca de la pantalla
+     frente a la violeta que empieza en la cinta. Con 45vh el violeta pesaba
+     de más; con 50 el blanco se quedaba justo por debajo de la mitad y la
+     costura no caía en el centro. 55 las equilibra dejando además el
+     formulario a un golpe de pulgar. */
   .dg-hero {
-    min-height: 45vh;
+    min-height: 55vh;
   }
 
   /* La cinta se monta sobre la costura con márgenes negativos calculados
