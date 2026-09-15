@@ -477,6 +477,87 @@
   display: none;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   LA PILA: LA COMPOSICIÓN DE MÓVIL
+   ═══════════════════════════════════════════════════════════════════════
+
+   En escritorio no existe. Aparece por debajo de 900 px, donde el sobre se
+   retira: allí el carrusel horizontal competía con el desplazamiento
+   vertical de la página, y la carpeta pedía un ancho que el teléfono no
+   tiene. */
+.pila {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* EL SOBRE ENTERO SE RETIRA. display:none y no una opacidad: el carrusel
+     seguiría animándose invisible, gastando fotogramas en algo que nadie ve. */
+  .stage {
+    display: none;
+  }
+
+  .pila {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: min(92vw, 460px);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .pilaKicker {
+    font-family: var(--font-jost), Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    color: #f0c98a;
+  }
+
+  .pilaTitle {
+    margin: 0;
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-size: clamp(30px, 8.6vw, 40px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #fffffd;
+    text-wrap: balance;
+  }
+
+  .pilaBrief {
+    margin: 0 0 8px;
+    font-family: var(--font-jost), Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 253, 0.78);
+    text-wrap: balance;
+  }
+
+  .pilaCards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  /* Las fichas heredan de .paper su tipografía —.paperNumber, .paperTitle y
+     .paperText se reutilizan tal cual— pero no su posicionamiento: aquí van
+     en flujo, una debajo de otra. */
+  .pilaCard {
+    padding: 22px 22px 20px;
+    border: 1px solid rgba(240, 201, 138, 0.42);
+    border-radius: 18px;
+    background: linear-gradient(
+      160deg,
+      rgba(255, 250, 241, 0.97),
+      rgba(244, 236, 250, 0.94)
+    );
+    box-shadow: 0 18px 38px -22px rgba(8, 3, 22, 0.6);
+    text-align: left;
+  }
+}
+
 @media (max-width: 900px) {
   .folderBriefLong {
     display: none;
@@ -672,17 +753,10 @@
 
   /* En móvil solo cambian las medidas: la posición la da el flujo y la caja
      se hereda. Las coordenadas de antes lo anclaban dentro de la solapa. */
+  /* ⚠️ LA NOTA SE RETIRA EN MÓVIL. Su texto vive ahora dentro de la pila,
+     debajo del titular; dejarla aquí lo pintaría dos veces. */
   .folderBrief {
-    width: min(90vw, 430px);
-    /* Sube a solaparse con el sobre. En móvil la carpeta deja un hueco por
-       debajo —su alto sale de la proporción, no del contenido— y la nota
-       quedaba flotando lejos, como un bloque suelto. Montada sobre ese hueco
-       se lee como parte de la misma pieza. */
-    margin-top: -80px;
-    padding: 18px 20px;
-    border-radius: 18px;
-    font-size: 15px;
-    line-height: 1.58;
+    display: none;
   }
 }
 

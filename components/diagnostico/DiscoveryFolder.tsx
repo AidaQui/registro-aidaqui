@@ -6,6 +6,7 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import styles from "./DiscoveryFolder.module.css";
 
 type DiscoveryItem = {
@@ -36,6 +37,10 @@ export default function DiscoveryFolder({
 }: DiscoveryFolderProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  /* La pila de móvil se revela con el scroll. El hook busca [data-reveal]
+     dentro del contenedor que devuelve, así que basta con colgarlo del
+     bloque que solo existe en móvil. */
+  const pilaRef = useScrollReveal<HTMLDivElement>();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -265,6 +270,40 @@ export default function DiscoveryFolder({
             <span className={styles.folderKicker}>LECTURA</span>
             <strong className={styles.folderTitle}>{title}</strong>
           </div>
+        </div>
+      </div>
+
+      {/* ── EN MÓVIL NO HAY SOBRE ──
+
+          El sobre y su carrusel viven en el bloque de arriba, que el CSS
+          oculta por debajo de 900 px. Aquí va la otra composición: titular,
+          promesa y las cuatro fichas apiladas.
+
+          SON DOS MONTAJES DISTINTOS Y NO UNO ADAPTADO. El sobre necesita
+          posiciones absolutas y un carril que se desplaza; la pila es flujo
+          normal. Forzar el primero a comportarse como la segunda es de donde
+          salían los saltos y los recortes.
+
+          Cada ficha entra al llegar al viewport con el mismo revelado que
+          usa el resto del sitio: en una columna larga, verlas aparecer marca
+          el ritmo de lectura que en el carrusel daba el desplazamiento. */}
+      <div className={styles.pila} ref={pilaRef}>
+        <span className={styles.pilaKicker}>LECTURA</span>
+        <h3 className={styles.pilaTitle} data-reveal="title">
+          {title}
+        </h3>
+        <p className={styles.pilaBrief} data-reveal>
+          {subtitleShort ?? subtitle}
+        </p>
+
+        <div className={styles.pilaCards} data-reveal-group>
+          {items.map((item) => (
+            <article key={item.numero} className={styles.pilaCard}>
+              <span className={styles.paperNumber}>{item.numero}</span>
+              <h4 className={styles.paperTitle}>{item.titulo}</h4>
+              <p className={styles.paperText}>{item.texto}</p>
+            </article>
+          ))}
         </div>
       </div>
 

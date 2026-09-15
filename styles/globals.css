@@ -11353,6 +11353,22 @@ a.pearl-btn {
 
    Se repone el mismo vidrio violeta del resto: una sola capa, sin franja, y
    con el filo dorado haciendo el contorno en vez de un reborde blanco. */
+/* ── AJUSTES DE MÓVIL EN LA PORTADA ── */
+@media (max-width: 700px) {
+  /* La portada ocupaba más de la mitad de la pantalla antes de que se viera
+     nada de lo que hay debajo. 45vh deja el formulario a un golpe de pulgar. */
+  .dg-hero {
+    min-height: 45vh;
+  }
+
+  /* La cinta se monta sobre la costura con márgenes negativos calculados
+     sobre su propio alto; en móvil ese solape deja el panel demasiado pegado,
+     así que se le devuelve aire por debajo. */
+  .dg-tira-costura {
+    margin-bottom: 30px;
+  }
+}
+
 @media (max-width: 700px) {
   .dg-panel__inner .lm-form {
     background: linear-gradient(
