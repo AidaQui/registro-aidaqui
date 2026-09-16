@@ -44,9 +44,22 @@ export type FichaCodigo = {
   integrar: string;
 };
 
+/**
+ * Las fichas que se enseñan en la pantalla de resultado.
+ *
+ * ⚠️ LOS TÍTULOS VAN ATADOS A LOS CORREOS DE MAILERLITE. Cada uno nombra el
+ * patrón con la misma palabra que usa su correo («Código de Seguridad» aquí,
+ * «Tu código dominante es: Seguridad» allí). Si aquí dijera «Código de
+ * Control» y el correo «Seguridad», la persona leería dos nombres distintos
+ * para lo mismo y parecería que le mandaron el vídeo equivocado.
+ *
+ * La equivalencia con los identificadores internos está en
+ * ETIQUETA_MAILERLITE, en preguntas.ts. Renombrar un título obliga a revisar
+ * las tres cosas a la vez: esta ficha, esa tabla y el correo.
+ */
 export const FICHAS: Record<Codigo, FichaCodigo> = {
   control: {
-    titulo: "Código de Control",
+    titulo: "Código de Seguridad",
     frase: "Si no lo controlo, algo puede salir mal.",
     descripcion:
       "Has hecho mucho trabajo interno, pero una parte de ti sigue necesitando [[anticipar, entender y controlar lo que ocurre para sentirse segura]]. Puede manifestarse como [[sobrepensar, dificultad para soltar, querer saber cómo va a suceder todo, exigencia o frustración cuando la realidad no responde como esperabas]].",
@@ -55,7 +68,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
       "Confianza, rendición y capacidad de permanecer en lo desconocido sin volver automáticamente al control.",
   },
   hiperexigencia: {
-    titulo: "Código de Exigencia",
+    titulo: "Código de Merecimiento",
     frase: "Todavía no soy suficiente para estar donde quiero estar.",
     descripcion:
       "Tu crecimiento se ha convertido, sin darte cuenta, en otra forma de [[exigirte]]. Siempre existe [[una versión más evolucionada, más sana, más consciente o más preparada que necesitas alcanzar antes de permitirte sentirte suficiente]]. Incluso el desarrollo personal puede convertirse en [[una persecución]].",
@@ -63,7 +76,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     integrar: "Dejar de utilizar la evolución para rechazarse en el presente.",
   },
   escasez: {
-    titulo: "Código de Carencia",
+    titulo: "Código de Suficiencia",
     frase: "Tengo que hacer más para poder recibir más.",
     descripcion:
       "Intelectualmente puedes creer en la abundancia, pero tu sistema sigue funcionando desde [[la sensación de que nunca hay suficiente: dinero, tiempo, oportunidades, amor o incluso capacidad personal]]. Por eso [[haces, fuerzas, acumulas, te preocupas o tienes dificultad para recibir sin sentir que primero tienes que merecerlo]].",
@@ -71,7 +84,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     integrar: "Suficiencia, merecimiento y apertura a recibir.",
   },
   validacion: {
-    titulo: "Código de Validación Externa",
+    titulo: "Código de Pertenencia",
     frase: "Sé quién soy… hasta que alguien deja de confirmármelo.",
     descripcion:
       "Puedes haber trabajado mucho tu autoestima y, aun así, seguir midiendo inconscientemente [[tu valor a través de cómo te perciben los demás]]. Aparece al [[compararte, buscar aprobación, necesitar reconocimiento, tener miedo a decepcionar o modificar quién eres para sentirte aceptada]].",
@@ -79,7 +92,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     integrar: "Validación interna y soberanía.",
   },
   supervivencia: {
-    titulo: "Código de Supervivencia Emocional",
+    titulo: "Código de Protección",
     frase:
       "Sé que estoy a salvo, pero mi cuerpo todavía vive como si tuviera que protegerme.",
     descripcion:
@@ -89,7 +102,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
       "Seguridad interna y una nueva respuesta ante aquello que antes representaba una amenaza.",
   },
   desconexion: {
-    titulo: "Código de Búsqueda Infinita",
+    titulo: "Código de Autoridad",
     frase: "He aprendido tanto de otros que ya no sé qué es verdad para mí.",
     descripcion:
       "Has leído, escuchado, hecho cursos, terapias o procesos espirituales. Tienes muchísimo conocimiento. Pero cuanto más [[buscas respuestas, más difícil puede volverse escuchar la tuya]]. Tu siguiente nivel [[no necesita necesariamente otra respuesta externa]].",
@@ -97,7 +110,7 @@ export const FICHAS: Record<Codigo, FichaCodigo> = {
     integrar: "Conexión con el Ser, intuición y discernimiento interno.",
   },
   autosabotaje: {
-    titulo: "Código de Retorno a la Antigua Identidad",
+    titulo: "Código de Identidad",
     frase:
       "Quiero cambiar… pero cuando estoy a punto de hacerlo, vuelvo a lo conocido.",
     descripcion:

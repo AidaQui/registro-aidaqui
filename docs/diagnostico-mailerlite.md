@@ -78,18 +78,23 @@ corresponde. Son estos siete:
 
 | # | Valor que llega | Correo que le toca | Título que vio en pantalla |
 |---|---|---|---|
-| 1 | `Seguridad` | Email 1 — Seguridad | Código de Control |
-| 2 | `Merecimiento` | Email 2 — Merecimiento | Código de Exigencia |
-| 3 | `Suficiencia` | Email 3 — Suficiencia | Código de Carencia |
-| 4 | `Pertenencia` | Email 4 — Pertenencia | Código de Validación Externa |
-| 5 | `Protección` | Email 5 — Protección | Código de Supervivencia Emocional |
-| 6 | `Autoridad` | Email 6 — Autoridad | Código de Búsqueda Infinita |
-| 7 | `Identidad` | Email 7 — Identidad | Código de Retorno a la Antigua Identidad |
+| 1 | `Seguridad` | Email 1 — Seguridad | Código de Seguridad |
+| 2 | `Merecimiento` | Email 2 — Merecimiento | Código de Merecimiento |
+| 3 | `Suficiencia` | Email 3 — Suficiencia | Código de Suficiencia |
+| 4 | `Pertenencia` | Email 4 — Pertenencia | Código de Pertenencia |
+| 5 | `Protección` | Email 5 — Protección | Código de Protección |
+| 6 | `Autoridad` | Email 6 — Autoridad | Código de Autoridad |
+| 7 | `Identidad` | Email 7 — Identidad | Código de Identidad |
 
-> **El mismo patrón tiene dos nombres, según dónde se mire.** En la web y en
-> Supabase se llama `control`; a MailerLite llega como `Seguridad`. Los dos
-> son correctos, pero **solo el de la primera columna sirve dentro de una
-> condición**.
+> **El mismo patrón tiene dos nombres, según dónde se mire.** Dentro del
+> código se llama `control`; de cara a la persona —pantalla y correo— es
+> siempre «Seguridad». Los dos son correctos, pero **solo el de la primera
+> columna sirve dentro de una condición**.
+>
+> La tercera columna y la segunda dicen ahora lo mismo a propósito: la persona
+> lee «Código de Seguridad» al terminar el cuestionario y recibe un correo que
+> le confirma «Tu código dominante es: Seguridad». Si esas dos palabras se
+> separan, parece que le llegó el vídeo de otro patrón.
 >
 > La traducción entre ambos vive en un único sitio del código,
 > `ETIQUETA_MAILERLITE` en `components/diagnostico/preguntas.ts`. Se adaptó
