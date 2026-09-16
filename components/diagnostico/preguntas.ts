@@ -6,10 +6,14 @@
  * E→supervivencia, F→desconexion, G→autosabotaje.
  *
  * ⚠️ LOS IDENTIFICADORES NO CAMBIAN AUNQUE SÍ LOS NOMBRES VISIBLES.
- * Son los valores que viajan a MailerLite y contra los que compara la
- * automatización que elige el vídeo. Renombrarlos obligaría a reconfigurar
- * las siete ramas del lado del cliente. Los nombres de cara al público
- * ("Código de Control", etc.) viven en resultados.ts.
+ * Son la clave de todo: los usa el cálculo, son las claves de FICHAS y son
+ * lo que se guarda en Supabase. Renombrarlos dejaría ilegibles los registros
+ * ya guardados.
+ *
+ * Este patrón tiene TRES vocabularios, y conviene no mezclarlos:
+ *   · el identificador   — aquí abajo; cálculo, FICHAS y Supabase
+ *   · el nombre visible  — "Código de Control"; en resultados.ts
+ *   · la etiqueta de MailerLite — "Seguridad"; en ETIQUETA_MAILERLITE
  */
 
 export const CODIGOS = [
@@ -26,6 +30,33 @@ export type Codigo = (typeof CODIGOS)[number];
 
 /** Compatibilidad con el nombre anterior del tipo. */
 export type Patron = Codigo;
+
+/**
+ * Lo que se manda a MailerLite en el campo `patron_dominante`.
+ *
+ * NO son los identificadores de arriba, y es deliberado. La automatización
+ * del cliente ya estaba montada con estos siete nombres —uno por correo— y
+ * sus condiciones comparan carácter por carácter. Traducir aquí, en el borde
+ * con MailerLite, cuesta una línea; renombrar los códigos por todo el
+ * proyecto obligaría a migrar las filas que Supabase ya tiene guardadas.
+ *
+ * El orden es el mismo en las dos listas porque salen del mismo material.
+ *
+ * ⚠️ TIENEN QUE COINCIDIR EXACTAMENTE CON EL VALOR DE CADA CONDICIÓN:
+ * mayúscula inicial incluida, y la tilde de «Protección» incluida. Si en
+ * MailerLite se renombra uno, hay que cambiarlo aquí el mismo día o esa rama
+ * deja de coincidir — sin error, sin aviso, y esas personas se quedan sin
+ * vídeo.
+ */
+export const ETIQUETA_MAILERLITE: Record<Codigo, string> = {
+  control: "Seguridad",
+  hiperexigencia: "Merecimiento",
+  escasez: "Suficiencia",
+  validacion: "Pertenencia",
+  supervivencia: "Protección",
+  desconexion: "Autoridad",
+  autosabotaje: "Identidad",
+};
 
 /** El orden de las opciones dentro de cada pregunta define a qué código suman. */
 const ORDEN: Codigo[] = [

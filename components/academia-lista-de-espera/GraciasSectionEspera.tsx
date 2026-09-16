@@ -51,7 +51,7 @@ export default function GraciasSectionEspera() {
           <p className="espera-gracias__card-label">PRÓXIMO PASO</p>
           <p className="espera-gracias__card-text">
             Antes de que abramos las plazas, descubre qué patrón inconsciente
-            sigue dirigiendo tu vida. Son 4 preguntas, menos de 2 minutos, y
+            sigue dirigiendo tu vida. Son 7 preguntas, menos de 3 minutos, y
             recibirás tu lectura personalizada en vídeo.
           </p>
         </div>

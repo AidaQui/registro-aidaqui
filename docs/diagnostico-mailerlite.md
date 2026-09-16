@@ -76,15 +76,30 @@ ahí todo el que complete la radiografía entra a este grupo.
 Hace falta **una plantilla por patrón**, cada una con el vídeo que le
 corresponde. Son estos siete:
 
-| # | Patrón | Nombre completo |
-|---|---|---|
-| 1 | `control` | El patrón de control |
-| 2 | `hiperexigencia` | El patrón de hiperexigencia |
-| 3 | `escasez` | El patrón de escasez |
-| 4 | `validacion` | El patrón de validación |
-| 5 | `supervivencia` | El patrón de supervivencia |
-| 6 | `desconexion` | El patrón de desconexión |
-| 7 | `autosabotaje` | El patrón de autosabotaje |
+| # | Valor que llega | Correo que le toca | Título que vio en pantalla |
+|---|---|---|---|
+| 1 | `Seguridad` | Email 1 — Seguridad | Código de Control |
+| 2 | `Merecimiento` | Email 2 — Merecimiento | Código de Exigencia |
+| 3 | `Suficiencia` | Email 3 — Suficiencia | Código de Carencia |
+| 4 | `Pertenencia` | Email 4 — Pertenencia | Código de Validación Externa |
+| 5 | `Protección` | Email 5 — Protección | Código de Supervivencia Emocional |
+| 6 | `Autoridad` | Email 6 — Autoridad | Código de Búsqueda Infinita |
+| 7 | `Identidad` | Email 7 — Identidad | Código de Retorno a la Antigua Identidad |
+
+> **El mismo patrón tiene dos nombres, según dónde se mire.** En la web y en
+> Supabase se llama `control`; a MailerLite llega como `Seguridad`. Los dos
+> son correctos, pero **solo el de la primera columna sirve dentro de una
+> condición**.
+>
+> La traducción entre ambos vive en un único sitio del código,
+> `ETIQUETA_MAILERLITE` en `components/diagnostico/preguntas.ts`. Se adaptó
+> la web a la automatización, y no al revés, porque las condiciones ya
+> estaban montadas y Supabase ya tenía cientos de registros guardados con los
+> identificadores antiguos.
+>
+> **Si alguna vez se renombra una condición en MailerLite, hay que cambiar esa
+> tabla el mismo día.** Es lo único que mantiene unidas las dos mitades: si se
+> desincronizan, la rama deja de coincidir sin dar ningún error.
 
 **Dónde:** Campaigns → Create campaign → Regular campaign
 
@@ -140,37 +155,72 @@ corresponde.
 Si la interfaz solo permite condiciones de dos salidas (sí/no), se encadenan:
 
 ```
-¿patron_dominante = control?
-├── Sí → enviar «Radiografía — Control»
-└── No → ¿patron_dominante = hiperexigencia?
-         ├── Sí → enviar «Radiografía — Hiperexigencia»
-         └── No → ¿patron_dominante = escasez?
+¿patron_dominante = Seguridad?
+├── Sí → enviar «Email 1 — Seguridad»
+└── No → ¿patron_dominante = Merecimiento?
+         ├── Sí → enviar «Email 2 — Merecimiento»
+         └── No → ¿patron_dominante = Suficiencia?
                   └── … y así con los siete
 ```
 
 ### ⚠️ Los valores exactos
 
-La comparación es **carácter por carácter**. Estos son los siete valores que
-llegan, en minúsculas y **sin tildes**:
+La comparación es **carácter por carácter**, y distingue mayúsculas. Estos
+son los siete valores que llegan, con su mayúscula inicial y la tilde de
+«Protección»:
 
 ```
-control
-hiperexigencia
-escasez
-validacion
-supervivencia
-desconexion
-autosabotaje
+Seguridad
+Merecimiento
+Suficiencia
+Pertenencia
+Protección
+Autoridad
+Identidad
 ```
 
-> **Esto es lo que más se rompe en la práctica.** Si una rama compara contra
-> `desconexión` o `validación` —con tilde, que es como se escriben bien en
-> castellano— esa rama **no coincide nunca** y esas personas se quedan sin
-> vídeo. No da error ni aviso: simplemente no entran por ninguna rama.
+> **Esto es lo que más se rompe en la práctica.** `seguridad` en minúscula no
+> es lo mismo que `Seguridad`, ni `Proteccion` sin tilde lo mismo que
+> `Protección`. Una rama que compare mal **no coincide nunca** y esas personas
+> se quedan sin vídeo: no da error ni aviso, simplemente no entran por ninguna
+> rama. Lo más seguro es **copiar y pegar**, nunca escribirlos.
 >
-> Van sin tilde a propósito, justamente para evitar problemas de codificación
-> entre sistemas. Lo más seguro es **copiar y pegar** los valores de la lista
-> de arriba en vez de escribirlos.
+> Tampoco vale el título que la persona vio en pantalla: ni
+> `Código de Control` ni `Código de Supervivencia Emocional`. Solo los siete
+> valores de esta lista.
+
+### Cómo saber si las ramas están bien sin esperar a que llegue un correo
+
+En la lista de automatizaciones, cada flujo muestra **En progreso** y
+**Completado**.
+
+> **«Completado» no significa «recibió el correo».** Quien baja por toda la
+> cadena de condicionales y no coincide con ninguna rama **también sale como
+> completado**: atraviesa el flujo y se va sin recibir nada.
+>
+> Por eso un contador de completados subiendo mientras nadie recibe el vídeo
+> es exactamente el síntoma de una rama que compara contra un valor
+> equivocado. Si el número sube y los correos no llegan, el problema está en
+> los valores, no en el envío.
+
+### La automatización solo alcanza a quien entre después
+
+MailerLite dispara el flujo cuando alguien **se une al grupo**, y solo a
+partir del momento en que la automatización queda publicada.
+
+> Quien ya estaba en el grupo antes de publicarla **no entra nunca**. No
+> aparece como en progreso ni como completado: simplemente no existe para ese
+> flujo, y no hay forma de que le llegue el vídeo con solo esperar.
+>
+> Si el grupo ya tenía gente cuando se publicó la automatización, esas
+> personas hay que recuperarlas aparte — normalmente con una campaña manual
+> segmentada por `patron_dominante`, una por patrón.
+>
+> **Ojo al segmentar a los antiguos.** Quien completó el diagnóstico antes de
+> que la web empezara a mandar estas etiquetas tiene guardado el identificador
+> viejo en minúsculas (`control`, `hiperexigencia`…), no `Seguridad`. Para
+> alcanzarlos hay que segmentar por esos valores antiguos, o filtrar por los
+> dos a la vez.
 
 ### Una salida de seguridad
 
@@ -188,7 +238,7 @@ funciona de verdad.
 1. Completar el diagnóstico en la web con un correo real y controlado.
 2. Comprobar en MailerLite que el suscriptor **entró al grupo**.
 3. Abrir su ficha y verificar que `patron_dominante` **tiene un valor**, y que
-   ese valor es uno de los siete de la lista.
+   ese valor es uno de los siete de la lista — con su mayúscula inicial.
 4. Comprobar que **llega el correo** con el vídeo de ese patrón.
 5. **Repetir eligiendo respuestas distintas** hasta obtener otro patrón, y
    comprobar que el vídeo que llega **también cambia**.
@@ -197,9 +247,18 @@ funciona de verdad.
 > funcionaría igual aunque las siete ramas apuntaran al mismo vídeo, y eso no
 > se descubriría hasta tener gente real dentro.
 
-Para forzar un patrón concreto, basta con elegir siempre la misma letra en las
-cuatro preguntas: la primera opción da `control`, la segunda `hiperexigencia`,
-y así en el orden de la lista.
+Para forzar un patrón concreto, hay que elegir **siempre la misma letra en las
+seis preguntas de opciones**: la opción A da `Seguridad`, la B `Merecimiento`,
+y así en el orden de la tabla del punto 3.
+
+El cuestionario tiene **seis preguntas de opciones y una séptima abierta**. La
+séptima es obligatoria para poder terminar, pero no puntúa: no influye en el
+patrón.
+
+> **Tienen que ser las seis.** Con seis preguntas y siete patrones el empate es
+> frecuente, así que hay un desempate automático. Si se responde la misma letra
+> solo en algunas y se varía en el resto, puede ganar otro patrón y parecer que
+> la bifurcación está mal cuando en realidad funcionaba.
 
 ---
 
@@ -221,3 +280,8 @@ ningún contacto**.
 - [ ] Confirmación de que el campo `patron_dominante` está creado
 - [ ] Confirmación de que las siete plantillas existen, cada una con su vídeo
 - [ ] Confirmación de que la automatización está **publicada** (no en borrador)
+- [ ] Confirmación de que las siete ramas comparan contra los valores de la
+      primera columna del punto 3 (`Seguridad`, `Merecimiento`…), con su
+      mayúscula inicial y la tilde de `Protección`
+- [ ] Si el grupo ya tenía suscriptores antes de publicar la automatización:
+      decidir cómo se les hace llegar el vídeo

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
 import {
+  ETIQUETA_MAILERLITE,
   PREGUNTAS_CERRADAS,
   calcularDiagnostico,
   type Respuestas,
@@ -35,21 +36,43 @@ const TABLE = "diagnosticos";
  * vídeo. Tiene que existir como campo personalizado en MailerLite: si no, la
  * API acepta el suscriptor pero descarta ese valor en silencio.
  *
+ * OJO: `etiqueta` NO es el identificador interno. Es el nombre con el que la
+ * automatización tiene montadas sus siete condiciones («Seguridad»,
+ * «Merecimiento»…), y la traducción vive en ETIQUETA_MAILERLITE. En Supabase
+ * se sigue guardando el identificador, así que el mismo patrón aparece con
+ * dos nombres según dónde se mire.
+ *
  * No lanza: el dato ya está en Supabase y el correo es secundario.
  */
 async function addToMailerLite(
   name: string,
   email: string,
   phone: string,
-  patron: string
+  etiqueta: string
 ): Promise<void> {
   const apiKey = process.env.MAILERLITE_API_KEY;
-  const groupId =
-    process.env.MAILERLITE_GROUP_ID_DIAGNOSTICO ||
-    process.env.MAILERLITE_GROUP_ID;
+  const groupId = process.env.MAILERLITE_GROUP_ID_DIAGNOSTICO;
 
-  if (!apiKey || !groupId) {
-    console.warn("MailerLite no configurado (falta API key o group id)");
+  /* NO HAY FALLBACK A MAILERLITE_GROUP_ID, Y ES DELIBERADO.
+     Esa variable es el grupo de la masterclass y la lista de espera. Caer en
+     ella cuando falta la del diagnóstico no salva nada: mete a la persona en
+     un embudo que no es el suyo y le dispara la automatización de otra
+     campaña. El síntoma aparece días después como «me llegó un correo
+     viejo», sin nada en los logs que apunte al origen.
+
+     El diagnóstico ya quedó guardado en Supabase antes de llegar aquí, así
+     que cortar no pierde a nadie: solo retrasa el vídeo hasta que se corrija
+     la configuración. */
+  if (!groupId) {
+    console.error(
+      "MAILERLITE_GROUP_ID_DIAGNOSTICO sin valor: el suscriptor no entra a " +
+        "ningún grupo y no recibirá su vídeo. Revisar variables de entorno."
+    );
+    return;
+  }
+
+  if (!apiKey) {
+    console.error("MAILERLITE_API_KEY sin valor: no se envía nada a MailerLite.");
     return;
   }
 
@@ -66,7 +89,7 @@ async function addToMailerLite(
         fields: {
           ...(name ? { name } : {}),
           ...(phone ? { phone } : {}),
-          patron_dominante: patron,
+          patron_dominante: etiqueta,
         },
         groups: [groupId],
       }),
@@ -206,11 +229,13 @@ export default async function handler(
   const guardado = await saveToSupabase(fila);
   if (!guardado.ok) registrarFallback(fila);
 
+  /* A MailerLite va la etiqueta, no el identificador: es contra eso que
+     comparan las siete condiciones de la automatización. */
   await addToMailerLite(
     trimmedName,
     trimmedEmail,
     trimmedPhone,
-    diagnostico.dominante
+    ETIQUETA_MAILERLITE[diagnostico.dominante]
   );
 
   return res.status(200).json({ ok: true, patron: diagnostico.dominante });
