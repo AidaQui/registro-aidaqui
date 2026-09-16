@@ -9908,6 +9908,36 @@ a.pearl-btn {
    LA MÁSCARA ES MÁS ABIERTA QUE LA DE LA HÉLICE. Los anillos son círculos
    completos: si se recortan con el mismo óvalo cerrado, se ven como arcos
    sueltos en vez de anillos. Se difumina sólo el borde. */
+/* LAS HEBRAS DE ADN: MISMA CAJA QUE LOS ANILLOS Y LA MISMA MÁSCARA.
+
+   Las dos capas tienen que desvanecerse contra los mismos bordes; con
+   máscaras distintas se ve dónde termina cada lienzo, que es justo lo que la
+   máscara existe para esconder.
+
+   Esta va sin z-index: es el primer hijo del hero y el resto lleva posición,
+   así que el orden de pintado ya la deja al fondo. */
+.dg-hero__adn {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 80% at 50% 50%,
+    #000 55%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 80% at 50% 50%,
+    #000 55%,
+    transparent 100%
+  );
+}
+
+.dg-hero__adn-canvas {
+  width: 100%;
+  height: 100%;
+}
+
 .dg-hero__rings {
   position: absolute;
   inset: 0;
@@ -10139,16 +10169,6 @@ a.pearl-btn {
    donde se alcanza el tope manda el porcentaje, y a partir de ahí, los
    110 px. Si se cambia cualquiera de los dos props, hay que cambiarlo aquí.
    */
-.dg-tira-costura {
-  position: relative;
-  /* Por encima del panel, que va en z-index 1. Sin esto el panel se pinta sobre
-     la mitad inferior de la cinta y la corta en seco por el medio. */
-  z-index: 3;
-  width: 100%;
-  margin-top: calc(min(13.3333%, 110px) * -0.5);
-  margin-bottom: calc(min(13.3333%, 110px) * -0.5);
-}
-
 /* ══ LO QUE HAY QUE DESTAPAR PARA QUE EL FONDO SE VEA ══
 
    Estos dos llevaban color propio y opaco, así que el campo de ondas quedaba
@@ -11364,13 +11384,6 @@ a.pearl-btn {
      formulario a un golpe de pulgar. */
   .dg-hero {
     min-height: 55vh;
-  }
-
-  /* La cinta se monta sobre la costura con márgenes negativos calculados
-     sobre su propio alto; en móvil ese solape deja el panel demasiado pegado,
-     así que se le devuelve aire por debajo. */
-  .dg-tira-costura {
-    margin-bottom: 30px;
   }
 }
 

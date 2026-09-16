@@ -9,9 +9,9 @@ import FormularioContacto from "@/components/diagnostico/FormularioContacto";
 import Resultado from "@/components/diagnostico/Resultado";
 import { LANDING } from "@/components/diagnostico/resultados";
 import type { Codigo } from "@/components/diagnostico/preguntas";
-import TextLoop from "@/components/diagnostico/TextLoop";
 import GradientWaves from "@/components/diagnostico/GradientWaves";
 import MagicRings from "@/components/diagnostico/MagicRings";
+import AdnParticles from "@/components/diagnostico/AdnParticles";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 import { Dna, Eye, LockKeyhole, Play, Puzzle, Sparkles, Sprout } from "lucide-react";
@@ -38,9 +38,9 @@ import { Dna, Eye, LockKeyhole, Play, Puzzle, Sparkles, Sprout } from "lucide-re
 type Fase = "intro" | "quiz" | "escaneando" | "resultado";
 
 const SOCIAL_PROOF_AVATARS = [
-  "/lista-de-espera/testimonios/Emilie Lahera Villa.png",
-  "/lista-de-espera/testimonios/fabianadelafuente.png",
-  "/lista-de-espera/testimonios/Bre Dlg.png",
+  "/lista-de-espera/testimonios/santiago.jpeg",
+  "/lista-de-espera/testimonios/oriana.jpeg",
+  "/lista-de-espera/testimonios/martina.jpeg",
   "/lista-de-espera/testimonios/Mafe Ellingboe.png",
 ] as const;
 
@@ -90,12 +90,6 @@ export default function LeadMagnetPage() {
      la imagen vive 2,1 s y el aviso 3 s más su salida. Atados al mismo estado,
      uno de los dos se cortaría a destiempo. */
   const [avisoVisible, setAvisoVisible] = useState(false);
-  /* El grosor de la cinta depende del ancho: la banda escala con la ventana,
-     así que el trazo que en escritorio es un remate en móvil se ve como un
-     hilo. Arranca en 70 —el valor de escritorio— para que el servidor y el
-     primer render pinten lo mismo y no haya aviso de hidratación. */
-  const [anchoCinta, setAnchoCinta] = useState(70);
-
   /* Estable entre renders: el escáner la usa dentro de un efecto, y una
      función nueva en cada render lo volvería a disparar. */
   const irAResultado = useCallback(() => setFase("resultado"), []);
@@ -122,14 +116,6 @@ export default function LeadMagnetPage() {
       };
     }
   }, [router.isReady, router.query]);
-
-  useEffect(() => {
-    const consulta = window.matchMedia("(max-width: 700px)");
-    const aplicar = () => setAnchoCinta(consulta.matches ? 92 : 70);
-    aplicar();
-    consulta.addEventListener("change", aplicar);
-    return () => consulta.removeEventListener("change", aplicar);
-  }, []);
 
   useEffect(() => {
     if (!videoBloqueado) return;
@@ -243,12 +229,38 @@ export default function LeadMagnetPage() {
         {fase === "intro" ? (
           <>
             <section className="dg-hero">
-              {/* ══ CAPA DE ATRÁS: LOS ANILLOS ══
+              {/* ══ CAPA DEL FONDO: LAS HEBRAS DE ADN ══
 
-                  Tres planos en el hero, de atrás hacia delante: los anillos,
-                  la hélice y el contenido. Los anillos van los últimos en
-                  profundidad porque son los que menos tienen que decir: marcan
-                  un pulso que se expande, y esa es toda su función.
+                  Va la primera del documento, así que queda por detrás de todo
+                  lo demás sin necesidad de z-index.
+
+                  ES EL SEGUNDO LIENZO WEBGL DEL HERO, con los anillos ya
+                  corriendo por delante. Se montó a sabiendas, no por descuido:
+                  si al verlo el fondo queda recargado, lo que sobra es uno de
+                  los dos, y quitar este es borrar estas diez líneas.
+
+                  POR QUÉ HEBRAS Y NO CUALQUIER OTRA PARTÍCULA: la página se
+                  llama "Radiografía de tu ADN". Un campo de puntos genérico
+                  sería atmósfera; esto nombra el tema.
+
+                  Las hebras se reparten a los lados y el centro queda libre:
+                  ahí va el titular, y es lo único que tiene que leerse. */}
+              <div className="dg-hero__adn" aria-hidden="true">
+                <AdnParticles
+                  className="dg-hero__adn-canvas"
+                  strands={7}
+                  /* Muy baja: por delante van los anillos a 0.55 y encima el
+                     titular. Esto solo tiene que insinuarse. */
+                  opacity={0.42}
+                  speed={0.85}
+                />
+              </div>
+
+              {/* ══ CAPA DE EN MEDIO: LOS ANILLOS ══
+
+                  Los anillos van por detrás del contenido porque son los que
+                  menos tienen que decir: marcan un pulso que se expande, y esa
+                  es toda su función.
 
                   ES EL MISMO GESTO QUE UNA RADIOGRAFÍA. Un pulso que sale del
                   centro y se expande es lo que hace un escáner, y esta página
@@ -354,70 +366,10 @@ export default function LeadMagnetPage() {
                       />
                     ))}
                   </div>
-                  <p>Súmate y descubre tu código como ellas</p>
+                  <p>Súmate y descubre tu código como ellos</p>
                 </div>
               </div>
             </section>
-
-            {/* LA CINTA DE PALABRAS CLAVE, MONTADA SOBRE LA COSTURA.
-
-                Va justo en el borde donde el violeta del hero se corta contra
-                el crema del panel, con media cinta a cada lado. Ese corte es la
-                línea más marcada de la página: poner la cinta encima la
-                convierte en el remate de la portada en lugar de un bloque más
-                dentro del panel.
-
-                Aquí vivía un párrafo en el hero que enumeraba todo esto en
-                prosa. Nadie lee tres líneas de texto corrido en una portada
-                cuando lo que tiene delante es un campo para escribir: se retiró
-                y quedaron sus palabras, que es lo único que se recordaba.
-
-                SALE DEL PANEL Y DEL HERO para poder ocupar el ancho completo.
-                La costura llega de canto a canto, y una cinta que se detuviera
-                en los 1180 px del contenido dejaría el corte a la vista por los
-                dos lados.
-
-                Se detiene al pasar el cursor: es texto, y un texto que se mueve
-                sin poder pararlo no se puede leer. */}
-            <div className="dg-tira-costura">
-              <TextLoop
-                text={LANDING.palabrasClave}
-                label={LANDING.promesa}
-                shape="wave"
-                /* 160 y no los 520 del original: a ancho completo, 520 serían
-                   más de 800 px de alto. Esto es un remate, no una sección.
-
-                   ⚠️ Si se cambia este valor hay que recalcular el margen
-                   negativo de .dg-tira-costura: los dos describen la misma
-                   altura desde sitios distintos. */
-                viewHeight={160}
-                /* Tope real: en móvil la banda sigue escalando con el ancho
-                   (52 px a 390), y en escritorio deja de crecer aquí en vez
-                   de llegar a los 256 px que medía a 1920. */
-                maxHeight={110}
-                curviness={15}
-                /* 70 en escritorio y 92 por debajo de 700 px: la banda escala
-                   con el ancho, así que en móvil el mismo trazo se ve como un
-                   hilo. El texto va dentro, de modo que engrosarla es lo que
-                   le devuelve aire. */
-                ribbonWidth={anchoCinta}
-                /* El violeta del hero, no el de las tarjetas: la cinta tiene
-                   que leerse como el final de la banda oscura. */
-                ribbonColor="#2e1a52"
-                color="#fffffd"
-                fontSize={29}
-                fontWeight={600}
-                letterSpacing={2}
-                speed={55}
-                separator="✦"
-                /* Las estrellas en el mismo dorado que la palabra "ADN"
-                   del hero: las mismas cinco paradas de su degradado. Es
-                   el único acento dorado de la página y conviene que
-                   aparezca siempre con la misma receta. */
-                starGradient={["#a06c08", "#d4a020", "#f0c98a", "#d4a020", "#a06c08"]}
-                pauseOnHover
-              />
-            </div>
 
             {/* EL PANEL SUBE SOBRE EL HERO con las esquinas superiores
                 redondeadas. Es lo que separa la promesa de la acción: arriba
