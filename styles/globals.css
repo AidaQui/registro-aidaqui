@@ -14526,14 +14526,34 @@ button.dg-resource__video {
   /* Un filo claro sobre el violeta: sin él la curva termina en un corte seco
      contra el fondo oscuro. */
   border-top: 1px solid rgba(255, 250, 241, 0.16);
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 253, 0.985),
-      rgba(255, 255, 253, 0.96) 46%,
-      rgba(250, 246, 240, 0.93)
-    ),
-    transparent;
+
+  /* ── EL PANEL LLEVA LA REJILLA ENCIMA, Y NO ES UN CAPRICHO ──
+
+     La rejilla de la página la dibuja .dg-page::before: una capa FIJA en
+     z-index 0, detrás de todo. Se veía dentro del panel porque el panel era
+     transparente, no porque estuviera pintada ahí.
+
+     Al volverse opaco —y tiene que serlo: una curva translúcida sobre el
+     violeta no se lee como un plano por delante— el panel tapaba esa capa y
+     la rejilla desaparecía de media página.
+
+     Así que se la pinta él. background-attachment: fixed en las dos líneas es
+     lo que hace que el retículo de 96 px quede anclado al viewport igual que
+     el de ::before: sin eso, la rejilla del panel se desplazaría al hacer
+     scroll y se vería el salto justo en la costura.
+
+     El crema va opaco y en la última capa; las dos rejillas, delante. */
+  background-color: #f9f5f0;
+  background-image:
+    linear-gradient(rgba(46, 26, 82, 0.2) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(46, 26, 82, 0.2) 2px, transparent 2px),
+    linear-gradient(180deg, #fffffd 0%, #fffffd 46%, #faf6f0 100%);
+  background-size:
+    96px 96px,
+    96px 96px,
+    100% 100%;
+  background-position: -1px -1px, -1px -1px, 0 0;
+  background-attachment: fixed, fixed, scroll;
   padding-top: calc(clamp(52px, 6vw, 88px) + 2rem);
 }
 
