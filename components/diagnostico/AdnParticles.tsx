@@ -2,51 +2,61 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 /**
- * Campo de hebras de ADN en partículas, para el fondo del hero.
+ * Hebras de ADN en partículas, para el fondo del hero.
  *
  * NO ES LA HÉLICE DEL ESCANEO. Aquella (MolecularDnaAnimation) es una pieza
  * central, grande y en cian: cuenta algo —"te estamos analizando"— y pide que
- * la mires. Esto es lo contrario: varias hebras pequeñas, lejanas y lentas,
- * repartidas por el fondo. Su único trabajo es que el violeta no sea un plano
- * liso, y tiene que perder siempre contra el titular.
+ * la mires. Estas son laterales, lentas y tenues. Su único trabajo es que el
+ * violeta no sea un plano liso, y tienen que perder siempre contra el titular.
  *
- * ── POR QUÉ CASI TODO OCURRE EN EL SHADER ──
+ * ── CÁMARA ORTOGRÁFICA, Y ES LA DECISIÓN QUE SOSTIENE TODO LO DEMÁS ──
  *
- * Las posiciones no se recalculan en JavaScript en ningún fotograma. Cada
- * punto lleva su sitio en la hebra (`aT`), de qué lado va (`aSide`) y los
- * parámetros de su hebra, y la hélice se resuelve en el vértice a partir del
- * tiempo. Son dos llamadas de dibujo y cero trabajo por fotograma en la CPU.
+ * Con perspectiva, una hebra colocada al fondo se proyecta hacia el centro por
+ * mucho que se la aparte en X: acababan amontonadas sobre el titular, que es
+ * el sitio exacto que hay que dejar libre. Y su tamaño en pantalla dependía de
+ * la distancia, así que quedaban demasiado pequeñas para leerse como hélices.
  *
- * Importa porque el hero YA tiene un lienzo WebGL —los anillos—, así que este
- * es el segundo contexto gráfico de la misma pantalla. Se decidió a sabiendas;
- * lo que no se puede es que además cueste caro.
+ * En ortográfica, X en el mundo es X en pantalla y el tamaño no depende de la
+ * profundidad. El encuadre se mide en fracciones de la caja visible, de modo
+ * que el pasillo central queda libre en cualquier proporción de pantalla.
  *
- * ── LOS COLORES SON LOS DE LOS ANILLOS ──
+ * ── EL BRILLO ES UN DATO, NO UN CÁLCULO ──
  *
- * Lavanda y dorado, las mismas dos paradas. El hero solo admite un acento
- * dorado y conviene que aparezca siempre con la misma receta; si estas
- * partículas trajeran un tercer color, el fondo pasaría a tener tres voces.
+ * Cada hebra trae el suyo en un atributo. La versión anterior lo deducía de la
+ * profundidad en espacio de vista con una ventana escrita a ojo, y esa ventana
+ * no coincidía con dónde estaban las hebras: el campo entero se dibujaba con
+ * alfa cero. Un valor explícito no se puede desincronizar de la escena.
  */
 
 type Props = {
   className?: string;
-  /** Cuántas hebras se reparten por el fondo. */
+  /** Cuántas hebras se reparten por los lados. */
   strands?: number;
-  /** Puntos por hebra y lado. Más = hebra más continua, menos = más granulada. */
+  /** Puntos por cadena. Más = hebra continua, menos = granulada. */
   pointsPerStrand?: number;
-  /** Opacidad global. Por defecto muy baja: es un fondo. */
+  /** Opacidad global. Es un fondo: va baja. */
   opacity?: number;
   /** Multiplicador de velocidad de giro. */
   speed?: number;
+  /** Tamaño base del punto, en píxeles antes del pixel ratio. */
+  dotSize?: number;
   color?: string;
   colorTwo?: string;
 };
 
 const TAU = Math.PI * 2;
 
-/* Semilla fija: el reparto de las hebras se decide una vez y es el mismo en
-   cada carga. Con Math.random() el fondo cambiaba de composición al recargar,
-   y una de cada varias salía con dos hebras pisando el titular. */
+/* Media altura del encuadre, en unidades de mundo. El ancho sale de la
+   proporción de la pantalla, así que este número fija la escala de todo. */
+const MEDIA_ALTURA = 5;
+
+/* Pasillo libre en el centro, en fracción de la media anchura. Ahí va el
+   titular y es lo único que tiene que leerse. */
+const PASILLO = 0.52;
+
+/* Semilla fija: el reparto se decide una vez y es el mismo en cada carga. Con
+   Math.random() la composición cambiaba al recargar y alguna salía encima del
+   titular. */
 function aleatorio(semilla: number) {
   let s = semilla;
   return () => {
@@ -58,17 +68,21 @@ function aleatorio(semilla: number) {
 const vertexShader = /* glsl */ `
   uniform float uTime;
   uniform float uPixelRatio;
+  uniform float uTamBase;
+  uniform float uMediaAncho;
 
-  attribute vec3 aCentro;
+  attribute vec3 aCentro;  // x,y en fracción del encuadre
   attribute vec3 aHebra;   // x: radio, y: largo, z: vueltas
   attribute vec3 aMovim;   // x: fase, y: giro, z: balanceo
   attribute float aT;      // 0..1 a lo largo de la hebra
   attribute float aLado;   // 0 o 1: las dos cadenas
   attribute float aTam;
   attribute float aMezcla;
+  attribute float aBrillo;
 
   varying float vMezcla;
-  varying float vAtenua;
+  varying float vBrillo;
+  varying float vFrente;
 
   void main() {
     float angulo =
@@ -77,24 +91,31 @@ const vertexShader = /* glsl */ `
       + uTime * aMovim.y
       + aLado * ${Math.PI.toFixed(6)};
 
-    vec3 pos = aCentro;
+    /* La X se resuelve aquí y no en la geometría: depende de la anchura del
+       encuadre, que cambia con el tamaño de la ventana. Guardada en el buffer
+       habría que reconstruirlo en cada resize. */
+    vec3 pos;
+    pos.x = aCentro.x * uMediaAncho;
+    pos.y = aCentro.y * ${MEDIA_ALTURA.toFixed(1)};
+    pos.z = 0.0;
+
     pos.x += cos(angulo) * aHebra.x;
     pos.z += sin(angulo) * aHebra.x;
     pos.y += (aT - 0.5) * aHebra.y;
 
-    /* Un balanceo lentísimo, distinto por hebra, para que el conjunto no
-       parezca un objeto rígido girando en bloque. */
-    pos.y += sin(uTime * aMovim.z + aMovim.x) * 0.18;
+    /* Balanceo lentísimo y distinto por hebra: sin él el conjunto parece un
+       objeto rígido girando en bloque. */
+    pos.y += sin(uTime * aMovim.z + aMovim.x) * 0.22;
 
-    vec4 enVista = modelViewMatrix * vec4(pos, 1.0);
+    /* La cadena que en este instante pasa por delante se ve algo más clara.
+       Es lo único que da volumen a la hélice sin usar profundidad real. */
+    vFrente = 0.62 + 0.38 * (sin(angulo) * 0.5 + 0.5);
 
-    /* Lo que está detrás se apaga: es lo que da profundidad al campo sin
-       tener que ordenar nada ni escribir en el buffer de profundidad. */
-    vAtenua = smoothstep(-9.0, -1.5, enVista.z);
     vMezcla = aMezcla;
+    vBrillo = aBrillo;
 
-    gl_Position = projectionMatrix * enVista;
-    gl_PointSize = aTam * uPixelRatio * (7.0 / -enVista.z);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    gl_PointSize = aTam * uTamBase * uPixelRatio;
   }
 `;
 
@@ -106,22 +127,21 @@ const fragmentShader = /* glsl */ `
   uniform float uOpacidad;
 
   varying float vMezcla;
-  varying float vAtenua;
+  varying float vBrillo;
+  varying float vFrente;
 
   void main() {
-    /* El punto es un cuadrado: sin esto se ven cuadraditos, que sobre un
-       degradado suave cantan muchísimo. */
-    vec2 c = gl_PointCoord - 0.5;
-    float d = length(c);
-    float disco = 1.0 - smoothstep(0.18, 0.5, d);
+    /* El punto es un cuadrado: sin redondearlo se ven cuadraditos, que sobre
+       un degradado suave cantan muchísimo. */
+    float d = length(gl_PointCoord - 0.5);
+    float disco = 1.0 - smoothstep(0.16, 0.5, d);
     if (disco <= 0.001) discard;
 
     vec3 color = mix(uColor, uColorDos, vMezcla);
-    gl_FragColor = vec4(color, disco * vAtenua * uOpacidad);
+    gl_FragColor = vec4(color, disco * vBrillo * vFrente * uOpacidad);
   }
 `;
 
-/* Las barras entre las dos cadenas usan el mismo cálculo, sin el disco. */
 const fragmentShaderBarras = /* glsl */ `
   precision mediump float;
 
@@ -130,34 +150,32 @@ const fragmentShaderBarras = /* glsl */ `
   uniform float uOpacidad;
 
   varying float vMezcla;
-  varying float vAtenua;
+  varying float vBrillo;
+  varying float vFrente;
 
   void main() {
     vec3 color = mix(uColor, uColorDos, vMezcla);
-    gl_FragColor = vec4(color, vAtenua * uOpacidad * 0.4);
+    /* Las barras van más tenues que los puntos: son la estructura, no el
+       dibujo. Al mismo peso la hebra se lee como una escalera maciza. */
+    gl_FragColor = vec4(color, vBrillo * vFrente * uOpacidad * 0.28);
   }
 `;
 
 export default function AdnParticles({
   className,
-  strands = 7,
-  pointsPerStrand = 54,
-  opacity = 0.5,
+  strands = 6,
+  pointsPerStrand = 70,
+  opacity = 0.55,
   speed = 1,
+  dotSize = 2.2,
   color = "#b79ae8",
   colorTwo = "#f0c98a",
 }: Props) {
   const contenedorRef = useRef<HTMLDivElement>(null);
 
-  /* Las props entran por dependencias y no por una ref: cambiar el número de
-     hebras o los colores tiene que reconstruir la geometría, que es donde
-     viven esos valores. En la práctica son constantes en la llamada, así que
-     el efecto corre una sola vez. */
   useEffect(() => {
     const contenedor = contenedorRef.current;
     if (!contenedor) return;
-
-    const o = { strands, pointsPerStrand, opacity, speed, color, colorTwo };
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -175,14 +193,15 @@ export default function AdnParticles({
     renderer.domElement.style.display = "block";
 
     const escena = new THREE.Scene();
-    const camara = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-    camara.position.z = 7;
+    /* Los planos de recorte van holgados: la hélice se mueve en Z y no hay
+       nada que ganar apretándolos. */
+    const camara = new THREE.OrthographicCamera(-1, 1, 1, -1, -20, 20);
 
-    /* ── Geometría: una hebra es dos cadenas de puntos y sus barras ── */
+    /* ── Geometría ── */
 
     const rnd = aleatorio(20260916);
-    const porHebra = o.pointsPerStrand;
-    const totalPuntos = o.strands * porHebra * 2;
+    const porCadena = pointsPerStrand;
+    const totalPuntos = strands * porCadena * 2;
 
     const centro = new Float32Array(totalPuntos * 3);
     const hebra = new Float32Array(totalPuntos * 3);
@@ -191,12 +210,12 @@ export default function AdnParticles({
     const lado = new Float32Array(totalPuntos);
     const tam = new Float32Array(totalPuntos);
     const mezcla = new Float32Array(totalPuntos);
+    const brillo = new Float32Array(totalPuntos);
     const posicionFalsa = new Float32Array(totalPuntos * 3);
 
-    /* Una barra cada cuántos puntos. Todas serían una escalera maciza. */
+    /* Una barra cada seis puntos: todas serían una escalera maciza. */
     const PASO_BARRA = 6;
-    const barrasPorHebra = Math.floor(porHebra / PASO_BARRA);
-    const totalBarras = o.strands * barrasPorHebra * 2;
+    const totalBarras = strands * Math.floor(porCadena / PASO_BARRA) * 2;
 
     const bCentro = new Float32Array(totalBarras * 3);
     const bHebra = new Float32Array(totalBarras * 3);
@@ -205,36 +224,40 @@ export default function AdnParticles({
     const bLado = new Float32Array(totalBarras);
     const bTam = new Float32Array(totalBarras);
     const bMezcla = new Float32Array(totalBarras);
+    const bBrillo = new Float32Array(totalBarras);
     const bPosicionFalsa = new Float32Array(totalBarras * 3);
 
     let i = 0;
     let ib = 0;
 
-    for (let h = 0; h < o.strands; h++) {
-      /* Repartidas a los lados y arriba: el centro del hero es del titular.
-         El signo alterna para que no se amontonen todas en la misma mitad. */
+    for (let h = 0; h < strands; h++) {
+      /* Alterna izquierda y derecha, y siempre fuera del pasillo central.
+         En fracción del encuadre: 0 es el centro y 1 el borde. */
       const ladoX = h % 2 === 0 ? -1 : 1;
-      const cx = ladoX * (1.9 + rnd() * 2.6);
-      const cy = (rnd() - 0.5) * 4.4;
-      const cz = -1.5 - rnd() * 5.5;
+      const cx = ladoX * (PASILLO + rnd() * (0.98 - PASILLO));
+      const cy = (rnd() - 0.5) * 1.1;
 
-      const radio = 0.28 + rnd() * 0.34;
-      const largo = 1.8 + rnd() * 2.8;
-      const vueltas = 1.4 + rnd() * 1.6;
+      const radio = 0.52 + rnd() * 0.46;
+      const largo = 3.1 + rnd() * 2.4;
+      const vueltas = 1.5 + rnd() * 1.2;
       const fase = rnd() * TAU;
-      /* El signo del giro alterna: dos hebras vecinas girando igual se leen
-         como una sola pieza desplazada. */
-      const giro = (0.09 + rnd() * 0.13) * (rnd() > 0.5 ? 1 : -1) * o.speed;
-      const balanceo = (0.12 + rnd() * 0.18) * o.speed;
+      /* El signo alterna: dos hebras vecinas girando igual se leen como una
+         sola pieza desplazada. */
+      const giro = (0.1 + rnd() * 0.14) * (rnd() > 0.5 ? 1 : -1) * speed;
+      const balanceo = (0.1 + rnd() * 0.16) * speed;
       const mezclaHebra = rnd();
+      /* Unas más presentes que otras: es lo que da capas al campo. */
+      const brilloHebra = 0.42 + rnd() * 0.58;
 
-      for (let p = 0; p < porHebra; p++) {
-        const tt = porHebra === 1 ? 0.5 : p / (porHebra - 1);
+      for (let p = 0; p < porCadena; p++) {
+        const tt = porCadena === 1 ? 0.5 : p / (porCadena - 1);
+        /* Los extremos se apagan para que la hebra no termine en un corte
+           recto: entra y sale del fondo en vez de aparecer cortada. */
+        const desvanecido = Math.pow(Math.sin(tt * Math.PI), 0.6);
 
         for (let s = 0; s < 2; s++) {
           centro[i * 3] = cx;
           centro[i * 3 + 1] = cy;
-          centro[i * 3 + 2] = cz;
           hebra[i * 3] = radio;
           hebra[i * 3 + 1] = largo;
           hebra[i * 3 + 2] = vueltas;
@@ -243,11 +266,9 @@ export default function AdnParticles({
           movim[i * 3 + 2] = balanceo;
           t[i] = tt;
           lado[i] = s;
-          tam[i] = 1.5 + rnd() * 1.6;
-          /* La mezcla varía un poco dentro de la hebra: con un único valor
-             cada hebra sale de un color plano y parecen siete objetos
-             pintados, no un campo. */
+          tam[i] = 0.75 + rnd() * 0.6;
           mezcla[i] = Math.min(1, Math.max(0, mezclaHebra + (rnd() - 0.5) * 0.5));
+          brillo[i] = brilloHebra * desvanecido;
           i++;
         }
 
@@ -255,7 +276,6 @@ export default function AdnParticles({
           for (let s = 0; s < 2; s++) {
             bCentro[ib * 3] = cx;
             bCentro[ib * 3 + 1] = cy;
-            bCentro[ib * 3 + 2] = cz;
             bHebra[ib * 3] = radio;
             bHebra[ib * 3 + 1] = largo;
             bHebra[ib * 3 + 2] = vueltas;
@@ -266,6 +286,7 @@ export default function AdnParticles({
             bLado[ib] = s;
             bTam[ib] = 1;
             bMezcla[ib] = mezclaHebra;
+            bBrillo[ib] = brilloHebra * desvanecido;
             ib++;
           }
         }
@@ -277,12 +298,12 @@ export default function AdnParticles({
       d: {
         centro: Float32Array; hebra: Float32Array; movim: Float32Array;
         t: Float32Array; lado: Float32Array; tam: Float32Array;
-        mezcla: Float32Array; falsa: Float32Array;
+        mezcla: Float32Array; brillo: Float32Array; falsa: Float32Array;
       }
     ) {
       /* `position` no se usa —todo sale del shader— pero three lo necesita
-         para calcular el volumen delimitador. Se deja en ceros y se le da
-         una esfera a mano: sin ella, three lo considera un punto y el
+         para calcular el volumen delimitador. Se deja en ceros y se le da una
+         esfera enorme a mano: sin ella three lo toma por un punto y el
          recorte por frustum se lleva el campo entero fuera de pantalla. */
       geo.setAttribute("position", new THREE.BufferAttribute(d.falsa, 3));
       geo.setAttribute("aCentro", new THREE.BufferAttribute(d.centro, 3));
@@ -292,26 +313,29 @@ export default function AdnParticles({
       geo.setAttribute("aLado", new THREE.BufferAttribute(d.lado, 1));
       geo.setAttribute("aTam", new THREE.BufferAttribute(d.tam, 1));
       geo.setAttribute("aMezcla", new THREE.BufferAttribute(d.mezcla, 1));
-      geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, -3), 14);
+      geo.setAttribute("aBrillo", new THREE.BufferAttribute(d.brillo, 1));
+      geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), 1e4);
     }
 
     const geoPuntos = new THREE.BufferGeometry();
     armar(geoPuntos, {
-      centro, hebra, movim, t, lado, tam, mezcla, falsa: posicionFalsa,
+      centro, hebra, movim, t, lado, tam, mezcla, brillo, falsa: posicionFalsa,
     });
 
     const geoBarras = new THREE.BufferGeometry();
     armar(geoBarras, {
-      centro: bCentro, hebra: bHebra, movim: bMovim, t: bT,
-      lado: bLado, tam: bTam, mezcla: bMezcla, falsa: bPosicionFalsa,
+      centro: bCentro, hebra: bHebra, movim: bMovim, t: bT, lado: bLado,
+      tam: bTam, mezcla: bMezcla, brillo: bBrillo, falsa: bPosicionFalsa,
     });
 
     const uniformes = {
       uTime: { value: 0 },
       uPixelRatio: { value: 1 },
-      uColor: { value: new THREE.Color(o.color) },
-      uColorDos: { value: new THREE.Color(o.colorTwo) },
-      uOpacidad: { value: o.opacity },
+      uTamBase: { value: dotSize },
+      uMediaAncho: { value: MEDIA_ALTURA },
+      uColor: { value: new THREE.Color(color) },
+      uColorDos: { value: new THREE.Color(colorTwo) },
+      uOpacidad: { value: opacity },
     };
 
     const comun = {
@@ -319,8 +343,9 @@ export default function AdnParticles({
       vertexShader,
       transparent: true,
       depthWrite: false,
-      /* Aditiva: sobre el violeta profundo, los puntos se suman como luz.
-         En modo normal se verían como pegatinas mates encima del degradado. */
+      depthTest: false,
+      /* Aditiva: sobre el violeta profundo los puntos se suman como luz. En
+         modo normal quedan como pegatinas mates encima del degradado. */
       blending: THREE.AdditiveBlending,
     };
 
@@ -332,25 +357,29 @@ export default function AdnParticles({
 
     const puntos = new THREE.Points(geoPuntos, matPuntos);
     const barras = new THREE.LineSegments(geoBarras, matBarras);
-    escena.add(puntos);
+    /* Las barras primero: son la estructura y van por debajo de los puntos. */
     escena.add(barras);
+    escena.add(puntos);
 
     /* ── Tamaño ── */
 
-    /* Arrow y no `function`: las declaraciones se elevan, así que TypeScript
-       no conserva dentro de ellas el estrechamiento de `contenedor` a no
-       nulo que hicimos arriba. */
     const medir = () => {
       const { clientWidth: w, clientHeight: h } = contenedor;
       if (!w || !h) return;
       /* Tope en 1.5: por encima no se distingue nada en un fondo a media
-         opacidad y en un móvil de 3x triplica el trabajo para nada. */
+         opacidad, y en un móvil de 3x triplica el trabajo para nada. */
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       renderer.setPixelRatio(dpr);
       renderer.setSize(w, h, false);
       uniformes.uPixelRatio.value = dpr;
-      camara.aspect = w / h;
+
+      const mediaAncho = MEDIA_ALTURA * (w / h);
+      camara.left = -mediaAncho;
+      camara.right = mediaAncho;
+      camara.top = MEDIA_ALTURA;
+      camara.bottom = -MEDIA_ALTURA;
       camara.updateProjectionMatrix();
+      uniformes.uMediaAncho.value = mediaAncho;
     };
 
     medir();
@@ -372,9 +401,8 @@ export default function AdnParticles({
       animacion = requestAnimationFrame(dibujar);
       /* El delta se acota: al volver de una pestaña en segundo plano llega un
          salto de varios segundos y el campo daría un tirón. */
-      const delta = Math.min((ahora - ultimo) / 1000, 0.05);
+      tiempo += Math.min((ahora - ultimo) / 1000, 0.05);
       ultimo = ahora;
-      tiempo += delta;
       uniformes.uTime.value = tiempo;
       renderer.render(escena, camara);
     }
@@ -391,46 +419,7 @@ export default function AdnParticles({
       animacion = 0;
     }
 
-    if (movimientoReducido.matches) {
-      /* Un fotograma y quieto: el campo sigue estando, simplemente no se
-         mueve. Apagarlo del todo dejaría el hero más pobre sin necesidad. */
-      uniformes.uTime.value = 0;
-      renderer.render(escena, camara);
-    } else {
-      /* Fuera de pantalla no se dibuja: el hero es lo primero de la página y
-         en cuanto se baja al formulario deja de verse. */
-      const observadorVista = new IntersectionObserver(
-        ([entrada]) => {
-          visible = entrada.isIntersecting;
-          if (visible) arrancar();
-          else parar();
-        },
-        { threshold: 0 }
-      );
-      observadorVista.observe(contenedor);
-      arrancar();
-
-      const alCambiarPestana = () => {
-        if (document.hidden) parar();
-        else arrancar();
-      };
-      document.addEventListener("visibilitychange", alCambiarPestana);
-
-      return () => {
-        parar();
-        observadorVista.disconnect();
-        document.removeEventListener("visibilitychange", alCambiarPestana);
-        observadorTam.disconnect();
-        geoPuntos.dispose();
-        geoBarras.dispose();
-        matPuntos.dispose();
-        matBarras.dispose();
-        renderer.dispose();
-        renderer.domElement.remove();
-      };
-    }
-
-    return () => {
+    const limpiar = () => {
       parar();
       observadorTam.disconnect();
       geoPuntos.dispose();
@@ -440,7 +429,39 @@ export default function AdnParticles({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [strands, pointsPerStrand, opacity, speed, color, colorTwo]);
+
+    if (movimientoReducido.matches) {
+      /* Un fotograma y quieto: el campo sigue estando, simplemente no se
+         mueve. Apagarlo del todo dejaría el hero más pobre sin necesidad. */
+      renderer.render(escena, camara);
+      return limpiar;
+    }
+
+    /* Fuera de pantalla no se dibuja: el hero es lo primero de la página y en
+       cuanto se baja al formulario deja de verse. */
+    const observadorVista = new IntersectionObserver(
+      ([entrada]) => {
+        visible = entrada.isIntersecting;
+        if (visible) arrancar();
+        else parar();
+      },
+      { threshold: 0 }
+    );
+    observadorVista.observe(contenedor);
+    arrancar();
+
+    const alCambiarPestana = () => {
+      if (document.hidden) parar();
+      else arrancar();
+    };
+    document.addEventListener("visibilitychange", alCambiarPestana);
+
+    return () => {
+      observadorVista.disconnect();
+      document.removeEventListener("visibilitychange", alCambiarPestana);
+      limpiar();
+    };
+  }, [strands, pointsPerStrand, opacity, speed, dotSize, color, colorTwo]);
 
   return <div ref={contenedorRef} className={className} aria-hidden="true" />;
 }

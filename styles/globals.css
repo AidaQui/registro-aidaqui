@@ -14493,3 +14493,54 @@ button.dg-resource__video {
 .dg-resource__video:hover .dg-resource__poster {
   filter: saturate(1.04) contrast(1.02) brightness(1.02);
 }
+
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  EL PANEL VUELVE A MONTARSE SOBRE EL HERO, CON LAS ESQUINAS REDONDEADAS
+  ═══════════════════════════════════════════════════════════════════════════
+
+  El redondeo estaba puesto desde el principio y tres rediseños lo fueron
+  anulando a `0`. Esto lo devuelve, y va AL FINAL DE LA HOJA a propósito:
+  hay seis reglas `.dg-panel` repartidas y la última es la que se pinta.
+  Ponerlo arriba no tendría ningún efecto visible.
+
+  EL REDONDEO SOLO SE LEE SI HAY ALGO DETRÁS. Un panel crema con las esquinas
+  redondeadas sobre un fondo crema no despega: el ojo no ve una curva, ve
+  nada. Por eso el margen negativo — el panel sube sobre el hero y por los dos
+  picos asoma su violeta. El margen y el radio valen lo mismo para que asome
+  el cuarto de círculo entero y no un recorte.
+
+  LA SANGRÍA SE DEVUELVE EN EL PADDING. Sin eso, subir el panel arrastraría su
+  contenido hacia arriba y el formulario se comería el aire que tiene con el
+  titular.
+
+  Ocupa el sitio que dejó la cinta de palabras: allí la costura entre el
+  violeta y el crema la marcaba una banda; ahora la marca la propia curva.
+*/
+.dg-panel {
+  position: relative;
+  /* Por encima del hero, que va en z-index 1. */
+  z-index: 2;
+  margin-top: -2rem;
+  border-radius: 2rem 2rem 0 0;
+  /* Un filo claro sobre el violeta: sin él la curva termina en un corte seco
+     contra el fondo oscuro. */
+  border-top: 1px solid rgba(255, 250, 241, 0.16);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 253, 0.985),
+      rgba(255, 255, 253, 0.96) 46%,
+      rgba(250, 246, 240, 0.93)
+    ),
+    transparent;
+  padding-top: calc(clamp(52px, 6vw, 88px) + 2rem);
+}
+
+@media (min-width: 768px) {
+  .dg-panel {
+    margin-top: -3.5rem;
+    border-radius: 3.5rem 3.5rem 0 0;
+    padding-top: calc(clamp(52px, 6vw, 88px) + 3.5rem);
+  }
+}

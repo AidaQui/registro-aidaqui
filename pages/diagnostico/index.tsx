@@ -248,10 +248,11 @@ export default function LeadMagnetPage() {
               <div className="dg-hero__adn" aria-hidden="true">
                 <AdnParticles
                   className="dg-hero__adn-canvas"
-                  strands={7}
-                  /* Muy baja: por delante van los anillos a 0.55 y encima el
-                     titular. Esto solo tiene que insinuarse. */
-                  opacity={0.42}
+                  strands={6}
+                  /* Baja, pero no tanto como para desaparecer: por delante van
+                     los anillos y encima el titular. Si al verlo pesa, este
+                     es el número que se toca. */
+                  opacity={0.55}
                   speed={0.85}
                 />
               </div>
