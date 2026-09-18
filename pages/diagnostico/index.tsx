@@ -37,6 +37,54 @@ import { Dna, Eye, LockKeyhole, Play, Puzzle, Sparkles, Sprout } from "lucide-re
 
 type Fase = "intro" | "quiz" | "escaneando" | "resultado";
 
+/*
+ * LA URL DE FINALIZACIÓN, SIN NAVEGAR.
+ *
+ * Para medir cuánta gente termina la radiografía hace falta una URL propia que
+ * sólo se alcance al terminarla. Navegar de verdad a /diagnostico/gracias
+ * rompería lo de arriba: metería una carga de página justo en el momento de
+ * más valor, y un fallo ahí deja a la persona sin su resultado.
+ *
+ * replaceState cambia la barra de direcciones sin desmontar nada. Clarity y
+ * Vercel Analytics registran la vista igual —las dos miden por URL—, el
+ * componente del resultado sigue montado, y como REEMPLAZA en vez de apilar,
+ * el botón de atrás sigue llevando a donde la persona venía y no al
+ * cuestionario que acaba de completar.
+ *
+ * La ruta existe también como página real, para quien llegue a ella directo,
+ * recargue o la comparta.
+ */
+const RUTA_FINALIZADO = "/diagnostico/gracias";
+
+const RUTA_BASE = "/diagnostico";
+
+function reescribirRuta(destino: string) {
+  if (typeof window === "undefined") return;
+  if (window.location.pathname === destino) return;
+
+  /* El navegador la rechaza si el origen no coincide (por ejemplo, servido
+     desde un about:blank en previsualizaciones). Que falle el contador no
+     puede tumbar la pantalla de resultado. */
+  try {
+    /* La query se conserva: los datos de contacto pueden venir por ella. */
+    window.history.replaceState(
+      window.history.state,
+      "",
+      destino + window.location.search
+    );
+  } catch {
+    /* Sin métrica, pero con resultado. */
+  }
+}
+
+function marcarFinalizado() {
+  reescribirRuta(RUTA_FINALIZADO);
+}
+
+function restituirRuta() {
+  reescribirRuta(RUTA_BASE);
+}
+
 const SOCIAL_PROOF_AVATARS = [
   "/lista-de-espera/testimonios/santiago.jpeg",
   "/lista-de-espera/testimonios/oriana.jpeg",
@@ -92,7 +140,10 @@ export default function LeadMagnetPage() {
   const [avisoVisible, setAvisoVisible] = useState(false);
   /* Estable entre renders: el escáner la usa dentro de un efecto, y una
      función nueva en cada render lo volvería a disparar. */
-  const irAResultado = useCallback(() => setFase("resultado"), []);
+  const irAResultado = useCallback(() => {
+    setFase("resultado");
+    marcarFinalizado();
+  }, []);
 
   /* Los parámetros solo están disponibles cuando el router se hidrata, así
      que la lectura va en un efecto y no en el primer render. */
@@ -130,6 +181,9 @@ export default function LeadMagnetPage() {
 
   function irA(siguiente: Fase) {
     setFase(siguiente);
+    /* Si se vuelve atrás desde el resultado —el reintento tras un fallo de
+       envío es el caso real— la URL de finalización deja de ser cierta. */
+    if (siguiente !== "resultado") restituirRuta();
     window.scrollTo({ top: 0 });
   }
 

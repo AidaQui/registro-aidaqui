@@ -15434,3 +15434,83 @@ button.dg-resource__video {
   }
 }
 
+/* ===== /diagnostico/gracias — ruta real de finalización ===== */
+
+/* Sólo la ven quienes llegan a la URL sin haber hecho la radiografía: un
+   enlace compartido, un marcador o una recarga. Quien la termina de verdad se
+   queda en el resultado, con la URL reescrita por debajo. */
+.dg-gracias {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dg-gracias__shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: min(calc(100% - 48px), 620px);
+  margin: 0 auto;
+  padding: clamp(64px, 12vh, 120px) 0;
+  text-align: center;
+}
+
+.dg-gracias__eyebrow {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240, 201, 138, 0.9);
+}
+
+.dg-gracias__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 4.6vw, 46px);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.dg-gracias__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.dg-gracias__body {
+  max-width: 480px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.78);
+}
+
+.dg-gracias__link {
+  margin-top: 8px;
+  padding: 12px 26px;
+  border-radius: 100px;
+  border: 1px solid rgba(240, 201, 138, 0.4);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(249, 245, 240, 0.9);
+  text-decoration: none;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.dg-gracias__link:hover {
+  border-color: rgba(240, 201, 138, 0.75);
+  background-color: rgba(240, 201, 138, 0.1);
+  color: #ffffff;
+}
