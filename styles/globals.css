@@ -11274,9 +11274,16 @@ a.pearl-btn {
   margin-top: clamp(6px, 1.4vw, 14px);
 }
 
+/* UNA SOLA COLUMNA, CENTRADA.
+
+   Aquí iban dos tarjetas a la par —el correo y la comunidad de WhatsApp— y
+   por eso la rejilla era 1fr 1fr. Retirada la segunda, esa misma rejilla
+   dejaba la tarjeta del correo ocupando media pantalla con el otro medio en
+   blanco. La columna se acota a la anchura de lectura y se centra. */
 @media (min-width: 760px) {
   .dg-page__shell .dg-resultado__cierre {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 560px);
+    justify-content: center;
     align-items: stretch;
   }
 }
