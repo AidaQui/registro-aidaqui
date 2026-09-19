@@ -1,73 +1,52 @@
-import Image from "next/image";
+import { Unlink, BatteryCharging, HandHeart, Sparkles, Users } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-const experiencias = [
+/**
+ * "Lo que experimentarás dentro": los cinco puntos de la experiencia.
+ *
+ * ── SIN IMÁGENES, CON NÚMERO E ICONO ──
+ *
+ * Esta sección llegó a tener siete tarjetas con fotografía. Se retiraron: las
+ * imágenes traían su propio rótulo quemado que repetía el texto de al lado, y
+ * siete fotos para cinco ideas cortas la volvían la sección más pesada de la
+ * página para lo poco que dice.
+ *
+ * Cada tarjeta lleva ahora dos marcas: el icono, arriba y a la izquierda, que
+ * adelanta de qué va el punto antes de leerlo; y el número, grande y al
+ * fondo, que hace de textura.
+ *
+ * ── EL REPARTO: 3 + 2 ──
+ *
+ * Tres arriba y dos abajo ocupando la mitad cada una. Cinco es impar, así que
+ * alguna fila tiene que repartirse distinto; con 3+2 las dos filas cierran
+ * completas y ninguna tarjeta queda suelta.
+ */
+
+const PUNTOS = [
   {
-    src: "/activacion/img-1.webp",
-    alt: "Liberación energética y emocional de bloqueos",
-    text: (
-      <>
-        Liberación energética y emocional de{" "}
-        <em>bloqueos que no te permiten avanzar</em>
-      </>
-    ),
+    Icono: Unlink,
+    texto:
+      "Liberación de fugas y cargas energéticas que no te permiten avanzar.",
   },
   {
-    src: "/activacion/img-2.webp",
-    alt: "Activación de merecimiento y autenticidad",
-    text: (
-      <>
-        Activación de <em>merecimiento y autenticidad</em>
-      </>
-    ),
+    Icono: BatteryCharging,
+    texto:
+      "Aumento de tu capacidad energética para poder procesar e integrar las nuevas frecuencias del planeta.",
   },
   {
-    src: "/activacion/img-3.webp",
-    alt: "Herramientas para sostener tu energía en el día a día",
-    text: (
-      <>
-        Herramientas para sostener tu energía <em>en el día a día</em>
-      </>
-    ),
+    Icono: HandHeart,
+    texto:
+      "Preparación para recibir y sostener experiencias que conscientemente dices querer.",
   },
   {
-    src: "/activacion/img-4.webp",
-    alt: "Amplificación de tu energía de manifestación",
-    text: (
-      <>
-        Amplificación de tu <em>energía de manifestación</em>
-      </>
-    ),
+    Icono: Sparkles,
+    texto:
+      "Amplificación de tu energía manifestadora y herramientas para sostener tu frecuencia diaria en la vida real.",
   },
   {
-    src: "/activacion/img-5.webp",
-    alt: "Espacio de conexión grupal",
-    text: (
-      <>
-        Un espacio de <em>conexión grupal</em> con personas que también están
-        despertando
-      </>
-    ),
-  },
-  {
-    src: "/activacion/img-6.webp",
-    alt: "Reset energético profundo",
-    text: (
-      <>
-        Un profundo <em>reset energético</em> para volver a sentirte alineado,
-        recargado y conectado a tu Ser Superior
-      </>
-    ),
-  },
-  {
-    src: "/activacion/img-7.webp",
-    alt: "Acompañamiento en vivo durante la experiencia",
-    text: (
-      <>
-        Acompañamiento <em>en vivo</em> durante toda la experiencia, con espacio
-        para tus preguntas
-      </>
-    ),
+    Icono: Users,
+    texto:
+      "Un espacio de conexión grupal con personas que están en un proceso espiritual.",
   },
 ];
 
@@ -89,43 +68,23 @@ export default function ExperienciaSection() {
           Lo que experimentarás <em>dentro</em>
         </h2>
 
-        <ul className="frec-experiencia__grid" data-reveal-group data-reveal-fade>
-          {experiencias.map(({ src, alt, text }, i) => (
-            <li key={i} className="frec-experiencia__card">
-              <div className="frec-experiencia__media">
-                <Image
-                  src={src}
-                  alt={alt}
-                  fill
-                  sizes="(max-width: 700px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                  quality={90}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-              <p className="frec-experiencia__text">{text}</p>
+        <ul className="frec-exp" data-reveal-group data-reveal-fade>
+          {PUNTOS.map(({ Icono, texto }, i) => (
+            <li key={i} className="frec-exp__card">
+              {/* El número es fondo, no dato: va detrás de todo, cortado por
+                  el borde, y de ahí el aria-hidden. */}
+              <span className="frec-exp__num" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+
+              <span className="frec-exp__icono" aria-hidden="true">
+                <Icono size={22} strokeWidth={1.7} />
+              </span>
+
+              <p className="frec-exp__texto">{texto}</p>
             </li>
           ))}
         </ul>
-
-        <div className="frec-close frec-close--centered">
-          <p className="frec-close__emphasis" data-reveal="title">
-            Estamos viviendo un cambio profundo de consciencia.
-          </p>
-
-          <div className="frec-close__body" data-reveal>
-            <p>
-              Muchas personas están intentando sostener nuevas realidades con
-              identidades antiguas. Y por eso sienten desconexión, confusión,
-              vacío, agotamiento, incoherencia interna.
-            </p>
-            <p>
-              La verdadera transformación no ocurre solo entendiendo más. Ocurre
-              cuando empiezas a habitar <em>una nueva frecuencia</em> en tu vida
-              real: en tu cuerpo, en tus relaciones, en tus decisiones, en la
-              forma en la que te eliges.
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );

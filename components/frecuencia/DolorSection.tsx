@@ -1,62 +1,65 @@
-import {
-  Compass,
-  BatteryLow,
-  Ear,
-  Lock,
-  Heart,
-  UserRoundX,
-} from "lucide-react";
+import { Brain, Heart, PersonStanding, Flame } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-const sintomas = [
+/**
+ * Second section: what working multidimensionally means.
+ *
+ * ── POR QUÉ NO ES UN BENTO ──
+ *
+ * Las cinco frases centrales son el MISMO patrón repetido —"puedes X, y sin
+ * embargo Y"— y su fuerza está en la acumulación: una detrás de otra van
+ * cercando la misma idea. Un bento las pondría en celdas de tamaños
+ * distintos, y ahí la repetición deja de leerse como insistencia y pasa a
+ * parecer cinco datos sueltos.
+ *
+ * Así que van iguales entre sí, en rejilla pareja. El bento se reserva para
+ * contenido de pesos distintos, que no es este caso.
+ *
+ * ── LOS CUATRO CUERPOS ──
+ *
+ * El copy los nombra —mental, emocional, físico, energético— y por eso
+ * abren la sección: son la promesa concreta de lo que se va a trabajar, y
+ * enunciarlos antes de las frases da con qué leerlas.
+ */
+
+/*
+ * Cada cuerpo lleva un fondo propio y su icono en grande por detrás del
+ * nombre, a modo de segundo fondo.
+ *
+ * EL FONDO ES CSS, NO UNA FOTO. Las catorce imágenes de la carpeta ya están
+ * repartidas entre las secciones de experiencia y de entregables, y repetir
+ * cuatro de ellas aquí se nota a media página de distancia. Un degradado por
+ * cuerpo —el tono lo pone `data-cuerpo` en globals.css— da fondo distinto a
+ * cada tarjeta, no pesa nada y deja el icono legible por delante, que es lo
+ * que una foto con detalle no permitiría.
+ */
+const CUERPOS = [
+  { Icono: Brain, nombre: "Mental", clave: "mental" },
+  { Icono: Heart, nombre: "Emocional", clave: "emocional" },
+  /* Una figura humana, no la línea de pulso que llevaba: el cuerpo físico es
+     el cuerpo entero, no un signo vital. */
+  { Icono: PersonStanding, nombre: "Físico", clave: "fisico" },
+  /* Una llama en lugar de las chispas: lo energético aquí es fuego interno,
+     y las chispas se leían como el "destacado" de cualquier interfaz. */
+  { Icono: Flame, nombre: "Energético", clave: "energetico" },
+];
+
+const CONTRASTES = [
   {
-    icon: <Compass size={24} strokeWidth={1.7} aria-hidden="true" />,
-    text: (
-      <>
-        Te cuesta sentir <em>claridad y dirección</em>
-      </>
-    ),
+    quieres: "Puedes querer algo mentalmente",
+    pero: "y sentir miedo emocionalmente.",
   },
   {
-    icon: <BatteryLow size={24} strokeWidth={1.7} aria-hidden="true" />,
-    text: (
-      <>
-        Sientes <em>agotamiento emocional</em> o energético
-      </>
-    ),
+    quieres: "Puedes saber que una decisión es correcta",
+    pero: "y sentir cómo tu cuerpo físico se contrae.",
   },
   {
-    icon: <Ear size={24} strokeWidth={1.7} aria-hidden="true" />,
-    text: (
-      <>
-        Tu intuición te pide <em>cambios que aún no sabes cómo hacer</em>
-      </>
-    ),
+    quieres: "Puedes pedir una realidad diferente",
+    pero: "y seguir respondiendo desde la misma programación de siempre.",
   },
   {
-    icon: <Lock size={24} strokeWidth={1.7} aria-hidden="true" />,
-    text: (
-      <>
-        Has trabajado mucho en ti… pero <em>algo sigue bloqueado</em>
-      </>
-    ),
-  },
-  {
-    icon: <Heart size={24} strokeWidth={1.7} aria-hidden="true" />,
-    text: (
-      <>
-        Quieres volver a sentir <em>conexión</em> contigo, con Dios y con tu
-        verdad
-      </>
-    ),
-  },
-  {
-    icon: <UserRoundX size={24} strokeWidth={1.7} aria-hidden="true" />,
-    text: (
-      <>
-        Ya no te identificas con <em>la versión que estás sosteniendo</em>
-      </>
-    ),
+    quieres: "Puedes leer, formarte y aprender conceptos",
+    pero: "y aún así vivir una vida que no representa tu crecimiento interno.",
   },
 ];
 
@@ -65,56 +68,77 @@ export default function DolorSection() {
 
   return (
     <section ref={ref} className="frec-dolor" aria-labelledby="frec-dolor-title">
-      <div className="frec-dolor__bg" aria-hidden="true" />
-
       <div className="frec-shell">
         <div className="frec-intro">
+          {/* La bajada que había aquí se absorbió en el titular: decía lo
+              mismo en otras palabras y partía en dos una sola idea. */}
           <h2 id="frec-dolor-title" className="frec-intro__title" data-reveal="title">
-            Lo que estás sintiendo <em>no es casualidad</em>.
+            Viviremos una experiencia energética y{" "}
+            <em>multidimensional</em> diseñada para trabajar profundamente con
+            tu cuerpo
           </h2>
-
-          <p className="frec-intro__text" data-reveal>
-            Hay momentos donde una identidad ya no puede sostener el siguiente
-            nivel de tu alma. Y aunque por fuera continúes con tu vida… por
-            dentro sientes que te estás alejando de quien realmente eres en
-            esencia.
-          </p>
         </div>
 
-        <ul className="frec-dolor__grid" data-reveal-group data-reveal-fade>
-          {sintomas.map((item, i) => (
-            <li key={i} className="frec-dolor__card">
-              <span className="frec-dolor__num" aria-hidden="true">
-                0{i + 1}
+        {/* El nombre va en blanco sobre el dorado, con un velo que lo apaga
+            por abajo: el dorado tiene brillos casi blancos y sin ese velo el
+            texto se perdería contra ellos. Las reglas están en globals.css
+            bajo .frec-cuerpos[data-tipo="clara"]. */}
+        <ul
+          className="frec-cuerpos"
+          data-tipo="clara"
+          data-reveal-group
+          data-reveal-fade
+        >
+          {CUERPOS.map(({ Icono, nombre, clave }) => (
+            <li key={nombre} className="frec-cuerpo" data-cuerpo={clave}>
+              {/* El icono es fondo, no ilustración: va detrás del nombre, a
+                  gran tamaño y recortado por la tarjeta. De ahí que sea
+                  aria-hidden y que el nombre viaje en su propio span. */}
+              <span className="frec-cuerpo__marca" aria-hidden="true">
+                <Icono size={120} strokeWidth={1.1} />
               </span>
-              <span className="frec-dolor__icon" aria-hidden="true">
-                {item.icon}
-              </span>
-              <p className="frec-dolor__text">{item.text}</p>
+              <span className="frec-cuerpo__nombre">{nombre}</span>
             </li>
           ))}
         </ul>
 
-        <div className="frec-twist" data-reveal>
-          <span className="frec-twist__label">Porque llega un punto</span>
-          <p className="frec-twist__text">
-            Donde seguir consumiendo contenido espiritual{" "}
-            <em>no llena el vacío</em>.
-          </p>
-        </div>
+        {/* El eje de la sección, suelto y a ancho de lectura: es la frase que
+            todo lo que sigue desarrolla.
 
-        <div className="frec-close">
-          <p className="frec-close__emphasis" data-reveal="title">
-            Solo volver a ti puede regresarte a la coherencia, la paz y la
-            plenitud.
-          </p>
+            Los saltos van forzados y no al azar del navegador: a ancho de
+            escritorio la frase caía dejando "piensa." sola en el segundo
+            renglón. Los <br> sólo entran por encima de 700px —ver la regla
+            .frec-eje__salto—, porque en móvil el ancho ya obliga a otro
+            reparto. */}
+        <p className="frec-eje" data-reveal="title">
+          Porque tú no eres solamente
+          <br className="frec-eje__salto" />{" "}
+          <em>la parte de ti que piensa</em>.
+        </p>
 
-          <div className="frec-close__body" data-reveal>
-            <p>
-              Y a manifestar una vida que ames todos los días, desde un lugar
-              que ya no tengas que sostener a la fuerza.
-            </p>
-          </div>
+        <ul className="frec-contrastes" data-reveal-group data-reveal-fade>
+          {CONTRASTES.map(({ quieres, pero }, i) => (
+            <li key={i} className="frec-contraste">
+              <p className="frec-contraste__quieres">{quieres}</p>
+              {/* El "y" del copy queda implícito en la disposición: arriba lo
+                  que se quiere, abajo lo que ocurre de verdad, y entre los dos
+                  una regla que marca que no coinciden. */}
+              <span className="frec-contraste__corte" aria-hidden="true" />
+              <p className="frec-contraste__pero">{pero}</p>
+            </li>
+          ))}
+        </ul>
+
+        {/* El remate en panel violeta, como el cierre de la lista de espera:
+            es la única pieza oscura de la sección y por eso cierra. */}
+        <div className="frec-remate" data-reveal>
+          <p className="frec-remate__texto">
+            Trabajar multidimensionalmente es dejar de trabajar únicamente desde
+            el cuerpo mental y empezar a integrar todos tus cuerpos para vivir
+            una <strong>transformación real</strong> que te brinde la
+            coherencia, la paz, la plenitud y la capacidad de manifestar una
+            vida que ames todos los días.
+          </p>
         </div>
       </div>
     </section>

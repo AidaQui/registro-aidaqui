@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CalendarDays, Clock, Globe2, Video } from "lucide-react";
+import { CalendarDays, Clock, Video } from "lucide-react";
 import FrecuenciaBadge from "@/components/frecuencia/FrecuenciaBadge";
 import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
 import { BANDERAS } from "@/components/frecuencia/Banderas";
@@ -57,40 +57,30 @@ export default function HeroFrecuencia() {
             alineada con tu Ser.
           </p>
 
-          <div className="frec-schedules-block">
-            <p id="frec-hero-schedules-title" className="frec-schedules__label">
-              <Globe2 size={14} strokeWidth={2} aria-hidden="true" />
-              Horarios según tu país
-            </p>
-
-            {/* Bandera y país arriba, hora debajo: la fila de arriba dice de
-                quién es el dato y la de abajo lo da. */}
-            <ul
-              className="frec-schedules frec-schedules--hero"
-              aria-labelledby="frec-hero-schedules-title"
-            >
-              {HORARIOS.map(({ pais, hora }) => {
-                const Bandera = BANDERAS[pais];
-                return (
-                  <li key={pais} className="frec-schedule">
-                    <span className="frec-schedule__head">
-                      {Bandera && <Bandera className="frec-schedule__flag" />}
-                      <span className="frec-schedule__country">{pais}</span>
-                    </span>
-                    <span className="frec-schedule__time">
-                      <Clock
-                        size={14}
-                        strokeWidth={2}
-                        className="frec-schedule__clock"
-                        aria-hidden="true"
-                      />
-                      {hora}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          {/* Bandera y país arriba, hora debajo: la fila de arriba dice de
+              quién es el dato y la de abajo lo da. */}
+          <ul className="frec-schedules" aria-label="Horarios por país">
+            {HORARIOS.map(({ pais, hora }) => {
+              const Bandera = BANDERAS[pais];
+              return (
+                <li key={pais} className="frec-schedule">
+                  <span className="frec-schedule__head">
+                    {Bandera && <Bandera className="frec-schedule__flag" />}
+                    <span className="frec-schedule__country">{pais}</span>
+                  </span>
+                  <span className="frec-schedule__time">
+                    <Clock
+                      size={14}
+                      strokeWidth={2}
+                      className="frec-schedule__clock"
+                      aria-hidden="true"
+                    />
+                    {hora}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
 
           <FrecuenciaCta />
         </div>

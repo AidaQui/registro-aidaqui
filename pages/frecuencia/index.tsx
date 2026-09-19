@@ -2,6 +2,7 @@ import Head from "next/head";
 import HeroFrecuencia from "@/components/frecuencia/HeroFrecuencia";
 import DolorSection from "@/components/frecuencia/DolorSection";
 import ExperienciaSection from "@/components/frecuencia/ExperienciaSection";
+import NuevaTierraSection from "@/components/frecuencia/NuevaTierraSection";
 import RecibirasSection from "@/components/frecuencia/RecibirasSection";
 import SobreAida from "@/components/frecuencia/SobreAida";
 import CierreFrecuencia from "@/components/frecuencia/CierreFrecuencia";
@@ -24,6 +25,7 @@ export default function Frecuencia() {
         <HeroFrecuencia />
         <DolorSection />
         <ExperienciaSection />
+        <NuevaTierraSection />
         <RecibirasSection />
         <SobreAida />
         <CierreFrecuencia />

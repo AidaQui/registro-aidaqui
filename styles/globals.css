@@ -14776,83 +14776,6 @@ button.dg-resource__video {
   color: rgba(160, 108, 8, 0.75);
 }
 
-/* En la hero, el rótulo da contexto antes de que la mirada salte a las horas. */
-.frec-schedules-block {
-  display: grid;
-  gap: 8px;
-  width: 100%;
-  max-width: 560px;
-}
-
-.frec-schedules__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: rgba(46, 32, 64, 0.76);
-}
-
-/* Variante de hero: cuatro badges equilibrados, con más contraste y volumen
-   que las tarjetas de apoyo del cierre. */
-.frec-schedules--hero {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  max-width: none;
-  margin: 0;
-}
-
-.frec-schedules--hero .frec-schedule {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  gap: 5px;
-  padding: 11px 10px 10px;
-  border-color: rgba(160, 108, 8, 0.26);
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(249, 243, 253, 0.78) 100%
-  );
-  box-shadow:
-    0 10px 24px rgba(41, 0, 102, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-.frec-schedules--hero .frec-schedule::before {
-  content: "";
-  position: absolute;
-  inset: 0 18px auto;
-  height: 2px;
-  border-radius: 0 0 2px 2px;
-  background: linear-gradient(90deg, #d4a020, #6f43b4);
-}
-
-.frec-schedules--hero .frec-schedule__head {
-  gap: 7px;
-}
-
-.frec-schedules--hero .frec-schedule__flag {
-  width: 22px;
-  height: 22px;
-  filter: drop-shadow(0 2px 3px rgba(41, 0, 102, 0.14));
-}
-
-.frec-schedules--hero .frec-schedule__country {
-  font-weight: 600;
-  color: rgba(46, 32, 64, 0.78);
-}
-
-.frec-schedules--hero .frec-schedule__time {
-  font-size: 21px;
-  letter-spacing: -0.01em;
-}
-
 /* El cierre va centrado, y la rejilla se centra por su caja, no por
    justify-content: de ahí el margin-inline auto. */
 .frec-schedules--on-panel {
@@ -14888,17 +14811,62 @@ button.dg-resource__video {
   min-height: 750px;
   display: flex;
   overflow: hidden;
-  background-color: #f9f5f0;
+  /* Blanco y no el crema de la página: el .webp del fondo trae un borde
+     blanco propio, y con el crema detrás se vería la costura entre los dos
+     en los bordes redondeados. */
+  background-color: #ffffff;
 }
 
+/* La figura viene centrada en el banner, no a la derecha como el de la lista
+   de espera: al anclar el fondo a la izquierda, la mitad despejada queda bajo
+   el texto y Aida se corre hacia la derecha, que es donde hay sitio.
+
+   EL .webp TRAE SUS PROPIAS ESQUINAS REDONDEADAS Y SU BORDE BLANCO. Sigue en
+   `cover` —el hero es de alto fijo y con `contain` quedarían franjas arriba y
+   abajo—, así que en pantallas más anchas que 1920px el recorte se come algo
+   de la curva. El fondo crema del hero es el mismo blanco del borde, de modo
+   que ese corte no se ve como un filo. */
 .frec-hero__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/lista-de-espera/hero-web-4.jpg");
+  background-image: url("/activacion-v2/bg-herosection.webp");
   background-size: cover;
-  background-position: center;
+  background-position: left center;
   background-repeat: no-repeat;
+}
+
+/* VELO SOBRE LA MITAD DEL TEXTO.
+
+   El banner de la lista de espera traía su lado izquierdo ya despejado; éste
+   es un jardín a plena luz de punta a punta, y el violeta del titular sobre
+   el verde pierde el contraste. Un degradado de crema que se apaga hacia el
+   centro devuelve el fondo liso bajo el texto sin tapar a Aida.
+
+   SE PROBÓ QUITARLO Y NO FUNCIONA. La alternativa era sostener cada pieza con
+   su propia sombra o su propio vidrio, dejando ver el jardín entero: el
+   titular se perdía igual. Detrás de cada letra hay hojas, flores y un camino
+   claro, y ninguna sombra gana contra un fondo que cambia cada pocos píxeles.
+   Un fondo liso bajo el texto no es un recurso perezoso aquí, es el único que
+   deja el titular legible.
+
+   Va aquí y no en el .frec-hero__bg porque ese lleva la foto: separarlos deja
+   cambiar la imagen sin rehacer el velo. */
+.frec-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* En blanco, no en crema: el borde del .webp es blanco puro y un velo
+     crema encima dejaba ver dónde acababa uno y empezaba el otro. */
+  background: linear-gradient(
+    96deg,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 255, 255, 0.82) 34%,
+    rgba(255, 255, 255, 0.3) 52%,
+    rgba(255, 255, 255, 0) 66%
+  );
 }
 
 .frec-hero__shell {
@@ -14977,6 +14945,14 @@ button.dg-resource__video {
 
    Sigue sin itálica y en Jost: la versión en Fraunces cursiva a este cuerpo
    era la que se veía pixelada. */
+/* El fondo, el borde y el radio los pone el bloque de vidrio del final del
+   archivo; aquí sólo queda la caja y la tipografía. */
+/* REMARCADA: ES LA PROMESA, NO UN PÁRRAFO.
+
+   Bloque con fondo dorado tenue y filete a la izquierda. Llegó a llevar el
+   mismo vidrio que los chips y se le retiró: el vidrio quedó reservado a los
+   horarios, que son un dato de servicio, y esta frase necesita destacarse por
+   encima de ellos, no igualarse. */
 .frec-hero__lead {
   max-width: 540px;
   margin: 0;
@@ -14997,34 +14973,49 @@ button.dg-resource__video {
 
 
 /* ===== Dolor ===== */
+/* El mismo blanco del hero, y no el crema del body: el hero pasó a blanco
+   puro para casar con el borde del .webp, y con el crema aquí se veía la
+   juntura entre las dos secciones como una franja de tono distinto. */
+/*
+  ESPACIOS CONTENIDOS EN ESCRITORIO.
+
+  Los cinco huecos de esta sección —padding, intro, cuerpos, eje y
+  contrastes— sumaban casi 400px en pantallas anchas, y eso la partía en
+  cinco bloques sueltos en vez de leerse como un argumento seguido.
+
+  Los topes de los clamp bajan entre un 25 y un 35%; los mínimos apenas se
+  tocan, porque en móvil el aire hacía falta. */
 .frec-dolor {
   position: relative;
-  padding: clamp(72px, 9vw, 130px) 0;
+  padding: clamp(64px, 6.5vw, 92px) 0;
   overflow: hidden;
+  background-color: #ffffff;
 }
 
-.frec-dolor__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(201, 179, 232, 0.28), transparent 55%),
-    radial-gradient(circle at 85% 75%, rgba(240, 201, 138, 0.22), transparent 55%);
-}
+/* AQUÍ IBAN DOS MANCHAS RADIALES —violeta arriba, dorada abajo— y se
+   retiraron. Daban a la sección dos tonos donde el hero tiene uno, y la
+   juntura entre ambas se leía como un corte. Fondo plano, como en la lista
+   de espera: el color lo ponen las piezas, no el lienzo. */
 
 .frec-intro {
   max-width: 820px;
-  margin: 0 auto clamp(44px, 5vw, 68px);
+  margin: 0 auto clamp(34px, 3.4vw, 46px);
   text-align: center;
 }
 
+/* Sin margen inferior: la bajada que iba debajo se absorbió en el propio
+   titular, y el hueco hasta las tarjetas ya lo pone el .frec-intro.
+
+   text-wrap: balance reparte los renglones para que el último no quede con
+   dos palabras sueltas, que es lo que pasaba al alargar la frase. */
 .frec-intro__title {
-  margin: 0 0 20px;
+  margin: 0;
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(28px, 3.6vw, 46px);
+  font-size: clamp(28px, 3.6vw, 44px);
   font-weight: 600;
   line-height: 1.14;
   letter-spacing: -0.025em;
+  text-wrap: balance;
   color: #290066;
 }
 
@@ -15036,149 +15027,6 @@ button.dg-resource__video {
   color: transparent;
 }
 
-.frec-intro__text {
-  margin: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: clamp(16px, 1.5vw, 18px);
-  line-height: 1.62;
-  color: rgba(46, 32, 64, 0.78);
-}
-
-.frec-dolor__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 24px);
-  margin: 0 0 clamp(44px, 5vw, 64px);
-  padding: 0;
-  list-style: none;
-}
-
-.frec-dolor__card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: clamp(26px, 3vw, 34px);
-  border-radius: 18px;
-  border: 1px solid rgba(212, 168, 85, 0.3);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 14px 34px rgba(41, 0, 102, 0.08);
-}
-
-.frec-dolor__num {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: rgba(212, 160, 32, 0.9);
-}
-
-.frec-dolor__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: linear-gradient(150deg, rgba(155, 126, 200, 0.2), rgba(212, 168, 85, 0.18));
-  color: #5b3aa0;
-}
-
-.frec-dolor__text {
-  margin: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: clamp(15px, 1.4vw, 17px);
-  line-height: 1.55;
-  color: rgba(46, 32, 64, 0.85);
-}
-
-.frec-dolor__text em {
-  font-style: normal;
-  font-weight: 600;
-  color: #290066;
-}
-
-/* ---- El giro: rompe la grilla, panel violeta ---- */
-.frec-twist {
-  display: flex;
-  align-items: center;
-  gap: clamp(20px, 3vw, 40px);
-  padding: clamp(26px, 3vw, 38px) clamp(28px, 3.4vw, 48px);
-  margin: 0 0 clamp(40px, 4.6vw, 60px);
-  border-radius: 20px;
-  background: linear-gradient(120deg, #2e1a52 0%, #43276f 55%, #34205c 100%);
-  box-shadow: 0 18px 44px rgba(41, 0, 102, 0.28);
-}
-
-.frec-twist__label {
-  flex-shrink: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #f0c98a;
-}
-
-.frec-twist__text {
-  margin: 0;
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(19px, 2.2vw, 27px);
-  font-weight: 500;
-  line-height: 1.3;
-  color: #f9f5f0;
-}
-
-.frec-twist__text em {
-  font-style: italic;
-  color: #f0c98a;
-}
-
-/* ---- Cierre de sección ---- */
-.frec-close {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(24px, 3.4vw, 52px);
-  align-items: start;
-}
-
-.frec-close--centered {
-  grid-template-columns: minmax(0, 1fr);
-  max-width: 820px;
-  margin: clamp(48px, 5.5vw, 76px) auto 0;
-  text-align: center;
-}
-
-.frec-close__emphasis {
-  margin: 0;
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(22px, 2.6vw, 32px);
-  font-weight: 600;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
-  color: #290066;
-}
-
-.frec-close__body {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.frec-close__body p {
-  margin: 0;
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: clamp(15px, 1.45vw, 17px);
-  line-height: 1.62;
-  color: rgba(46, 32, 64, 0.78);
-}
-
-.frec-close__body em {
-  font-style: normal;
-  font-weight: 600;
-  color: #5b3aa0;
-}
 
 /* ===== Experiencia ===== */
 .frec-experiencia {
@@ -15186,54 +15034,6 @@ button.dg-resource__video {
   padding: clamp(72px, 9vw, 130px) 0;
 }
 
-.frec-experiencia__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 2.2vw, 28px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.frec-experiencia__card {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(212, 168, 85, 0.26);
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 16px 38px rgba(41, 0, 102, 0.09);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.frec-experiencia__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 22px 48px rgba(41, 0, 102, 0.16);
-}
-
-/* Ratio nativo de las fotos (526x720): forzar 4/3 las recortaba y ampliaba */
-.frec-experiencia__media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-}
-
-.frec-experiencia__text {
-  margin: 0;
-  padding: 0 clamp(20px, 2.2vw, 26px) clamp(24px, 2.6vw, 30px);
-  font-family: var(--font-jost), Arial, sans-serif;
-  font-size: clamp(15px, 1.4vw, 17px);
-  line-height: 1.55;
-  color: rgba(46, 32, 64, 0.85);
-}
-
-.frec-experiencia__text em {
-  font-style: normal;
-  font-weight: 600;
-  color: #290066;
-}
 
 /* ===== Qué recibirás — panel violeta ===== */
 .frec-recibiras {
@@ -15535,15 +15335,10 @@ button.dg-resource__video {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .frec-dolor__grid,
-  .frec-experiencia__grid,
   .frec-recibiras__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .frec-close {
-    grid-template-columns: minmax(0, 1fr);
-  }
 
   .frec-aida__shell {
     grid-template-columns: minmax(0, 1fr);
@@ -15562,13 +15357,47 @@ button.dg-resource__video {
 
 /* ===== Mobile (≤ 700px) ===== */
 @media (max-width: 700px) {
+  /* EL BANNER DE MÓVIL TRAE A AIDA ARRIBA Y SE DESVANECE A BLANCO.
+
+     Esa mitad blanca es el sitio del texto, así que el contenido arranca por
+     debajo de la figura en vez de centrarse: si no, el titular cae sobre la
+     cara.
+
+     El relleno es porcentual —sobre el ancho, que es como se calcula el
+     padding vertical en porcentaje— para que siga al alto de la imagen, que
+     es proporcional al ancho por el background-size: 100% auto.
+
+     62% y no 96%: la imagen mide 960x1500 y las manos acaban cerca del 38%
+     de su alto, que sobre el ancho son unos 60 puntos. Con 96 el contenido
+     empezaba muy por debajo de donde la figura termina y quedaba un hueco
+     blanco enorme entre la foto y el titular. */
   .frec-hero {
     min-height: 0;
-    padding: clamp(32px, 8vw, 56px) 0 clamp(40px, 9vw, 64px);
+    padding: 62% 0 clamp(40px, 9vw, 64px);
   }
 
   .frec-hero__bg {
-    background-image: url("/lista-de-espera/hero-mobile-4.jpg");
+    background-image: url("/activacion-v2/herosection-mobile.jpg");
+    background-position: top center;
+    background-size: 100% auto;
+  }
+
+  /* En vertical el velo va de arriba abajo, no de izquierda a derecha: aquí
+     lo que hay que despejar es la parte baja, bajo la figura. La imagen ya se
+     desvanece sola, así que el velo sólo remata ese blanco. */
+  /* En vertical el velo va de arriba abajo, no de izquierda a derecha: aquí
+     lo que hay que despejar es la parte baja, bajo la figura. La imagen ya se
+     desvanece sola, así que el velo sólo remata ese blanco.
+
+     Sus paradas subieron con el contenido: al empezar el texto más arriba,
+     un velo que arrancaba al 42% lo dejaba sobre la zona aún sin despejar. */
+  .frec-hero::after {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 24%,
+      rgba(255, 255, 255, 0.8) 38%,
+      rgba(255, 255, 255, 0.97) 48%
+    );
   }
 
   .frec-hero__shell {
@@ -15582,10 +15411,6 @@ button.dg-resource__video {
     gap: 6px;
   }
 
-  .frec-schedules--hero {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .frec-schedule {
     padding: 8px 8px;
   }
@@ -15594,22 +15419,9 @@ button.dg-resource__video {
     font-size: 17px;
   }
 
-  .frec-dolor__grid,
-  .frec-experiencia__grid,
   .frec-recibiras__grid,
   .frec-bonus__grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* El giro se apila: la etiqueta queda arriba del remate */
-  .frec-twist {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .frec-close--centered {
-    text-align: left;
   }
 
   .frec-recibiras__panel {
@@ -15710,4 +15522,1298 @@ button.dg-resource__video {
   border-color: rgba(240, 201, 138, 0.75);
   background-color: rgba(240, 201, 138, 0.1);
   color: #ffffff;
+}
+
+
+/* ===== Frecuencia — chips de horario en vidrio espejo ===== */
+
+/*
+  SÓLO LOS CHIPS DE LAS BANDERAS, DE MOMENTO.
+
+  El acabado llegó a cubrir también las píldoras y el bloque de la promesa, y
+  se retiró de ambos: son la marca y el argumento de la página, y con tres
+  piezas de vidrio a la vez el hero pasaba a ser un muestrario de vidrio. Los
+  chips son un dato de servicio, así que aquí el efecto decora sin competir.
+
+  Vive dentro de .frec-hero y no en .frec-schedule a secas porque el mismo
+  chip aparece en el cierre, sobre el panel violeta liso: sin una imagen
+  detrás no hay nada que refractar y el vidrio se vería como una caja gris.
+*/
+.frec-hero {
+  /* El tinte baja al subir el desenfoque: cuanto más se difumina el fondo,
+     menos opacidad hace falta para que el texto se lea. Y cuanto menos opaco,
+     más se ve el jardín moviéndose por debajo, que es el efecto. */
+  --glass-tinte: rgba(252, 250, 246, 0.34);
+  --glass-tinte-alto: rgba(252, 250, 246, 0.46);
+  --glass-desenfoque: 30px;
+  --glass-borde: rgba(255, 255, 255, 0.72);
+  --glass-sombra: 0 10px 30px rgba(41, 0, 102, 0.16);
+}
+
+/*
+  EL VIDRIO.
+
+  saturate por encima de 1 es lo que separa un cristal de un plástico
+  translúcido: al desenfocar, los colores de detrás se apagan, y devolverles
+  saturación es lo que hace que el verde del jardín siga leyéndose como verde
+  a través de la pieza.
+
+  brightness acompaña por el mismo motivo: sin él, 30px de desenfoque dejan
+  una papilla apagada.
+*/
+.frec-hero .frec-schedule {
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-tinte);
+  backdrop-filter: blur(var(--glass-desenfoque)) saturate(1.8) brightness(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-desenfoque)) saturate(1.8)
+    brightness(1.08);
+  border: 1px solid var(--glass-borde);
+  box-shadow:
+    var(--glass-sombra),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+/*
+  EL ESPEJO: LA BANDA DE LUZ QUE CRUZA LA PIEZA.
+
+  Esto es lo que lo vuelve espejo y no sólo cristal esmerilado. Un vidrio real
+  no se ve uniforme: refleja la luz del ambiente en una franja, y el resto
+  queda oscuro. La banda va de la esquina superior izquierda a la inferior
+  derecha, con un corte neto a mitad de recorrido —de 0.62 a 0.06 en pocos
+  puntos— porque un degradado suave se lee como niebla, y el filo es lo que
+  se lee como reflejo.
+*/
+.frec-hero .frec-schedule::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    134deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.38) 22%,
+    rgba(255, 255, 255, 0.06) 38%,
+    transparent 58%
+  );
+}
+
+/*
+  EL SEGUNDO REFLEJO, ABAJO A LA DERECHA.
+
+  Una pieza de vidrio recoge luz por los dos lados. Sin este, la mitad
+  inferior derecha queda plana y el chip se lee como una tarjeta con un
+  degradado encima, no como un objeto con volumen.
+*/
+.frec-hero .frec-schedule::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    316deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.08) 18%,
+    transparent 40%
+  );
+}
+
+/* El contenido va por encima de los dos reflejos. */
+.frec-hero .frec-schedule__head,
+.frec-hero .frec-schedule__time {
+  position: relative;
+  z-index: 1;
+}
+
+/* El texto necesita algo más de cuerpo sobre un fondo tan transparente. */
+.frec-hero .frec-schedule__country {
+  color: rgba(46, 32, 64, 0.78);
+}
+
+.frec-hero .frec-schedule__time {
+  color: #23004f;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.frec-hero .frec-schedule:hover {
+  transform: translateY(-2px);
+  background: var(--glass-tinte-alto);
+}
+
+/*
+  SIN backdrop-filter NO HAY VIDRIO.
+
+  Con un tinte al 34% y sin desenfoque, la foto atraviesa el texto entera. El
+  respaldo sube la opacidad hasta que el fondo vuelve a ser legible.
+*/
+@supports not (backdrop-filter: blur(1px)) {
+  .frec-hero .frec-schedule {
+    background: rgba(252, 250, 246, 0.94);
+  }
+}
+
+/*
+  EN MÓVIL EL DESENFOQUE BAJA A LA MITAD.
+
+  backdrop-filter se recalcula en cada fotograma sobre lo que haya detrás, y
+  detrás hay una foto a pantalla completa. 30px en un teléfono de gama media
+  se nota al hacer scroll; 16px sigue leyéndose como vidrio.
+
+  Y el tinte sube al bajar el desenfoque: con menos difuminado, el texto
+  necesita más fondo para sostenerse.
+*/
+@media (max-width: 700px) {
+  .frec-hero {
+    --glass-desenfoque: 16px;
+    --glass-tinte: rgba(252, 250, 246, 0.44);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frec-hero .frec-schedule:hover {
+    transform: none;
+  }
+}
+
+/* ===== Frecuencia — sección 2: la experiencia multidimensional ===== */
+
+/*
+  FONDO PLANO, UN SOLO BLANCO.
+
+  Llegó a llevar dos manchas radiales de fondo y se quitaron: partían la
+  sección en dos tonos mientras el hero tiene uno solo, y el empalme entre las
+  dos se leía como una franja. El color lo ponen las piezas —los chips de los
+  cuerpos, el panel del remate—, no el lienzo.
+*/
+
+/* ---- Los cuatro cuerpos ---- */
+
+.frec-cuerpos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 16px);
+  margin: 0 0 clamp(36px, 3.6vw, 50px);
+  padding: 0;
+  list-style: none;
+}
+
+/*
+  CADA CUERPO: FONDO PROPIO, ICONO GRANDE DETRÁS, NOMBRE DELANTE.
+
+  Tres capas en una tarjeta de 150px de alto —fondo, icono, nombre—, así que
+  el orden importa: el fondo va en la propia tarjeta, el icono en un hijo
+  posicionado y el nombre encima con z-index. Sin el recorte del overflow, el
+  icono de 120px se saldría por los cuatro lados.
+*/
+/*
+  FONDO DORADO PARA LAS CUATRO.
+
+  Sustituye a los cuatro degradados de colores distintos que había. La textura
+  es una sola imagen para las cuatro tarjetas, y lo que las diferencia es el
+  encuadre: cada data-cuerpo la toma por una esquina distinta, así que ninguna
+  repite la misma mancha de luz. Sale más barato que cuatro archivos y evita
+  que se vea el mismo brillo cuatro veces seguidas.
+*/
+.frec-cuerpo {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 150px;
+  padding: 16px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 160, 32, 0.45);
+  background-image: url("/activacion-v2/bg-gold.jpg");
+  background-size: 190% auto;
+  background-position: center;
+  box-shadow:
+    0 8px 20px rgba(120, 78, 10, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: transform 280ms ease, box-shadow 280ms ease;
+}
+
+.frec-cuerpo:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 28px rgba(120, 78, 10, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* CUATRO ENCUADRES DE LA MISMA TEXTURA. */
+.frec-cuerpo[data-cuerpo="mental"] {
+  background-position: left top;
+}
+
+.frec-cuerpo[data-cuerpo="emocional"] {
+  background-position: right top;
+}
+
+.frec-cuerpo[data-cuerpo="fisico"] {
+  background-position: left bottom;
+}
+
+.frec-cuerpo[data-cuerpo="energetico"] {
+  background-position: right bottom;
+}
+
+/*
+  EL ICONO COMO SEGUNDO FONDO.
+
+  Sobresale por arriba y por la derecha a propósito: un icono centrado y
+  entero se lee como ilustración, y recortado por el borde se lee como
+  textura. Va al 22% de opacidad —por encima se come el nombre, por debajo
+  desaparece— y sin eventos de puntero, que si no roba el hover.
+*/
+/* Blanco sobre el dorado, y a más opacidad que el violeta anterior: sobre un
+   fondo con textura, el 22% de antes lo hacía desaparecer entre los brillos. */
+/* z-index 1, por encima del velo del ::before: el icono es parte del fondo
+   visual pero tiene que quedar sobre el degradado, no debajo. */
+.frec-cuerpo__marca {
+  position: absolute;
+  top: -26px;
+  right: -22px;
+  z-index: 1;
+  pointer-events: none;
+  color: #ffffff;
+  opacity: 0.38;
+}
+
+/*
+  EL NOMBRE, REMARCADO.
+
+  Pasa de 13px en sans a 27px en la serif de los titulares: es lo que la
+  tarjeta viene a decir, y con el icono grande detrás necesita peso para
+  sostenerse.
+
+  Va en blanco, y por eso el ::before apaga el dorado por abajo: la textura
+  tiene brillos casi blancos y sin ese velo el nombre se perdería contra
+  ellos. Se probó también en marrón sobre un velo claro y se descartó.
+*/
+.frec-cuerpo__nombre {
+  position: relative;
+  /* Por encima del velo (0) y del icono (1). */
+  z-index: 2;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(21px, 2.2vw, 27px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* El velo que separa el texto del fondo. Va en un ::before y no en la propia
+   tarjeta porque tiene que quedar por encima del dorado y por debajo del
+   icono y del nombre. */
+.frec-cuerpo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* El velo apaga el dorado por abajo, que es donde se apoya el nombre. */
+.frec-cuerpos[data-tipo="clara"] .frec-cuerpo::before {
+  background: linear-gradient(
+    to top,
+    rgba(92, 54, 4, 0.82) 0%,
+    rgba(120, 76, 12, 0.38) 40%,
+    transparent 72%
+  );
+}
+
+.frec-cuerpos[data-tipo="clara"] .frec-cuerpo__nombre {
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(70, 40, 0, 0.55);
+}
+
+/* ---- El eje ---- */
+
+/*
+  Suelto y centrado, sin caja: es la frase que sostiene toda la sección y
+  encerrarla la igualaría a las piezas que vienen después.
+*/
+.frec-eje {
+  max-width: 760px;
+  margin: 0 auto clamp(30px, 3vw, 40px);
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #290066;
+}
+
+.frec-eje em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* El salto que equilibra los dos renglones en escritorio. En móvil se anula
+   —ver el bloque de 700px—, donde el ancho ya reparte la frase solo. */
+.frec-eje__salto {
+  display: inline;
+}
+
+/* ---- Los contrastes ---- */
+
+/*
+  DOS COLUMNAS, NO CUATRO NI UNA.
+
+  Son cuatro frases del mismo peso y con la misma forma: a cuatro columnas
+  cada una queda tan estrecha que se parte en seis líneas, y a una sola la
+  lista se vuelve un scroll largo que diluye la acumulación. En dos, cada
+  pareja se lee de un golpe y el patrón queda a la vista.
+*/
+.frec-contrastes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  margin: 0 0 clamp(36px, 3.6vw, 48px);
+  padding: 0;
+  list-style: none;
+}
+
+/*
+  MÁS COMPACTAS Y CON PROFUNDIDAD.
+
+  El relleno baja de 24-32px a 18-22px y el hueco interior de 12 a 9: son
+  cuatro frases cortas, y el aire que tenían las hacía ocupar media pantalla
+  sin aportar nada.
+
+  Las tres sombras hacen el relieve: la exterior las levanta del fondo, la
+  primera interior marca el filo de luz de arriba, y la segunda —negativa y
+  desplazada— hunde el borde inferior. Esa última es la que las hace parecer
+  huecas en vez de planas.
+*/
+/*
+  BORDE DORADO GIRATORIO.
+
+  Mismo recurso que el badge del hero —un cónico que da vueltas y del que sólo
+  asoma el filo—, pero aquí la pieza es rectangular y grande, así que hay dos
+  diferencias:
+
+  1. El tramo de luz es más largo. En una píldora de 30px, 40 grados de arco
+     recorren el contorno entero; en una tarjeta de 300px se ven como un punto.
+
+  2. Cada tarjeta arranca en un ángulo distinto (--giro). Con las cuatro en
+     fase, los cuatro destellos suben y bajan a la vez y la rejilla parpadea.
+
+  El truco del borde: el cónico se pinta en la CAPA DE ABAJO (el ::before,
+  que ocupa toda la tarjeta) y el contenido va sobre un fondo opaco que lo
+  tapa salvo 1px de canto. De ahí que el relleno de 1px sea el borde.
+*/
+.frec-contraste {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 1px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(41, 0, 102, 0.05);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+/* El cónico que gira: es lo que se ve como borde. */
+.frec-contraste::before {
+  content: "";
+  position: absolute;
+  /* Muy por fuera de la caja para que al girar el degradado cubra las
+     esquinas: a inset 0 el centro de giro deja los vértices sin pintar. */
+  inset: -130%;
+  z-index: 0;
+  background: conic-gradient(
+    from var(--giro, 0deg),
+    rgba(212, 168, 85, 0.18) 0deg,
+    rgba(240, 201, 138, 0.35) 40deg,
+    #f0c98a 80deg,
+    #d4a020 100deg,
+    #f0c98a 120deg,
+    rgba(240, 201, 138, 0.35) 165deg,
+    rgba(212, 168, 85, 0.18) 220deg,
+    rgba(212, 168, 85, 0.18) 360deg
+  );
+  animation: frec-borde-giro 6s linear infinite;
+}
+
+/* Cuatro fases distintas: sin esto, los cuatro bordes destellan a la vez. */
+.frec-contraste:nth-child(2)::before { animation-delay: -1.5s; }
+.frec-contraste:nth-child(3)::before { animation-delay: -3s; }
+.frec-contraste:nth-child(4)::before { animation-delay: -4.5s; }
+
+/* La cara: el fondo opaco que tapa el cónico salvo el filo de 1px. */
+.frec-contraste::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 1;
+  border-radius: 15px;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(248, 244, 252, 0.94) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* El texto, por encima de las dos capas. */
+.frec-contraste > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* El relleno lo lleva el contenido, no la caja: la caja sólo aporta el 1px
+   del borde. */
+.frec-contraste__quieres,
+.frec-contraste__pero {
+  padding-inline: clamp(19px, 2.1vw, 23px);
+}
+
+.frec-contraste__quieres {
+  padding-top: clamp(17px, 1.9vw, 21px);
+}
+
+.frec-contraste__pero {
+  padding-bottom: clamp(17px, 1.9vw, 21px);
+}
+
+@keyframes frec-borde-giro {
+  to {
+    --giro: 360deg;
+  }
+}
+
+/* Sin @property el navegador no sabe interpolar un ángulo guardado en una
+   variable, y el borde saltaría de golpe en vez de girar. */
+@property --giro {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Quien pide menos movimiento se queda con el borde quieto, no sin borde. */
+@media (prefers-reduced-motion: reduce) {
+  .frec-contraste::before {
+    animation: none;
+  }
+}
+
+/* El filo de luz interior se mudó al ::after, que es quien pinta la cara:
+   aquí sólo queda la sombra exterior. */
+.frec-contraste:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(41, 0, 102, 0.08);
+}
+
+/* Al pasar por encima, el borde acelera. */
+.frec-contraste:hover::before {
+  animation-duration: 2.5s;
+}
+
+.frec-contraste__quieres {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: #290066;
+}
+
+/*
+  LA REGLA ENTRE LAS DOS MITADES.
+
+  Es lo que hace visible el "y sin embargo" que el copy dice con palabras: sin
+  ella las dos frases se leen como una sola idea continuada, y lo que cuenta
+  aquí es justo que NO coinciden. Se apaga hacia la derecha para que no
+  parezca un separador de lista.
+*/
+.frec-contraste__corte {
+  display: block;
+  /* Igual que el texto: la caja ya no lleva relleno, lo llevan los hijos. */
+  width: calc(100% - clamp(38px, 4.2vw, 46px));
+  margin-inline: clamp(19px, 2.1vw, 23px);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 160, 32, 0.55) 0%,
+    rgba(212, 160, 32, 0.15) 45%,
+    transparent 100%
+  );
+}
+
+.frec-contraste__pero {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(46, 32, 64, 0.72);
+}
+
+/* ---- El remate ---- */
+
+/*
+  La única pieza oscura de la sección, y por eso cierra: después de cuatro
+  tarjetas claras iguales, el violeta dice que esto es la conclusión y no un
+  quinto contraste.
+*/
+/*
+  LA AURORA, CON UN VELO VIOLETA SUAVE.
+
+  Llevó primero un degradado opaco que la apagaba entera, y después nada. Sin
+  nada, la banda de luz diagonal entra muy dura justo donde cae el texto.
+
+  Este velo es el punto medio: violeta al 30-45%, que es la mitad de lo que
+  tapaba el primero. Se ve la aurora, pero la banda deja de golpear.
+
+  El orden importa: en `background-image` la primera capa es la de arriba, así
+  que el degradado va primero y la imagen debajo.
+
+  La imagen mide 736x414 y aquí se amplía hasta 1,5x. No se nota porque es una
+  aurora difusa, sin detalle fino que delate el estiramiento: con una
+  fotografía este mismo escalado se vería roto.
+*/
+.frec-remate {
+  position: relative;
+  padding: clamp(32px, 4vw, 52px) clamp(28px, 3.6vw, 56px);
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #1d1336;
+  background-image:
+    linear-gradient(
+      140deg,
+      rgba(46, 26, 82, 0.45) 0%,
+      rgba(67, 39, 111, 0.3) 50%,
+      rgba(35, 18, 68, 0.5) 100%
+    ),
+    url("/lista-de-espera/fondo.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  box-shadow: 0 20px 48px rgba(41, 0, 102, 0.26);
+}
+
+/*
+  Blanco puro, con sombra oscura propia.
+
+  La sombra sustituye al velo que cubría toda la caja: la aurora tiene una
+  banda casi blanca cruzando en diagonal, y sin nada el texto se perdería
+  justo ahí. Tres capas del mismo negro violáceo —una corta que define el filo
+  y dos largas que apagan el fondo inmediato— bastan para sostenerlo sin tapar
+  la imagen.
+*/
+.frec-remate__texto {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.62;
+  color: #ffffff;
+  text-shadow:
+    0 1px 2px rgba(12, 4, 28, 0.9),
+    0 0 14px rgba(12, 4, 28, 0.75),
+    0 0 30px rgba(12, 4, 28, 0.6);
+}
+
+/* El único tramo en mayúsculas del copy: va en dorado y en la serif, que es
+   como la página marca lo que importa. */
+/* Dorado plano y no en degradado recortado: un relleno transparente no admite
+   text-shadow, y sobre la aurora a pelo este tramo necesita la misma sombra
+   que el resto del párrafo para no perderse en la banda de luz. */
+.frec-remate__texto strong {
+  display: inline;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.12em;
+  font-weight: 600;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #f5c96b;
+}
+
+/* ===== Tablet ===== */
+@media (max-width: 1023px) {
+  .frec-cuerpos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  /* Los contrastes pasan a una columna: en dos, cada tarjeta queda tan
+     estrecha que las frases se parten en cinco o seis líneas. */
+  .frec-contrastes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Más bajas: en una columna de media pantalla, 150px de alto dejan la
+     tarjeta casi vacía bajo el nombre. */
+  .frec-cuerpo {
+    min-height: 104px;
+    padding: 12px 14px;
+  }
+
+  .frec-cuerpo__marca {
+    top: -18px;
+    right: -16px;
+  }
+
+  .frec-cuerpo__marca svg {
+    width: 84px;
+    height: 84px;
+  }
+
+  .frec-eje {
+    text-align: left;
+  }
+
+  /* El salto forzado sobra: a este ancho la frase ya se reparte sola, y
+     mantenerlo dejaría un renglón corto seguido de uno largo. */
+  .frec-eje__salto {
+    display: none;
+  }
+
+  .frec-remate {
+    padding: clamp(28px, 7vw, 40px) clamp(22px, 5vw, 32px);
+    border-radius: 20px;
+  }
+
+  .frec-remate__texto {
+    text-align: left;
+  }
+}
+
+/* ===== Frecuencia — sección 3: la Nueva Tierra ===== */
+
+/*
+  UN CIELO, NO UN COLOR.
+
+  Es la sección del cambio planetario, así que el fondo es un cielo nocturno
+  armado por capas, todas en CSS:
+
+    1. El violeta de base, más oscuro abajo que arriba.
+    2. Dos auroras de luz, una violeta y otra dorada, difuminadas.
+    3. Un campo de estrellas: puntos de luz de tres tamaños.
+
+  NADA DE ESTO ES UNA IMAGEN. Un cielo estrellado en JPEG a ancho completo
+  pesa cientos de kilobytes y se pixela al estirarlo; en degradados pesa cero,
+  es nítido a cualquier tamaño y se ajusta cambiando un valor.
+
+  Va oscura a propósito: encadena con el remate violeta de la sección anterior
+  —hablan de lo mismo— y deja el corte contra la sección de experiencia, que
+  es clara.
+*/
+.frec-tierra {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(80px, 10vw, 150px) 0;
+  background-color: #150c2b;
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(91, 58, 160, 0.45) 0%,
+      transparent 70%
+    ),
+    linear-gradient(180deg, #1d1336 0%, #150c2b 55%, #0f0821 100%);
+}
+
+/*
+  EL CAMPO DE ESTRELLAS.
+
+  Tres capas de radial-gradient repetidas en mosaico, cada una con su tamaño
+  de baldosa: al no ser múltiplos entre sí, los puntos no forman rejilla y el
+  reparto se lee como aleatorio.
+
+  El tamaño del punto va en el porcentaje del degradado, no en la baldosa: un
+  `circle 1px` se recorta duro en algunos navegadores, mientras que el
+  porcentaje lo deja con un borde suave, que es como se ve una estrella.
+*/
+.frec-tierra__estrellas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 70% 65%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1px 1px at 45% 15%, rgba(240, 201, 138, 0.8), transparent),
+    radial-gradient(1px 1px at 85% 40%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 12% 80%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(2px 2px at 58% 88%, rgba(201, 179, 232, 0.7), transparent);
+  background-size:
+    340px 340px,
+    290px 290px,
+    410px 410px,
+    250px 250px,
+    370px 370px,
+    460px 460px;
+  /* El destello es muy lento y muy corto de recorrido: una estrella que
+     parpadea rápido se lee como un error de pintado. */
+  animation: frec-estrellas 9s ease-in-out infinite;
+}
+
+@keyframes frec-estrellas {
+  0%, 100% { opacity: 0.75; }
+  50%      { opacity: 1; }
+}
+
+/*
+  LAS DOS AURORAS.
+
+  Dos manchas de luz muy difuminadas, una violeta arriba a la izquierda y otra
+  dorada abajo a la derecha. Se mueven en bucle largo —28 segundos— para que
+  el cielo no quede congelado, pero tan poco que el movimiento no se mira: se
+  nota al volver a la sección, no mientras se lee.
+*/
+.frec-tierra__aurora {
+  position: absolute;
+  inset: -10%;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      ellipse 45% 38% at 18% 22%,
+      rgba(124, 77, 205, 0.4) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 40% 34% at 82% 78%,
+      rgba(212, 160, 32, 0.22) 0%,
+      transparent 70%
+    );
+  filter: blur(30px);
+  animation: frec-aurora 28s ease-in-out infinite;
+}
+
+@keyframes frec-aurora {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(2%, -1.5%, 0) scale(1.06); }
+}
+
+/* Quien pide menos movimiento se queda con el cielo quieto. */
+@media (prefers-reduced-motion: reduce) {
+  .frec-tierra__estrellas,
+  .frec-tierra__aurora {
+    animation: none;
+  }
+}
+
+.frec-tierra__shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- El diagnóstico ---- */
+
+.frec-tierra__eyebrow {
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240, 201, 138, 0.85);
+}
+
+.frec-tierra__title {
+  max-width: 900px;
+  margin: 0 auto clamp(28px, 3.2vw, 40px);
+  text-align: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 4.2vw, 52px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: #ffffff;
+}
+
+.frec-tierra__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.frec-tierra__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto clamp(44px, 5vw, 68px);
+  text-align: center;
+}
+
+.frec-tierra__intro p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.65;
+  color: rgba(249, 245, 240, 0.8);
+}
+
+/* ---- El giro ---- */
+
+/*
+  Rompe la columna de lectura con una pieza de cristal: es donde el argumento
+  deja de hablar del mundo y empieza a hablar de quien lee, y ese cambio de
+  destinatario merece un cambio de forma.
+*/
+.frec-tierra__giro {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto clamp(48px, 5.5vw, 76px);
+  padding: clamp(30px, 3.6vw, 48px) clamp(26px, 3.4vw, 52px);
+  border-radius: 24px;
+  border: 1px solid rgba(240, 201, 138, 0.28);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  text-align: center;
+}
+
+.frec-tierra__giro-texto {
+  margin: 0 0 14px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(21px, 2.4vw, 30px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.frec-tierra__giro-texto em {
+  font-style: italic;
+  color: #f0c98a;
+}
+
+.frec-tierra__giro-pie {
+  max-width: 660px;
+  margin: 0 auto;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.78);
+}
+
+/* ---- El remate en escalera ---- */
+
+/*
+  Tres frases de peso creciente. Cada una se desplaza un poco más a la
+  derecha que la anterior: la escalera se lee como una cuenta atrás y lleva el
+  ojo hasta la última, que es la que tiene que quedar sonando.
+*/
+.frec-tierra__remate {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.frec-tierra__paso {
+  position: relative;
+  margin: 0;
+  padding-left: 22px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.76);
+}
+
+/* El filete de la izquierda: crece en luz con cada escalón. */
+.frec-tierra__paso::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(240, 201, 138, 0.35);
+}
+
+.frec-tierra__paso--fuerte {
+  margin-left: clamp(0px, 3vw, 44px);
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(19px, 2.1vw, 25px);
+  font-weight: 500;
+  line-height: 1.35;
+  color: #ffffff;
+}
+
+.frec-tierra__paso--fuerte::before {
+  background: rgba(240, 201, 138, 0.7);
+}
+
+.frec-tierra__paso--fuerte em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* El último escalón: el más desplazado y el único con fondo propio, porque es
+   la frase que cierra la sección. */
+.frec-tierra__paso--cierre {
+  margin-left: clamp(0px, 6vw, 88px);
+  padding: clamp(18px, 2vw, 24px) clamp(20px, 2.2vw, 28px);
+  border-radius: 16px;
+  border: 1px solid rgba(240, 201, 138, 0.22);
+  background: linear-gradient(
+    120deg,
+    rgba(240, 201, 138, 0.12) 0%,
+    rgba(240, 201, 138, 0.03) 100%
+  );
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #f0c98a;
+}
+
+/* Su filete sobraría: la caja ya lo delimita. */
+.frec-tierra__paso--cierre::before {
+  display: none;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  /* La escalera se deshace: a este ancho el sangrado se come el texto y las
+     tres frases quedan en columnas distintas sin ganar nada. */
+  .frec-tierra__paso--fuerte,
+  .frec-tierra__paso--cierre {
+    margin-left: 0;
+  }
+
+  .frec-tierra__intro,
+  .frec-tierra__giro {
+    text-align: left;
+  }
+
+  .frec-tierra__giro {
+    border-radius: 20px;
+  }
+
+  /* Menos desenfoque: son 30px recalculándose sobre un fondo animado. */
+  .frec-tierra__aurora {
+    filter: blur(20px);
+  }
+}
+
+/* ===== Frecuencia — prueba de serif: Lora en lugar de Fraunces ===== */
+
+/*
+  UNA SOLA REGLA, NO VEINTE.
+
+  La serif de esta landing sale de var(--font-fraunces) en unas veinte reglas
+  distintas. En vez de reescribirlas una por una, aquí se REDEFINE esa misma
+  variable dentro de /frecuencia: todo lo que la lee se sirve de Lora sin
+  tocar ni una de esas reglas.
+
+  Y el cambio queda acotado. --font-fraunces se usa en 93 sitios repartidos
+  por las cinco landings; con esta regla, las otras cuatro siguen en Fraunces.
+
+  PARA VOLVER ATRÁS, se borra este bloque. Para llevar Lora a todo el sitio,
+  se mueve la línea a :root y se cambia la fuente en pages/_app.tsx.
+*/
+.frec-hero,
+.frec-dolor,
+.frec-tierra,
+.frec-experiencia,
+.frec-recibiras,
+.frec-aida,
+.frec-cierre {
+  --font-fraunces: var(--font-lora);
+}
+
+/*
+  AJUSTES POR EL CAMBIO DE FUENTE.
+
+  Lora y Fraunces no ocupan lo mismo a igual cuerpo: Lora tiene la altura de x
+  algo mayor y los trazos más parejos, así que a los mismos px se ve más
+  grande y más densa. Dos correcciones:
+
+  1. Los titulares grandes aflojan el interletrado. El -0.025em que Fraunces
+     necesitaba —es una fuente de contraste alto, con letras que se separan
+     solas— en Lora junta demasiado.
+
+  2. Las cursivas bajan de peso. La itálica de Lora es más cerrada que la de
+     Fraunces y a 600 se empasta en los cuerpos chicos.
+*/
+.frec-hero__title,
+.frec-intro__title,
+.frec-tierra__title,
+.frec-section-title,
+.frec-cierre__title,
+.frec-aida__name {
+  letter-spacing: -0.012em;
+}
+
+.frec-eje em,
+.frec-tierra__giro-texto em,
+.frec-hero__accent {
+  font-weight: 500;
+}
+
+/* ===== Frecuencia — dos tipografías y un peso mínimo de cuerpo ===== */
+
+/*
+  DOS FUENTES, NO MÁS.
+
+  Lora para los titulares, Jost para todo el cuerpo. Ya era así, pero el peso
+  del cuerpo estaba desparejo: diez reglas no declaraban font-weight y
+  heredaban el 400 del navegador, y una lo declaraba explícitamente.
+
+  400 sobre fondos claros con texto violeta se ve desvaído, y sobre los
+  paneles violetas directamente se pierde. 500 es el mínimo que sostiene en
+  los dos, y es un peso que Jost ya carga —ver pages/_app.tsx—, así que no
+  añade ninguna descarga.
+*/
+.frec-exp__texto,
+.frec-bonus__body,
+.frec-aida__body p,
+.frec-cierre__lead,
+.frec-remate__texto,
+.frec-tierra__intro p,
+.frec-tierra__giro-pie,
+.frec-tierra__paso,
+.frec-contraste__pero,
+.frec-contraste__quieres,
+.frec-schedule__country,
+.frec-hero__note {
+  font-weight: 500;
+}
+
+/* El pie de página se queda en 400: es letra pequeña de aviso legal y a 500
+   compite con el contenido. */
+.frec-footer p {
+  font-weight: 400;
+}
+
+/* ===== Frecuencia — los cinco puntos de la experiencia ===== */
+
+/*
+  UNA LISTA, NO CINCO TARJETAS.
+
+  Pediste tablitas mucho más chicas, y aquí eso significa no hacer tarjetas:
+  sin fondo, sin borde en caja, sin sombra. Sólo un filete dorado a la
+  izquierda, el número y el texto.
+
+  Y hay una razón además del tamaño: justo encima hay siete tarjetas con foto,
+  y debajo el remate. Cinco cajas más entre medias convierten la sección en
+  una pila de cajas. Una lista limpia deja que las fotos sigan siendo lo que
+  se mira.
+
+  Dos columnas en escritorio: son cinco frases de una o dos líneas, y a una
+  sola columna la lista se estira sin necesidad.
+*/
+
+/* ===== Frecuencia — los cinco puntos de la experiencia ===== */
+
+/*
+  EL NÚMERO COMO ELEMENTO GRÁFICO.
+
+  Aquí había siete tarjetas con fotografía y se retiraron: las imágenes traían
+  su propio rótulo quemado que repetía el texto de al lado, y siete fotos para
+  cinco ideas cortas hacían de ésta la sección más pesada de la página para lo
+  poco que dice.
+
+  El número ocupa ese lugar. Va grande, detrás del texto y cortado por el
+  borde de la tarjeta: recortado se lee como textura, entero se leería como un
+  dato —y el orden aquí no significa nada, son cinco cosas que pasan, no cinco
+  pasos—.
+
+  TRES ARRIBA Y DOS ABAJO.
+
+  Cinco es impar, así que alguna fila tiene que repartirse distinto. Con seis
+  columnas de base, las tres primeras ocupan dos cada una y las dos últimas
+  tres cada una: las dos filas cierran completas y ninguna tarjeta queda
+  suelta al final.
+*/
+.frec-exp {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(12px, 1.3vw, 18px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Fila de arriba: tres tarjetas de dos columnas. */
+.frec-exp__card:nth-child(-n + 3) {
+  grid-column: span 2;
+}
+
+/* Fila de abajo: dos tarjetas de tres columnas. */
+.frec-exp__card:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+/* column y no row: el icono va arriba, el texto debajo, y entre los dos el
+   hueco que los separa. */
+.frec-exp__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 172px;
+  padding: clamp(18px, 1.9vw, 24px);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(155, 126, 200, 0.22);
+  background: linear-gradient(
+    158deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(246, 241, 252, 0.9) 100%
+  );
+  box-shadow:
+    0 8px 22px rgba(41, 0, 102, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transition: transform 280ms ease, box-shadow 280ms ease;
+}
+
+/*
+  EL ICONO, ARRIBA Y A LA IZQUIERDA.
+
+  Adelanta de qué va el punto antes de leerlo. Va en su propia caja redonda
+  con fondo tenue: suelto sobre el degradado de la tarjeta se perdería contra
+  el número que hay detrás.
+*/
+.frec-exp__icono {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: linear-gradient(
+    150deg,
+    rgba(155, 126, 200, 0.2),
+    rgba(212, 168, 85, 0.18)
+  );
+  color: #5b3aa0;
+}
+
+.frec-exp__card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 34px rgba(41, 0, 102, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/*
+  EL NÚMERO.
+
+  Sobresale por arriba y por la derecha: el corte del borde es lo que lo
+  convierte en fondo. En degradado violeta-dorado y a opacidad baja, para que
+  se lea por debajo del texto sin disputárselo.
+
+  line-height 0.75 lo sube dentro de su propia caja: a 1 la cifra queda
+  colgando muy por debajo de su borde superior.
+*/
+.frec-exp__num {
+  position: absolute;
+  top: -20px;
+  right: -8px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(76px, 8vw, 108px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 0.75;
+  letter-spacing: -0.04em;
+  background: linear-gradient(
+    168deg,
+    rgba(155, 126, 200, 0.28) 0%,
+    rgba(212, 160, 32, 0.22) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Las dos de abajo son más anchas: su número acompaña. */
+.frec-exp__card:nth-child(n + 4) .frec-exp__num {
+  font-size: clamp(88px, 9vw, 124px);
+  top: -24px;
+}
+
+/* margin-top auto lo empuja al fondo de la tarjeta: con alturas distintas en
+   la misma fila, así los textos quedan alineados por abajo. */
+.frec-exp__texto {
+  position: relative;
+  z-index: 1;
+  margin: auto 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.25vw, 15.5px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(46, 32, 64, 0.85);
+}
+
+/* ===== Tablet ===== */
+@media (max-width: 1023px) {
+  /* El 3+2 no entra: a este ancho tres tarjetas por fila quedan más
+     estrechas que altas. Pasa a 2+2+1, con la última a lo ancho para que no
+     quede a media fila. */
+  .frec-exp {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .frec-exp__card:nth-child(-n + 3),
+  .frec-exp__card:nth-child(n + 4) {
+    grid-column: span 1;
+  }
+
+  .frec-exp__card:last-child {
+    grid-column: 1 / -1;
+    min-height: 140px;
+  }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  .frec-exp {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .frec-exp__card,
+  .frec-exp__card:last-child {
+    min-height: 0;
+  }
+
+  .frec-exp__num,
+  .frec-exp__card:nth-child(n + 4) .frec-exp__num {
+    font-size: clamp(64px, 20vw, 86px);
+    top: -14px;
+  }
+
+  .frec-exp__icono {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+  }
 }
