@@ -14625,8 +14625,10 @@ button.dg-resource__video {
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 7px 22px 7px 8px;
+  gap: 7px;
+  /* Simétrico: el relleno izquierdo era menor para alojar el logo de 26px,
+     y con un icono de 15px la píldora quedaba descentrada. */
+  padding: 7px 16px;
   border-radius: 100px;
   background: linear-gradient(180deg, #fdfaf5 0%, #f6efe4 100%);
   font-family: var(--font-jost), Arial, sans-serif;
@@ -14638,28 +14640,31 @@ button.dg-resource__video {
   white-space: nowrap;
 }
 
-.frec-badge__logo {
-  position: relative;
+/* El icono sustituye al logo que ocupaba este hueco. Va en dorado, que es lo
+   que lo separa del texto sin pedirle un fondo propio. */
+.frec-badge__icono {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  overflow: hidden;
+  flex-shrink: 0;
+  color: #a06c08;
 }
 
-.frec-badge__pulse {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 160, 32, 0.35), transparent 70%);
-  animation: frec-pulse 2.6s ease-in-out infinite;
+/* El sello y las dos píldoras, en fila. */
+.frec-hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
-@keyframes frec-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(0.9); }
-  50%      { opacity: 1;   transform: scale(1.15); }
+/* El sello de marca: redondo y algo mayor que las píldoras, para que abra la
+   fila en vez de leerse como una de ellas. */
+.frec-hero__sello {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(41, 0, 102, 0.16);
 }
 
 /* ---- Títulos de sección ---- */
@@ -14687,47 +14692,170 @@ button.dg-resource__video {
 }
 
 /* ---- Horarios por país: texto real, no imágenes ---- */
+/* LOS CUATRO HORARIOS, EN UNA SOLA LÍNEA.
+
+   Eran cuatro tarjetas en rejilla, con la hora debajo del país, y ocupaban
+   tanto como el propio titular. Son un dato de servicio —cuándo es, en tu
+   país—, no un argumento de venta: pasan a chips en fila, con la hora y el
+   país en el mismo renglón.
+
+   flex-wrap sigue puesto por si una traducción o una zona horaria de dos
+   dígitos los desborda: antes de romper el ancho, bajan de línea. */
+/* LOS CUATRO EN UNA LÍNEA, Y SI NO ENTRAN, EN COLUMNA.
+
+   auto-fit con un mínimo de 108px hace las dos cosas sin media query: mientras
+   quepan cuatro columnas de ese ancho, van los cuatro en fila e iguales entre
+   sí; cuando el contenedor se estrecha, la rejilla reduce el número de
+   columnas sola —a dos, y luego a una— en vez de dejar un huérfano suelto,
+   que es lo que hacía el flex-wrap. */
 .frec-schedules {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin: 4px 0 0;
+  /* 122px es lo que mide el más ancho —"Argentina" arriba, reloj y hora
+     abajo—: por debajo de eso el texto se partiría. */
+  grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+  gap: 8px;
+  margin: 2px 0 0;
   padding: 0;
   list-style: none;
   width: 100%;
-  max-width: 460px;
+  max-width: 560px;
 }
 
+/* DOS RENGLONES: BANDERA Y PAÍS ARRIBA, HORA DEBAJO.
+
+   Deja de ser una píldora de una línea y pasa a tarjeta, así que el radio baja
+   de 100px —que en algo alto se ve como una cápsula— a una esquina redondeada
+   normal. */
 .frec-schedule {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(212, 160, 32, 0.28);
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(6px);
-  text-align: center;
+  align-items: center;
+  gap: 3px;
+  padding: 9px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(212, 160, 32, 0.3);
+  background: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.frec-schedule__head {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.frec-schedule__flag {
+  display: block;
+  flex-shrink: 0;
 }
 
 .frec-schedule__country {
   font-family: var(--font-jost), Arial, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: rgba(46, 32, 64, 0.62);
 }
 
+/* En su propio renglón ya no compite con el país, así que puede crecer: es el
+   dato que la persona vino a buscar. */
 .frec-schedule__time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
+  line-height: 1.1;
   color: #290066;
 }
 
-.frec-schedules--on-panel {
+/* Dorado y algo apagado: acompaña a la hora sin disputarle el peso. */
+.frec-schedule__clock {
+  flex-shrink: 0;
+  color: rgba(160, 108, 8, 0.75);
+}
+
+/* En la hero, el rótulo da contexto antes de que la mirada salte a las horas. */
+.frec-schedules-block {
+  display: grid;
+  gap: 8px;
+  width: 100%;
   max-width: 560px;
+}
+
+.frec-schedules__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(46, 32, 64, 0.76);
+}
+
+/* Variante de hero: cuatro badges equilibrados, con más contraste y volumen
+   que las tarjetas de apoyo del cierre. */
+.frec-schedules--hero {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: none;
+  margin: 0;
+}
+
+.frec-schedules--hero .frec-schedule {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  gap: 5px;
+  padding: 11px 10px 10px;
+  border-color: rgba(160, 108, 8, 0.26);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(249, 243, 253, 0.78) 100%
+  );
+  box-shadow:
+    0 10px 24px rgba(41, 0, 102, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+.frec-schedules--hero .frec-schedule::before {
+  content: "";
+  position: absolute;
+  inset: 0 18px auto;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, #d4a020, #6f43b4);
+}
+
+.frec-schedules--hero .frec-schedule__head {
+  gap: 7px;
+}
+
+.frec-schedules--hero .frec-schedule__flag {
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 2px 3px rgba(41, 0, 102, 0.14));
+}
+
+.frec-schedules--hero .frec-schedule__country {
+  font-weight: 600;
+  color: rgba(46, 32, 64, 0.78);
+}
+
+.frec-schedules--hero .frec-schedule__time {
+  font-size: 21px;
+  letter-spacing: -0.01em;
+}
+
+/* El cierre va centrado, y la rejilla se centra por su caja, no por
+   justify-content: de ahí el margin-inline auto. */
+.frec-schedules--on-panel {
   margin-inline: auto;
 }
 
@@ -14742,6 +14870,15 @@ button.dg-resource__video {
 
 .frec-schedules--on-panel .frec-schedule__time {
   color: #f0c98a;
+}
+
+/* Sobre el violeta, el aro oscuro de la bandera desaparece: se aclara. */
+.frec-schedules--on-panel .frec-schedule__flag circle[stroke] {
+  stroke: rgba(249, 245, 240, 0.35);
+}
+
+.frec-schedules--on-panel .frec-schedule__clock {
+  color: rgba(240, 201, 138, 0.8);
 }
 
 /* ===== Hero ===== */
@@ -14782,14 +14919,24 @@ button.dg-resource__video {
   gap: 18px;
 }
 
+/* EL TITULAR ES EL NOMBRE DE LA EXPERIENCIA, NO UNA FRASE.
+
+   Antes era una frase larga de cuatro líneas y por eso iba en cuerpo
+   contenido. Un nombre propio pide lo contrario: cuerpo grande, dos líneas
+   como mucho, y el dorado sobre el violeta —el mismo realce que la marca usa
+   en el resto de la página— para que se lea como un rótulo. */
 .frec-hero__title {
   margin: 0;
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(25px, 2.6vw, 35px);
+  font-size: clamp(34px, 4.4vw, 56px);
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: #290066;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  background: linear-gradient(96deg, #290066 0%, #5b3aa0 55%, #a06c08 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .frec-hero__accent {
@@ -14800,26 +14947,54 @@ button.dg-resource__video {
   color: transparent;
 }
 
-.frec-hero__lead {
-  max-width: 520px;
+/* El segundo párrafo: explica el cómo, después de que la cita dijo el qué.
+   Va en sans y sin filete para que no compita con ella. */
+.frec-hero__body {
+  max-width: 540px;
   margin: 0;
-  padding-left: 16px;
-  border-left: 2px solid rgba(212, 160, 32, 0.5);
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(16px, 1.6vw, 19px);
-  font-style: italic;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 18px;
   font-weight: 500;
-  line-height: 1.45;
-  color: #43276f;
+  line-height: 1.55;
+  color: rgba(46, 32, 64, 0.88);
 }
 
-.frec-hero__note {
-  margin: 2px 0 0;
+/* NI ITÁLICA NI SERIF EN ESTE CUERPO.
+
+   Iba en Fraunces itálica a 16-19px y se veía sucia: una serif inclinada
+   tiene remates finos que a ese tamaño caen entre píxeles, y el
+   -webkit-font-smoothing: antialiased del body adelgaza aún más el trazo.
+   El resultado se lee como pixelado.
+
+   Jost en cuerpo algo mayor no tiene remates que perder, así que el filo
+   queda limpio. El filete dorado y el color siguen marcando que esto es la
+   promesa y no un párrafo cualquiera. */
+/* REMARCADA: ES LA PROMESA, NO UN PÁRRAFO.
+
+   Pasa de filete a bloque con fondo propio. El filete solo no bastaba para
+   separarla de lo que viene debajo, y subirle el cuerpo la habría puesto a
+   competir con el titular. Un fondo tenue la aísla sin agrandarla.
+
+   Sigue sin itálica y en Jost: la versión en Fraunces cursiva a este cuerpo
+   era la que se veía pixelada. */
+.frec-hero__lead {
+  max-width: 540px;
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 3px solid #d4a020;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(
+    96deg,
+    rgba(212, 160, 32, 0.14) 0%,
+    rgba(212, 160, 32, 0.04) 100%
+  );
   font-family: var(--font-jost), Arial, sans-serif;
-  font-size: clamp(13px, 1.2vw, 14px);
-  letter-spacing: 0.04em;
-  color: rgba(46, 32, 64, 0.6);
+  font-size: clamp(17px, 1.7vw, 20px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: #3a2064;
 }
+
 
 /* ===== Dolor ===== */
 .frec-dolor {
@@ -15400,8 +15575,23 @@ button.dg-resource__video {
     padding: 0;
   }
 
+  /* El mínimo baja para que en móvil entren dos por fila en lugar de una:
+     el auto-fit resuelve el resto sin más reglas. */
   .frec-schedules {
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    gap: 6px;
+  }
+
+  .frec-schedules--hero {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .frec-schedule {
+    padding: 8px 8px;
+  }
+
+  .frec-schedule__time {
+    font-size: 17px;
   }
 
   .frec-dolor__grid,

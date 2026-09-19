@@ -1,5 +1,7 @@
+import { CalendarDays, Clock } from "lucide-react";
 import FrecuenciaBadge from "@/components/frecuencia/FrecuenciaBadge";
 import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
+import { BANDERAS } from "@/components/frecuencia/Banderas";
 import { EVENTO, HORARIOS, LINKS } from "@/components/frecuencia/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
@@ -14,7 +16,11 @@ export default function CierreFrecuencia() {
     >
       <div className="frec-cierre__panel">
         <div className="frec-cierre__shell">
-          <FrecuenciaBadge>{EVENTO.formato}</FrecuenciaBadge>
+          {/* Aquí la fecha, no el formato: es el cierre y lo que queda por
+              decidir es cuándo. */}
+          <FrecuenciaBadge icono={<CalendarDays size={15} strokeWidth={2} />}>
+            {EVENTO.fechaCorta}
+          </FrecuenciaBadge>
 
           <h2
             id="frec-cierre-title"
@@ -27,8 +33,8 @@ export default function CierreFrecuencia() {
           </h2>
 
           <p className="frec-cierre__lead" data-reveal>
-            Si algo dentro de ti sabe que ha llegado el momento de volver a tu
-            frecuencia original, este es el lugar.
+            Si algo dentro de ti sabe que ha llegado el momento de encarnar la
+            versión más alineada con tu Ser, este es el lugar.
           </p>
 
           <div className="frec-cierre__actions" data-reveal>
@@ -58,12 +64,26 @@ export default function CierreFrecuencia() {
             className="frec-schedules frec-schedules--on-panel"
             aria-label="Horarios por país"
           >
-            {HORARIOS.map(({ pais, hora }) => (
-              <li key={pais} className="frec-schedule">
-                <span className="frec-schedule__country">{pais}</span>
-                <span className="frec-schedule__time">{hora}</span>
-              </li>
-            ))}
+            {HORARIOS.map(({ pais, hora }) => {
+              const Bandera = BANDERAS[pais];
+              return (
+                <li key={pais} className="frec-schedule">
+                  <span className="frec-schedule__head">
+                    {Bandera && <Bandera className="frec-schedule__flag" />}
+                    <span className="frec-schedule__country">{pais}</span>
+                  </span>
+                  <span className="frec-schedule__time">
+                    <Clock
+                      size={14}
+                      strokeWidth={2}
+                      className="frec-schedule__clock"
+                      aria-hidden="true"
+                    />
+                    {hora}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

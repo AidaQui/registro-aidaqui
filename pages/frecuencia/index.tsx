@@ -12,10 +12,10 @@ export default function Frecuencia() {
   return (
     <>
       <Head>
-        <title>Activación de la Frecuencia Original — Aida Qui</title>
+        <title>Activación del Ser Multidimensional — Aida Qui</title>
         <meta
           name="description"
-          content="Una experiencia profunda diseñada para liberar bloqueos energéticos, reconectar con tu intuición y volver a sentirte alineada contigo."
+          content="Una preparación energética para aumentar tu capacidad de integrar y sostener mayores niveles de información y consciencia."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
