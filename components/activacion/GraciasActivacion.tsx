@@ -23,8 +23,8 @@ import { EVENTO, HORARIOS, LINKS } from "@/components/activacion/config";
  * dato para decidir y ahora son una cita que hay que anotar.
  */
 
-const GRUPO_WHATSAPP =
-  "https://chat.whatsapp.com/Go03w9mfDwbDQC7Z7QwLh0?mode=gi_t";
+/** Grupo propio de esta experiencia, no el de la landing anterior. */
+const GRUPO_WHATSAPP = "https://chat.whatsapp.com/CXDD2XxJkJkBE90CEMjZeX";
 
 const WhatsAppIcon = () => (
   <svg

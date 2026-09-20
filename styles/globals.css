@@ -17799,46 +17799,6 @@ button.dg-resource__video {
   }
 }
 
-/* ===== Frecuencia — el nombre de la experiencia en el cierre ===== */
-
-/*
-  El mismo logotipo del hero, cerrando donde la página abrió. Sin el sello: en
-  el hero identifica la marca junto a la foto, y aquí sólo hace falta el
-  nombre.
-*/
-.frec-cierre__marca {
-  display: block;
-  margin-bottom: 2px;
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(15px, 1.5vw, 19px);
-  font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(
-    96deg,
-    #f0c98a 0%,
-    #ffffff 22%,
-    #f0c98a 42%,
-    #d4a020 50%,
-    #f0c98a 58%,
-    #ffffff 78%,
-    #f0c98a 100%
-  );
-  background-size: 300% 100%;
-  background-position: 0% 50%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: frec-logo-luz 7s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .frec-cierre__marca {
-    animation: none;
-    background-position: 50% 50%;
-  }
-}
 
 /* ===== Activación — página de gracias ===== */
 
@@ -18030,5 +17990,174 @@ button.dg-resource__video {
   .frec-gracias__marca {
     flex-direction: column;
     gap: 10px;
+  }
+}
+
+/* ===== Activación — ajustes de móvil ===== */
+
+/*
+  EL SCROLL HORIZONTAL.
+
+  Lo provocaba el resplandor de la tarjeta de precio: va con inset -14%, es
+  decir sobresale por los cuatro lados, y su contenedor no recortaba. En
+  escritorio sobraba margen y no se notaba; en móvil, con la tarjeta casi a
+  ancho de pantalla, ese exceso empujaba el documento.
+
+  El recorte va en la tarjeta, que es quien tiene el radio: ponerlo en el
+  body sólo escondería el síntoma.
+*/
+.frec-precio__card {
+  overflow: hidden;
+}
+
+/*
+  EL LOGOTIPO, DENTRO DE UNA CAJA.
+
+  Sello y nombre pasan a leerse como una pieza cerrada en vez de dos
+  elementos sueltos uno al lado del otro. Aplica en las dos medidas: es un
+  cambio de forma, no un arreglo de móvil.
+*/
+.frec-hero__marca {
+  align-self: flex-start;
+  padding: 10px 18px 10px 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(155, 126, 200, 0.3);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 6px 18px rgba(41, 0, 102, 0.07);
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  /*
+    EL CUERPO DE TEXTO, A 16px.
+
+    Los tamaños iban de 13 a 15.5 según la sección. 16 es el mínimo cómodo de
+    lectura en vertical y además evita que iOS haga zoom al enfocar un campo.
+
+    Va con clamp y 4vw en medio: en pantallas anchas de móvil el texto
+    acompaña, pero nunca baja de 16 ni pasa de 17.
+  */
+  .frec-exp__texto,
+  .frec-rec__bajada,
+  .frec-rec__intro,
+  .frec-aida__body p,
+  .frec-cierre__lead,
+  .frec-remate__texto,
+  .frec-acel__intro p,
+  .frec-acel__giro-pie,
+  .frec-acel__paso,
+  .frec-contraste__pero,
+  .frec-contraste__quieres,
+  .frec-dolor__texto,
+  .frec-precio__item,
+  .frec-gracias__lead,
+  .frec-gracias__paso-texto,
+  .frec-hero__body {
+    font-size: clamp(16px, 4vw, 17px);
+    line-height: 1.55;
+  }
+
+  /* El contenido del hero sube: el relleno superior estaba calculado para
+     dejar pasar la figura entera de la foto, y con el logotipo en su caja la
+     columna arranca más abajo de lo necesario. */
+  .frec-hero {
+    padding-top: 52%;
+  }
+
+  /* El logotipo aprieta un punto: con el borde nuevo, el relleno de
+     escritorio lo hacía demasiado ancho para la columna. */
+  .frec-hero__marca {
+    padding: 8px 14px 8px 9px;
+  }
+
+  /* ---- Sección de Aida ---- */
+
+  /* A la izquierda: son cuatro párrafos largos, y centrados dejan cada
+     renglón con un borde distinto. */
+  .frec-aida__body,
+  .frec-aida__body p,
+  .frec-aida__eyebrow,
+  .frec-aida__name {
+    text-align: left;
+  }
+
+  .frec-aida__shell {
+    justify-items: start;
+    text-align: left;
+  }
+
+  /* ---- Sección de precio ---- */
+
+  /* El eyebrow y el titular vuelven al centro: son dos líneas cortas, y a la
+     izquierda quedan descolgados de la tarjeta, que sí va centrada. */
+  .frec-precio__intro {
+    text-align: center;
+  }
+
+  /*
+    "HOY" ENCIMA DE LA CIFRA.
+
+    En fila los dos ocupaban un ancho que obligaba a achicar el número, que
+    es el dato que se vino a buscar. Apilado, la cifra manda.
+  */
+  .frec-precio__cifra {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* ---- Sección de cierre ---- */
+
+  /* El titular se acorta: a 44px máximo ocupaba nueve renglones en vertical.
+     Con esto baja a cinco o seis. */
+  .frec-cierre__title {
+    font-size: clamp(22px, 6.4vw, 27px);
+    line-height: 1.22;
+  }
+
+  /* Blanco, no gris: sobre el panel violeta el 80% de opacidad lo dejaba
+     apagado justo en la frase que pide reservar. */
+  .frec-cierre__lead {
+    color: #ffffff;
+  }
+}
+
+/*
+  ===== EL CTA, EN UNA SOLA LÍNEA =====
+
+  "Quiero reservar mi lugar" con las dos estrellas y el interletrado en
+  mayúsculas no entra en un renglón por debajo de 380px.
+
+  Se descartó acortar el texto: "Reservar mi lugar" pierde el "quiero", que
+  es lo que convierte el botón en una decisión de quien lo pulsa y no en una
+  instrucción. Lo que se ajusta es la caja, que no cuesta nada: relleno más
+  corto, cuerpo algo menor y las estrellas pegadas al texto.
+*/
+@media (max-width: 700px) {
+  .frec-cta .pearl-wrap {
+    padding: 15px 14px;
+    font-size: clamp(14px, 3.8vw, 16px);
+    letter-spacing: 0;
+  }
+
+  .frec-cta .pearl-wrap p {
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .frec-cta .pearl-star {
+    font-size: 0.78em;
+  }
+}
+
+/* Por debajo de 360px las estrellas se retiran: son decorativas y es lo
+   primero que puede irse antes de partir el rótulo. */
+@media (max-width: 360px) {
+  .frec-cta .pearl-star {
+    display: none;
+  }
+
+  .frec-cta .pearl-wrap {
+    padding-inline: 10px;
+    font-size: 13.5px;
   }
 }

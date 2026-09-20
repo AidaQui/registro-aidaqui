@@ -77,7 +77,7 @@ export default function DolorSection() {
           <h2 id="frec-dolor-title" className="frec-intro__title" data-reveal="title">
             Viviremos una experiencia energética y{" "}
             <em>multidimensional</em> diseñada para trabajar profundamente con
-            tu cuerpo
+            tu cuerpo...
           </h2>
         </div>
 

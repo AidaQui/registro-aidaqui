@@ -55,17 +55,16 @@ export default function CierreFrecuencia() {
             {EVENTO.fechaCorta}
           </FrecuenciaBadge>
 
-          {/* El nombre de la experiencia, en el mismo logotipo del hero: cierra
-              donde abrió. */}
-          <span className="frec-cierre__marca">{EVENTO.titulo}</span>
-
           <h2
             id="frec-cierre-title"
             className="frec-cierre__title"
             data-reveal="title"
           >
-            Te espero este {EVENTO.fechaCorta} vía Zoom para trabajar el{" "}
-            <em>desorden energético</em> y aumentar tu capacidad para procesar,
+            {/* La fecha es lo que hay que retener de esta frase, así que va
+                remarcada; el "desorden energético" pasa a texto normal para
+                no competir con ella. */}
+            Te espero este <em>{EVENTO.fechaCorta}</em> vía Zoom para trabajar
+            el desorden energético y aumentar tu capacidad para procesar,
             integrar y sostener más información y consciencia.
           </h2>
 
