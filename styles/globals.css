@@ -18353,3 +18353,83 @@ button.dg-resource__video {
     align-items: center;
   }
 }
+
+/* ===== Activación — el logotipo, consolidado ===== */
+
+/*
+  ESTA REGLA MANDA SOBRE LAS ANTERIORES.
+
+  La clase acabó definida en ocho sitios distintos a lo largo del archivo, y
+  entre todas se pisaban lo suficiente como para que el resultado dejara de
+  ser predecible. Ésta va al final y fija lo que importa; las de arriba
+  quedan como estaban por si algo más depende de ellas.
+
+  EL ANCHO LO DABA EL CONTENIDO, NO LA CAJA. El nombre en una sola línea mide
+  más que la pantalla en vertical, así que la píldora crecía con él por mucho
+  align-self que llevara. Lo que faltaba era permitir que el texto se parta:
+  con el salto habilitado, la caja se ajusta a lo que necesita y deja de
+  llegar al borde.
+*/
+.frec-hero__marca {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.frec-hero__marca .frec-hero__title {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  /* En vertical el nombre ocupa dos renglones dentro de la píldora, así que
+     el sello se alinea con el bloque entero y no con la primera línea. */
+  .frec-hero__marca {
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 10px;
+  }
+
+  .frec-hero__marca .frec-hero__title {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
+/* ===== Activación — el documento no se desplaza a lo ancho ===== */
+
+/*
+  LA FRANJA DEL BORDE DERECHO.
+
+  Algo dentro de la página mide más que el viewport y empuja el documento, y
+  el resultado es una banda del color del navegador asomando al costado.
+
+  Se han ido tapando los desbordes uno a uno —el resplandor del precio, los
+  cónicos de los badges, los velos con inset negativo— pero basta que aparezca
+  uno nuevo para que vuelva. Esta regla corta el problema de raíz: el
+  documento deja de poder desplazarse en horizontal, y cualquier exceso futuro
+  se recorta en lugar de mover la página.
+
+  Va en html y en body a la vez porque los navegadores no coinciden en cuál
+  de los dos manda: aplicado sólo a body, Safari sigue desplazando.
+
+  No afecta al scroll vertical ni a los carruseles internos, que tienen su
+  propio overflow.
+*/
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* clip y no hidden: hidden sobre html convierte el elemento en contenedor de
+   desplazamiento y rompe position: sticky dentro de la página. clip recorta
+   sin crear ese contexto. */
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
