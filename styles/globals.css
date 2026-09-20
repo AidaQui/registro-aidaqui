@@ -17839,3 +17839,196 @@ button.dg-resource__video {
     background-position: 50% 50%;
   }
 }
+
+/* ===== Activación — página de gracias ===== */
+
+/*
+  Reutiliza el panel del cierre: quien llega aquí acaba de ver esa sección, y
+  repetir su forma dice que sigue en el mismo sitio.
+*/
+.frec-gracias {
+  position: relative;
+  padding: clamp(40px, 5vw, 72px) 24px 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.frec-gracias__panel {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  border-radius: clamp(36px, 6vw, 72px);
+  background: linear-gradient(160deg, #2e1a52 0%, #43276f 52%, #341f5e 100%);
+  padding: clamp(40px, 6vw, 72px) clamp(24px, 4vw, 56px);
+  overflow: hidden;
+  box-shadow: 0 26px 60px rgba(41, 0, 102, 0.24);
+}
+
+.frec-gracias__shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+/* El logotipo, en su versión clara: sobre el violeta el degradado del hero
+   —que va de violeta a dorado— perdería la mitad de su recorrido. */
+.frec-gracias__marca {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.4vw, 18px);
+  margin-bottom: 4px;
+}
+
+.frec-gracias__marca .frec-hero__title {
+  background: linear-gradient(
+    96deg,
+    #f0c98a 0%,
+    #ffffff 22%,
+    #f0c98a 42%,
+    #d4a020 50%,
+    #f0c98a 58%,
+    #ffffff 78%,
+    #f0c98a 100%
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.frec-gracias__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 4.2vw, 50px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.frec-gracias__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #f0c98a, #d4a020, #f0c98a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.frec-gracias__lead {
+  max-width: 560px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 500;
+  line-height: 1.6;
+  color: rgba(249, 245, 240, 0.82);
+}
+
+/*
+  EL PASO QUE FALTA.
+
+  En su propia caja porque es una instrucción, no una felicitación: mezclado
+  con el resto del texto se lee como algo que ya está hecho.
+*/
+.frec-gracias__paso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+  margin-top: 8px;
+  padding: clamp(22px, 3vw, 30px) clamp(20px, 2.6vw, 28px);
+  border-radius: 20px;
+  border: 1px solid rgba(240, 201, 138, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.frec-gracias__paso-rotulo {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240, 201, 138, 0.9);
+}
+
+.frec-gracias__paso-texto {
+  margin: 0 0 4px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.4vw, 16px);
+  font-weight: 500;
+  line-height: 1.55;
+  color: rgba(249, 245, 240, 0.88);
+}
+
+/* ---- La cita ---- */
+
+.frec-gracias__cita {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.frec-gracias__cita-rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(249, 245, 240, 0.72);
+}
+
+.frec-gracias__cita-rotulo svg {
+  color: rgba(240, 201, 138, 0.85);
+}
+
+.frec-gracias__soporte {
+  margin: 6px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(249, 245, 240, 0.55);
+}
+
+.frec-gracias__soporte a {
+  color: rgba(240, 201, 138, 0.9);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.frec-gracias__soporte a:hover {
+  color: #f0c98a;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  .frec-gracias {
+    padding-inline: 16px;
+  }
+
+  .frec-gracias__panel {
+    border-radius: 28px;
+    padding: clamp(32px, 8vw, 44px) clamp(20px, 5vw, 28px);
+  }
+
+  /* El logotipo se apila: en una fila, a este ancho, el nombre se parte en
+     tres renglones contra el sello. */
+  .frec-gracias__marca {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
