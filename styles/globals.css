@@ -18262,3 +18262,94 @@ button.dg-resource__video {
     height: 82px;
   }
 }
+
+/* ===== Activación — cuatro correcciones ===== */
+
+/*
+  1. EL RESALTADO AZUL AL TOCAR LAS TARJETAS.
+
+  En móvil, al tocar un elemento, el navegador pinta encima un rectángulo de
+  realce. Sobre estas tarjetas dejaba asomar el degradado violeta que llevan
+  como respaldo bajo la fotografía, y el efecto se leía como un fallo.
+
+  -webkit-tap-highlight-color lo desactiva. Las tarjetas no son pulsables
+  —no llevan enlace ni botón—, así que no hay nada que confirmar con un
+  realce.
+*/
+.frec-rec__card,
+.frec-exp__card,
+.frec-cuerpo,
+.frec-experiencia__card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+  2. EL LOGOTIPO SE AJUSTA A SU CONTENIDO.
+
+  La caja tomaba el ancho de la columna porque el contenedor la estira. Con
+  align-self: flex-start ya no lo hacía, pero el nombre seguía forzando su
+  ancho mínimo y desbordaba en pantallas estrechas.
+
+  min-width: 0 permite que el texto se acorte dentro de la caja, y el salto
+  de línea deja que el nombre ocupe dos renglones antes que estirar la
+  píldora más allá del ancho disponible.
+*/
+.frec-hero__marca {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.frec-hero__marca .frec-hero__title {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/*
+  3. EL SCROLL HORIZONTAL.
+
+  El resplandor de la tarjeta de precio sale por los cuatro lados con
+  inset -14%. Se recortaba con overflow: hidden en la propia tarjeta, pero
+  eso recortaba también la columna de luz que va dentro, que es justo lo que
+  tiene que verse.
+
+  La solución correcta es aislarlo: el resplandor pasa a la sección, que sí
+  puede recortar sin tocar nada del interior de la tarjeta.
+*/
+.frec-precio {
+  overflow: hidden;
+}
+
+.frec-precio__card {
+  overflow: visible;
+}
+
+/* La columna vuelve a recortarse sólo a sí misma, con el radio del cuerpo. */
+.frec-precio__pillar {
+  border-radius: 27px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  /*
+    4. LA LUZ DEL CIERRE, MÁS PRESENTE.
+
+    Iba al 78% y seguía perdiéndose contra el violeta del panel. Sube a plena
+    intensidad —igual que en escritorio— porque el modo screen la suma al
+    fondo en vez de taparlo: lo que gana es alcance, no opacidad sobre el
+    texto.
+  */
+  .frec-cierre__rays {
+    opacity: 1;
+  }
+
+  /* Y la columna del precio acompaña. */
+  .frec-precio__pillar {
+    opacity: 0.8;
+  }
+
+  /* El logotipo puede partir el nombre en dos renglones antes que desbordar
+     la columna. */
+  .frec-hero__marca {
+    align-items: center;
+  }
+}
