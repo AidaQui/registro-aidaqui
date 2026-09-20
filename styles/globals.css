@@ -17481,3 +17481,283 @@ button.dg-resource__video {
     font-size: 16px;
   }
 }
+
+/* ===== Frecuencia — la sección de decisión ===== */
+
+.frec-precio {
+  position: relative;
+  padding: clamp(64px, 7vw, 100px) 0;
+  background-color: #ffffff;
+}
+
+.frec-precio__intro {
+  max-width: 720px;
+  margin: 0 auto clamp(32px, 3.6vw, 48px);
+  text-align: center;
+}
+
+.frec-precio__eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(160, 108, 8, 0.95);
+}
+
+.frec-precio__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(24px, 2.9vw, 36px);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: #290066;
+}
+
+.frec-precio__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/*
+  LA TARJETA.
+
+  Es la única pieza oscura de su zona, y ese corte es deliberado: una tarjeta
+  de precio que se parece al resto de la página se lee como una sección más,
+  y ésta es donde se decide.
+
+  El borde dorado va en un relleno de 1px sobre un degradado, no en un
+  `border`: un borde no admite degradado y aquí el filo tiene que pasar de
+  dorado a violeta como lo hace el resto de la marca.
+*/
+.frec-precio__card {
+  position: relative;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 1px;
+  border-radius: 28px;
+  background: linear-gradient(
+    150deg,
+    rgba(240, 201, 138, 0.75) 0%,
+    rgba(155, 126, 200, 0.35) 45%,
+    rgba(240, 201, 138, 0.45) 100%
+  );
+  box-shadow: 0 26px 60px rgba(41, 0, 102, 0.22);
+}
+
+/* La luz que respira detrás de la tarjeta: la separa del blanco de la
+   sección sin necesidad de una sombra más dura. */
+.frec-precio__glow {
+  position: absolute;
+  inset: -14%;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(212, 160, 32, 0.22) 0%,
+    transparent 70%
+  );
+  filter: blur(28px);
+  animation: frec-precio-luz 6s ease-in-out infinite;
+}
+
+@keyframes frec-precio-luz {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frec-precio__glow {
+    animation: none;
+  }
+}
+
+.frec-precio__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: clamp(32px, 4vw, 48px) clamp(24px, 3.4vw, 44px);
+  border-radius: 27px;
+  background: linear-gradient(158deg, #2e1a52 0%, #241640 60%, #1b1030 100%);
+  text-align: center;
+}
+
+.frec-precio__nombre {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 27px);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  background: linear-gradient(96deg, #f0c98a 0%, #ffffff 50%, #f0c98a 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ---- Lo que incluye ---- */
+
+/*
+  Alineada a la izquierda aunque la tarjeta vaya centrada: una lista centrada
+  deja los renglones con bordes distintos y se lee como poesía, no como un
+  inventario de lo que se recibe.
+*/
+.frec-precio__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 100%;
+  max-width: 400px;
+  margin: 4px 0 0;
+  padding: 18px 0;
+  border-top: 1px solid rgba(240, 201, 138, 0.2);
+  border-bottom: 1px solid rgba(240, 201, 138, 0.2);
+  list-style: none;
+  text-align: left;
+}
+
+.frec-precio__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 15.5px);
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgba(249, 245, 240, 0.86);
+}
+
+.frec-precio__item svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #f0c98a;
+}
+
+/* ---- La cifra ---- */
+
+.frec-precio__cifra {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.frec-precio__tachado {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 500;
+  text-decoration: line-through;
+  color: rgba(249, 245, 240, 0.45);
+}
+
+.frec-precio__hoy {
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240, 201, 138, 0.85);
+}
+
+/* El número es lo más grande de la tarjeta: es el dato que se vino a buscar
+   y el que decide. */
+.frec-precio__monto {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(46px, 5.6vw, 68px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.frec-precio__nota {
+  margin: -6px 0 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(249, 245, 240, 0.6);
+}
+
+/* ---- Reducción de fricción ---- */
+
+/*
+  Las cuatro dudas de último momento —cuándo, a qué hora, dónde, y qué pasa
+  si no puedo ir— resueltas justo debajo del botón, que es donde aparecen.
+*/
+.frec-precio__datos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frec-precio__datos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(249, 245, 240, 0.62);
+}
+
+.frec-precio__datos svg {
+  flex-shrink: 0;
+  color: rgba(240, 201, 138, 0.7);
+}
+
+/* El CTA ocupa el ancho de la tarjeta: es la única acción de la pieza y no
+   tiene por qué medir menos que lo que hay encima. */
+.frec-precio__body .frec-cta {
+  max-width: 420px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  .frec-precio__intro {
+    text-align: left;
+  }
+
+  .frec-precio__body {
+    padding: clamp(28px, 7vw, 36px) clamp(20px, 5vw, 28px);
+    border-radius: 23px;
+  }
+
+  .frec-precio__card {
+    border-radius: 24px;
+  }
+
+  /* Los cuatro datos en dos columnas: en una fila envuelven mal y dejan un
+     ítem suelto en el último renglón. */
+  .frec-precio__datos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    justify-items: start;
+    text-align: left;
+  }
+}
