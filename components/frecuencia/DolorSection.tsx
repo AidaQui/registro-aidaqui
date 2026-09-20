@@ -1,4 +1,4 @@
-import { Brain, Heart, Footprints, Atom } from "lucide-react";
+import { Brain, Heart, PersonStanding, Atom } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -36,9 +36,11 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const CUERPOS = [
   { Icono: Brain, nombre: "Mental", clave: "mental" },
   { Icono: Heart, nombre: "Emocional", clave: "emocional" },
-  /* Huellas: el cuerpo físico es el que camina y deja marca en la vida real,
-     no una figura de pie ni un signo vital. */
-  { Icono: Footprints, nombre: "Físico", clave: "fisico" },
+  /* Una figura humana. Se probaron unas huellas y se descartaron: obligaban a
+     una lectura indirecta —el cuerpo que camina— cuando aquí el icono va a
+     120px como textura de fondo, donde una silueta se reconoce de inmediato y
+     una metáfora no. */
+  { Icono: PersonStanding, nombre: "Físico", clave: "fisico" },
   /* Un átomo: lo energético entendido como la materia de la que está hecho
      todo, que es más preciso que una llama o unas chispas. */
   { Icono: Atom, nombre: "Energético", clave: "energetico" },
