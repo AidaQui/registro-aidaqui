@@ -1,4 +1,5 @@
 import { CalendarDays, Check, Clock, Video } from "lucide-react";
+import LightPillar from "@/components/frecuencia/LightPillar";
 import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
 import { EVENTO, HORARIOS, PRECIO } from "@/components/frecuencia/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -61,6 +62,28 @@ export default function PrecioSection() {
           <div className="frec-precio__glow" aria-hidden="true" />
 
           <div className="frec-precio__body">
+            {/* LA COLUMNA DE LUZ, DENTRO DE LA TARJETA.
+
+                Los colores son los de la marca —violeta arriba, dorado
+                abajo—, no los del ejemplo. El giro es lento y el resplandor
+                bajo: detrás de una lista y un precio, una columna a plena
+                intensidad los deja ilegibles.
+
+                pillarRotation 180 la pone del revés, con la boca ancha
+                arriba: así la luz se abre hacia el nombre de la experiencia y
+                se estrecha al llegar al botón. */}
+            <LightPillar
+              className="frec-precio__pillar"
+              topColor="#9b7ec8"
+              bottomColor="#d4a020"
+              intensity={0.85}
+              rotationSpeed={0.22}
+              glowAmount={0.004}
+              pillarWidth={2.4}
+              pillarHeight={0.35}
+              noiseIntensity={0.35}
+              pillarRotation={180}
+            />
             <p className="frec-precio__nombre">{EVENTO.titulo}</p>
 
             <ul className="frec-precio__lista">

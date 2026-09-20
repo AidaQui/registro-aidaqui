@@ -1,4 +1,4 @@
-import { Brain, Heart, PersonStanding, Flame } from "lucide-react";
+import { Brain, Heart, Footprints, Atom } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -36,12 +36,12 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const CUERPOS = [
   { Icono: Brain, nombre: "Mental", clave: "mental" },
   { Icono: Heart, nombre: "Emocional", clave: "emocional" },
-  /* Una figura humana, no la línea de pulso que llevaba: el cuerpo físico es
-     el cuerpo entero, no un signo vital. */
-  { Icono: PersonStanding, nombre: "Físico", clave: "fisico" },
-  /* Una llama en lugar de las chispas: lo energético aquí es fuego interno,
-     y las chispas se leían como el "destacado" de cualquier interfaz. */
-  { Icono: Flame, nombre: "Energético", clave: "energetico" },
+  /* Huellas: el cuerpo físico es el que camina y deja marca en la vida real,
+     no una figura de pie ni un signo vital. */
+  { Icono: Footprints, nombre: "Físico", clave: "fisico" },
+  /* Un átomo: lo energético entendido como la materia de la que está hecho
+     todo, que es más preciso que una llama o unas chispas. */
+  { Icono: Atom, nombre: "Energético", clave: "energetico" },
 ];
 
 const CONTRASTES = [

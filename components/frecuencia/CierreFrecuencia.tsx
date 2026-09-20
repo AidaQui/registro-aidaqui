@@ -55,19 +55,23 @@ export default function CierreFrecuencia() {
             {EVENTO.fechaCorta}
           </FrecuenciaBadge>
 
+          {/* El nombre de la experiencia, en el mismo logotipo del hero: cierra
+              donde abrió. */}
+          <span className="frec-cierre__marca">{EVENTO.titulo}</span>
+
           <h2
             id="frec-cierre-title"
             className="frec-cierre__title"
             data-reveal="title"
           >
-            Te espero {EVENTO.fechaLarga} para{" "}
-            <em>recordar quién eres</em> más allá del ruido, el miedo y las
-            versiones que ya no te representan.
+            Te espero este {EVENTO.fechaCorta} vía Zoom para trabajar el{" "}
+            <em>desorden energético</em> y aumentar tu capacidad para procesar,
+            integrar y sostener más información y consciencia.
           </h2>
 
           <p className="frec-cierre__lead" data-reveal>
-            Si algo dentro de ti sabe que ha llegado el momento de encarnar la
-            versión más alineada con tu Ser, este es el lugar.
+            Si quieres salir de los bucles automáticos y empezar a encarnar la
+            versión más alineada con tu Ser, reserva tu lugar ahora.
           </p>
 
           {/* Los horarios van antes de los botones: son el último dato que
