@@ -1,9 +1,9 @@
 import { CalendarDays, Clock } from "lucide-react";
 import LightRays from "@/components/masterclass/LightRays";
-import FrecuenciaBadge from "@/components/frecuencia/FrecuenciaBadge";
-import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
-import { BANDERAS } from "@/components/frecuencia/Banderas";
-import { EVENTO, HORARIOS, LINKS } from "@/components/frecuencia/config";
+import FrecuenciaBadge from "@/components/activacion/FrecuenciaBadge";
+import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
+import { BANDERAS } from "@/components/activacion/Banderas";
+import { EVENTO, HORARIOS, LINKS } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function CierreFrecuencia() {

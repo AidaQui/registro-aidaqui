@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { CalendarDays, Clock, Video } from "lucide-react";
-import FrecuenciaBadge from "@/components/frecuencia/FrecuenciaBadge";
-import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
-import { BANDERAS } from "@/components/frecuencia/Banderas";
-import { EVENTO, HORARIOS } from "@/components/frecuencia/config";
+import FrecuenciaBadge from "@/components/activacion/FrecuenciaBadge";
+import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
+import { BANDERAS } from "@/components/activacion/Banderas";
+import { EVENTO, HORARIOS } from "@/components/activacion/config";
 
 export default function HeroFrecuencia() {
   return (

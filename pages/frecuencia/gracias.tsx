@@ -1,5 +1,5 @@
 import Head from "next/head";
-import GraciasSection from "@/components/activacion/GraciasSection";
+import GraciasSection from "@/components/frecuencia/GraciasSection";
 
 export default function Gracias() {
   return (

@@ -1,4 +1,4 @@
-import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
+import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**

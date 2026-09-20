@@ -1,4 +1,4 @@
-import { CTA_LABEL, LINKS } from "@/components/frecuencia/config";
+import { CTA_LABEL, LINKS } from "@/components/activacion/config";
 
 type Props = {
   /** "gold" is meant for CTAs sitting on the violet panel. */

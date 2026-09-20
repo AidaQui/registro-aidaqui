@@ -1,7 +1,7 @@
 import { CalendarDays, Check, Clock, Video } from "lucide-react";
-import LightPillar from "@/components/frecuencia/LightPillar";
-import FrecuenciaCta from "@/components/frecuencia/FrecuenciaCta";
-import { EVENTO, HORARIOS, PRECIO } from "@/components/frecuencia/config";
+import LightPillar from "@/components/activacion/LightPillar";
+import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
+import { EVENTO, HORARIOS, PRECIO } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
