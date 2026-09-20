@@ -18222,3 +18222,43 @@ button.dg-resource__video {
 .frec-cierre__lead {
   color: #ffffff;
 }
+
+/* ===== Activación — gracias: ajustes ===== */
+
+/*
+  LOS TEXTOS, EN BLANCO.
+
+  Iban entre el 82% y el 55% de opacidad. Sobre el violeta profundo del panel
+  eso los dejaba en gris, y aquí no hay jerarquía que justificarlo: quien
+  llega ya compró, así que todo lo que se le dice importa por igual.
+
+  El enlace de soporte conserva su dorado: es lo único pulsable del bloque y
+  tiene que distinguirse del texto que lo rodea.
+*/
+.frec-gracias__lead,
+.frec-gracias__paso-texto,
+.frec-gracias__cita-rotulo,
+.frec-gracias__soporte {
+  color: #ffffff;
+}
+
+/* El rótulo del paso se queda en dorado: es una etiqueta, no texto de
+   lectura, y en blanco competiría con el titular. */
+.frec-gracias__paso-rotulo {
+  color: #f0c98a;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  /*
+    EL SELLO, MÁS GRANDE.
+
+    En el hero acompaña a un nombre en una fila y por eso mide 44; aquí abre
+    la página él solo, apilado encima del texto, y a esa medida quedaba
+    pequeño para el papel que cumple.
+  */
+  .frec-gracias__marca .frec-hero__sello {
+    width: 82px;
+    height: 82px;
+  }
+}

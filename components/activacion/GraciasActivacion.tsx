@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CalendarDays, Clock } from "lucide-react";
+import LightRays from "@/components/masterclass/LightRays";
 import { BANDERAS } from "@/components/activacion/Banderas";
 import { EVENTO, HORARIOS, LINKS } from "@/components/activacion/config";
 
@@ -44,6 +45,25 @@ export default function GraciasActivacion() {
   return (
     <section className="frec-gracias" aria-labelledby="frec-gracias-title">
       <div className="frec-gracias__panel">
+        {/* Los mismos rayos del cierre de la landing: quien llega aquí acaba
+            de ver esa sección, y repetir su luz dice que sigue en el mismo
+            sitio. Los valores son los de allí, sin tocar. */}
+        <div className="frec-cierre__rays" aria-hidden="true">
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#ffd9a0"
+            raysSpeed={0.6}
+            lightSpread={0.55}
+            rayLength={2.2}
+            fadeDistance={1.6}
+            saturation={1}
+            followMouse={false}
+            mouseInfluence={0}
+            noiseAmount={0.04}
+            distortion={0.02}
+          />
+        </div>
+
         <div className="frec-gracias__shell">
           {/* El mismo logotipo del hero: quien llega aquí viene de allí. */}
           <div className="frec-gracias__marca">
