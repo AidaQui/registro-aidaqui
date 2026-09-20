@@ -48,3 +48,16 @@ export const LINKS = {
 } as const;
 
 export const CTA_LABEL = "Quiero reservar mi lugar";
+
+/**
+ * Precio de la edición.
+ *
+ * `tachado` es el valor de referencia que se muestra cruzado sobre el precio
+ * real. Dejarlo vacío oculta esa línea: un precio tachado que nadie ha pagado
+ * nunca no persuade, molesta.
+ */
+export const PRECIO = {
+  actual: "$33",
+  tachado: "",
+  nota: "Pago único · Acceso inmediato",
+} as const;

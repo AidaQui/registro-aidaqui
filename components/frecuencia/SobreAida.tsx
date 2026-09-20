@@ -1,13 +1,50 @@
 import Image from "next/image";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
+/** Inclinación máxima de la foto, en grados. */
+const MAX_TILT = 9;
+
 export default function SobreAida() {
   const ref = useScrollReveal<HTMLElement>();
+
+  /*
+   * LA FOTO SIGUE AL PUNTERO.
+   *
+   * Sustituye al zoom que tenía: ampliar la imagen recortaba el encuadre y se
+   * comía las líneas del diseño. Inclinarla no toca el recorte, sólo la gira.
+   *
+   * Los ángulos viajan como variables CSS y no como transform en línea para
+   * que la regla decida cómo se componen: así el reveal de entrada puede usar
+   * su propio transform sin que uno pise al otro.
+   */
+  function inclinar(e: React.MouseEvent<HTMLDivElement>) {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.setProperty("--rx", `${(-py * MAX_TILT).toFixed(2)}deg`);
+    el.style.setProperty("--ry", `${(px * MAX_TILT).toFixed(2)}deg`);
+  }
+
+  function enderezar(e: React.MouseEvent<HTMLDivElement>) {
+    const el = e.currentTarget;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  }
 
   return (
     <section ref={ref} className="frec-aida" aria-labelledby="frec-aida-title">
       <div className="frec-shell frec-aida__shell">
-        <div className="frec-aida__media" data-reveal>
+        {/* La foto entra desde la izquierda y el texto desde la derecha: es la
+            única sección con dos columnas, y hacerlas converger dice que son
+            una sola pieza. En el resto de la página todo sigue entrando desde
+            abajo, que es lo que acompaña al scroll. */}
+        <div
+          className="frec-aida__media"
+          data-reveal="left"
+          onMouseMove={inclinar}
+          onMouseLeave={enderezar}
+        >
           {/* Native size is 870x1068 */}
           <Image
             src="/lista-de-espera/aida.webp"
@@ -21,7 +58,7 @@ export default function SobreAida() {
         </div>
 
         <div className="frec-aida__copy">
-          <p className="frec-aida__eyebrow" data-reveal>
+          <p className="frec-aida__eyebrow" data-reveal="right">
             ¿Quién guiará esta experiencia?
           </p>
 
@@ -29,7 +66,7 @@ export default function SobreAida() {
             AIDA QUI
           </h2>
 
-          <div className="frec-aida__body" data-reveal>
+          <div className="frec-aida__body" data-reveal="right">
             <p>
               Aida Qui es una de las referentes más reconocidas en transformación
               energética y espiritualidad práctica en habla hispana.
