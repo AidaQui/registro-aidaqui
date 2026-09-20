@@ -2,16 +2,6 @@ import type { Patron } from "@/components/diagnostico/preguntas";
 import { PREGUNTAS } from "@/components/diagnostico/preguntas";
 import { FICHAS } from "@/components/diagnostico/resultados";
 
-const whatsappGroupUrl =
-  "https://chat.whatsapp.com/JBThHsrH03wJyIAbU4LbpA?mode=gi_t";
-
-const WhatsAppIcon = () => (
-  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.523 5.845L.057 23.428a.5.5 0 0 0 .609.61l5.652-1.48A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.012-1.374l-.36-.214-3.733.977.998-3.645-.234-.374A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z" />
-  </svg>
-);
-
 const CheckIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
@@ -66,9 +56,12 @@ type Props = {
  *   2. LAS DOS CLAVES. Lo que hay detrás y lo que hay que integrar, fuera de
  *      la ficha: son lectura, no identificación.
  *
- *   3. EL CIERRE, en dos tarjetas a la par. El correo confirma lo que ya pasó;
- *      la comunidad propone lo que sigue. Una al lado de la otra dejan claro
- *      que son dos cosas distintas, y que sólo una pide actuar.
+ *   3. EL CIERRE: la tarjeta del correo, que confirma lo que ya pasó.
+ *
+ *      Aquí vivía también la tarjeta de la comunidad de WhatsApp, con el
+ *      borde de luz giratoria. Se retiró entera: esta pantalla cierra el
+ *      diagnóstico y no pide nada más. Si vuelve a hacer falta un paso
+ *      siguiente, es una sección nueva, no la restitución de aquella.
  *
  * EL NOMBRE VA EN EL RÓTULO. Es lo primero que se pidió en el formulario y
  * hasta aquí no se había usado para nada: verlo en el veredicto es lo que
@@ -248,47 +241,6 @@ export default function Resultado({ patron, email, nombre }: Props) {
           </p>
         </section>
 
-        {/* EL MARCO DE LA LUZ QUE GIRA.
-
-            Es un envoltorio y no un `border` de la propia tarjeta porque lo que
-            recorre el contorno es un degradado cónico animado, y un borde no
-            puede llevar degradado con redondeo. El truco: el degradado se pinta
-            en ESTE div, la tarjeta de dentro lleva su fondo opaco, y del
-            degradado sólo asoma el píxel de relleno que los separa.
-
-            No es el mismo recurso que un borde encendido fijo. Un tramo corto
-            de luz dando vueltas no dice "esto importa", dice "esto te está
-            esperando", y esta tarjeta es lo único que queda por hacer en toda
-            la página.
-
-            ⚠️ Su redondeo es el de la tarjeta + 1px (el relleno). Con el mismo
-            valor, la curva de fuera cae por dentro de la de dentro y el filo se
-            ve más fino en las esquinas que en los lados. */}
-        <div className="dg-resultado__marco">
-          <section className="dg-resultado__comunidad">
-            <h2 className="dg-resultado__comunidad-title">Un último paso</h2>
-            <p className="dg-resultado__note">
-              En la comunidad de WhatsApp recibirás novedades y serás de las
-              primeras personas en saber cuándo abrimos las plazas de Academia
-              ADN.
-            </p>
-
-            <a
-              href={whatsappGroupUrl}
-              className="dg-resultado__cta"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="dg-resultado__cta-border" aria-hidden="true" />
-              <span className="dg-resultado__cta-face">
-                <span className="dg-resultado__cta-icon" aria-hidden="true">
-                  <WhatsAppIcon />
-                </span>
-                Unirme a la comunidad
-              </span>
-            </a>
-          </section>
-        </div>
       </div>
     </div>
   );

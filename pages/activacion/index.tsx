@@ -1,33 +1,44 @@
 import Head from "next/head";
-import HeroSection from "@/components/activacion/HeroSection";
-import PainSection from "@/components/activacion/PainSection";
-import Section3 from "@/components/activacion/Section3";
-import Section4 from "@/components/activacion/Section4";
-import Section5 from "@/components/activacion/Section5";
-import Section6 from "@/components/activacion/Section6";
-import FinalSection from "@/components/activacion/FinalSection";
+import HeroFrecuencia from "@/components/activacion/HeroFrecuencia";
+import DolorSection from "@/components/activacion/DolorSection";
+import ExperienciaSection from "@/components/activacion/ExperienciaSection";
+import CambioSection, {
+  CambioTexto,
+} from "@/components/activacion/CambioSection";
+import RecibirasSection from "@/components/activacion/RecibirasSection";
+import SobreAida from "@/components/activacion/SobreAida";
+import PrecioSection from "@/components/activacion/PrecioSection";
+import CierreFrecuencia from "@/components/activacion/CierreFrecuencia";
+import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
+import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
-export default function Home() {
+export default function Frecuencia() {
   return (
     <>
       <Head>
-        <title>Activación de la Frecuencia Original — Aida Qui</title>
+        <title>Activación del Ser Multidimensional — Aida Qui</title>
         <meta
           name="description"
-          content="Una experiencia profunda diseñada para liberar bloqueos energéticos, reconectar con tu intuición y volver a sentirte alineada contigo."
+          content="Una preparación energética para aumentar tu capacidad de integrar y sostener mayores niveles de información y consciencia."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <SmoothScroll />
       <main>
-        <HeroSection />
-        <PainSection />
-        <Section3 />
-        <Section4 />
-        <div className="s4-s5-divider" aria-hidden="true" />
-        <Section5 />
-        <Section6 />
-        <FinalSection />
+        <HeroFrecuencia />
+        <DolorSection />
+        <ExperienciaSection />
+        {/* La banda del amanecer y su desarrollo son una sola idea en dos
+            secciones: la primera existe para que la fotografía se vea entera,
+            y el texto continúa debajo sobre blanco. */}
+        <CambioSection />
+        <CambioTexto />
+        <RecibirasSection />
+        <SobreAida />
+        <PrecioSection />
+        <CierreFrecuencia />
       </main>
+      <GradualBlur height="7rem" strength={2} divCount={6} />
     </>
   );
 }
