@@ -14938,15 +14938,15 @@ button.dg-resource__video {
   salto: si empezara en violeta y acabara en dorado, al reiniciarse daría un
   corte visible.
 */
+/* Sin mayúsculas ni interletrado: en caja alta y a este cuerpo el nombre se
+   leía como un rótulo de sección; en caja baja se lee como un logotipo. */
 .frec-hero__title {
   display: block;
   margin: 0;
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(19px, 1.9vw, 24px);
+  font-size: clamp(19px, 1.9vw, 20px);
   font-weight: 700;
   line-height: 1.12;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
   background: linear-gradient(
     96deg,
     #290066 0%,
@@ -18094,16 +18094,6 @@ button.dg-resource__video {
     text-align: center;
   }
 
-  /*
-    "HOY" ENCIMA DE LA CIFRA.
-
-    En fila los dos ocupaban un ancho que obligaba a achicar el número, que
-    es el dato que se vino a buscar. Apilado, la cifra manda.
-  */
-  .frec-precio__cifra {
-    flex-direction: column;
-    gap: 2px;
-  }
 
   /* ---- Sección de cierre ---- */
 
@@ -18160,4 +18150,75 @@ button.dg-resource__video {
     padding-inline: 10px;
     font-size: 13.5px;
   }
+}
+
+/* ===== Activación — los fondos ganan presencia ===== */
+
+/*
+  LA COLUMNA DE LUZ DE LA TARJETA DE PRECIO.
+
+  Estaba al 50% y en móvil al 34%: a esa intensidad la columna se adivinaba
+  pero no se veía. Sube a 0.78 y 0.62, que es donde se lee como una luz real
+  sin comerse la lista ni el precio.
+
+  El resplandor de detrás también sube: es lo que separa la tarjeta del
+  blanco de la sección.
+*/
+.frec-precio__pillar {
+  opacity: 0.78;
+}
+
+.frec-precio__glow {
+  filter: blur(34px);
+  background: radial-gradient(
+    ellipse 62% 54% at 50% 50%,
+    rgba(212, 160, 32, 0.38) 0%,
+    rgba(155, 126, 200, 0.2) 45%,
+    transparent 72%
+  );
+}
+
+/*
+  LOS RAYOS DEL CIERRE.
+
+  Mismo caso: al 55% —y al 32% en móvil— los haces apenas se distinguían del
+  violeta del panel. Con el modo screen que ya llevan, subir la opacidad no
+  apaga el texto, sólo hace que la luz llegue.
+*/
+.frec-cierre__rays {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .frec-precio__pillar {
+    opacity: 0.62;
+  }
+
+  .frec-cierre__rays {
+    opacity: 0.78;
+  }
+}
+
+/* ===== Activación — el cierre en escritorio ===== */
+
+/*
+  EL TITULAR, EQUILIBRADO.
+
+  Caía en cinco renglones con "consciencia." sola en el último.
+
+  text-wrap: balance es lo que lo arregla: el navegador iguala la longitud de
+  las líneas en vez de llenar cada una hasta el borde, que es exactamente lo
+  que deja palabras huérfanas al final. Acotado a 24 caracteres entra en
+  cuatro renglones parejos.
+*/
+.frec-cierre__title {
+  max-width: 24ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+/* Blanco también en escritorio: el 80% de opacidad que llevaba lo dejaba
+   apagado justo en la frase que pide reservar. */
+.frec-cierre__lead {
+  color: #ffffff;
 }

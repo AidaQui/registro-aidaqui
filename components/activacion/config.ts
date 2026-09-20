@@ -28,10 +28,10 @@ export type Horario = {
  * indexable.
  */
 export const HORARIOS: Horario[] = [
-  { pais: "España", hora: "19hs" },
-  { pais: "Argentina", hora: "14hs" },
-  { pais: "México", hora: "11hs" },
-  { pais: "Colombia", hora: "12hs" },
+  { pais: "España", hora: "19:00 hs" },
+  { pais: "Argentina", hora: "14:00 hs" },
+  { pais: "México", hora: "11:00 hs" },
+  { pais: "Colombia", hora: "12:00 hs" },
 ];
 
 /**
