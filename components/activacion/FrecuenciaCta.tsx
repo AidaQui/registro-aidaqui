@@ -5,6 +5,12 @@ type Props = {
   variant?: "violet" | "gold";
   label?: string;
   className?: string;
+  /**
+   * Un ancla (p. ej. "#frec-precio-title") hace scroll suave dentro de la
+   * misma página en vez de abrir el checkout externo. El resto de la landing
+   * sigue yendo directo a `LINKS.registro`, así que este prop es opt-in.
+   */
+  href?: string;
 };
 
 /**
@@ -16,6 +22,7 @@ export default function FrecuenciaCta({
   variant = "violet",
   label = CTA_LABEL,
   className = "",
+  href = LINKS.registro,
 }: Props) {
   const classes = [
     "pearl-btn",
@@ -26,12 +33,13 @@ export default function FrecuenciaCta({
     .filter(Boolean)
     .join(" ");
 
+  const isAnchor = href.startsWith("#");
+
   return (
     <a
-      href={LINKS.registro}
+      href={href}
       className={classes}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...(!isAnchor && { target: "_blank", rel: "noopener noreferrer" })}
     >
       <div className="pearl-wrap">
         <p>

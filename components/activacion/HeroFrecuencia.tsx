@@ -101,7 +101,10 @@ export default function HeroFrecuencia() {
             })}
           </ul>
 
-          <FrecuenciaCta />
+          {/* Va al pricing, no al checkout externo: saltar directo afuera sin
+              ver antes qué incluye y cuánto cuesta es la fricción que más
+              rebota. El botón de la tarjeta de precio sí abre el checkout. */}
+          <FrecuenciaCta href="#frec-precio-title" />
         </div>
       </div>
     </section>
