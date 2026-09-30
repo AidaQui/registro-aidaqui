@@ -1,7 +1,7 @@
 import { CalendarDays, Check, Video } from "lucide-react";
-import LightPillar from "@/components/activacion-v3/LightPillar";
-import CheckoutCta from "@/components/activacion-v3/CheckoutCta";
-import { CHECKOUT_URL, EVENTO, PRECIO } from "@/components/activacion-v3/config";
+import LightPillar from "@/components/activacion/LightPillar";
+import CheckoutCta from "@/components/activacion/CheckoutCta";
+import { CHECKOUT_URL, EVENTO, PRECIO } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -93,7 +93,7 @@ export default function PuenteCierre() {
             {!CHECKOUT_URL && (
               <p id="checkout-pendiente" className="puente-cierre__pendiente">
                 Falta configurar la URL del checkout en{" "}
-                <code>components/activacion-v3/config.ts</code> (
+                <code>components/activacion/config.ts</code> (
                 <code>CHECKOUT_URL</code>). Hasta entonces los botones quedan
                 deshabilitados.
               </p>

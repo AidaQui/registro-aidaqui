@@ -55,22 +55,30 @@ export default function CierreFrecuencia() {
             {EVENTO.fechaCorta}
           </FrecuenciaBadge>
 
+          {/* EL CIERRE VUELVE AL TITULAR DEL HERO.
+
+              La página abrió preguntando si cuesta procesar los cambios, y
+              cierra respondiendo que el problema no era falta de información.
+              Es la misma idea con la que empezó, ya recorrida: quien llega
+              aquí ya tiene el marco para entenderla. */}
           <h2
             id="frec-cierre-title"
             className="frec-cierre__title"
             data-reveal="title"
           >
-            {/* La fecha es lo que hay que retener de esta frase, así que va
-                remarcada; el "desorden energético" pasa a texto normal para
-                no competir con ella. */}
-            Te espero este <em>{EVENTO.fechaCorta}</em> vía Zoom para trabajar
-            el desorden energético y aumentar tu capacidad para procesar,
-            integrar y sostener más información y consciencia.
+            Quizás tu próximo nivel no necesita que incorpores{" "}
+            <em>más información</em>.
           </h2>
 
           <p className="frec-cierre__lead" data-reveal>
-            Si quieres salir de los bucles automáticos y empezar a encarnar la
-            versión más alineada con tu Ser, reserva tu lugar ahora.
+            Quizás necesita que tu sistema esté preparado para sostener todo lo
+            que ya estás descubriendo.
+          </p>
+
+          <p className="frec-cierre__texto" data-reveal>
+            Este {EVENTO.fechaCorta} vamos a crear un espacio para trabajar
+            profundamente sobre tu capacidad de procesar, integrar y sostener
+            una nueva etapa.
           </p>
 
           {/* Los horarios van antes de los botones: son el último dato que
@@ -103,7 +111,11 @@ export default function CierreFrecuencia() {
           </ul>
 
           <div className="frec-cierre__actions" data-reveal>
-            <FrecuenciaCta variant="gold" />
+            <FrecuenciaCta
+              variant="gold"
+              href={LINKS.puente}
+              label="Quiero vivir esta experiencia"
+            />
 
             {/* Misma estructura pearl que los demás CTA de la página —el
                 envoltorio y el <p> son lo que el efecto necesita—, sólo que

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /** Inclinación máxima de la foto, en grados. */
@@ -66,30 +67,59 @@ export default function SobreAida() {
             AIDA QUI
           </h2>
 
-          <div className="frec-aida__body" data-reveal="right">
-            <p>
-              Aida Qui es una de las referentes más reconocidas en transformación
-              energética y espiritualidad práctica en habla hispana.
-            </p>
-            <p>
-              Es creadora de la <em>Academia ADN</em>, un movimiento y escuela de
-              transformación diseñado para ayudar a las personas a elevar su
-              consciencia, vivir desde una mayor coherencia y transformar todas
-              las áreas de su vida.
-            </p>
-            <p>
-              Durante años ha acompañado a miles de personas en procesos de
-              transformación profunda, ayudándolas a cambiar su realidad desde la
-              raíz: su energía, su identidad y la forma en la que habitan su
-              vida.
-            </p>
-            <p>
-              Su trabajo une espiritualidad práctica, maestría energética,
-              sistema emocional y transformación profunda para ayudar a las
-              personas a dejar atrás viejas versiones de sí mismas y comenzar a
-              vivir desde una frecuencia más auténtica, consciente y alineada.
-            </p>
-          </div>
+          {/* EN MÓVIL LA BIOGRAFÍA SE PLIEGA.
+
+              Son cuatro párrafos y a ancho de teléfono ocupan una pantalla
+              entera de scroll antes de llegar al precio. Plegada deja ver el
+              primero —que ya dice quién es— y ofrece el resto a quien lo
+              quiera.
+
+              Va con <details> nativo: abre y cierra sin estado propio, es
+              accesible por teclado y el buscador lee el contenido aunque esté
+              cerrado. En escritorio no hay pliegue —la columna tiene sitio de
+              sobra—, y el CSS neutraliza el marcador y deja todo abierto. */}
+          <details className="frec-aida__detalle" data-reveal="right">
+            {/* El botón va DENTRO del summary porque es lo que el navegador
+                hace pulsable, pero el summary se ordena por CSS para que
+                aparezca al final: el marcado manda que abra, y la retícula
+                manda dónde se ve. Sacarlo de aquí lo dejaría sin funcionar
+                sin JavaScript. */}
+            <summary className="frec-aida__resumen">
+              <p className="frec-aida__entrada">
+                Aida Qui es una de las referentes más reconocidas en
+                transformación energética y espiritualidad práctica en habla
+                hispana.
+              </p>
+
+              <span className="frec-aida__mas" aria-hidden="true">
+                <span className="frec-aida__mas-abrir">Leer su historia</span>
+                <span className="frec-aida__mas-cerrar">Mostrar menos</span>
+                <ChevronDown size={16} strokeWidth={2.2} />
+              </span>
+            </summary>
+
+            <div className="frec-aida__body">
+              <p>
+                Es creadora de la <em>Academia ADN</em>, un movimiento y escuela
+                de transformación diseñado para ayudar a las personas a elevar
+                su consciencia, vivir desde una mayor coherencia y transformar
+                todas las áreas de su vida.
+              </p>
+              <p>
+                Durante años ha acompañado a miles de personas en procesos de
+                transformación profunda, ayudándolas a cambiar su realidad desde
+                la raíz: su energía, su identidad y la forma en la que habitan
+                su vida.
+              </p>
+              <p>
+                Su trabajo une espiritualidad práctica, maestría energética,
+                sistema emocional y transformación profunda para ayudar a las
+                personas a dejar atrás viejas versiones de sí mismas y comenzar
+                a vivir desde una frecuencia más auténtica, consciente y
+                alineada.
+              </p>
+            </div>
+          </details>
         </div>
       </div>
     </section>

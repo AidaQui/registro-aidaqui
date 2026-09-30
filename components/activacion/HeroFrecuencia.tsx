@@ -3,7 +3,7 @@ import { CalendarDays, Clock, Video } from "lucide-react";
 import FrecuenciaBadge from "@/components/activacion/FrecuenciaBadge";
 import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
 import { BANDERAS } from "@/components/activacion/Banderas";
-import { EVENTO, HORARIOS } from "@/components/activacion/config";
+import { EVENTO, HORARIOS, LINKS } from "@/components/activacion/config";
 
 export default function HeroFrecuencia() {
   return (
@@ -31,7 +31,13 @@ export default function HeroFrecuencia() {
               <span className="frec-badge__corto">En vivo</span>
             </FrecuenciaBadge>
 
-            <FrecuenciaBadge icono={<CalendarDays size={15} strokeWidth={2} />}>
+            {/* La fecha va destacada sobre la otra píldora: es el dato que
+                la página entera va a ir repitiendo hasta la sección de
+                octubre, y aquí es donde empieza a pesar. */}
+            <FrecuenciaBadge
+              icono={<CalendarDays size={15} strokeWidth={2} />}
+              className="frec-badge--fecha"
+            >
               {EVENTO.fechaCorta}
             </FrecuenciaBadge>
           </div>
@@ -56,21 +62,21 @@ export default function HeroFrecuencia() {
             <span className="frec-hero__title">{EVENTO.titulo}</span>
           </div>
 
-          {/* LA PROMESA ES EL TITULAR.
+          {/* LA PREGUNTA ES EL TITULAR.
 
-              Es lo que más tiene que destacar de la página —por encima del
-              propio nombre de la experiencia—, así que es el h1: lo que un
-              buscador y un lector de pantalla leen como tema de la página no
-              puede ser el logotipo, tiene que ser esto. */}
+              Llega tráfico frío, así que el h1 no puede ser la promesa de la
+              experiencia —eso da por hecho un contexto que quien llega no
+              tiene—: es una pregunta sobre lo que ya le está pasando. Se
+              reconoce antes de que le expliquemos nada. */}
           <h1 id="frec-hero-title" className="frec-hero__lead">
-            Una preparación energética para aumentar tu capacidad de integrar y
-            sostener mayores niveles de información y consciencia.
+            ¿Sientes que estás atravesando muchos cambios internos y todavía te
+            cuesta procesar todo lo que está pasando?
           </h1>
 
           <p className="frec-hero__body">
-            Prepara tu cuerpo mental, emocional, físico y energético para salir
-            de los bucles automáticos y empezar a encarnar la versión más
-            alineada con tu Ser.
+            Vive una experiencia energética guiada para liberar carga,
+            recuperar claridad y preparar tu sistema para integrar con mayor
+            equilibrio los cambios que estás viviendo.
           </p>
 
           {/* Bandera y país arriba, hora debajo: la fila de arriba dice de
@@ -104,7 +110,10 @@ export default function HeroFrecuencia() {
           {/* Va al pricing, no al checkout externo: saltar directo afuera sin
               ver antes qué incluye y cuánto cuesta es la fricción que más
               rebota. El botón de la tarjeta de precio sí abre el checkout. */}
-          <FrecuenciaCta href="#frec-precio-title" />
+          <FrecuenciaCta
+            href={LINKS.puente}
+            label="Quiero vivir esta experiencia"
+          />
         </div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { CTA_LABEL, LINKS } from "@/components/activacion-v3/config";
+import { CTA_LABEL, LINKS } from "@/components/activacion-v2/config";
 
 type Props = {
   /** "gold" is meant for CTAs sitting on the violet panel. */
@@ -33,17 +33,13 @@ export default function FrecuenciaCta({
     .filter(Boolean)
     .join(" ");
 
-  /* Anclas y rutas del propio sitio se quedan en la pestaña: sacar a alguien
-     a una ventana nueva dentro del mismo embudo le rompe el botón de volver
-     justo cuando más lo va a usar. El target="_blank" queda sólo para el
-     checkout externo. */
-  const isInterno = href.startsWith("#") || href.startsWith("/");
+  const isAnchor = href.startsWith("#");
 
   return (
     <a
       href={href}
       className={classes}
-      {...(!isInterno && { target: "_blank", rel: "noopener noreferrer" })}
+      {...(!isAnchor && { target: "_blank", rel: "noopener noreferrer" })}
     >
       <div className="pearl-wrap">
         <p>

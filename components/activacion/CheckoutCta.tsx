@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/components/activacion-v3/config";
+import { CHECKOUT_URL } from "@/components/activacion/config";
 
 type Props = {
   /** "gold" para los CTA que van sobre panel violeta. */

@@ -1,5 +1,5 @@
 import { Sparkles } from "lucide-react";
-import { OCTUBRE } from "@/components/activacion-v3/config";
+import { OCTUBRE } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**

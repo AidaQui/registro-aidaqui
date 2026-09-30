@@ -1,5 +1,5 @@
 import Head from "next/head";
-import GraciasActivacion from "@/components/activacion-v3/GraciasActivacion";
+import GraciasActivacion from "@/components/activacion-v2/GraciasActivacion";
 
 export default function GraciasActivacionPage() {
   return (

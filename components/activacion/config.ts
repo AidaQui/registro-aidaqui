@@ -45,9 +45,43 @@ export const HORARIOS: Horario[] = [
 export const LINKS = {
   registro: "https://pixelbridge-theta.vercel.app/go",
   soporte: "https://wa.link/insiui",
+  /** La página puente, entre la landing y el checkout. */
+  puente: "/activacion/reservar",
 } as const;
 
+/**
+ * El checkout, al final de la página puente.
+ *
+ * Es el mismo redirector que ya usa /activacion: el flujo de pago y su página
+ * de gracias viven de ese lado, así que cambiarlo aquí rompería el embudo
+ * entero, no sólo estos botones.
+ *
+ * Si se vacía, los botones de la puente vuelven a renderizarse deshabilitados
+ * con un aviso, en vez de apuntar a ninguna parte.
+ */
+export const CHECKOUT_URL = LINKS.registro;
+
 export const CTA_LABEL = "Quiero reservar mi lugar";
+
+/**
+ * Los cuatro momentos de octubre.
+ *
+ * `protagonista` marca el 10/10, que es la fecha del encuentro y la única que
+ * la sección destaca. Va como dato y no como índice fijo porque si una
+ * edición futura cambia de fecha, el destacado se mueve con ella.
+ */
+export type MomentoOctubre = {
+  dia: string;
+  nombre: string;
+  protagonista?: boolean;
+};
+
+export const OCTUBRE: MomentoOctubre[] = [
+  { dia: "01", nombre: "Apertura" },
+  { dia: "10", nombre: "Activación", protagonista: true },
+  { dia: "19", nombre: "Integración" },
+  { dia: "28", nombre: "Cierre" },
+];
 
 /**
  * Precio de la edición.
@@ -57,7 +91,7 @@ export const CTA_LABEL = "Quiero reservar mi lugar";
  * nunca no persuade, molesta.
  */
 export const PRECIO = {
-  actual: "$33",
+  actual: "USD 33",
   tachado: "",
-  nota: "Pago único · Acceso inmediato",
+  nota: "Pago único",
 } as const;

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { CalendarDays, Video } from "lucide-react";
 import LightRays from "@/components/masterclass/LightRays";
-import CheckoutCta from "@/components/activacion-v3/CheckoutCta";
-import { EVENTO, PRECIO } from "@/components/activacion-v3/config";
+import CheckoutCta from "@/components/activacion/CheckoutCta";
+import { EVENTO, PRECIO } from "@/components/activacion/config";
 
 /**
  * Hero de la página puente: confirmar, no volver a vender.

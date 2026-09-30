@@ -2,24 +2,25 @@ import { Brain, Heart, Dna, Atom } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Second section: what working multidimensionally means.
+ * Por qué hace falta trabajar cuatro dimensiones y no sólo entender.
  *
- * ── POR QUÉ NO ES UN BENTO ──
+ * ── QUÉ CAMBIÓ Y POR QUÉ ──
  *
- * Las cinco frases centrales son el MISMO patrón repetido —"puedes X, y sin
- * embargo Y"— y su fuerza está en la acumulación: una detrás de otra van
- * cercando la misma idea. Un bento las pondría en celdas de tamaños
- * distintos, y ahí la repetición deja de leerse como insistencia y pasa a
- * parecer cinco datos sueltos.
+ * La sección llevaba, además de las cuatro dimensiones, cinco frases con el
+ * patrón "puedes X y sin embargo Y" y un remate largo. Se retiraron: esas
+ * frases decían lo mismo que la sección de identificación que ahora va
+ * delante, y dos secciones seguidas nombrando síntomas hacen que la segunda
+ * se lea como repetición.
  *
- * Así que van iguales entre sí, en rejilla pareja. El bento se reserva para
- * contenido de pesos distintos, que no es este caso.
+ * Lo que queda es sólo la explicación: cada dimensión con un ejemplo de cómo
+ * se desacompasa. El ejemplo va DENTRO de la tarjeta y no en una lista aparte
+ * porque pertenece a la dimensión que nombra; separado obligaba a la persona a
+ * emparejar frase y dimensión por su cuenta.
  *
- * ── LOS CUATRO CUERPOS ──
+ * ── LAS CUATRO DIMENSIONES ──
  *
- * El copy los nombra —mental, emocional, físico, energético— y por eso
- * abren la sección: son la promesa concreta de lo que se va a trabajar, y
- * enunciarlos antes de las frases da con qué leerlas.
+ * Son la promesa concreta de lo que se va a trabajar, y el titular las prepara
+ * negando la premisa de que con entender alcanza.
  */
 
 /*
@@ -34,32 +35,36 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * que una foto con detalle no permitiría.
  */
 const CUERPOS = [
-  { Icono: Brain, nombre: "Mental", clave: "mental" },
-  { Icono: Heart, nombre: "Emocional", clave: "emocional" },
+  {
+    Icono: Brain,
+    nombre: "Mental",
+    clave: "mental",
+    texto:
+      "Puedes entender qué necesitas hacer y aun así seguir reaccionando como antes.",
+  },
+  {
+    Icono: Heart,
+    nombre: "Emocional",
+    clave: "emocional",
+    texto: "Pueden aparecer emociones que todavía necesitan ser procesadas.",
+  },
   /* La hélice: el cuerpo físico por lo que lo compone. Además enlaza con
      Academia ADN, que es de donde viene toda la marca. */
-  { Icono: Dna, nombre: "Físico", clave: "fisico" },
+  {
+    Icono: Dna,
+    nombre: "Físico",
+    clave: "fisico",
+    texto:
+      "El cuerpo también puede manifestar saturación, tensión o cansancio.",
+  },
   /* Un átomo: lo energético entendido como la materia de la que está hecho
      todo, que es más preciso que una llama o unas chispas. */
-  { Icono: Atom, nombre: "Energético", clave: "energetico" },
-];
-
-const CONTRASTES = [
   {
-    quieres: "Puedes querer algo mentalmente",
-    pero: "y sentir miedo emocionalmente.",
-  },
-  {
-    quieres: "Puedes saber que una decisión es correcta",
-    pero: "y sentir cómo tu cuerpo físico se contrae.",
-  },
-  {
-    quieres: "Puedes pedir una realidad diferente",
-    pero: "y seguir respondiendo desde la misma programación de siempre.",
-  },
-  {
-    quieres: "Puedes leer, formarte y aprender conceptos",
-    pero: "y aún así vivir una vida que no representa tu crecimiento interno.",
+    Icono: Atom,
+    nombre: "Energético",
+    clave: "energetico",
+    texto:
+      "Puedes sentir que algo interno está cambiando aunque todavía no puedas explicarlo.",
   },
 ];
 
@@ -67,16 +72,35 @@ export default function DolorSection() {
   const ref = useScrollReveal<HTMLElement>();
 
   return (
-    <section ref={ref} className="frec-dolor" aria-labelledby="frec-dolor-title">
+    // frec-dolor--v3 separa esta versión de la v2, que comparte .frec-dolor:
+    // el fondo del encabezado sólo debe aparecer aquí.
+    <section
+      ref={ref}
+      className="frec-dolor frec-dolor--v3"
+      aria-labelledby="frec-dolor-title"
+    >
       <div className="frec-shell">
         <div className="frec-intro">
-          {/* La bajada que había aquí se absorbió en el titular: decía lo
-              mismo en otras palabras y partía en dos una sola idea. */}
-          <h2 id="frec-dolor-title" className="frec-intro__title" data-reveal="title">
-            Viviremos una experiencia energética y{" "}
-            <em>multidimensional</em> diseñada para trabajar profundamente con
-            tu cuerpo...
+          {/* EL EJE PASA A SER EL TITULAR.
+
+              Antes esta frase iba suelta en mitad de la sección y el titular
+              presentaba la experiencia. Pero la experiencia ya se presenta más
+              abajo, y aquí lo que toca es explicar POR QUÉ hacen falta cuatro
+              dimensiones. Esa explicación empieza por negar la premisa de que
+              con entender alcanza, y eso es justo lo que dice esta frase. */}
+          <h2
+            id="frec-dolor-title"
+            className="frec-intro__title"
+            data-reveal="title"
+          >
+            Porque tú no eres solamente{" "}
+            <em>la parte de ti que piensa</em>.
           </h2>
+
+          <p className="frec-intro__lead" data-reveal>
+            Cuando atravesamos una transformación, no todas nuestras dimensiones
+            cambian al mismo ritmo.
+          </p>
         </div>
 
         {/* El nombre va en blanco sobre el dorado, con un velo que lo apaga
@@ -89,7 +113,7 @@ export default function DolorSection() {
           data-reveal-group
           data-reveal-fade
         >
-          {CUERPOS.map(({ Icono, nombre, clave }) => (
+          {CUERPOS.map(({ Icono, nombre, clave, texto }) => (
             <li key={nombre} className="frec-cuerpo" data-cuerpo={clave}>
               {/* El icono es fondo, no ilustración: va detrás del nombre, a
                   gran tamaño y recortado por la tarjeta. De ahí que sea
@@ -98,46 +122,20 @@ export default function DolorSection() {
                 <Icono size={120} strokeWidth={1.1} />
               </span>
               <span className="frec-cuerpo__nombre">{nombre}</span>
+              {/* La dimensión sola no dice nada a quien llega de frío: el
+                  ejemplo es lo que la vuelve reconocible. */}
+              <span className="frec-cuerpo__texto">{texto}</span>
             </li>
           ))}
         </ul>
 
-        {/* El eje de la sección, suelto y a ancho de lectura: es la frase que
-            todo lo que sigue desarrolla.
-
-            Los saltos van forzados y no al azar del navegador: a ancho de
-            escritorio la frase caía dejando "piensa." sola en el segundo
-            renglón. Los <br> sólo entran por encima de 700px —ver la regla
-            .frec-eje__salto—, porque en móvil el ancho ya obliga a otro
-            reparto. */}
-        <p className="frec-eje" data-reveal="title">
-          Porque tú no eres solamente
-          <br className="frec-eje__salto" />{" "}
-          <em>la parte de ti que piensa</em>.
-        </p>
-
-        <ul className="frec-contrastes" data-reveal-group data-reveal-fade>
-          {CONTRASTES.map(({ quieres, pero }, i) => (
-            <li key={i} className="frec-contraste">
-              <p className="frec-contraste__quieres">{quieres}</p>
-              {/* El "y" del copy queda implícito en la disposición: arriba lo
-                  que se quiere, abajo lo que ocurre de verdad, y entre los dos
-                  una regla que marca que no coinciden. */}
-              <span className="frec-contraste__corte" aria-hidden="true" />
-              <p className="frec-contraste__pero">{pero}</p>
-            </li>
-          ))}
-        </ul>
-
-        {/* El remate en panel violeta, como el cierre de la lista de espera:
-            es la única pieza oscura de la sección y por eso cierra. */}
+        {/* El remate en panel violeta: es la única pieza oscura de la sección
+            y por eso cierra. Una sola frase, que es la conclusión que las
+            cuatro tarjetas dejan servida. */}
         <div className="frec-remate" data-reveal>
           <p className="frec-remate__texto">
-            Trabajar multidimensionalmente es dejar de trabajar únicamente desde
-            el cuerpo mental y empezar a integrar todos tus cuerpos para vivir
-            una <strong>transformación real</strong> que te brinde la
-            coherencia, la paz, la plenitud y la capacidad de manifestar una
-            vida que ames todos los días.
+            Para integrar una nueva etapa, necesitamos{" "}
+            <strong>trabajar más allá de la mente</strong>.
           </p>
         </div>
       </div>

@@ -2,7 +2,6 @@ type Props = {
   /** Icon shown before the label, at 15px to match the cap height. */
   icono?: React.ReactNode;
   children: React.ReactNode;
-  className?: string;
 };
 
 /**
@@ -13,13 +12,9 @@ type Props = {
  * for the date — which says more in the same space than the logo did on a page
  * that is already branded.
  */
-export default function FrecuenciaBadge({
-  icono,
-  children,
-  className = "",
-}: Props) {
+export default function FrecuenciaBadge({ icono, children }: Props) {
   return (
-    <span className={`frec-badge ${className}`.trim()}>
+    <span className="frec-badge">
       <span className="frec-badge__inner">
         {icono && (
           <span className="frec-badge__icono" aria-hidden="true">

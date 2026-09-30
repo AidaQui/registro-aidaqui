@@ -1,52 +1,65 @@
-import { Unlink, BatteryCharging, HandHeart, Sparkles, Users } from "lucide-react";
+import {
+  Unlink,
+  Wind,
+  Antenna,
+  BatteryCharging,
+  ShieldCheck,
+  Mountain,
+} from "lucide-react";
+import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
+import { LINKS } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * "Lo que experimentarás dentro": los cinco puntos de la experiencia.
+ * La presentación de la experiencia y lo que se trabaja dentro, en una pieza.
+ *
+ * ── POR QUÉ VAN JUNTAS ──
+ *
+ * Eran dos secciones: una presentaba la Activación y otra listaba lo que se
+ * experimenta dentro. Separadas repetían la misma promesa dos veces con otras
+ * palabras, y en tráfico frío eso lee como relleno. Ahora el titular presenta
+ * y las tarjetas concretan: una sola idea con su desarrollo.
+ *
+ * Es también el primer momento de la página en que se nombra el producto. Las
+ * dos secciones anteriores describen lo que le pasa a la persona; ésta abre
+ * con "por eso creamos", que es lo que convierte ese síntoma en una respuesta.
  *
  * ── SIN IMÁGENES, CON NÚMERO E ICONO ──
  *
  * Esta sección llegó a tener siete tarjetas con fotografía. Se retiraron: las
  * imágenes traían su propio rótulo quemado que repetía el texto de al lado, y
- * siete fotos para cinco ideas cortas la volvían la sección más pesada de la
- * página para lo poco que dice.
+ * siete fotos para ideas cortas la volvían la sección más pesada de la página
+ * para lo poco que dice.
  *
- * Cada tarjeta lleva ahora dos marcas: el icono, arriba y a la izquierda, que
+ * Cada tarjeta lleva dos marcas: el icono, arriba y a la izquierda, que
  * adelanta de qué va el punto antes de leerlo; y el número, grande y al
  * fondo, que hace de textura.
- *
- * ── EL REPARTO: 3 + 2 ──
- *
- * Tres arriba y dos abajo ocupando la mitad cada una. Cinco es impar, así que
- * alguna fila tiene que repartirse distinto; con 3+2 las dos filas cierran
- * completas y ninguna tarjeta queda suelta.
  */
 
 const PUNTOS = [
   {
     Icono: Unlink,
-    texto:
-      "Liberación de fugas y cargas energéticas que no te permiten avanzar.",
+    texto: "Liberar carga interna y energética.",
+  },
+  {
+    Icono: Wind,
+    texto: "Generar mayor espacio mental y emocional.",
+  },
+  {
+    Icono: Antenna,
+    texto: "Reconectar con tu intuición.",
   },
   {
     Icono: BatteryCharging,
-    texto:
-      "Aumento de tu capacidad energética para poder procesar e integrar las nuevas frecuencias del planeta.",
+    texto: "Aumentar tu capacidad de integración.",
   },
   {
-    Icono: HandHeart,
-    texto:
-      "Preparación para recibir y sostener experiencias que conscientemente dices querer.",
+    Icono: ShieldCheck,
+    texto: "Regular tu sistema frente a nuevos cambios.",
   },
   {
-    Icono: Sparkles,
-    texto:
-      "Amplificación de tu energía manifestadora y herramientas para sostener tu frecuencia diaria en la vida real.",
-  },
-  {
-    Icono: Users,
-    texto:
-      "Un espacio de conexión grupal con personas que están en un proceso espiritual.",
+    Icono: Mountain,
+    texto: "Sostener una nueva etapa desde mayor coherencia.",
   },
 ];
 
@@ -60,15 +73,27 @@ export default function ExperienciaSection() {
       aria-labelledby="frec-experiencia-title"
     >
       <div className="frec-shell">
-        <h2
-          id="frec-experiencia-title"
-          className="frec-section-title"
-          data-reveal="title"
-        >
-          Lo que experimentarás <em>dentro</em>
-        </h2>
+        <div className="frec-experiencia__intro">
+          <h2
+            id="frec-experiencia-title"
+            className="frec-section-title"
+            data-reveal="title"
+          >
+            Por eso creamos la <em>Activación del Ser Multidimensional</em>
+          </h2>
 
-        <ul className="frec-exp" data-reveal-group data-reveal-fade>
+          <p className="frec-experiencia__lead" data-reveal>
+            Una experiencia energética guiada diseñada para trabajar
+            profundamente con tu sistema y acompañarte a integrar el momento
+            que estás atravesando.
+          </p>
+
+          <p className="frec-experiencia__sub" data-reveal>
+            Durante la activación vamos a trabajar para que puedas:
+          </p>
+        </div>
+
+        <ul className="frec-exp frec-exp--seis" data-reveal-group data-reveal-fade>
           {PUNTOS.map(({ Icono, texto }, i) => (
             <li key={i} className="frec-exp__card">
               {/* El número es fondo, no dato: va detrás de todo, cortado por
@@ -85,6 +110,13 @@ export default function ExperienciaSection() {
             </li>
           ))}
         </ul>
+
+        <div className="frec-experiencia__cta" data-reveal>
+          <FrecuenciaCta
+            href={LINKS.puente}
+            label="Quiero vivir esta activación"
+          />
+        </div>
       </div>
     </section>
   );

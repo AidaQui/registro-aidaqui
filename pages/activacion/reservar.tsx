@@ -1,15 +1,15 @@
 import Head from "next/head";
-import PuenteHero from "@/components/activacion-v3/puente/PuenteHero";
-import PuenteIncluye from "@/components/activacion-v3/puente/PuenteIncluye";
-import PuenteOctubre from "@/components/activacion-v3/puente/PuenteOctubre";
-import PuenteObjeciones from "@/components/activacion-v3/puente/PuenteObjeciones";
-import PuenteCierre from "@/components/activacion-v3/puente/PuenteCierre";
+import PuenteHero from "@/components/activacion/puente/PuenteHero";
+import PuenteIncluye from "@/components/activacion/puente/PuenteIncluye";
+import PuenteOctubre from "@/components/activacion/puente/PuenteOctubre";
+import PuenteObjeciones from "@/components/activacion/puente/PuenteObjeciones";
+import PuenteCierre from "@/components/activacion/puente/PuenteCierre";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
 /**
  * Página puente entre la landing y el checkout.
  *
- *   Anuncio → /activacion-v3 → ESTA → checkout → gracias
+ *   Anuncio → /activacion → ESTA → checkout → gracias
  *
  * ── NOINDEX ──
  *

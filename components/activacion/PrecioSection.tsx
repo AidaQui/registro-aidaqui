@@ -1,7 +1,7 @@
-import { CalendarDays, Check, Clock, Video } from "lucide-react";
+import { CalendarDays, Check, Video } from "lucide-react";
 import LightPillar from "@/components/activacion/LightPillar";
 import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
-import { EVENTO, HORARIOS, PRECIO } from "@/components/activacion/config";
+import { EVENTO, LINKS, PRECIO } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -26,11 +26,14 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 
 const INCLUYE = [
-  "Encuentro en vivo con Aida Qui",
-  "Canalización personalizada para el grupo",
-  "Conexión en comunidad",
-  "La grabación completa del encuentro",
-  "Dos activaciones guiadas para integrar",
+  "Experiencia energética en vivo",
+  "Trabajo mental, emocional, físico y energético",
+  "Canalización y acompañamiento",
+  "Experiencia en comunidad",
+  "Grabación completa",
+  "Activación complementaria #1",
+  "Activación complementaria #2",
+  "Preparación previa al 10/10",
 ];
 
 export default function PrecioSection() {
@@ -53,8 +56,8 @@ export default function PrecioSection() {
             className="frec-precio__title"
             data-reveal="title"
           >
-            Todo lo que acabas de ver forma parte de una{" "}
-            <em>única experiencia en vivo</em>.
+            Todo lo que necesitas para vivir esta experiencia, en un{" "}
+            <em>único acceso</em>.
           </h2>
         </div>
 
@@ -76,12 +79,16 @@ export default function PrecioSection() {
               className="frec-precio__pillar"
               topColor="#9b7ec8"
               bottomColor="#d4a020"
-              intensity={0.85}
+              /* Bajó de 0.85 a 0.45: a plena intensidad la columna se
+                 comía la lista y los datos del pie, que son justo lo que
+                 hay que leer antes de pulsar. Sigue estando —da la
+                 profundidad de la tarjeta— pero ya no compite. */
+              intensity={0.45}
               rotationSpeed={0.22}
               glowAmount={0.004}
               pillarWidth={2.4}
               pillarHeight={0.35}
-              noiseIntensity={0.35}
+              noiseIntensity={0.28}
               pillarRotation={180}
             />
             <p className="frec-precio__nombre">{EVENTO.titulo}</p>
@@ -105,18 +112,20 @@ export default function PrecioSection() {
 
             <p className="frec-precio__nota">{PRECIO.nota}</p>
 
-            <FrecuenciaCta variant="gold" />
+            {/* Sale hacia la página puente, no al checkout: allí se confirma
+                qué se está comprando antes de pagar. Los otros CTA de la
+                landing bajan hasta aquí, así que éste es el único punto por el
+                que se abandona la página. */}
+            <FrecuenciaCta variant="gold" href={LINKS.puente} />
 
-            {/* Reducción de fricción: las cuatro dudas de último momento,
-                resueltas donde se decide. */}
+            {/* Reducción de fricción: las tres dudas de último momento,
+                resueltas donde se decide. La hora local salió de aquí porque
+                los cuatro husos ya están arriba en el hero y en el cierre;
+                repetir sólo el de España aquí confundía a quien no está ahí. */}
             <ul className="frec-precio__datos">
               <li>
                 <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
                 {EVENTO.fechaCorta}
-              </li>
-              <li>
-                <Clock size={15} strokeWidth={2} aria-hidden="true" />
-                {HORARIOS[0].hora} {HORARIOS[0].pais}
               </li>
               <li>
                 <Video size={15} strokeWidth={2} aria-hidden="true" />

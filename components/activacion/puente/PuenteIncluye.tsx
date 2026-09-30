@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
-import CheckoutCta from "@/components/activacion-v3/CheckoutCta";
-import { PRECIO } from "@/components/activacion-v3/config";
+import CheckoutCta from "@/components/activacion/CheckoutCta";
+import { PRECIO } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**

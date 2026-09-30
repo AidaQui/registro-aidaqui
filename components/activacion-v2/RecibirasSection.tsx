@@ -1,5 +1,4 @@
-import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
-import { LINKS } from "@/components/activacion-v3/config";
+import FrecuenciaCta from "@/components/activacion-v2/FrecuenciaCta";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -40,25 +39,23 @@ type Tarjeta = {
 const INCLUYE: Tarjeta[] = [
   {
     titulo: "Experiencia energética en vivo",
-    bajada:
-      "Un encuentro guiado junto a Aida para trabajar profundamente sobre tu sistema.",
+    bajada: "Guiada por Aida Qui, en directo y en tiempo real.",
     foto: "/activacion-v2/item1.jpg",
   },
   {
-    titulo: "Canalización y acompañamiento",
-    bajada:
-      "Un espacio pensado para ayudarte a observar e integrar aquello que esté apareciendo durante el proceso.",
+    titulo: "Canalización personalizada",
+    bajada: "Para el grupo, en directo, según lo que pida el momento.",
     foto: "/activacion-v2/item2.jpg",
   },
   {
-    titulo: "Experiencia en comunidad",
+    titulo: "Conexión en comunidad",
     bajada:
-      "Vivirás la activación junto a otras personas que también están atravesando procesos de transformación.",
+      "Un encuentro profundo con almas de diferentes partes del mundo.",
     foto: "/activacion-v2/item3.jpg",
   },
   {
-    titulo: "Grabación completa",
-    bajada: "Para que puedas volver a vivir la experiencia posteriormente.",
+    titulo: "La grabación completa",
+    bajada: "El encuentro en vivo entero, para volver cuando lo necesites.",
     foto: "/activacion-v2/item4.jpg",
   },
 ];
@@ -122,7 +119,7 @@ export default function RecibirasSection() {
           className="frec-section-title"
           data-reveal="title"
         >
-          Todo lo que incluye <em>tu acceso</em>
+          ¿Qué <em>recibirás</em>?
         </h2>
 
         <ul className="frec-rec" data-reveal-group data-reveal-fade>
@@ -133,13 +130,14 @@ export default function RecibirasSection() {
 
         <div className="frec-rec__bloque">
           <h3 className="frec-rec__subtitulo" data-reveal="title">
-            Además vas a recibir 2 activaciones guiadas complementarias para{" "}
-            <em>continuar integrando</em>
+            Dos activaciones guiadas para integrar{" "}
+            <em>después del encuentro</em>
           </h3>
 
           <p className="frec-rec__intro" data-reveal>
-            <strong>Dos prácticas</strong> para seguir trabajando e integrando
-            después del encuentro.
+            <strong>Dos prácticas poderosas</strong> para ayudarte a limpiar
+            cargas energéticas, recalibrar tu energía y sostener esta nueva
+            etapa de tu vida.
           </p>
 
           <ul
@@ -160,7 +158,7 @@ export default function RecibirasSection() {
         </div>
 
         <div className="frec-rec__cta" data-reveal>
-          <FrecuenciaCta href={LINKS.puente} />
+          <FrecuenciaCta />
         </div>
       </div>
     </section>

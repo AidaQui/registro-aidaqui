@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { CalendarDays, Clock } from "lucide-react";
 import LightRays from "@/components/masterclass/LightRays";
-import { BANDERAS } from "@/components/activacion-v3/Banderas";
-import { EVENTO, HORARIOS, LINKS } from "@/components/activacion-v3/config";
+import { BANDERAS } from "@/components/activacion-v2/Banderas";
+import { EVENTO, HORARIOS, LINKS } from "@/components/activacion-v2/config";
 
 /**
  * Página de gracias de la Activación del Ser Multidimensional.

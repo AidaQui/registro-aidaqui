@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
-import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
-import { LINKS, OCTUBRE } from "@/components/activacion-v3/config";
+import FrecuenciaCta from "@/components/activacion/FrecuenciaCta";
+import { LINKS, OCTUBRE } from "@/components/activacion/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
