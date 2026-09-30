@@ -45,7 +45,21 @@ export const HORARIOS: Horario[] = [
 export const LINKS = {
   registro: "https://pixelbridge-theta.vercel.app/go",
   soporte: "https://wa.link/insiui",
+  /** La página puente, entre la landing y el checkout. */
+  puente: "/activacion-v3/reservar",
 } as const;
+
+/**
+ * ⚠️ PENDIENTE: la URL real del checkout va aquí.
+ *
+ * Mientras esté vacío, los botones de la página puente se renderizan
+ * deshabilitados y avisan de que el enlace falta. Es deliberado: un botón que
+ * apunta a un sitio inventado se descubre en producción y con tráfico pago
+ * encima. Vacío falla aquí, que es donde se arregla.
+ *
+ * Al cargarlo, los tres botones de la puente quedan activos solos.
+ */
+export const CHECKOUT_URL = "";
 
 export const CTA_LABEL = "Quiero reservar mi lugar";
 

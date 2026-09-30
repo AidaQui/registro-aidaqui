@@ -1,7 +1,7 @@
 import { CalendarDays, Check, Video } from "lucide-react";
 import LightPillar from "@/components/activacion-v3/LightPillar";
 import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
-import { EVENTO, PRECIO } from "@/components/activacion-v3/config";
+import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v3/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -108,7 +108,11 @@ export default function PrecioSection() {
 
             <p className="frec-precio__nota">{PRECIO.nota}</p>
 
-            <FrecuenciaCta variant="gold" />
+            {/* Sale hacia la página puente, no al checkout: allí se confirma
+                qué se está comprando antes de pagar. Los otros CTA de la
+                landing bajan hasta aquí, así que éste es el único punto por el
+                que se abandona la página. */}
+            <FrecuenciaCta variant="gold" href={LINKS.puente} />
 
             {/* Reducción de fricción: las tres dudas de último momento,
                 resueltas donde se decide. La hora local salió de aquí porque
