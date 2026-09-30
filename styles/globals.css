@@ -20341,3 +20341,69 @@ body {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   PÁGINA PUENTE — AJUSTES
+   ========================================================================== */
+
+/*
+  LOS RAYOS DEL HERO.
+
+  El contenedor hereda .frec-cierre__rays —posición, recorte y mezcla ya
+  resueltos allí— y aquí sólo se le da la altura del hero. Duplicar esas
+  reglas sería mantener dos copias del mismo encuadre.
+*/
+.puente-hero__rays {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/*
+  EL LOGOTIPO, SOBRE BLANCO SÓLIDO.
+
+  En la landing la píldora va al 55% de blanco porque su hero es claro y ahí
+  el alfa sólo suaviza. Sobre el violeta profundo de esta página ese mismo
+  alfa deja pasar el fondo y el nombre pierde contraste justo en la primera
+  pieza que se lee.
+
+  Blanco pleno, y el nombre en violeta oscuro: la marca se lee de un vistazo
+  y la píldora se recorta limpia contra el panel.
+*/
+.puente-hero__marca {
+  align-self: center;
+  padding: 10px 20px 10px 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(12, 4, 28, 0.28);
+}
+
+.puente-hero__marca .frec-hero__title {
+  color: #2a0f56;
+}
+
+/* --------------------------------------------------------------------------
+   EL PIE
+   -------------------------------------------------------------------------- */
+
+/*
+  Sobre el mismo violeta del cierre, para que la página termine donde termina
+  la card de compra y no en un corte seco. El separador es una regla fina por
+  arriba: sin ella el pie se lee como parte de la tarjeta.
+*/
+.puente-footer {
+  padding: clamp(28px, 3.2vw, 44px) 20px clamp(22px, 2.4vw, 32px);
+  border-top: 1px solid rgba(232, 196, 106, 0.16);
+  margin-top: clamp(40px, 4.5vw, 64px);
+  text-align: center;
+}
+
+.puente-footer p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(11.5px, 1.1vw, 13px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+}

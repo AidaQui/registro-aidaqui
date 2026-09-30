@@ -107,7 +107,7 @@ export default function PuenteCierre() {
         </div>
       </div>
 
-      <footer className="frec-footer">
+      <footer className="puente-footer">
         <p>
           © {new Date().getFullYear()} Aida Qui · Divine Alignment LLC · Todos
           los derechos reservados

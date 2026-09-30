@@ -113,6 +113,7 @@ export default function CierreFrecuencia() {
           <div className="frec-cierre__actions" data-reveal>
             <FrecuenciaCta
               variant="gold"
+              href={LINKS.puente}
               label="Quiero vivir esta experiencia"
             />
 

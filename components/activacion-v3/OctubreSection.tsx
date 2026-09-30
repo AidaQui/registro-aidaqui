@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
-import { OCTUBRE } from "@/components/activacion-v3/config";
+import { LINKS, OCTUBRE } from "@/components/activacion-v3/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -137,7 +137,7 @@ export default function OctubreSection() {
         <div className="frec-octubre__cta" data-reveal>
           <FrecuenciaCta
             variant="gold"
-            href="#frec-precio-title"
+            href={LINKS.puente}
             label="Quiero vivir la Activación"
           />
         </div>

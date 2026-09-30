@@ -7,6 +7,7 @@ import {
   Mountain,
 } from "lucide-react";
 import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
+import { LINKS } from "@/components/activacion-v3/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -112,7 +113,7 @@ export default function ExperienciaSection() {
 
         <div className="frec-experiencia__cta" data-reveal>
           <FrecuenciaCta
-            href="#frec-precio-title"
+            href={LINKS.puente}
             label="Quiero vivir esta activación"
           />
         </div>

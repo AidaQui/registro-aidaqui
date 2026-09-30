@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CalendarDays, Video } from "lucide-react";
+import LightRays from "@/components/masterclass/LightRays";
 import CheckoutCta from "@/components/activacion-v3/CheckoutCta";
 import { EVENTO, PRECIO } from "@/components/activacion-v3/config";
 
@@ -25,6 +26,25 @@ export default function PuenteHero() {
   return (
     <section className="puente-hero" aria-labelledby="puente-hero-title">
       <div className="puente-hero__bg" aria-hidden="true" />
+
+      {/* Los mismos rayos del cierre de la landing, con sus valores sin tocar.
+          Quien llega aquí acaba de pulsar el botón de esa sección, y repetir
+          su luz dice que sigue dentro del mismo recorrido. */}
+      <div className="frec-cierre__rays puente-hero__rays" aria-hidden="true">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#ffd9a0"
+          raysSpeed={0.6}
+          lightSpread={0.55}
+          rayLength={2.2}
+          fadeDistance={1.6}
+          saturation={1}
+          followMouse={false}
+          mouseInfluence={0}
+          noiseAmount={0.04}
+          distortion={0.02}
+        />
+      </div>
 
       <div className="puente-hero__shell">
         <div className="frec-hero__marca puente-hero__marca">

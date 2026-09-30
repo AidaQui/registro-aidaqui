@@ -50,16 +50,16 @@ export const LINKS = {
 } as const;
 
 /**
- * ⚠️ PENDIENTE: la URL real del checkout va aquí.
+ * El checkout, al final de la página puente.
  *
- * Mientras esté vacío, los botones de la página puente se renderizan
- * deshabilitados y avisan de que el enlace falta. Es deliberado: un botón que
- * apunta a un sitio inventado se descubre en producción y con tráfico pago
- * encima. Vacío falla aquí, que es donde se arregla.
+ * Es el mismo redirector que ya usa /activacion: el flujo de pago y su página
+ * de gracias viven de ese lado, así que cambiarlo aquí rompería el embudo
+ * entero, no sólo estos botones.
  *
- * Al cargarlo, los tres botones de la puente quedan activos solos.
+ * Si se vacía, los botones de la puente vuelven a renderizarse deshabilitados
+ * con un aviso, en vez de apuntar a ninguna parte.
  */
-export const CHECKOUT_URL = "";
+export const CHECKOUT_URL = LINKS.registro;
 
 export const CTA_LABEL = "Quiero reservar mi lugar";
 

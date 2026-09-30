@@ -1,4 +1,5 @@
 import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
+import { LINKS } from "@/components/activacion-v3/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -159,7 +160,7 @@ export default function RecibirasSection() {
         </div>
 
         <div className="frec-rec__cta" data-reveal>
-          <FrecuenciaCta href="#frec-precio-title" />
+          <FrecuenciaCta href={LINKS.puente} />
         </div>
       </div>
     </section>

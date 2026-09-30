@@ -3,7 +3,7 @@ import { CalendarDays, Clock, Video } from "lucide-react";
 import FrecuenciaBadge from "@/components/activacion-v3/FrecuenciaBadge";
 import FrecuenciaCta from "@/components/activacion-v3/FrecuenciaCta";
 import { BANDERAS } from "@/components/activacion-v3/Banderas";
-import { EVENTO, HORARIOS } from "@/components/activacion-v3/config";
+import { EVENTO, HORARIOS, LINKS } from "@/components/activacion-v3/config";
 
 export default function HeroFrecuencia() {
   return (
@@ -111,7 +111,7 @@ export default function HeroFrecuencia() {
               ver antes qué incluye y cuánto cuesta es la fricción que más
               rebota. El botón de la tarjeta de precio sí abre el checkout. */}
           <FrecuenciaCta
-            href="#frec-precio-title"
+            href={LINKS.puente}
             label="Quiero vivir esta experiencia"
           />
         </div>
