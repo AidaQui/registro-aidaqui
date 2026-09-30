@@ -45,21 +45,7 @@ export const HORARIOS: Horario[] = [
 export const LINKS = {
   registro: "https://pixelbridge-theta.vercel.app/go",
   soporte: "https://wa.link/insiui",
-  /** La página puente, entre la landing y el checkout. */
-  puente: "/activacion/reservar",
 } as const;
-
-/**
- * El checkout, al final de la página puente.
- *
- * Es el mismo redirector que ya usa /activacion: el flujo de pago y su página
- * de gracias viven de ese lado, así que cambiarlo aquí rompería el embudo
- * entero, no sólo estos botones.
- *
- * Si se vacía, los botones de la puente vuelven a renderizarse deshabilitados
- * con un aviso, en vez de apuntar a ninguna parte.
- */
-export const CHECKOUT_URL = LINKS.registro;
 
 export const CTA_LABEL = "Quiero reservar mi lugar";
 
@@ -89,9 +75,8 @@ export const OCTUBRE: MomentoOctubre[] = [
  * La moneda es el EURO, no el dólar: el cobro se hace en euros y anunciar
  * otra divisa cambia lo que la persona cree que va a pagar.
  *
- * Este valor es el único sitio donde vive el precio —la landing y la página
- * puente lo leen de aquí en ocho puntos—, así que se corrige una vez y se
- * corrige entero. No escribir la cifra a mano en ningún componente.
+ * Este valor es el único sitio donde vive el precio, así que se corrige una
+ * vez y se corrige entero. No escribir la cifra a mano en ningún componente.
  *
  * `tachado` es el valor de referencia que se muestra cruzado sobre el precio
  * real. Dejarlo vacío oculta esa línea: un precio tachado que nadie ha pagado

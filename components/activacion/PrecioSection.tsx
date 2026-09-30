@@ -112,11 +112,13 @@ export default function PrecioSection() {
 
             <p className="frec-precio__nota">{PRECIO.nota}</p>
 
-            {/* Sale hacia la página puente, no al checkout: allí se confirma
-                qué se está comprando antes de pagar. Los otros CTA de la
-                landing bajan hasta aquí, así que éste es el único punto por el
-                que se abandona la página. */}
-            <FrecuenciaCta variant="gold" href={LINKS.puente} />
+            {/* EL ÚNICO BOTÓN QUE SALE DE LA PÁGINA.
+
+                Los otros cinco CTA de la landing bajan hasta esta tarjeta, así
+                que aquí es donde se paga: quien pulsa ya tiene delante lo que
+                incluye y cuánto cuesta, que es lo que evita llegar al checkout
+                sin saber qué se está comprando. */}
+            <FrecuenciaCta variant="gold" href={LINKS.registro} />
 
             {/* Reducción de fricción: las tres dudas de último momento,
                 resueltas donde se decide. La hora local salió de aquí porque
