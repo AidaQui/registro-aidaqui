@@ -18433,3 +18433,1054 @@ body {
     overflow-x: hidden;
   }
 }
+
+
+/* =========================================================================
+   ACTIVACIÓN — REESTRUCTURACIÓN NARRATIVA
+   =========================================================================
+
+   La landing pasó a ordenarse para tráfico frío: reconocimiento antes de
+   explicación. Esto trae dos secciones nuevas —identificación y octubre— más
+   FAQ y testimonios, y algunos ajustes en las que ya existían.
+
+   Todo va aquí abajo y no repartido entre los bloques de arriba a propósito:
+   agrupado es una pieza que se lee y se revierte de una vez, mientras que
+   intercalado obligaría a tocar ocho bloques distintos del archivo.
+   ========================================================================= */
+
+
+/* ===== Hero: fecha destacada y microcopy ===== */
+
+/*
+  LA PÍLDORA DE LA FECHA PESA MÁS QUE LA OTRA.
+
+  Las dos píldoras del hero son del mismo tipo, pero no valen lo mismo: el
+  formato es un dato y la fecha es LA cita. El fondo dorado tenue y el texto
+  en su tono la separan sin romper el sistema —sigue siendo la misma píldora
+  con su borde giratorio—, y de aquí en adelante la página va a repetir ese
+  dorado cada vez que aparezca el 10/10.
+*/
+.frec-badge--fecha .frec-badge__inner {
+  background: linear-gradient(
+    150deg,
+    rgba(212, 160, 32, 0.16),
+    rgba(176, 125, 31, 0.1)
+  );
+  color: #7a5408;
+  font-weight: 600;
+}
+
+.frec-badge--fecha .frec-badge__icono {
+  color: #a06c08;
+}
+
+/* El microcopy cierra el hero: tres datos cortos separados por puntos, en
+   cuerpo pequeño y peso bajo. Es lo último que se lee antes de decidir bajar,
+   así que no compite con el botón que tiene encima. */
+.frec-hero__micro {
+  margin: 14px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(12.5px, 1.1vw, 13.5px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(46, 32, 64, 0.62);
+}
+
+@media (max-width: 700px) {
+  /* Centrado con el resto del hero, que a este ancho ya va centrado. */
+  .frec-hero__micro {
+    text-align: center;
+  }
+}
+
+
+/* ===== Sección de identificación ===== */
+
+/*
+  LA SECCIÓN MÁS LIVIANA DE LA PÁGINA, A PROPÓSITO.
+
+  Va inmediatamente después del hero y su trabajo es que la persona se
+  reconozca, no que se impresione. De ahí que no tenga panel, ni foto, ni
+  color de fondo propio: cinco tarjetas claras sobre el blanco de la página.
+
+  Si pesara más, leería como si ya estuviéramos vendiendo algo, y todavía no.
+*/
+.frec-ident {
+  position: relative;
+  padding: clamp(56px, 6vw, 92px) 0 clamp(40px, 4vw, 64px);
+}
+
+.frec-ident__intro {
+  max-width: 780px;
+  margin: 0 auto clamp(28px, 3vw, 40px);
+  text-align: center;
+}
+
+.frec-ident__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(25px, 3.1vw, 38px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+  color: #290066;
+}
+
+.frec-ident__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #a06c08, #d4a020, #a06c08);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* La frase de entrada a la lista: pequeña y en peso medio, porque es una
+   bisagra y no un argumento. */
+.frec-ident__lead {
+  margin: clamp(16px, 1.8vw, 22px) 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 500;
+  color: rgba(46, 32, 64, 0.72);
+}
+
+/*
+  CINCO TARJETAS EN RETÍCULA 3+2.
+
+  Mismo reparto que .frec-exp porque el problema es idéntico —cinco piezas,
+  filas que tienen que cerrar completas—, pero con la retícula escrita aquí y
+  no heredada: las dos secciones van a evolucionar por separado, y compartir
+  selector haría que un ajuste en una moviera la otra sin querer.
+*/
+.frec-ident__lista {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(10px, 1.1vw, 15px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frec-ident__card:nth-child(-n + 3) {
+  grid-column: span 2;
+}
+
+.frec-ident__card:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+/* row y no column: aquí el icono va al lado del texto, no encima. Son frases
+   de un renglón o dos, y apiladas dejarían la tarjeta con más aire que
+   contenido. */
+.frec-ident__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: clamp(15px, 1.6vw, 20px);
+  border-radius: 15px;
+  border: 1px solid rgba(155, 126, 200, 0.18);
+  background: rgba(252, 250, 255, 0.72);
+  transition: border-color 260ms ease, background 260ms ease;
+}
+
+.frec-ident__card:hover {
+  border-color: rgba(155, 126, 200, 0.34);
+  background: rgba(250, 246, 255, 0.95);
+}
+
+.frec-ident__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(
+    150deg,
+    rgba(155, 126, 200, 0.16),
+    rgba(212, 168, 85, 0.14)
+  );
+  color: #5b3aa0;
+}
+
+.frec-ident__texto {
+  margin: 0;
+  padding-top: 7px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.2vw, 15.5px);
+  font-weight: 500;
+  line-height: 1.42;
+  color: rgba(46, 32, 64, 0.86);
+}
+
+/*
+  EL CIERRE DE LA SECCIÓN.
+
+  Reformula los cinco síntomas como un solo problema. Va a ancho de lectura y
+  centrado, con la parte que importa en negrita: es la frase que la sección
+  siguiente va a desarmar en cuatro dimensiones, así que tiene que quedar.
+
+  El filete dorado de arriba la separa de las tarjetas sin necesidad de un
+  hueco tan grande que parezca otra sección.
+*/
+.frec-ident__cierre {
+  position: relative;
+  max-width: 700px;
+  margin: clamp(34px, 3.6vw, 50px) auto 0;
+  padding-top: clamp(24px, 2.6vw, 34px);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15.5px, 1.5vw, 18px);
+  font-weight: 400;
+  line-height: 1.58;
+  text-align: center;
+  color: rgba(46, 32, 64, 0.8);
+}
+
+.frec-ident__cierre::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 54px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #d4a020, transparent);
+}
+
+.frec-ident__cierre strong {
+  font-weight: 600;
+  color: #290066;
+}
+
+@media (max-width: 1023px) {
+  /* 2+2+1: a este ancho tres por fila quedan más estrechas que altas. La
+     última pasa a ocupar la fila entera. */
+  .frec-ident__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .frec-ident__card:nth-child(-n + 3),
+  .frec-ident__card:nth-child(n + 4) {
+    grid-column: span 1;
+  }
+
+  .frec-ident__card:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .frec-ident__lista {
+    grid-template-columns: 1fr;
+  }
+
+  .frec-ident__card:nth-child(-n + 3),
+  .frec-ident__card:nth-child(n + 4),
+  .frec-ident__card:last-child {
+    grid-column: span 1;
+  }
+}
+
+
+/* ===== Las cuatro dimensiones: bajada y texto por tarjeta ===== */
+
+/* La bajada del titular, que antes no existía en esta sección. */
+.frec-intro__lead {
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(46, 32, 64, 0.72);
+}
+
+/*
+  EL EJEMPLO DENTRO DE LA TARJETA.
+
+  Las tarjetas llevaban sólo el nombre de la dimensión, centrado y a gran
+  cuerpo. Ahora llevan además una frase, así que el nombre se hace más pequeño
+  para dejarle sitio: sin este ajuste el nombre seguía ocupando el centro
+  óptico y la frase quedaba como un pie de foto.
+
+  align-items y text-align pasan a la izquierda porque una frase de dos
+  renglones centrada se lee mal: el ojo pierde el inicio de línea.
+*/
+.frec-cuerpo {
+  /* La regla base es un flex en fila con el nombre apoyado abajo. Con el
+     ejemplo dentro hacen falta dos renglones, así que pasa a columna: en fila
+     el nombre y la frase competirían por el mismo ancho. */
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: left;
+  min-height: 210px;
+  gap: 10px;
+}
+
+.frec-cuerpo__nombre {
+  font-size: clamp(19px, 2vw, 25px);
+}
+
+/* z-index 2 como el nombre: el velo va en 0 y el icono de fondo en 1. */
+.frec-cuerpo__texto {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.15vw, 14.5px);
+  font-weight: 500;
+  line-height: 1.44;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/*
+  El texto va en blanco, como el nombre: el velo de estas tarjetas apaga el
+  dorado a marrón oscuro por abajo, así que ahí lo legible es el blanco y no
+  el violeta.
+
+  El velo sube más que antes porque ahora tiene que cubrir dos renglones de
+  frase además del nombre: con el corte original en 72% la primera línea caía
+  sobre el dorado a plena luz.
+*/
+.frec-cuerpos[data-tipo="clara"] .frec-cuerpo::before {
+  background: linear-gradient(
+    to top,
+    rgba(92, 54, 4, 0.88) 0%,
+    rgba(104, 62, 8, 0.72) 42%,
+    rgba(120, 76, 12, 0.34) 68%,
+    transparent 92%
+  );
+}
+
+.frec-cuerpos[data-tipo="clara"] .frec-cuerpo__texto {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 5px rgba(70, 40, 0, 0.5);
+}
+
+@media (max-width: 700px) {
+  .frec-cuerpo {
+    min-height: 168px;
+  }
+}
+
+
+/* ===== Experiencia: intro fusionada y retícula de seis ===== */
+
+.frec-experiencia__intro {
+  max-width: 800px;
+  margin: 0 auto clamp(30px, 3.2vw, 44px);
+  text-align: center;
+}
+
+.frec-experiencia__lead {
+  margin: clamp(16px, 1.8vw, 22px) 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.45vw, 17.5px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(46, 32, 64, 0.76);
+}
+
+/* La frase que introduce la lista: en violeta y con más peso que la bajada,
+   porque es la que hace que las seis tarjetas se lean como una enumeración
+   y no como seis afirmaciones sueltas. */
+.frec-experiencia__sub {
+  margin: clamp(20px, 2.2vw, 28px) 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 600;
+  color: #5b3aa0;
+}
+
+/*
+  SEIS TARJETAS: 3+3.
+
+  La retícula base reparte 3+2 con :nth-child, que con seis piezas dejaría la
+  última suelta a media fila. Con --seis vuelven todas al mismo ancho y las
+  dos filas cierran solas.
+*/
+.frec-exp--seis .frec-exp__card:nth-child(-n + 3),
+.frec-exp--seis .frec-exp__card:nth-child(n + 4) {
+  grid-column: span 2;
+}
+
+/* Y el número de las tres de abajo vuelve al tamaño de las de arriba: el
+   aumento existía porque esas dos tarjetas eran más anchas, y ya no lo son. */
+.frec-exp--seis .frec-exp__card:nth-child(n + 4) .frec-exp__num {
+  font-size: clamp(76px, 8vw, 108px);
+  top: -20px;
+}
+
+.frec-experiencia__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(32px, 3.4vw, 46px);
+}
+
+@media (max-width: 1023px) {
+  .frec-exp--seis .frec-exp__card:nth-child(-n + 3),
+  .frec-exp--seis .frec-exp__card:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 700px) {
+  .frec-exp--seis .frec-exp__card:nth-child(-n + 3),
+  .frec-exp--seis .frec-exp__card:nth-child(n + 4) {
+    grid-column: span 6;
+  }
+}
+
+
+/* ===== Sección de octubre: la línea temporal ===== */
+
+/*
+  LA ÚNICA SECCIÓN OSCURA ANTES DEL PRECIO.
+
+  Octubre es el argumento de por qué ES ESTE DÍA y no otro, y ese argumento
+  necesita un ambiente propio: sobre el blanco de la página, cuatro fechas en
+  fila se leerían como una tabla de horarios.
+
+  El violeta profundo con resplandor dorado es el mismo lenguaje del cierre y
+  de la tarjeta de precio, así que la sección no introduce una estética nueva
+  —usa la que la página reserva para los momentos de decisión.
+*/
+.frec-octubre {
+  /* Ancho común de los bloques apilados bajo la línea temporal: texto,
+     remate, preparación previa y botón cierran todos sobre esta medida. */
+  --octubre-ancho: 760px;
+
+  position: relative;
+  overflow: hidden;
+  padding: clamp(64px, 6.5vw, 104px) 0;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(91, 58, 160, 0.5) 0%,
+      transparent 70%
+    ),
+    linear-gradient(168deg, #1d0b3d 0%, #2a0f56 55%, #1a0836 100%);
+}
+
+/* El resplandor dorado detrás de la línea temporal, centrado donde va a caer
+   el hito del 10: es lo que hace que ese punto parezca iluminado desde atrás
+   en vez de simplemente ser más grande. */
+.frec-octubre__glow {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  z-index: 0;
+  width: min(760px, 88%);
+  height: 340px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(212, 160, 32, 0.22) 0%,
+    rgba(212, 160, 32, 0.08) 45%,
+    transparent 72%
+  );
+  filter: blur(18px);
+}
+
+.frec-octubre__intro {
+  max-width: 820px;
+  margin: 0 auto clamp(44px, 4.6vw, 68px);
+  text-align: center;
+}
+
+.frec-octubre__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 3.4vw, 42px);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.024em;
+  text-wrap: balance;
+  color: #fff;
+}
+
+.frec-octubre__title em {
+  font-style: italic;
+  background: linear-gradient(92deg, #e8c46a, #ffe3a3, #e8c46a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.frec-octubre__lead {
+  margin: clamp(16px, 1.8vw, 22px) 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/*
+  LA LÍNEA TEMPORAL.
+
+  Cuatro hitos en fila con una línea corriendo por detrás. La línea es un
+  ::before del contenedor y no un borde de cada hito: así es una sola pieza
+  continua que atraviesa los cuatro, que es lo que la hace leer como recorrido
+  y no como cuatro cajas juntas.
+
+  Se detiene antes de los extremos —de ahí los degradados a transparente— para
+  que el recorrido no parezca continuar fuera de cuadro.
+*/
+.frec-octubre__linea {
+  /* El gap viaja como variable porque ::before lo necesita para situar los
+     extremos de la línea sobre el centro del primer y del último punto. */
+  --octubre-gap: clamp(8px, 1vw, 16px);
+
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--octubre-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+  La línea va de centro de punto a centro de punto, no de un porcentaje
+  aproximado al otro.
+
+  Con cuatro columnas iguales el primer punto cae al 12.5% del ancho y el
+  último al 87.5%, pero el gap entre celdas desplaza ambos hacia dentro: cada
+  celda mide (100% - 3*gap)/4, así que el centro de la primera está a la mitad
+  de eso y el de la última, a esa misma distancia del borde derecho. De ahí el
+  calc: el 12% que había antes era una estimación que fallaba por los dos
+  lados —sobraba a la izquierda y faltaba a la derecha— y el desajuste crecía
+  con el ancho de la ventana, porque el gap es fluido.
+*/
+.frec-octubre__linea::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: calc((100% - var(--octubre-gap) * 3) / 8);
+  right: calc((100% - var(--octubre-gap) * 3) / 8);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(232, 196, 106, 0.42),
+    rgba(232, 196, 106, 0.42)
+  );
+}
+
+.frec-octubre__hito {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* El punto sobre la línea. Los tres secundarios son pequeños y apagados; el
+   del 10 lo sobrescribe más abajo.
+
+   El halo macizo del color del fondo es lo que abre el hueco en la línea:
+   así el punto se lee encima de ella y no atravesado por ella. */
+.frec-octubre__punto {
+  width: 10px;
+  height: 10px;
+  margin-bottom: clamp(16px, 1.8vw, 24px);
+  border-radius: 50%;
+  background: rgba(232, 196, 106, 0.55);
+  box-shadow: 0 0 0 4px #240d49;
+}
+
+.frec-octubre__dia {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* El "/10" del mes, más pequeño y más apagado: el dato que cambia es el día,
+   el mes es contexto. */
+.frec-octubre__mes {
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.6;
+}
+
+.frec-octubre__nombre {
+  margin-top: 8px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(11px, 1.05vw, 12.5px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/*
+  EL HITO DEL 10/10.
+
+  Todo lo que lo distingue va aquí junto: punto más grande y dorado macizo con
+  halo, cifra a plena opacidad y en dorado, rótulo más legible. Los otros tres
+  hitos no cambian de tamaño para no empujar la retícula —el 10 crece hacia
+  dentro de su propia celda.
+*/
+/* El punto grande sube la mitad de lo que crece —(18-10)/2— para que su
+   centro siga cayendo sobre la línea, que está fijada al centro de los
+   puntos pequeños. El margen inferior compensa lo mismo, o el hito quedaría
+   4px más bajo que los otros tres. */
+.frec-octubre__hito[data-protagonista="si"] .frec-octubre__punto {
+  width: 18px;
+  height: 18px;
+  margin-top: -4px;
+  margin-bottom: calc(clamp(16px, 1.8vw, 24px) - 4px);
+  background: linear-gradient(150deg, #ffe3a3, #d4a020);
+  box-shadow:
+    0 0 0 5px #240d49,
+    0 0 0 8px rgba(212, 160, 32, 0.28),
+    0 0 26px rgba(212, 160, 32, 0.55);
+}
+
+.frec-octubre__hito[data-protagonista="si"] .frec-octubre__dia {
+  font-size: clamp(40px, 5vw, 66px);
+  background: linear-gradient(160deg, #ffe9b8, #e8c46a 55%, #c99a1c);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.frec-octubre__hito[data-protagonista="si"] .frec-octubre__nombre {
+  color: rgba(255, 227, 163, 0.82);
+}
+
+/* El sello "El encuentro": lo que convierte la fecha destacada en una cita.
+   Sin él, el 10 sólo se ve más grande y no se sabe por qué. */
+.frec-octubre__sello {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 196, 106, 0.32);
+  background: rgba(212, 160, 32, 0.14);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(10.5px, 1vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #ffe3a3;
+  white-space: nowrap;
+}
+
+/*
+  Los dos párrafos del código del 1.
+
+  TODOS LOS BLOQUES DE ESTA SECCIÓN COMPARTEN ANCHO. Antes cada uno tenía el
+  suyo —700, 720 y 640— y al ir centrados y apilados los bordes no coincidían
+  con ninguno de los de arriba ni de abajo: la columna se veía desalineada en
+  cada salto. Con --octubre-ancho los cuatro bloques cierran sobre la misma
+  línea vertical, que es lo que hace que se lean como una sola columna.
+*/
+.frec-octubre__texto {
+  max-width: var(--octubre-ancho);
+  margin: clamp(48px, 5vw, 72px) auto 0;
+  text-align: center;
+}
+
+.frec-octubre__texto p {
+  margin: 0 0 clamp(14px, 1.5vw, 18px);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.frec-octubre__texto p:last-child {
+  margin-bottom: 0;
+}
+
+.frec-octubre__texto strong {
+  font-weight: 600;
+  color: #ffe3a3;
+}
+
+/*
+  EL REMATE: DONDE OCTUBRE Y LA EXPERIENCIA SE JUNTAN.
+
+  En su propia caja con borde tenue, porque es el punto en que la sección deja
+  de hablar de un calendario y empieza a hablar del encuentro. Suelto entre
+  los párrafos de arriba se leería como un tercero más.
+*/
+.frec-octubre__remate {
+  max-width: var(--octubre-ancho);
+  margin: clamp(38px, 4vw, 56px) auto 0;
+  padding: clamp(24px, 2.6vw, 36px);
+  border-radius: 20px;
+  border: 1px solid rgba(232, 196, 106, 0.2);
+  background: linear-gradient(
+    158deg,
+    rgba(91, 58, 160, 0.26) 0%,
+    rgba(212, 160, 32, 0.07) 100%
+  );
+  text-align: center;
+}
+
+.frec-octubre__remate-fuerte {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(19px, 2.2vw, 27px);
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  color: #fff;
+}
+
+.frec-octubre__remate-fuerte em {
+  font-style: italic;
+  background: linear-gradient(92deg, #e8c46a, #ffe3a3, #e8c46a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.frec-octubre__remate-texto {
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14.5px, 1.35vw, 16.5px);
+  font-weight: 400;
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* La preparación previa: un entregable, no parte del argumento. Va en menor
+   peso y alineada a la izquierda con su filete, para que no compita con el
+   remate centrado que tiene encima. */
+.frec-octubre__previa {
+  position: relative;
+  max-width: var(--octubre-ancho);
+  margin: clamp(30px, 3.2vw, 44px) auto 0;
+  padding-left: clamp(16px, 1.8vw, 22px);
+  border-left: 2px solid rgba(232, 196, 106, 0.38);
+  text-align: left;
+}
+
+.frec-octubre__previa-titulo {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 600;
+  color: #ffe3a3;
+}
+
+.frec-octubre__previa-texto {
+  margin: 8px 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 15.5px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.frec-octubre__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(38px, 4vw, 54px);
+}
+
+/* El rótulo de este botón es el más largo de la página y partía en dos
+   renglones, lo que dejaba la píldora alta y estrecha justo donde el resto de
+   la sección ya cierra sobre una columna ancha. Se le impide partir y se le
+   da aire lateral: así ocupa una sola línea y su ancho acompaña al del bloque
+   que tiene encima en vez de contradecirlo. */
+.frec-octubre__cta .frec-cta p {
+  white-space: nowrap;
+}
+
+.frec-octubre__cta .frec-cta .pearl-wrap {
+  padding-left: clamp(24px, 3vw, 44px);
+  padding-right: clamp(24px, 3vw, 44px);
+}
+
+@media (max-width: 560px) {
+  /* A este ancho una sola línea obligaría a un cuerpo ilegible; vuelve a
+     permitirse el quiebre y el botón pasa a ocupar el ancho disponible. */
+  .frec-octubre__cta .frec-cta p {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 700px) {
+  /*
+    LA LÍNEA PASA A VERTICAL.
+
+    Cuatro hitos en fila a este ancho dejan las cifras y los rótulos
+    ilegibles. En columna cada hito recupera su ancho, y la línea corre por la
+    izquierda uniendo los puntos: el recorrido se mantiene, sólo cambia de
+    eje.
+  */
+  .frec-octubre__linea {
+    grid-template-columns: 1fr;
+    gap: clamp(26px, 6vw, 34px);
+    padding-left: 30px;
+  }
+
+  .frec-octubre__linea::before {
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(232, 196, 106, 0.42) 8%,
+      rgba(232, 196, 106, 0.42) 92%,
+      transparent
+    );
+  }
+
+  /* El hito pasa a fila: punto a la izquierda sobre la línea, y el día y su
+     rótulo a la derecha. */
+  .frec-octubre__hito {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 16px;
+    text-align: left;
+  }
+
+  .frec-octubre__punto {
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    margin: 0;
+    transform: translateY(-50%);
+  }
+
+  .frec-octubre__hito[data-protagonista="si"] .frec-octubre__punto {
+    left: -34px;
+    margin-top: 0;
+  }
+
+  .frec-octubre__dia {
+    grid-column: 1;
+    font-size: clamp(34px, 11vw, 44px);
+  }
+
+  .frec-octubre__hito[data-protagonista="si"] .frec-octubre__dia {
+    font-size: clamp(44px, 14vw, 58px);
+  }
+
+  .frec-octubre__nombre {
+    grid-column: 2;
+    margin-top: 0;
+  }
+
+  /* El sello baja a su propia fila, bajo las dos columnas: al lado del rótulo
+     no entra sin desbordar. */
+  .frec-octubre__sello {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    justify-self: start;
+  }
+
+  .frec-octubre__glow {
+    top: 30%;
+    height: 420px;
+  }
+
+  .frec-octubre__previa {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+
+/* ===== Testimonios ===== */
+
+/*
+  La sección no se renderiza mientras no haya testimonios reales cargados —ver
+  el componente—, pero su CSS sí existe: cuando lleguen, se pegan en el array
+  y la sección aparece ya resuelta.
+*/
+.frec-testi {
+  position: relative;
+  padding: clamp(20px, 2.4vw, 40px) 0 clamp(56px, 6vw, 88px);
+}
+
+.frec-testi__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(14px, 1.5vw, 20px);
+  margin: clamp(32px, 3.4vw, 46px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frec-testi__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(20px, 2.2vw, 28px);
+  border-radius: 18px;
+  border: 1px solid rgba(155, 126, 200, 0.2);
+  background: linear-gradient(
+    158deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(246, 241, 252, 0.9) 100%
+  );
+  box-shadow:
+    0 8px 22px rgba(41, 0, 102, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.frec-testi__marca {
+  display: inline-flex;
+  color: rgba(155, 126, 200, 0.55);
+}
+
+.frec-testi__texto {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.25vw, 15.5px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(46, 32, 64, 0.84);
+}
+
+/* El autor queda pegado al fondo de la tarjeta: con textos de largos
+   distintos en la misma fila, así todos los nombres se alinean. */
+.frec-testi__autor {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: auto 0 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13.5px, 1.2vw, 15px);
+  font-weight: 600;
+  color: #290066;
+}
+
+.frec-testi__detalle {
+  font-size: 0.86em;
+  font-weight: 500;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+
+/* ===== FAQ ===== */
+
+.frec-faq {
+  position: relative;
+  padding: clamp(56px, 6vw, 92px) 0;
+}
+
+.frec-faq__lista {
+  max-width: 780px;
+  margin: clamp(32px, 3.4vw, 48px) auto 0;
+}
+
+/*
+  CADA PREGUNTA ES UN <details>.
+
+  El navegador ya sabe abrir y cerrar esto, anunciarlo y dejarlo recorrer con
+  el teclado. Lo único que pone el CSS es el aspecto: el marcador nativo fuera,
+  y el signo + que gira a equis leyendo [open] en el padre.
+*/
+.frec-faq__item {
+  border-bottom: 1px solid rgba(155, 126, 200, 0.22);
+}
+
+.frec-faq__item:first-child {
+  border-top: 1px solid rgba(155, 126, 200, 0.22);
+}
+
+.frec-faq__pregunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(18px, 1.9vw, 24px) 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(15px, 1.4vw, 17.5px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: #290066;
+  transition: color 200ms ease;
+  /* El resalte azul del navegador al tocar en móvil se quita: aquí ya hay un
+     estado propio de abierto. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safari necesita el pseudo-elemento propio, no basta con list-style. */
+.frec-faq__pregunta::-webkit-details-marker {
+  display: none;
+}
+
+.frec-faq__pregunta:hover {
+  color: #5b3aa0;
+}
+
+.frec-faq__mas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgba(155, 126, 200, 0.14);
+  color: #5b3aa0;
+  transition: transform 260ms ease, background 260ms ease;
+}
+
+.frec-faq__item[open] .frec-faq__mas {
+  transform: rotate(45deg);
+  background: rgba(212, 160, 32, 0.18);
+  color: #a06c08;
+}
+
+.frec-faq__respuesta {
+  margin: 0;
+  padding: 0 46px clamp(20px, 2.2vw, 26px) 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 16px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(46, 32, 64, 0.78);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frec-faq__mas {
+    transition: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .frec-faq__respuesta {
+    padding-right: 0;
+  }
+}
+
+
+/* ===== Cierre: el párrafo nuevo bajo la bajada ===== */
+
+.frec-cierre__texto {
+  max-width: 620px;
+  margin: clamp(18px, 2vw, 26px) auto 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 16px);
+  font-weight: 400;
+  line-height: 1.58;
+  color: rgba(255, 255, 255, 0.64);
+}
