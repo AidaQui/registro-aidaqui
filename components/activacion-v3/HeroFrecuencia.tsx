@@ -114,14 +114,6 @@ export default function HeroFrecuencia() {
             href="#frec-precio-title"
             label="Quiero vivir esta experiencia"
           />
-
-          {/* Las tres objeciones de entrada —dónde es, qué pasa si no puedo
-              ir, cuánto cuesta— resueltas junto al botón. El precio va aquí
-              a propósito: en tráfico frío esconderlo hasta el pricing hace
-              que la mitad baje sólo a buscarlo. */}
-          <p className="frec-hero__micro">
-            En vivo por Zoom · Grabación incluida · USD 33
-          </p>
         </div>
       </div>
     </section>

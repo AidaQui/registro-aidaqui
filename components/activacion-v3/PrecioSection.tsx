@@ -79,12 +79,16 @@ export default function PrecioSection() {
               className="frec-precio__pillar"
               topColor="#9b7ec8"
               bottomColor="#d4a020"
-              intensity={0.85}
+              /* Bajó de 0.85 a 0.45: a plena intensidad la columna se
+                 comía la lista y los datos del pie, que son justo lo que
+                 hay que leer antes de pulsar. Sigue estando —da la
+                 profundidad de la tarjeta— pero ya no compite. */
+              intensity={0.45}
               rotationSpeed={0.22}
               glowAmount={0.004}
               pillarWidth={2.4}
               pillarHeight={0.35}
-              noiseIntensity={0.35}
+              noiseIntensity={0.28}
               pillarRotation={180}
             />
             <p className="frec-precio__nombre">{EVENTO.titulo}</p>

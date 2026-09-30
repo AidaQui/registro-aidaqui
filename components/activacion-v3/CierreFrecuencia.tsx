@@ -113,7 +113,7 @@ export default function CierreFrecuencia() {
           <div className="frec-cierre__actions" data-reveal>
             <FrecuenciaCta
               variant="gold"
-              label="Quiero vivir esta experiencia — USD 33"
+              label="Quiero vivir esta experiencia"
             />
 
             {/* Misma estructura pearl que los demás CTA de la página —el

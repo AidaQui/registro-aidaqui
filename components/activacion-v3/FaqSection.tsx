@@ -84,7 +84,13 @@ export default function FaqSection() {
                 </span>
               </summary>
 
-              <p className="frec-faq__respuesta">{respuesta}</p>
+              {/* La respuesta va envuelta porque <details> no anima su
+                  apertura: el contenedor es el que pasa de 0fr a 1fr y el
+                  párrafo de dentro viaja con él. Un solo elemento no podría
+                  hacerlo —height:auto no es animable—. */}
+              <div className="frec-faq__cuerpo">
+                <p className="frec-faq__respuesta">{respuesta}</p>
+              </div>
             </details>
           ))}
         </div>

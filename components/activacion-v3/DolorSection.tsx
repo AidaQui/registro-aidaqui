@@ -72,7 +72,13 @@ export default function DolorSection() {
   const ref = useScrollReveal<HTMLElement>();
 
   return (
-    <section ref={ref} className="frec-dolor" aria-labelledby="frec-dolor-title">
+    // frec-dolor--v3 separa esta versión de la v2, que comparte .frec-dolor:
+    // el fondo del encabezado sólo debe aparecer aquí.
+    <section
+      ref={ref}
+      className="frec-dolor frec-dolor--v3"
+      aria-labelledby="frec-dolor-title"
+    >
       <div className="frec-shell">
         <div className="frec-intro">
           {/* EL EJE PASA A SER EL TITULAR.

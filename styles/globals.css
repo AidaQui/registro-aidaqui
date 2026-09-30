@@ -17708,26 +17708,40 @@ button.dg-resource__video {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 18px;
-  margin: 4px 0 0;
+  gap: 8px;
+  margin: clamp(14px, 1.6vw, 18px) 0 0;
   padding: 0;
   list-style: none;
 }
 
+/*
+  CADA DATO EN SU PÍLDORA.
+
+  Iban sueltos y al 62% de opacidad sobre la columna de luz, que justo ahí
+  tiene su parte más clara: se perdían contra ella. Con fondo propio dejan de
+  competir con lo que tienen detrás, y el texto sube a blanco casi pleno.
+
+  Es lo último que se lee antes de pulsar —cuándo, dónde y si queda
+  grabado—, así que tiene que leerse de un vistazo y no forzando la vista.
+*/
 .frec-precio__datos li {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(240, 201, 138, 0.28);
+  background: rgba(26, 8, 54, 0.55);
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: rgba(249, 245, 240, 0.62);
+  color: rgba(255, 255, 255, 0.94);
 }
 
 .frec-precio__datos svg {
   flex-shrink: 0;
-  color: rgba(240, 201, 138, 0.7);
+  color: #f0c98a;
 }
 
 /* El CTA ocupa el ancho de la tarjeta: es la única acción de la pieza y no
@@ -18460,12 +18474,12 @@ body {
   con su borde giratorio—, y de aquí en adelante la página va a repetir ese
   dorado cada vez que aparezca el 10/10.
 */
+/* El fondo va OPACO, no translúcido: el borde de la píldora está animado y
+   con alfa se veía correr por debajo del texto, que lo hacía parecer un
+   defecto de render en vez de un detalle. Los tonos son los mismos que tenía
+   la versión con alfa, ya compuestos sobre el fondo claro del hero. */
 .frec-badge--fecha .frec-badge__inner {
-  background: linear-gradient(
-    150deg,
-    rgba(212, 160, 32, 0.16),
-    rgba(176, 125, 31, 0.1)
-  );
+  background: linear-gradient(150deg, #faeed2, #f5e4bd);
   color: #7a5408;
   font-weight: 600;
 }
@@ -18984,12 +18998,52 @@ body {
    El halo macizo del color del fondo es lo que abre el hueco en la línea:
    así el punto se lee encima de ella y no atravesado por ella. */
 .frec-octubre__punto {
+  position: relative;
   width: 10px;
   height: 10px;
   margin-bottom: clamp(16px, 1.8vw, 24px);
   border-radius: 50%;
   background: rgba(232, 196, 106, 0.55);
   box-shadow: 0 0 0 4px #240d49;
+}
+
+/*
+  LOS PUNTOS RESPIRAN.
+
+  Un latido lento y muy corto de recorrido: el recorrido de octubre es algo
+  que está en marcha, y unos puntos completamente quietos lo dejan pareciendo
+  un calendario impreso.
+
+  Los tres secundarios van desfasados entre sí —de ahí el retardo negativo,
+  que arranca la animación ya empezada— para que no pulsen a la vez, que es
+  lo que delataría que es un efecto y no un movimiento propio de cada uno.
+*/
+@keyframes octubre-latido {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+}
+
+.frec-octubre__punto {
+  animation: octubre-latido 3.4s ease-in-out infinite;
+}
+
+.frec-octubre__hito:nth-child(2) .frec-octubre__punto {
+  animation-delay: -0.85s;
+}
+
+.frec-octubre__hito:nth-child(3) .frec-octubre__punto {
+  animation-delay: -1.7s;
+}
+
+.frec-octubre__hito:nth-child(4) .frec-octubre__punto {
+  animation-delay: -2.55s;
 }
 
 .frec-octubre__dia {
@@ -19032,7 +19086,12 @@ body {
    centro siga cayendo sobre la línea, que está fijada al centro de los
    puntos pequeños. El margen inferior compensa lo mismo, o el hito quedaría
    4px más bajo que los otros tres. */
+/* El del 10 no late con los otros: mantiene su tamaño y su dorado macizo, y
+   lo que se mueve es un halo que se abre desde debajo —ver ::after—. Un punto
+   protagonista que además palpita se vuelve un aviso parpadeante. */
 .frec-octubre__hito[data-protagonista="si"] .frec-octubre__punto {
+  animation: none;
+  opacity: 1;
   width: 18px;
   height: 18px;
   margin-top: -4px;
@@ -19053,7 +19112,51 @@ body {
 }
 
 .frec-octubre__hito[data-protagonista="si"] .frec-octubre__nombre {
-  color: rgba(255, 227, 163, 0.82);
+  color: rgba(255, 227, 163, 0.95);
+}
+
+/* EL HALO DEL 10/10.
+
+   Un anillo que nace en el punto y se expande hasta desvanecerse, como la
+   onda de algo que acaba de encenderse. Va en ::after y no como box-shadow
+   animada porque la sombra pintaría por encima de la línea temporal; el
+   anillo, con z-index por detrás, la deja pasar. */
+@keyframes octubre-onda {
+  0% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3.2);
+  }
+}
+
+.frec-octubre__hito[data-protagonista="si"] .frec-octubre__punto::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 196, 106, 0.8);
+  animation: octubre-onda 2.8s ease-out infinite;
+}
+
+/* Quien pide menos movimiento no recibe ni el latido ni la onda: son adorno,
+   y el recorrido se entiende igual sin ellos. */
+@media (prefers-reduced-motion: reduce) {
+  .frec-octubre__punto,
+  .frec-octubre__hito[data-protagonista="si"] .frec-octubre__punto::after {
+    animation: none;
+  }
+
+  .frec-octubre__punto {
+    opacity: 1;
+  }
 }
 
 /* El sello "El encuentro": lo que convierte la fecha destacada en una cita.
@@ -19192,29 +19295,29 @@ body {
   margin-top: clamp(38px, 4vw, 54px);
 }
 
-/* El rótulo de este botón es el más largo de la página y partía en dos
-   renglones, lo que dejaba la píldora alta y estrecha justo donde el resto de
-   la sección ya cierra sobre una columna ancha. Se le impide partir y se le
-   da aire lateral: así ocupa una sola línea y su ancho acompaña al del bloque
-   que tiene encima en vez de contradecirlo. */
-.frec-octubre__cta .frec-cta p {
-  white-space: nowrap;
-}
-
+/* Aire lateral para que la píldora no quede pegada al rótulo. El nowrap que
+   hubo aquí se retiró al acortarse la etiqueta: con "Quiero vivir la
+   Activación" ya no parte en dos renglones por sí sola. */
 .frec-octubre__cta .frec-cta .pearl-wrap {
   padding-left: clamp(24px, 3vw, 44px);
   padding-right: clamp(24px, 3vw, 44px);
 }
 
-@media (max-width: 560px) {
-  /* A este ancho una sola línea obligaría a un cuerpo ilegible; vuelve a
-     permitirse el quiebre y el botón pasa a ocupar el ancho disponible. */
-  .frec-octubre__cta .frec-cta p {
-    white-space: normal;
-  }
-}
-
 @media (max-width: 700px) {
+  /*
+    EL TEXTO, A LA IZQUIERDA.
+
+    Centrado funciona en escritorio, donde cada párrafo ocupa dos o tres
+    renglones largos y el eje se percibe. A ancho de teléfono el mismo
+    párrafo cae en seis o siete renglones cortos y centrarlos deja los dos
+    márgenes dentados: el ojo pierde dónde empieza cada línea y la lectura se
+    vuelve costosa. Alineado a la izquierda todas arrancan en el mismo sitio.
+  */
+  .frec-octubre__texto,
+  .frec-octubre__remate {
+    text-align: left;
+  }
+
   /*
     LA LÍNEA PASA A VERTICAL.
 
@@ -19450,6 +19553,39 @@ body {
   color: #a06c08;
 }
 
+/*
+  LA APERTURA SUAVE.
+
+  <details> conmuta entre mostrar y ocultar su contenido sin estado
+  intermedio, así que el despliegue no se puede animar sobre el propio
+  elemento. El truco es una rejilla de una fila que va de 0fr a 1fr: ambas
+  medidas son animables y el contenido, con overflow oculto, se descubre a
+  medida que la fila crece.
+
+  La curva es la misma que usa el icono al girar, para que las dos cosas
+  parezcan un solo movimiento.
+*/
+/* content-visibility:visible es imprescindible: el navegador oculta el
+   contenido de un <details> cerrado y sin esto la rejilla animaría una caja
+   vacía, con el texto apareciendo de golpe al final. */
+.frec-faq__cuerpo {
+  display: grid;
+  grid-template-rows: 0fr;
+  content-visibility: visible;
+  transition: grid-template-rows 320ms cubic-bezier(0.32, 0.72, 0.28, 1);
+}
+
+.frec-faq__item[open] .frec-faq__cuerpo {
+  grid-template-rows: 1fr;
+}
+
+.frec-faq__cuerpo > * {
+  overflow: hidden;
+}
+
+/* El texto además se desvanece y sube un poco, medio tiempo por detrás de la
+   rejilla: sin esto aparece nítido desde el primer fotograma y se nota que lo
+   que crece es la caja y no el contenido. */
 .frec-faq__respuesta {
   margin: 0;
   padding: 0 46px clamp(20px, 2.2vw, 26px) 0;
@@ -19458,6 +19594,14 @@ body {
   font-weight: 400;
   line-height: 1.6;
   color: rgba(46, 32, 64, 0.78);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 240ms ease 60ms, transform 240ms ease 60ms;
+}
+
+.frec-faq__item[open] .frec-faq__respuesta {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -19475,14 +19619,17 @@ body {
 
 /* ===== Cierre: el párrafo nuevo bajo la bajada ===== */
 
+/* Continúa la idea del párrafo que tiene encima, así que va pegado a él y en
+   blanco: separado y al 64% de opacidad se leía como una nota al pie de algo
+   ya terminado, no como el remate de la frase. */
 .frec-cierre__texto {
   max-width: 620px;
-  margin: clamp(18px, 2vw, 26px) auto 0;
+  margin: clamp(8px, 0.9vw, 12px) auto 0;
   font-family: var(--font-jost), Arial, sans-serif;
   font-size: clamp(14px, 1.3vw, 16px);
   font-weight: 400;
   line-height: 1.58;
-  color: rgba(255, 255, 255, 0.64);
+  color: #fff;
 }
 
 /* ==========================================================================
@@ -19988,5 +20135,209 @@ body {
     flex-direction: row;
     align-items: baseline;
     gap: 10px;
+  }
+}
+
+/* ==========================================================================
+   ACTIVACIÓN V3 — AJUSTES
+   ========================================================================== */
+
+/*
+  EL FONDO DEL ENCABEZADO DE LAS CUATRO DIMENSIONES.
+
+  La sección abría sobre blanco plano justo después del panel violeta de la
+  identificación, y el salto dejaba el titular flotando sin sitio. La
+  fotografía entra sólo por arriba y se desvanece antes de llegar a las
+  tarjetas: es un arranque, no un fondo de sección, y por debajo tiene que
+  quedar blanco limpio para que los cuatro cuerpos se lean.
+
+  Va en ::before y no en background-image del propio <section> porque hay que
+  poder desvanecerlo con una máscara sin arrastrar el color de fondo.
+
+  La clase --v3 es deliberada: .frec-dolor la comparte la v2, que se le
+  mostró al cliente y no debe cambiar.
+*/
+.frec-dolor--v3::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  height: clamp(280px, 38vw, 460px);
+  background-image: url("/activacion-v2/bg-2.jpg");
+  background-size: cover;
+  background-position: center 28%;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.7) 45%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.7) 45%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* El contenido por delante de la fotografía. Sin esto el titular queda
+   debajo y la imagen lo tapa. */
+.frec-dolor--v3 .frec-shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sobre la fotografía el titular necesita algo más de cuerpo para separarse
+   de los claros del cielo. */
+.frec-dolor--v3 .frec-intro__title {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   LA BIOGRAFÍA DE AIDA, PLEGABLE EN MÓVIL
+   -------------------------------------------------------------------------- */
+
+/*
+  EN ESCRITORIO NO HAY PLIEGUE.
+
+  La columna tiene sitio para los cuatro párrafos y esconderlos ahí sería
+  inventar un problema. El <details> se neutraliza: contenido siempre
+  visible, sin marcador y sin el botón.
+*/
+.frec-aida__detalle {
+  display: block;
+}
+
+.frec-aida__resumen {
+  display: block;
+  list-style: none;
+  cursor: default;
+}
+
+.frec-aida__resumen::-webkit-details-marker {
+  display: none;
+}
+
+.frec-aida__resumen p {
+  margin: 0 0 clamp(12px, 1.3vw, 16px);
+}
+
+.frec-aida__mas {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /*
+    AQUÍ SÍ SE PLIEGA.
+
+    Cuatro párrafos a ancho de teléfono son una pantalla entera de scroll
+    entre la foto y el precio, y quien ya decidió tiene que atravesarla. El
+    primero queda a la vista —dice quién es, que es lo que hace falta— y el
+    resto se ofrece.
+
+    Misma mecánica que el FAQ: rejilla de 0fr a 1fr, porque <details> no
+    anima su propia apertura.
+  */
+  .frec-aida__detalle .frec-aida__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    content-visibility: visible;
+    transition: grid-template-rows 340ms cubic-bezier(0.32, 0.72, 0.28, 1);
+  }
+
+  .frec-aida__detalle[open] .frec-aida__body {
+    grid-template-rows: 1fr;
+  }
+
+  .frec-aida__detalle .frec-aida__body > * {
+    overflow: hidden;
+  }
+
+  /* El primer párrafo del cuerpo pierde su margen superior cuando está
+     cerrado, o el pliegue deja un hueco visible bajo el resumen. */
+  .frec-aida__detalle .frec-aida__body p:first-child {
+    margin-top: 0;
+  }
+
+  .frec-aida__detalle .frec-aida__body p {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 260ms ease 60ms, transform 260ms ease 60ms;
+  }
+
+  .frec-aida__detalle[open] .frec-aida__body p {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /*
+    EL BOTÓN.
+
+    Sutil a propósito: un contorno fino y el texto en violeta, sin relleno.
+    Compite en la misma pantalla con el CTA dorado de la sección siguiente y
+    un botón macizo aquí robaría esa atención para leer una biografía.
+  */
+  .frec-aida__mas {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(122, 79, 192, 0.32);
+    background: rgba(155, 126, 200, 0.07);
+    font-family: var(--font-jost), Arial, sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #5b3aa0;
+    transition: background 220ms ease, border-color 220ms ease;
+  }
+
+  .frec-aida__resumen {
+    cursor: pointer;
+  }
+
+  .frec-aida__resumen:hover .frec-aida__mas {
+    background: rgba(155, 126, 200, 0.14);
+    border-color: rgba(122, 79, 192, 0.5);
+  }
+
+  /* El galón gira al abrirse, que es lo que dice que el botón cierra lo que
+     acaba de abrir. */
+  .frec-aida__mas svg {
+    transition: transform 300ms cubic-bezier(0.32, 0.72, 0.28, 1);
+  }
+
+  .frec-aida__detalle[open] .frec-aida__mas svg {
+    transform: rotate(180deg);
+  }
+
+  /* Los dos rótulos viajan en el marcado y se alterna cuál se ve: medir el
+     texto para cambiarlo en JavaScript sería más frágil y no aporta nada. */
+  .frec-aida__mas-cerrar {
+    display: none;
+  }
+
+  .frec-aida__detalle[open] .frec-aida__mas-abrir {
+    display: none;
+  }
+
+  .frec-aida__detalle[open] .frec-aida__mas-cerrar {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frec-aida__detalle .frec-aida__body,
+  .frec-aida__detalle .frec-aida__body p,
+  .frec-aida__mas svg,
+  .frec-faq__cuerpo,
+  .frec-faq__respuesta {
+    transition: none;
   }
 }

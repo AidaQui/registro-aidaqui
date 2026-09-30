@@ -138,7 +138,7 @@ export default function OctubreSection() {
           <FrecuenciaCta
             variant="gold"
             href="#frec-precio-title"
-            label="Quiero vivir la Activación del 10/10"
+            label="Quiero vivir la Activación"
           />
         </div>
       </div>
