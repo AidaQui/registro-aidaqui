@@ -79,8 +79,13 @@ export default function SobreAida() {
               cerrado. En escritorio no hay pliegue —la columna tiene sitio de
               sobra—, y el CSS neutraliza el marcador y deja todo abierto. */}
           <details className="frec-aida__detalle" data-reveal="right">
+            {/* El botón va DENTRO del summary porque es lo que el navegador
+                hace pulsable, pero el summary se ordena por CSS para que
+                aparezca al final: el marcado manda que abra, y la retícula
+                manda dónde se ve. Sacarlo de aquí lo dejaría sin funcionar
+                sin JavaScript. */}
             <summary className="frec-aida__resumen">
-              <p>
+              <p className="frec-aida__entrada">
                 Aida Qui es una de las referentes más reconocidas en
                 transformación energética y espiritualidad práctica en habla
                 hispana.

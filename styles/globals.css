@@ -20120,21 +20120,70 @@ body {
 }
 
 @media (max-width: 700px) {
+  /*
+    LOS TRES DATOS, COMPACTOS.
+
+    Apilados a ancho completo cada uno era una tarjeta de 60px de alto con su
+    padding y su cifra a cuerpo de escritorio: los tres juntos ocupaban media
+    pantalla y empujaban el botón fuera de la vista, que es justo lo que una
+    página de pre-checkout no puede permitirse.
+
+    Ahora la fecha y el formato van en una fila de dos —son datos cortos y
+    caben— y el precio abajo, a lo ancho y en horizontal. Tres piezas
+    ordenadas en dos renglones en vez de tres bloques altos.
+  */
   .puente-hero__datos {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
   .puente-hero__dato {
     max-width: none;
+    gap: 8px;
+    padding: 11px 12px;
   }
 
-  /* El precio pasa a fila, con la cifra a la izquierda: apilado ocupaba una
-     tarjeta entera para dos datos cortos. */
+  /* El icono baja de tamaño con la tarjeta, o queda desproporcionado. */
+  .puente-hero__dato > svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .puente-hero__dato-fuerte {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .puente-hero__dato-pie {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  /* El precio ocupa las dos columnas y se lee en una línea: la cifra a la
+     izquierda y su nota al lado, no debajo. Sigue siendo lo más grande de la
+     fila, pero sin la altura de una tarjeta propia. */
+  .puente-hero__dato--precio {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+
   .puente-hero__dato--precio > span {
     flex-direction: row;
     align-items: baseline;
     gap: 10px;
+  }
+
+  .puente-hero__precio {
+    font-size: 26px;
+  }
+}
+
+/* A ancho de teléfono pequeño las dos columnas dejan los rótulos partidos en
+   tres renglones, así que vuelven a una sola. */
+@media (max-width: 380px) {
+  .puente-hero__datos {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -20191,10 +20240,57 @@ body {
   z-index: 1;
 }
 
-/* Sobre la fotografía el titular necesita algo más de cuerpo para separarse
-   de los claros del cielo. */
-.frec-dolor--v3 .frec-intro__title {
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+/*
+  EN MÓVIL LA FOTOGRAFÍA NO SE COMPARTE CON EL TEXTO.
+
+  A ancho de escritorio la imagen es una banda ancha y baja, y el titular cae
+  sobre su zona ya desvanecida. En vertical esa misma imagen se vuelve alta y
+  estrecha: el titular queda sobre el centro de la fotografía, donde está todo
+  el detalle, y hacía falta un velo blanco por detrás para poder leerlo. Ese
+  velo es exactamente lo que ensucia la imagen.
+
+  Así que dejan de compartir sitio. La foto ocupa limpia la franja de arriba
+  —sin máscara que la apague y a plena opacidad, que es como se ve bien— y el
+  contenido arranca por debajo de ella. Nada se superpone, así que no hace
+  falta ninguna sombra sobre el texto.
+*/
+@media (max-width: 700px) {
+  .frec-dolor--v3 {
+    /* La franja que se reserva para la imagen. El padding del contenido se
+       calcula desde aquí, así que cambiar este valor mueve las dos cosas a
+       la vez y nunca se descuadran. */
+    --dolor-foto: 200px;
+
+    padding-top: 0;
+  }
+
+  .frec-dolor--v3::before {
+    height: var(--dolor-foto);
+    opacity: 1;
+    /* Sin máscara: la imagen termina en su borde y no se desvanece sobre el
+       texto, porque ya no hay texto debajo. */
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  /* El contenido empieza donde acaba la imagen, con su propio aire. */
+  .frec-dolor--v3 .frec-shell {
+    padding-top: calc(var(--dolor-foto) + clamp(28px, 7vw, 44px));
+  }
+
+  /* El texto ya no va sobre la fotografía, así que la sombra que lo
+     despegaba del cielo sobra: sobre blanco sólo lo emborrona. */
+  .frec-dolor--v3 .frec-intro__title {
+    text-shadow: none;
+  }
+}
+
+/* En escritorio el titular sí cae sobre la parte desvanecida de la imagen, y
+   ahí un halo muy tenue lo separa de los claros del cielo. */
+@media (min-width: 701px) {
+  .frec-dolor--v3 .frec-intro__title {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -20242,6 +20338,43 @@ body {
     Misma mecánica que el FAQ: rejilla de 0fr a 1fr, porque <details> no
     anima su propia apertura.
   */
+
+  /*
+    EL BOTÓN, DEBAJO DE TODO.
+
+    Un <summary> tiene que ser el primer hijo del <details> —es la regla del
+    elemento y lo que lo hace pulsable—, pero el botón dentro de él quedaba
+    encima del texto que despliega, que se lee al revés: primero la acción y
+    después lo que abre.
+
+    display:contents disuelve la caja del summary y deja que sus dos hijos
+    —el párrafo de entrada y el botón— entren directamente en la columna del
+    details. Desde ahí `order` los coloca: el párrafo primero, el cuerpo en
+    medio y el botón al final. El marcado no cambia, así que sigue abriendo
+    sin JavaScript y los lectores de pantalla lo siguen anunciando como el
+    control del bloque.
+  */
+  .frec-aida__detalle {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frec-aida__resumen {
+    display: contents;
+  }
+
+  .frec-aida__entrada {
+    order: 1;
+  }
+
+  .frec-aida__detalle .frec-aida__body {
+    order: 2;
+  }
+
+  .frec-aida__mas {
+    order: 3;
+  }
+
   .frec-aida__detalle .frec-aida__body {
     display: grid;
     grid-template-rows: 0fr;
@@ -20298,13 +20431,22 @@ body {
     transition: background 220ms ease, border-color 220ms ease;
   }
 
-  .frec-aida__resumen {
+  /* El summary ya no tiene caja propia —display:contents—, así que el cursor
+     y el hover van sobre el botón, que es lo único visible que se pulsa. */
+  .frec-aida__mas {
     cursor: pointer;
   }
 
-  .frec-aida__resumen:hover .frec-aida__mas {
+  .frec-aida__mas:hover {
     background: rgba(155, 126, 200, 0.14);
     border-color: rgba(122, 79, 192, 0.5);
+  }
+
+  /* El foco de teclado recae en el summary invisible, así que el anillo se
+     dibuja sobre el botón: sin esto, tabular hasta aquí no se vería. */
+  .frec-aida__resumen:focus-visible .frec-aida__mas {
+    outline: 2px solid #7a4fc0;
+    outline-offset: 3px;
   }
 
   /* El galón gira al abrirse, que es lo que dice que el botón cierra lo que
