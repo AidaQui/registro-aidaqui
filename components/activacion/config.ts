@@ -86,12 +86,19 @@ export const OCTUBRE: MomentoOctubre[] = [
 /**
  * Precio de la edición.
  *
+ * La moneda es el EURO, no el dólar: el cobro se hace en euros y anunciar
+ * otra divisa cambia lo que la persona cree que va a pagar.
+ *
+ * Este valor es el único sitio donde vive el precio —la landing y la página
+ * puente lo leen de aquí en ocho puntos—, así que se corrige una vez y se
+ * corrige entero. No escribir la cifra a mano en ningún componente.
+ *
  * `tachado` es el valor de referencia que se muestra cruzado sobre el precio
  * real. Dejarlo vacío oculta esa línea: un precio tachado que nadie ha pagado
  * nunca no persuade, molesta.
  */
 export const PRECIO = {
-  actual: "USD 33",
+  actual: "33€",
   tachado: "",
   nota: "Pago único",
 } as const;

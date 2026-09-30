@@ -21,7 +21,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * ── TRES O CUATRO, NO MÁS ──
  *
  * La retícula está pensada para tres o cuatro piezas cortas. Un muro de
- * testimonios largos en una landing de USD 33 pide más atención de la que la
+ * testimonios largos en una landing de 33€ pide más atención de la que la
  * decisión necesita.
  */
 
