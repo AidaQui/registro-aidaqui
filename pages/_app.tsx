@@ -11,11 +11,22 @@ const fraunces = Fraunces({
   style: ["normal", "italic"],
 });
 
+/*
+ * Jost va SIN `weight`, igual que Fraunces y Lora.
+ *
+ * Es una fuente variable, así que un solo archivo cubre todo el rango de
+ * pesos. Enumerarlos —300, 400, 500, 600— la pedía como cuatro fuentes
+ * estáticas por cada subconjunto, y Turbopack no resuelve esa forma: el build
+ * caía con doce "Module not found" sobre @vercel/turbopack-next. Webpack sí la
+ * acepta, que es por lo que compilaba en local y fallaba en Vercel.
+ *
+ * Los pesos que usa el CSS siguen funcionando: al ser variable, cualquier
+ * valor del rango está disponible sin declararlo aquí.
+ */
 const jost = Jost({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jost",
-  weight: ["300", "400", "500", "600"],
 });
 
 /*
