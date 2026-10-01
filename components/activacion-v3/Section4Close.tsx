@@ -45,25 +45,51 @@ export default function Section4Close() {
   return (
     <div ref={ref} className="s4-close">
       <h3 className="s4-close__title text-reveal">
-        Estamos viviendo un cambio profundo de consciencia.
+        Estamos viviendo un profundo cambio de consciencia
       </h3>
-      <p className="s4-close__body text-reveal">
-        Muchas personas están intentando sostener nuevas realidades con
-        identidades antiguas. Y por eso sienten desconexión, confusión, vacío,
-        agotamiento, incoherencia interna.
+
+      <p className="s4-close__eyebrow text-reveal">
+        Y octubre es el acelerador energético de este proceso
       </p>
+
+      <p className="s4-close__body text-reveal">
+        Octubre no contiene únicamente el portal 10/10.
+      </p>
+
+      {/* Las cuatro fechas van en su propia pieza y no dentro del párrafo:
+          son el dato que hay que retener de toda la sección, y en línea con
+          el texto se leían como una enumeración más. */}
+      <p className="s4-close__body text-reveal">
+        <em>
+          El 1, 10, 19 y 28 abren cuatro momentos energéticos que comparten el
+          código del 1:
+        </em>{" "}
+        inicio, decisión y creación de una nueva dirección.
+      </p>
+
+      <p className="s4-close__body text-reveal">
+        Es un recorrido que comienza el 1/10,{" "}
+        <em>alcanza uno de sus puntos de mayor intensidad el 10/10</em> y
+        continúa hasta su cierre el 28/10.
+      </p>
+
+      <p className="s4-close__body text-reveal">
+        Durante la <em>Activación del Ser Multidimensional</em> prepararemos tu
+        sistema mental, emocional, físico y energético para atravesar este
+        proceso con mayor consciencia, claridad y dirección.
+      </p>
+
       <div className="s4-close__emphasis">
         <p className="text-reveal s4-close__phrase">
-          La verdadera transformación no ocurre solo entendiendo más.
-        </p>
-        <p className="text-reveal s4-close__phrase">
-          Ocurre cuando empiezas a habitar una nueva frecuencia en tu vida real.
-        </p>
-        <p className="text-reveal s4-close__phrase">
-          En tu cuerpo, en tus relaciones, en tus decisiones,<br />
-          en la forma en la que te eliges.
+          Por eso esta experiencia ocurre una sola vez al año, en un momento
+          energético que no volverá a repetirse de esta forma durante 9 años.
         </p>
       </div>
+
+      <p className="s4-close__body s4-close__cierre text-reveal">
+        Desde que te registres, comenzaremos a preparar tu energía para los
+        cuatro portales de octubre.
+      </p>
     </div>
   );
 }

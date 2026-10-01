@@ -19928,3 +19928,237 @@ body {
   }
 }
 
+
+/* ==========================================================================
+   ACTIVACIÓN V3 — /activacion-v3
+   ==========================================================================
+
+   Variante de pruebas sobre la landing de Frecuencia Original. Todo va con
+   modificador --v3 porque las clases base (.hero-section, .s4-*, .s6-*) las
+   comparten /frecuencia y /masterclass: sin el modificador, cualquier ajuste
+   de aquí les cambiaría el aspecto a las dos.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LA PORTADA DEL HERO
+   -------------------------------------------------------------------------- */
+
+/* Retrato de la sesión de lista de espera, en lugar del banner anterior. */
+.hero-section--v3 .hero-bg {
+  background-image: url("/lista-de-espera/hero-web.jpg");
+  background-position: center 22%;
+}
+
+/* --------------------------------------------------------------------------
+   2. LAS TARJETAS DE "LO QUE EXPERIMENTARÁS DENTRO"
+   -------------------------------------------------------------------------- */
+
+/*
+  MÁS BAJAS Y MÁS ANCHAS.
+
+  Iban en 3/4 —formato retrato—, y con siete piezas la sección se comía dos
+  pantallas enteras de scroll. El texto de cada tarjeta viene quemado en la
+  imagen, así que una tarjeta alta no aporta más información: sólo aleja el
+  texto siguiente.
+
+  4/3 apaisado reduce casi a la mitad la altura de cada fila y deja la
+  sección en una sola pantalla, que es lo que permite leerla de corrido.
+*/
+.s4-section--v3 .s4-card {
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+}
+
+/* Cinco por fila en lugar de cuatro: con la tarjeta más baja, cuatro la
+   dejaban demasiado ancha y la imagen perdía el encuadre. */
+.s4-section--v3 .s4-row--4 .s4-card,
+.s4-section--v3 .s4-row--3 .s4-card {
+  flex: 0 0 calc(22% - 12px);
+}
+
+.s4-section--v3 .s4-row {
+  gap: 16px;
+}
+
+.s4-section--v3 .s4-grid {
+  gap: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   3. EL VÍDEO DE VENTA
+   -------------------------------------------------------------------------- */
+
+.s3-vsl {
+  padding: clamp(48px, 5.5vw, 84px) 0;
+  background: #fbf4eb;
+}
+
+.s3-vsl__shell {
+  width: min(calc(100% - 40px), 900px);
+  margin: 0 auto;
+}
+
+.s3-vsl__title {
+  margin: 0 0 clamp(22px, 2.6vw, 34px);
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(23px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+  color: #2e2040;
+}
+
+.s3-vsl__title em {
+  font-style: italic;
+  color: #6a4a9c;
+}
+
+/* El marco mantiene la proporción del vídeo pase lo que pase dentro: así la
+   página no da un salto al cambiar la portada por el reproductor. */
+.s3-vsl__marco {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #1a0836;
+  box-shadow: 0 18px 48px rgba(46, 32, 64, 0.22);
+}
+
+.s3-vsl__player,
+.s3-vsl__portada {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.s3-vsl__portada {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.s3-vsl__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El botón de reproducción, por delante de la miniatura. El velo lo da su
+   propia sombra interior, no una capa aparte: una capa más oscurecería la
+   portada entera y aquí sólo hace falta contraste alrededor del play. */
+.s3-vsl__play {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 7vw, 82px);
+  height: clamp(64px, 7vw, 82px);
+  padding-left: 4px;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.92);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(26, 8, 54, 0.45);
+  transition: transform 240ms ease, background 240ms ease;
+}
+
+.s3-vsl__portada:hover .s3-vsl__play {
+  transform: scale(1.08);
+  background: #6a4a9c;
+}
+
+.s3-vsl__portada:focus-visible {
+  outline: 3px solid #6a4a9c;
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   4. EL TEXTO DE OCTUBRE
+   -------------------------------------------------------------------------- */
+
+/* El rótulo bajo el titular: va en versalitas y en violeta para que se lea
+   como un subtítulo y no como el primer párrafo del cuerpo. */
+.s4-section--v3 .s4-close__eyebrow {
+  margin: clamp(10px, 1.2vw, 14px) 0 clamp(22px, 2.4vw, 30px);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.3vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #6a4a9c;
+}
+
+/* Las cuatro fechas y los tramos del recorrido van remarcados dentro del
+   párrafo: son el dato que la sección pide retener. */
+.s4-section--v3 .s4-close__body em {
+  font-style: normal;
+  font-weight: 600;
+  color: #2e2040;
+}
+
+/* El cierre —"desde que te registres"— se separa del bloque de énfasis para
+   que no se lea como parte de la afirmación de los 9 años. */
+.s4-section--v3 .s4-close__cierre {
+  margin-top: clamp(22px, 2.6vw, 32px);
+}
+
+/* --------------------------------------------------------------------------
+   5. LA PORTADA DE LA SECCIÓN DE AIDA
+   -------------------------------------------------------------------------- */
+
+.s6-section--v3 .s6-bg {
+  background-image: url("/lista-de-espera/aida.webp");
+  background-size: cover;
+  background-position: center 18%;
+}
+
+/* --------------------------------------------------------------------------
+   MÓVIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* En vertical el retrato de escritorio recorta la cara, así que entra la
+     versión preparada para móvil de la misma sesión. */
+  .hero-section--v3 .hero-bg {
+    background-image: url("/lista-de-espera/hero-mobile.jpg");
+    background-size: cover;
+    background-position: top center;
+  }
+
+  /* El carrusel también baja de alto: en 3/4 cada tarjeta ocupaba casi toda
+     la pantalla y obligaba a desplazar para ver una sola. */
+  .s4-section--v3 .s4-carousel__item {
+    aspect-ratio: 4 / 3;
+    flex: 0 0 78vw;
+    max-width: 320px;
+  }
+
+  .s6-section--v3 .s6-bg {
+    background-position: center 12%;
+  }
+}
+
+@media (max-width: 700px) {
+  .s3-vsl__shell {
+    width: calc(100% - 32px);
+  }
+
+  .s3-vsl__marco {
+    border-radius: 14px;
+  }
+
+  /* A este ancho el texto centrado deja los dos márgenes dentados: cada
+     párrafo cae en muchos renglones cortos y el ojo pierde dónde empieza
+     cada línea. */
+  .s4-section--v3 .s4-close__eyebrow {
+    letter-spacing: 0.08em;
+  }
+}

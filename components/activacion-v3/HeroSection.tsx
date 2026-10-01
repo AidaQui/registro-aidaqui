@@ -34,7 +34,7 @@ function renderLetters(text: string, keyPrefix = "l") {
 
 export default function HeroSection() {
   return (
-    <section className="hero-section" aria-labelledby="hero-title">
+    <section className="hero-section hero-section--v3" aria-labelledby="hero-title">
       <div className="hero-bg" aria-hidden="true" />
       <div className="hero-shell">
         <div className="hero-copy">

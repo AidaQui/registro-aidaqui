@@ -70,7 +70,7 @@ export default function Section6() {
   }, []);
 
   return (
-    <section className="s6-section" aria-labelledby="s6-title">
+    <section className="s6-section s6-section--v3" aria-labelledby="s6-title">
       <div className="s6-bg" aria-hidden="true" />
       <div className="s6-overlay" aria-hidden="true" />
 

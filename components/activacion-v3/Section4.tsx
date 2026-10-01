@@ -31,7 +31,7 @@ export default function Section4() {
   }
 
   return (
-    <section className="s4-section" aria-labelledby="s4-title">
+    <section className="s4-section s4-section--v3" aria-labelledby="s4-title">
       <div className="s4-shell">
 
         <h2 className="s4-title" id="s4-title">
