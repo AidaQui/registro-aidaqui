@@ -20019,10 +20019,15 @@ body {
    5. LA PORTADA DE LA SECCIÓN DE AIDA
    -------------------------------------------------------------------------- */
 
-.s6-section--v3 .s6-bg {
-  background-image: url("/lista-de-espera/aida.webp");
-  background-size: cover;
-  background-position: center 18%;
+/* La altura mínima de 780px existía para que cupiera la fotografía de fondo.
+   Con la imagen en tarjeta, la sección la marca su propio contenido. */
+.s6-section--v3,
+.s6-section--v3 .s6-shell {
+  min-height: unset;
+}
+
+.s6-section--v3 .s6-shell {
+  padding: clamp(52px, 5.5vw, 88px) 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -20044,10 +20049,6 @@ body {
     aspect-ratio: 4 / 3;
     flex: 0 0 78vw;
     max-width: 320px;
-  }
-
-  .s6-section--v3 .s6-bg {
-    background-position: center 12%;
   }
 }
 
@@ -20296,5 +20297,320 @@ body {
 
   .hero-section--v3 .hero-title {
     max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   ACTIVACIÓN V3 — SEGUNDA RONDA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LOS DOS BADGES, DEL MISMO COLOR
+   -------------------------------------------------------------------------- */
+
+/*
+  El de la fecha iba en dorado para destacarlo, pero al lado del otro los dos
+  se leían como cosas distintas —uno parecía una etiqueta y el otro un aviso—
+  cuando son el mismo tipo de dato. Mismo tratamiento para los dos: lo que
+  destaca el 10/10 es la línea temporal de más abajo, no una píldora.
+*/
+.hero-badge-chip--fecha {
+  border-color: rgba(106, 74, 156, 0.22);
+  background: rgba(255, 255, 255, 0.92);
+  color: #4a3570;
+}
+
+.hero-badge-chip--fecha svg {
+  color: #6a4a9c;
+}
+
+/* --------------------------------------------------------------------------
+   2. EL HERO, SIN VELO NI SOMBRAS SOBRE LA FOTOGRAFÍA
+   -------------------------------------------------------------------------- */
+
+/*
+  Fuera el velo crema que cubría la imagen entera.
+
+  Estaba para que el texto se leyera por encima, pero apagaba la fotografía
+  hasta dejarla deslavada: se veía un fondo lavado, no un retrato.
+
+  El contraste del texto pasa a resolverse donde corresponde —en el propio
+  texto, con su sombra— y la imagen se ve tal cual es.
+*/
+.hero-section--v3::before {
+  background: none;
+}
+
+/* El texto se despega de la fotografía con su propia sombra, no con una capa
+   por encima: así sólo se oscurece lo que hay detrás de cada letra. */
+.hero-section--v3 .hero-title,
+.hero-section--v3 .hero-description {
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(26, 8, 54, 0.55), 0 1px 3px rgba(26, 8, 54, 0.4);
+}
+
+/* El marco del vídeo pierde su sombra proyectada: sobre la fotografía se leía
+   como un recorte pegado encima en vez de parte de la escena. */
+.hero-vsl {
+  box-shadow: none;
+}
+
+/* Los badges y los horarios ya traen su propio fondo opaco, así que se leen
+   sobre la fotografía sin ayuda. Sólo se les quita la sombra de color. */
+.hero-badge-chip {
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. LA LÍNEA DE LOS CUATRO PORTALES
+   -------------------------------------------------------------------------- */
+
+.s4-portales {
+  --portal-gap: clamp(8px, 1vw, 16px);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--portal-gap);
+  width: 100%;
+  max-width: 680px;
+  margin: clamp(26px, 3vw, 38px) auto;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+  La línea va de centro de punto a centro de punto, calculada.
+
+  Con cuatro columnas iguales el primer punto cae al 12.5% del ancho y el
+  último al 87.5%, pero el hueco entre celdas desplaza ambos hacia dentro: la
+  celda mide (100% - 3*gap)/4 y su centro, la mitad de eso. Un porcentaje a
+  ojo fallaría por los dos lados y el desajuste crecería con el ancho, porque
+  el hueco es fluido.
+*/
+.s4-portales::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: calc((100% - var(--portal-gap) * 3) / 8);
+  right: calc((100% - var(--portal-gap) * 3) / 8);
+  height: 1px;
+  background: rgba(106, 74, 156, 0.26);
+}
+
+.s4-portal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* El halo macizo del color del fondo abre el hueco en la línea: así el punto
+   se lee encima de ella y no atravesado por ella. */
+.s4-portal__punto {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin-bottom: clamp(14px, 1.6vw, 20px);
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.4);
+  box-shadow: 0 0 0 4px #fbf4eb;
+}
+
+.s4-portal__dia {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgba(46, 32, 64, 0.55);
+}
+
+/* El "/10" es contexto: el dato que cambia es el día. */
+.s4-portal__mes {
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.6;
+}
+
+.s4-portal__nombre {
+  margin-top: 7px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(10.5px, 1vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(46, 32, 64, 0.5);
+}
+
+/*
+  EL HITO DEL 10/10.
+
+  Todo lo que lo distingue va junto: punto mayor y macizo, cifra a plena
+  intensidad y en violeta, rótulo legible. Los otros tres no cambian de
+  tamaño para no empujar la retícula: el 10 crece dentro de su propia celda.
+*/
+.s4-portal[data-protagonista="si"] .s4-portal__punto {
+  width: 18px;
+  height: 18px;
+  margin-top: -4px;
+  margin-bottom: calc(clamp(14px, 1.6vw, 20px) - 4px);
+  background: linear-gradient(150deg, #8a68bd, #6a4a9c);
+  box-shadow:
+    0 0 0 5px #fbf4eb,
+    0 0 0 8px rgba(106, 74, 156, 0.18),
+    0 0 22px rgba(106, 74, 156, 0.4);
+}
+
+.s4-portal[data-protagonista="si"] .s4-portal__dia {
+  font-size: clamp(36px, 4.4vw, 58px);
+  color: #6a4a9c;
+}
+
+.s4-portal[data-protagonista="si"] .s4-portal__nombre {
+  color: #6a4a9c;
+}
+
+/* El sello es lo que convierte la fecha destacada en una cita: sin él, el 10
+   sólo se ve más grande y no se sabe por qué. */
+.s4-portal__sello {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 74, 156, 0.26);
+  background: rgba(106, 74, 156, 0.08);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(10px, 0.95vw, 11.5px);
+  font-weight: 600;
+  color: #6a4a9c;
+  white-space: nowrap;
+}
+
+/* El texto que acompaña a la línea se acorta y gana cuerpo: la información
+   dura ya está en los hitos, así que estos párrafos sólo los enmarcan. */
+.s4-section--v3 .s4-close__body {
+  max-width: 62ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --------------------------------------------------------------------------
+   4. LA FOTO DE AIDA, EN TARJETA
+   -------------------------------------------------------------------------- */
+
+/* Sin fondo fotográfico: la sección pasa a color plano y la imagen vive en
+   su propia pieza, al lado del texto. */
+.s6-section--v3 {
+  background-color: #fbf4eb;
+}
+
+.s6-section--v3 .s6-overlay {
+  display: none;
+}
+
+.s6-foto {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(46, 32, 64, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   MÓVIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /*
+    EL TEXTO DEL CIERRE, A LA IZQUIERDA.
+
+    Centrado funciona en escritorio, donde cada párrafo ocupa dos o tres
+    renglones largos y el eje se percibe. A ancho de teléfono el mismo
+    párrafo cae en seis o siete renglones cortos y centrarlos deja los dos
+    márgenes dentados: el ojo pierde dónde empieza cada línea.
+  */
+  .s4-section--v3 .s4-close,
+  .s4-section--v3 .s4-close__title,
+  .s4-section--v3 .s4-close__eyebrow,
+  .s4-section--v3 .s4-close__body,
+  .s4-section--v3 .s4-close__phrase {
+    text-align: left;
+  }
+
+  /*
+    LA LÍNEA PASA A VERTICAL.
+
+    Cuatro hitos en fila a este ancho dejan las cifras ilegibles. En columna
+    cada uno recupera su sitio y la línea corre por la izquierda uniéndolos:
+    el recorrido se mantiene, sólo cambia de eje.
+  */
+  .s4-portales {
+    grid-template-columns: 1fr;
+    gap: clamp(22px, 5vw, 30px);
+    padding-left: 34px;
+    max-width: 420px;
+  }
+
+  .s4-portales::before {
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .s4-portal {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
+    text-align: left;
+  }
+
+  /* El punto sale de la columna de texto y se sitúa sobre la línea. */
+  .s4-portal__punto {
+    position: absolute;
+    left: -34px;
+    margin: 0;
+    transform: translateY(6px);
+  }
+
+  .s4-portal[data-protagonista="si"] .s4-portal__punto {
+    left: -38px;
+    margin: 0;
+  }
+
+  .s4-portal__nombre {
+    margin-top: 0;
+  }
+
+  .s4-portal__sello {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  /* La tarjeta de Aida se centra y encoge: a ancho completo ocupaba una
+     pantalla entera antes de llegar al texto. */
+  .s6-foto {
+    max-width: 300px;
+    margin: 0 auto clamp(22px, 5vw, 32px);
+  }
+}
+
+@media (max-width: 420px) {
+  /* El sello baja a su propia línea: junto a la cifra y el rótulo no entra. */
+  .s4-portal {
+    flex-wrap: wrap;
+  }
+
+  .s4-portal__sello {
+    margin-left: 0;
+    flex-basis: 100%;
   }
 }

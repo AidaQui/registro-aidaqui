@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
@@ -71,11 +72,27 @@ export default function Section6() {
 
   return (
     <section className="s6-section s6-section--v3" aria-labelledby="s6-title">
-      <div className="s6-bg" aria-hidden="true" />
       <div className="s6-overlay" aria-hidden="true" />
 
       <div className="s6-shell">
-        <div className="s6-empty" aria-hidden="true" />
+        {/* LA FOTO, EN TARJETA Y NO DE FONDO.
+
+            Como fondo tenía que convivir con el texto por delante, lo que
+            obligaba a un velo que la apagaba entera: se veía deslavada y, en
+            móvil, el encuadre cortaba la cara. En su propia tarjeta se ve
+            completa y a plena intensidad, y el texto recupera un fondo limpio
+            donde leerse. */}
+        <div className="s6-foto">
+          <Image
+            src="/lista-de-espera/aida.webp"
+            alt="Aida Qui"
+            width={870}
+            height={1068}
+            sizes="(max-width: 900px) 72vw, 420px"
+            quality={90}
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
 
         <div ref={copyRef} className="s6-copy">
           <p className="s6-eyebrow">¿Quién guiará esta experiencia?</p>

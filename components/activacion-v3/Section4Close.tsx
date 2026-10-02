@@ -2,8 +2,23 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import { Sparkles } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Los cuatro momentos de octubre.
+ *
+ * `protagonista` marca el 10/10, que es la fecha del encuentro y la única que
+ * la línea destaca. Va como dato y no como índice fijo para que, si una
+ * edición futura cambia de fecha, el destacado se mueva con ella.
+ */
+const PORTALES = [
+  { dia: "01", nombre: "Apertura" },
+  { dia: "10", nombre: "Activación", protagonista: true },
+  { dia: "19", nombre: "Integración" },
+  { dia: "28", nombre: "Cierre" },
+];
 
 export default function Section4Close() {
   const ref = useRef<HTMLDivElement>(null);
@@ -53,25 +68,48 @@ export default function Section4Close() {
       </p>
 
       <p className="s4-close__body text-reveal">
-        Octubre no contiene únicamente el portal 10/10.
+        Octubre no contiene únicamente el portal 10/10. El 1, 10, 19 y 28 abren
+        cuatro momentos que comparten el{" "}
+        <em>código del 1</em>: inicio, decisión y nueva dirección.
       </p>
 
-      {/* Las cuatro fechas van en su propia pieza y no dentro del párrafo:
-          son el dato que hay que retener de toda la sección, y en línea con
-          el texto se leían como una enumeración más. */}
-      <p className="s4-close__body text-reveal">
-        <em>
-          El 1, 10, 19 y 28 abren cuatro momentos energéticos que comparten el
-          código del 1:
-        </em>{" "}
-        inicio, decisión y creación de una nueva dirección.
-      </p>
+      {/*
+        EL RECORRIDO, EN LÍNEA TEMPORAL.
 
-      <p className="s4-close__body text-reveal">
-        Es un recorrido que comienza el 1/10,{" "}
-        <em>alcanza uno de sus puntos de mayor intensidad el 10/10</em> y
-        continúa hasta su cierre el 28/10.
-      </p>
+        Las cuatro fechas vivían dentro de los párrafos y ahí se leían como una
+        enumeración más: quien escanea la sección no retenía ninguna. En una
+        línea con sus cuatro hitos el recorrido se entiende sin leer —se ve—, y
+        el 10/10 puede destacarse por tamaño y color en vez de por una cursiva
+        que compite con el resto del texto.
+
+        Es el dato que la página entera va a repetir hasta el botón, así que
+        merece ser una pieza y no un renglón.
+      */}
+      <ol className="s4-portales" aria-label="Los cuatro momentos de octubre">
+        {PORTALES.map(({ dia, nombre, protagonista }) => (
+          <li
+            key={dia}
+            className="s4-portal"
+            data-protagonista={protagonista ? "si" : undefined}
+          >
+            <span className="s4-portal__punto" aria-hidden="true" />
+
+            <span className="s4-portal__dia">
+              {dia}
+              <span className="s4-portal__mes">/10</span>
+            </span>
+
+            <span className="s4-portal__nombre">{nombre}</span>
+
+            {protagonista && (
+              <span className="s4-portal__sello">
+                <Sparkles size={13} strokeWidth={2} aria-hidden="true" />
+                Tu encuentro
+              </span>
+            )}
+          </li>
+        ))}
+      </ol>
 
       <p className="s4-close__body text-reveal">
         Durante la <em>Activación del Ser Multidimensional</em> prepararemos tu
@@ -81,8 +119,9 @@ export default function Section4Close() {
 
       <div className="s4-close__emphasis">
         <p className="text-reveal s4-close__phrase">
-          Por eso esta experiencia ocurre una sola vez al año, en un momento
-          energético que no volverá a repetirse de esta forma durante 9 años.
+          Esta experiencia ocurre una sola vez al año, en un momento energético
+          que no volverá a repetirse de esta forma durante{" "}
+          <strong>9 años</strong>.
         </p>
       </div>
 
