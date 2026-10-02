@@ -19944,10 +19944,9 @@ body {
    -------------------------------------------------------------------------- */
 
 /* Retrato de la sesión de lista de espera, en lugar del banner anterior. */
-.hero-section--v3 .hero-bg {
-  background-image: url("/lista-de-espera/hero-web.jpg");
-  background-position: center 22%;
-}
+/* El fondo de esta versión se define más abajo, junto al resto del hero
+   centrado. Aquí vivía una regla con otra imagen que quedó pisada al cambiar
+   la portada, y mantenerla sólo invitaba a editar la que no manda. */
 
 /* --------------------------------------------------------------------------
    2. LAS TARJETAS DE "LO QUE EXPERIMENTARÁS DENTRO"
@@ -20035,18 +20034,14 @@ body {
    -------------------------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  /* En vertical el retrato de escritorio recorta la cara, así que entra la
-     versión preparada para móvil de la misma sesión. */
-  .hero-section--v3 .hero-bg {
-    background-image: url("/lista-de-espera/hero-mobile.jpg");
-    background-size: cover;
-    background-position: top center;
-  }
+  /* La imagen de móvil se define con el resto del hero centrado, más abajo:
+     aquí quedaba una que pisaba a aquélla y dejaba el teléfono con otra
+     portada distinta a la de escritorio. */
 
-  /* El carrusel también baja de alto: en 3/4 cada tarjeta ocupaba casi toda
-     la pantalla y obligaba a desplazar para ver una sola. */
+  /* El carrusel conserva el retrato: con el texto dentro de la tarjeta, una
+     proporción apaisada deja la frase sin sitio. */
   .s4-section--v3 .s4-carousel__item {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
     flex: 0 0 78vw;
     max-width: 320px;
   }
@@ -20080,6 +20075,17 @@ body {
   background-image: url("/lista-de-espera/bg-pagegracias.jpg");
   background-size: cover;
   background-position: center 30%;
+
+  /* SIN EL PARPADEO.
+
+     .hero-bg trae una animación que sube y baja el brillo imitando un
+     relámpago. Nació para el banner anterior, que era una ilustración; sobre
+     un retrato real el mismo efecto se lee como un fallo de la pantalla, y
+     encima compite con el vídeo que ahora vive en este hero.
+
+     Se apaga sólo aquí: la animación la comparten /frecuencia y masterclass,
+     donde sigue teniendo sentido. */
+  animation: none;
 }
 
 /*
