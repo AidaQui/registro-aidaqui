@@ -20757,3 +20757,264 @@ body {
     border-radius: 22px;
   }
 }
+
+/* ==========================================================================
+   ACTIVACIÓN V3 — TERCERA RONDA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL BORDE ANIMADO DE LOS BADGES
+   -------------------------------------------------------------------------- */
+
+/*
+  Un destello que recorre el contorno.
+
+  Va en ::before, por detrás del contenido, con un degradado cónico que gira:
+  la máscara deja ver sólo el anillo de un píxel del borde, así que lo que se
+  ve girar es la luz sobre el contorno y no una forma dando vueltas.
+
+  `mask-composite: exclude` recorta el centro del degradado —ahí está el
+  truco—, y por eso hacen falta las dos máscaras.
+*/
+@property --badge-giro {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes badge-giro {
+  to {
+    --badge-giro: 360deg;
+  }
+}
+
+.hero-badge-chip {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-badge-chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--badge-giro),
+    transparent 0deg,
+    rgba(106, 74, 156, 0.08) 40deg,
+    #6a4a9c 80deg,
+    #c79a4e 110deg,
+    rgba(106, 74, 156, 0.08) 150deg,
+    transparent 210deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: badge-giro 4s linear infinite;
+}
+
+/* El segundo badge arranca a media vuelta: con los dos en fase el destello
+   pasa por ambos a la vez y se lee como un parpadeo de la página. */
+.hero-badge-chip--fecha::before {
+  animation-delay: -2s;
+}
+
+/* --------------------------------------------------------------------------
+   2. EL AVISO DEL VÍDEO
+   -------------------------------------------------------------------------- */
+
+.hero-vsl__aviso {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 2vw, 22px);
+  z-index: 2;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(26, 8, 54, 0.78);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(12px, 1.2vw, 13.5px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* El punto que late: es lo que hace que el ojo encuentre el aviso sin que el
+   aviso tenga que ser grande. */
+@keyframes vsl-pulso {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.72);
+  }
+}
+
+.hero-vsl__pulso {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f0c98a;
+  box-shadow: 0 0 10px rgba(240, 201, 138, 0.9);
+  animation: vsl-pulso 1.6s ease-in-out infinite;
+}
+
+/* Al pasar el puntero el aviso cede el protagonismo al botón de play. */
+.hero-vsl__portada:hover .hero-vsl__aviso {
+  opacity: 0.55;
+  transition: opacity 240ms ease;
+}
+
+/* --------------------------------------------------------------------------
+   3. LAS TARJETAS CON SU TEXTO
+   -------------------------------------------------------------------------- */
+
+.s4-section--v3 .s4-card,
+.s4-section--v3 .s4-carousel__item {
+  display: flex;
+  align-items: flex-end;
+}
+
+/*
+  LA SOMBRA INTERIOR.
+
+  Oscurece el borde inferior de la fotografía, que es donde cae el texto, y
+  deja la mitad de arriba limpia. Es sombra interior y no un velo sobre toda
+  la pieza: un velo parejo apagaría la imagen entera para resolver un
+  problema que sólo existe abajo.
+*/
+.s4-card__velo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(
+    to top,
+    rgba(20, 8, 38, 0.92) 0%,
+    rgba(20, 8, 38, 0.72) 32%,
+    rgba(20, 8, 38, 0.18) 62%,
+    rgba(20, 8, 38, 0.05) 100%
+  );
+  box-shadow: inset 0 -60px 60px -30px rgba(20, 8, 38, 0.75);
+  pointer-events: none;
+}
+
+.s4-card__texto {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(14px, 1.6vw, 20px);
+}
+
+.s4-card__texto p {
+  margin: 0;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(13px, 1.25vw, 15px);
+  font-weight: 500;
+  line-height: 1.42;
+  color: #fff;
+  text-wrap: pretty;
+}
+
+/* El número va pequeño y en dorado sobre el texto: ordena la lectura sin
+   robarle sitio a la frase, que es lo que hay que leer. */
+.s4-card__num {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(14px, 1.4vw, 17px);
+  font-weight: 600;
+  line-height: 1;
+  color: #f0c98a;
+}
+
+/*
+  LA PROPORCIÓN VUELVE A RETRATO.
+
+  Con el texto dentro, 4/3 apaisado deja la frase en cuatro renglones sobre
+  una tira de imagen muy baja: no cabe. 3/4 da altura para que la frase
+  respire y la fotografía siga viéndose por encima de ella.
+*/
+.s4-section--v3 .s4-card {
+  aspect-ratio: 3 / 4;
+}
+
+/* Cuatro por fila, no cinco: con texto dentro, una tarjeta al 22% deja la
+   frase en renglones de tres palabras. */
+.s4-section--v3 .s4-row--4 .s4-card,
+.s4-section--v3 .s4-row--3 .s4-card {
+  flex: 0 0 calc(25% - 15px);
+}
+
+/* --------------------------------------------------------------------------
+   4. LOS ESPACIOS DE LA SECCIÓN DE AIDA
+   -------------------------------------------------------------------------- */
+
+/* Sin sombra: la tarjeta queda a ras, que es lo que pide una fotografía
+   sobre fondo plano. */
+.s6-foto {
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. EL CUERPO DE TEXTO EN MÓVIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /*
+    NADA POR DEBAJO DE 16px.
+
+    Los tamaños de esta landing iban de 13 a 15.5 según la sección, que en un
+    teléfono obliga a acercar el aparato o a ampliar. 16 es el mínimo cómodo
+    de lectura en pantalla pequeña, y además es el umbral por debajo del cual
+    Safari hace zoom automático al enfocar un campo.
+  */
+  .s4-section--v3 .s4-close__body,
+  .s4-section--v3 .s4-close__phrase,
+  .s6-section--v3 .s6-body,
+  .hero-section--v3 .hero-description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .s4-card__texto p {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  /*
+    EL TEXTO DE AIDA, CON MARGEN.
+
+    .s6-copy llevaba `padding: 0 0 48px` —cero lateral— porque el margen lo
+    ponía el shell. Al pasar la foto a tarjeta esa cuenta dejó de cuadrar y
+    el texto quedaba contra el borde de la pantalla.
+
+    El margen superior de 300px también sobra: existía para dejar sitio a la
+    cara de Aida cuando la foto era el fondo de la sección.
+  */
+  .s6-section--v3 .s6-copy {
+    margin-top: 0;
+    padding: 0 4px clamp(32px, 7vw, 48px);
+    gap: clamp(14px, 3vw, 18px);
+  }
+
+  .s6-section--v3 .s6-shell {
+    padding: clamp(36px, 8vw, 56px) 20px;
+    gap: clamp(22px, 5vw, 32px);
+  }
+}

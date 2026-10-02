@@ -111,17 +111,8 @@ export default function FinalSection() {
         <div className="final-overlay" aria-hidden="true" />
 
         <div className="final-shell">
-          <Image
-            src="/common/logotipo.png"
-            alt="Activación de la Frecuencia Original"
-            width={420}
-            height={65}
-            className="final-logo"
-            style={{ width: "100%", maxWidth: 420, height: "auto" }}
-          />
-
           <h2 className="final-title" id="final-title">
-            Te espero este 06 de Junio vía Zoom para <mark className="final-highlight">recordar quién eres</mark> más allá del ruido, el miedo y las versiones que ya no te representan.
+            Te espero este 10 de octubre vía Zoom para <mark className="final-highlight">recordar quién eres</mark> más allá del ruido, el miedo y las versiones que ya no te representan.
           </h2>
 
           <div className="final-actions">

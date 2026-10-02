@@ -114,6 +114,17 @@ export default function HeroSection() {
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </span>
+
+                {/* EL AVISO QUE PIDE QUE LO VEAN.
+
+                    Una portada con un play en medio se lee como decoración y
+                    se pasa de largo. Este rótulo dice que hay algo que ver y
+                    cuánto cuesta verlo —el tiempo es la objeción real—, y su
+                    punto parpadea para que el ojo lo encuentre. */}
+                <span className="hero-vsl__aviso" aria-hidden="true">
+                  <span className="hero-vsl__pulso" />
+                  Mira este vídeo antes de reservar
+                </span>
               </button>
             )}
           </div>
