@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Image from "next/image";
+import { CalendarDays, Video } from "lucide-react";
 
 const schedules = [
   { country: "España", src: "/activacion/espana.webp" },
@@ -8,6 +10,9 @@ const schedules = [
 ];
 
 const ctaText = "Reservar mi lugar";
+
+/** El identificador del vídeo, no la URL: se usa en la portada y en el marco. */
+const VIDEO_ID = "-5FC3kLfjOw";
 
 const SparkleIcon = ({ id }: { id: string }) => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,17 +38,30 @@ function renderLetters(text: string, keyPrefix = "l") {
 }
 
 export default function HeroSection() {
+  const [videoActivo, setVideoActivo] = useState(false);
+
   return (
     <section className="hero-section hero-section--v3" aria-labelledby="hero-title">
       <div className="hero-bg" aria-hidden="true" />
       <div className="hero-shell">
         <div className="hero-copy">
+          {/* LOS BADGES, EN MARCADO Y NO EN IMAGEN.
+
+              Antes eran dos .webp con el texto quemado dentro, y uno de ellos
+              seguía diciendo "22 de mayo" —la fecha de una edición anterior—
+              sin forma de corregirlo salvo reexportando el archivo. En HTML la
+              fecha es texto: se cambia aquí y se acabó. Además pesan cero y se
+              leen en cualquier tamaño de pantalla. */}
           <div className="hero-badges" aria-label="Detalles de la experiencia">
-            {/* SVGs must use native img — Next Image degrades vector quality at non-native sizes */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/activacion/badge-1.webp" alt="Experiencia en vivo" className="hero-badge" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/activacion/badge-2.webp" alt="22 de mayo" className="hero-badge" />
+            <span className="hero-badge-chip">
+              <Video size={15} strokeWidth={2} aria-hidden="true" />
+              Experiencia en vivo
+            </span>
+
+            <span className="hero-badge-chip hero-badge-chip--fecha">
+              <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
+              10 de octubre
+            </span>
           </div>
 
           <h1 id="hero-title" className="hero-title">
@@ -51,19 +69,54 @@ export default function HeroSection() {
             su verdad.
           </h1>
 
-          <Image
-            className="hero-logo"
-            src="/common/logotipo.png"
-            alt="Activación de la Frecuencia Original"
-            width={460}
-            height={71}
-            priority
-          />
-
           <p className="hero-description">
             Una experiencia profunda diseñada para liberar bloqueos energéticos,
             reconectar con tu intuición y volver a sentirte alineada contigo.
           </p>
+
+          {/* EL VÍDEO, DENTRO DEL HERO.
+
+              Carga diferida: hasta que alguien pulsa sólo hay una miniatura, y
+              el reproductor se monta en ese momento. Un iframe de YouTube trae
+              su propio JavaScript y retrasaría la primera pantalla entera por
+              un vídeo que la mayoría no va a reproducir. */}
+          <div className="hero-vsl">
+            {videoActivo ? (
+              <iframe
+                className="hero-vsl__player"
+                src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0`}
+                title="Activación del Ser Multidimensional"
+                allow="accelerated-destination; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              /* Es un <button> de verdad y no un div con onClick: así responde
+                 al teclado y los lectores de pantalla lo anuncian. */
+              <button
+                type="button"
+                className="hero-vsl__portada"
+                onClick={() => setVideoActivo(true)}
+                aria-label="Reproducir el vídeo"
+              >
+                {/* La miniatura la sirve YouTube ya optimizada desde su CDN, así
+                    que no pasa por next/image: habría que declarar el dominio y
+                    volver a procesar algo que llega listo. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://i.ytimg.com/vi/${VIDEO_ID}/maxresdefault.jpg`}
+                  alt=""
+                  aria-hidden="true"
+                  className="hero-vsl__thumb"
+                />
+
+                <span className="hero-vsl__play" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </button>
+            )}
+          </div>
 
           <div className="hero-schedules" aria-label="Horarios por país">
             {schedules.map(({ country, src }) => (

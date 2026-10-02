@@ -1,7 +1,6 @@
 import Head from "next/head";
 import HeroSection from "@/components/activacion-v3/HeroSection";
 import PainSection from "@/components/activacion-v3/PainSection";
-import Section3 from "@/components/activacion-v3/Section3";
 import Section4 from "@/components/activacion-v3/Section4";
 import Section5 from "@/components/activacion-v3/Section5";
 import Section6 from "@/components/activacion-v3/Section6";
@@ -19,9 +18,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
+        {/* El vídeo de venta vivía aquí en su propia sección y ahora va dentro
+            del hero, junto a la promesa, así que Section3 sale de la página. */}
         <HeroSection />
         <PainSection />
-        <Section3 />
         <Section4 />
         <div className="s4-s5-divider" aria-hidden="true" />
         <Section5 />

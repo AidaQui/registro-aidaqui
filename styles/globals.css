@@ -19985,101 +19985,6 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   3. EL VÍDEO DE VENTA
-   -------------------------------------------------------------------------- */
-
-.s3-vsl {
-  padding: clamp(48px, 5.5vw, 84px) 0;
-  background: #fbf4eb;
-}
-
-.s3-vsl__shell {
-  width: min(calc(100% - 40px), 900px);
-  margin: 0 auto;
-}
-
-.s3-vsl__title {
-  margin: 0 0 clamp(22px, 2.6vw, 34px);
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(23px, 3vw, 36px);
-  font-weight: 600;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  text-align: center;
-  text-wrap: balance;
-  color: #2e2040;
-}
-
-.s3-vsl__title em {
-  font-style: italic;
-  color: #6a4a9c;
-}
-
-/* El marco mantiene la proporción del vídeo pase lo que pase dentro: así la
-   página no da un salto al cambiar la portada por el reproductor. */
-.s3-vsl__marco {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #1a0836;
-  box-shadow: 0 18px 48px rgba(46, 32, 64, 0.22);
-}
-
-.s3-vsl__player,
-.s3-vsl__portada {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.s3-vsl__portada {
-  display: grid;
-  place-items: center;
-  padding: 0;
-  background: none;
-  cursor: pointer;
-}
-
-.s3-vsl__thumb {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* El botón de reproducción, por delante de la miniatura. El velo lo da su
-   propia sombra interior, no una capa aparte: una capa más oscurecería la
-   portada entera y aquí sólo hace falta contraste alrededor del play. */
-.s3-vsl__play {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: clamp(64px, 7vw, 82px);
-  height: clamp(64px, 7vw, 82px);
-  padding-left: 4px;
-  border-radius: 50%;
-  background: rgba(106, 74, 156, 0.92);
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(26, 8, 54, 0.45);
-  transition: transform 240ms ease, background 240ms ease;
-}
-
-.s3-vsl__portada:hover .s3-vsl__play {
-  transform: scale(1.08);
-  background: #6a4a9c;
-}
-
-.s3-vsl__portada:focus-visible {
-  outline: 3px solid #6a4a9c;
-  outline-offset: 3px;
-}
-
-/* --------------------------------------------------------------------------
    4. EL TEXTO DE OCTUBRE
    -------------------------------------------------------------------------- */
 
@@ -20147,18 +20052,249 @@ body {
 }
 
 @media (max-width: 700px) {
-  .s3-vsl__shell {
-    width: calc(100% - 32px);
-  }
-
-  .s3-vsl__marco {
-    border-radius: 14px;
-  }
-
   /* A este ancho el texto centrado deja los dos márgenes dentados: cada
      párrafo cae en muchos renglones cortos y el ojo pierde dónde empieza
      cada línea. */
   .s4-section--v3 .s4-close__eyebrow {
     letter-spacing: 0.08em;
+  }
+}
+
+/* ==========================================================================
+   ACTIVACIÓN V3 — EL HERO, A UNA COLUMNA CENTRADA
+   ==========================================================================
+
+   El hero heredado era de dos columnas: una de 460px con el texto a la
+   izquierda y el resto vacío para que se viera la fotografía del fondo. Con
+   el vídeo dentro esa columna se queda corta —un reproductor a 460px no se
+   ve— y el reparto deja de tener sentido.
+
+   Pasa a columna única centrada: badges, promesa, descripción, vídeo,
+   horarios y botón, uno debajo de otro y todos sobre el mismo eje.
+   ========================================================================== */
+
+/* El retrato de la página de gracias, que es un plano más abierto y aguanta
+   el contenido centrado por delante sin que la cara quede tapada. */
+.hero-section--v3 .hero-bg {
+  background-image: url("/lista-de-espera/bg-pagegracias.jpg");
+  background-size: cover;
+  background-position: center 30%;
+}
+
+/*
+  EL VELO.
+
+  El heredado era un degradado lateral —opaco a la izquierda, transparente a
+  la derecha— porque el texto vivía en esa mitad. Con el contenido centrado
+  ese reparto deja la mitad derecha ilegible, así que pasa a un velo parejo
+  que sube por abajo, donde está el grueso del texto.
+*/
+.hero-section--v3::before {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 244, 235, 0.72) 0%,
+    rgba(251, 244, 235, 0.82) 38%,
+    rgba(251, 244, 235, 0.94) 100%
+  );
+}
+
+.hero-section--v3 .hero-shell {
+  display: block;
+  width: min(calc(100% - 40px), 860px);
+  padding: clamp(48px, 5.5vw, 78px) 0;
+  min-height: unset;
+}
+
+.hero-section--v3 .hero-copy {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  gap: clamp(16px, 1.8vw, 22px);
+}
+
+/* --------------------------------------------------------------------------
+   LOS BADGES
+   -------------------------------------------------------------------------- */
+
+.hero-section--v3 .hero-badges {
+  justify-content: center;
+  gap: 10px;
+}
+
+/*
+  Recreados en marcado, no en imagen.
+
+  Los .webp que había traían el texto quemado —uno seguía diciendo "22 de
+  mayo"— y para corregir una fecha hacía falta reexportar el archivo. En HTML
+  el texto es texto.
+*/
+.hero-badge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 74, 156, 0.22);
+  background: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-size: clamp(12.5px, 1.2vw, 14px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #4a3570;
+  box-shadow: 0 6px 16px rgba(106, 74, 156, 0.12);
+}
+
+.hero-badge-chip svg {
+  flex-shrink: 0;
+  color: #6a4a9c;
+}
+
+/* La fecha es el dato que la página va a repetir, así que va en dorado y con
+   el fondo opaco: sobre el fondo claro del hero el borde se perdía. */
+.hero-badge-chip--fecha {
+  border-color: rgba(176, 125, 31, 0.32);
+  background: linear-gradient(150deg, #faeed2, #f5e4bd);
+  color: #7a5408;
+}
+
+.hero-badge-chip--fecha svg {
+  color: #a06c08;
+}
+
+/* --------------------------------------------------------------------------
+   PROMESA Y DESCRIPCIÓN
+   -------------------------------------------------------------------------- */
+
+.hero-section--v3 .hero-title {
+  max-width: 20ch;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+.hero-section--v3 .hero-description {
+  max-width: 54ch;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   EL VÍDEO
+   -------------------------------------------------------------------------- */
+
+/* El marco mantiene la proporción pase lo que pase dentro: así la página no
+   da un salto al cambiar la miniatura por el reproductor. */
+.hero-vsl {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: clamp(6px, 0.8vw, 10px) auto 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #1a0836;
+  box-shadow: 0 18px 48px rgba(46, 32, 64, 0.26);
+}
+
+.hero-vsl__player,
+.hero-vsl__portada {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.hero-vsl__portada {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.hero-vsl__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El botón va por delante de la miniatura. El contraste lo da su propia
+   sombra, no una capa aparte: una capa oscurecería la portada entera. */
+.hero-vsl__play {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: clamp(58px, 6.5vw, 76px);
+  height: clamp(58px, 6.5vw, 76px);
+  padding-left: 4px;
+  border-radius: 50%;
+  background: rgba(106, 74, 156, 0.92);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(26, 8, 54, 0.45);
+  transition: transform 240ms ease, background 240ms ease;
+}
+
+.hero-vsl__portada:hover .hero-vsl__play {
+  transform: scale(1.08);
+  background: #6a4a9c;
+}
+
+.hero-vsl__portada:focus-visible {
+  outline: 3px solid #6a4a9c;
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   HORARIOS Y BOTÓN
+   -------------------------------------------------------------------------- */
+
+/* Los cuatro husos en una sola fila. Iban en rejilla de 2x2 porque la columna
+   del hero medía 460px; centrados y a todo el ancho entran los cuatro. */
+.hero-section--v3 .hero-schedules {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.hero-section--v3 .hero-schedule-wrap {
+  flex: 0 0 150px;
+  max-width: 150px;
+}
+
+.hero-section--v3 .hero-cta {
+  margin: clamp(4px, 0.6vw, 8px) auto 0;
+}
+
+/* --------------------------------------------------------------------------
+   MÓVIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .hero-section--v3 .hero-bg {
+    background-position: center 22%;
+  }
+
+  .hero-section--v3 .hero-shell {
+    width: calc(100% - 32px);
+    padding: clamp(36px, 8vw, 56px) 0;
+  }
+
+  .hero-vsl {
+    border-radius: 14px;
+  }
+
+  /* Dos por fila: cuatro no entran a este ancho y uno por fila alargaría el
+     hero media pantalla. */
+  .hero-section--v3 .hero-schedule-wrap {
+    flex: 0 0 calc(50% - 6px);
+    max-width: 160px;
+  }
+
+  .hero-section--v3 .hero-title {
+    max-width: 100%;
   }
 }
