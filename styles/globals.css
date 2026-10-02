@@ -20341,12 +20341,29 @@ body {
   background: none;
 }
 
-/* El texto se despega de la fotografía con su propia sombra, no con una capa
-   por encima: así sólo se oscurece lo que hay detrás de cada letra. */
+/*
+  LA PROMESA Y SU BAJADA, EN VIOLETA.
+
+  El halo es claro y no oscuro: un texto violeta sobre una fotografía con
+  zonas medias necesita que lo que lo rodea se aclare, no que se oscurezca,
+  o el color se confunde con las sombras del retrato.
+
+  Va como sombra del propio texto y no como capa por encima de la imagen,
+  para que sólo se aclare lo que hay detrás de cada letra y la fotografía
+  siga viéndose entera.
+*/
 .hero-section--v3 .hero-title,
 .hero-section--v3 .hero-description {
-  color: #fff;
-  text-shadow: 0 2px 18px rgba(26, 8, 54, 0.55), 0 1px 3px rgba(26, 8, 54, 0.4);
+  color: #4a3570;
+  text-shadow:
+    0 1px 16px rgba(251, 244, 235, 0.95),
+    0 1px 3px rgba(251, 244, 235, 0.9);
+}
+
+/* El titular, en el violeta pleno de la marca: es la primera pieza de texto
+   de la página y la que más tiene que pesar. */
+.hero-section--v3 .hero-title {
+  color: #5b3aa0;
 }
 
 /* El marco del vídeo pierde su sombra proyectada: sobre la fotografía se leía
@@ -20612,5 +20629,131 @@ body {
   .s4-portal__sello {
     margin-left: 0;
     flex-basis: 100%;
+  }
+}
+
+/* ==========================================================================
+   ACTIVACIÓN V3 — EL CIERRE DE OCTUBRE, EN PANEL VIOLETA
+   ==========================================================================
+
+   Venía seguido de las tarjetas, sobre el mismo crema y sin corte: se leía
+   como una continuación de "lo que experimentarás dentro" cuando es otra
+   cosa —el porqué de la fecha—. En su propio panel oscuro la sección se
+   separa sola, y de paso el 10/10 gana el contraste que en crema no tenía.
+
+   Al cambiar el fondo se invierte todo el color de dentro: los textos pasan
+   a blanco y el violeta de los acentos, a dorado.
+   ========================================================================== */
+
+.s4-section--v3 .s4-close {
+  position: relative;
+  margin-top: clamp(48px, 5.5vw, 76px);
+  padding: clamp(42px, 5vw, 72px) clamp(24px, 3.5vw, 56px);
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(122, 79, 192, 0.45) 0%,
+      transparent 70%
+    ),
+    linear-gradient(168deg, #2a1152 0%, #3a1a6b 55%, #240e45 100%);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   LOS TEXTOS, INVERTIDOS
+   -------------------------------------------------------------------------- */
+
+.s4-section--v3 .s4-close__title {
+  color: #fff;
+}
+
+.s4-section--v3 .s4-close__eyebrow {
+  color: #f0c98a;
+}
+
+.s4-section--v3 .s4-close__body {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.s4-section--v3 .s4-close__body em {
+  color: #ffe3a3;
+}
+
+.s4-section--v3 .s4-close__phrase {
+  color: #fff;
+}
+
+.s4-section--v3 .s4-close__phrase strong {
+  color: #ffe3a3;
+}
+
+/* El bloque de énfasis gana un filete dorado y su propio fondo: sobre el
+   panel, un texto suelto en blanco no se distinguía del resto. */
+.s4-section--v3 .s4-close__emphasis {
+  margin: clamp(26px, 3vw, 38px) auto;
+  padding: clamp(20px, 2.4vw, 30px);
+  max-width: 68ch;
+  border-radius: 18px;
+  border: 1px solid rgba(240, 201, 138, 0.26);
+  background: rgba(240, 201, 138, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   LA LÍNEA TEMPORAL, SOBRE EL PANEL
+   -------------------------------------------------------------------------- */
+
+.s4-section--v3 .s4-portales::before {
+  background: rgba(240, 201, 138, 0.3);
+}
+
+/* El halo que abre el hueco en la línea toma el color del panel, no el del
+   crema de antes, o se vería un anillo claro alrededor de cada punto. */
+.s4-section--v3 .s4-portal__punto {
+  background: rgba(240, 201, 138, 0.45);
+  box-shadow: 0 0 0 4px #2d1458;
+}
+
+.s4-section--v3 .s4-portal__dia {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.s4-section--v3 .s4-portal__nombre {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* El hito del 10/10 pasa de violeta a dorado: sobre el panel el violeta se
+   confundía con el fondo y dejaba de destacar. */
+.s4-section--v3 .s4-portal[data-protagonista="si"] .s4-portal__punto {
+  background: linear-gradient(150deg, #ffe3a3, #d4a020);
+  box-shadow:
+    0 0 0 5px #2d1458,
+    0 0 0 8px rgba(212, 160, 32, 0.26),
+    0 0 24px rgba(212, 160, 32, 0.5);
+}
+
+.s4-section--v3 .s4-portal[data-protagonista="si"] .s4-portal__dia {
+  color: #ffe3a3;
+}
+
+.s4-section--v3 .s4-portal[data-protagonista="si"] .s4-portal__nombre {
+  color: #ffe3a3;
+}
+
+.s4-section--v3 .s4-portal__sello {
+  border-color: rgba(240, 201, 138, 0.32);
+  background: rgba(212, 160, 32, 0.16);
+  color: #ffe3a3;
+}
+
+/* --------------------------------------------------------------------------
+   MÓVIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .s4-section--v3 .s4-close {
+    margin-top: clamp(34px, 7vw, 48px);
+    padding: clamp(30px, 7vw, 44px) clamp(18px, 5vw, 28px);
+    border-radius: 22px;
   }
 }
