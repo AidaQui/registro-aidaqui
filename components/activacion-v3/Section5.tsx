@@ -29,8 +29,24 @@ export default function Section5() {
     if (!el) return;
 
     const ctx = gsap.context(() => {
-      // Desktop: each card fans in from slight offset + rotation
-      const cards = el.querySelectorAll<HTMLElement>(".s5-card");
+      /*
+       * SÓLO LAS TARJETAS DE LA PRIMERA REJILLA.
+       *
+       * Esto tomaba todas las .s5-card de la sección, incluidas las dos del
+       * bloque de bonus, y las animaba con .s5-grid--5 como disparador. Como
+       * ese bloque está más abajo, su animación se consumía cuando la primera
+       * rejilla entraba en pantalla —con las bonus todavía fuera de vista— y
+       * `toggleActions: play none none none` no la revierte: quedaban en
+       * opacity 0 para siempre. La segunda animación, la de abajo, ya no podía
+       * recuperarlas porque gsap.from parte del estado final.
+       *
+       * En móvil no se notaba porque la rejilla es de una columna: todo cae
+       * tan junto que las bonus ya estaban en pantalla al dispararse.
+       */
+      const grid5 = el.querySelector(".s5-grid--5");
+      const cards = grid5
+        ? grid5.querySelectorAll<HTMLElement>(".s5-card")
+        : ([] as unknown as NodeListOf<HTMLElement>);
       cards.forEach((card, i) => {
         gsap.from(card, {
           opacity: 0,

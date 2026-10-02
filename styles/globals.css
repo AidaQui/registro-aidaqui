@@ -20372,6 +20372,15 @@ body {
   color: #5b3aa0;
 }
 
+/* La bajada sube a 18px y peso medio: es lo que explica la promesa, y al
+   tamaño de cuerpo corriente quedaba por debajo de los badges que tiene
+   encima. */
+.hero-section--v3 .hero-description {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
 /* El marco del vídeo pierde su sombra proyectada: sobre la fotografía se leía
    como un recorte pegado encima en vez de parte de la escena. */
 .hero-vsl {
@@ -20990,10 +20999,11 @@ body {
     de lectura en pantalla pequeña, y además es el umbral por debajo del cual
     Safari hace zoom automático al enfocar un campo.
   */
+  /* La bajada del hero queda fuera: lleva sus propios 18px, que ya están por
+     encima de este mínimo. */
   .s4-section--v3 .s4-close__body,
   .s4-section--v3 .s4-close__phrase,
-  .s6-section--v3 .s6-body,
-  .hero-section--v3 .hero-description {
+  .s6-section--v3 .s6-body {
     font-size: 16px;
     line-height: 1.6;
   }
