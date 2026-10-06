@@ -5,12 +5,43 @@ export const config = {
   api: { bodyParser: false },
 };
 
-async function addToMailerLite(email: string, name: string): Promise<void> {
+/**
+ * Un mismo webhook recibe las compras de todos los productos de la cuenta de
+ * Stripe. Cada compra va al grupo de MailerLite de su producto, y ese grupo
+ * dispara su propia automatización (Academia, mail post compra de Activación).
+ *
+ * `STRIPE_ACTIVACION_IDS` admite IDs de producto (prod_…) o de precio
+ * (price_…), separados por coma. Lo que no coincide con Activación sigue
+ * yendo a Academia, que es el comportamiento que había antes de separar.
+ */
+function parseIdList(value: string | undefined): string[] {
+  return (value ?? "")
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+}
+
+type Destino = { producto: string; groupId: string | undefined };
+
+function resolverDestino(idsComprados: string[]): Destino {
+  const idsActivacion = parseIdList(process.env.STRIPE_ACTIVACION_IDS);
+  const esActivacion = idsComprados.some((id) => idsActivacion.includes(id));
+
+  return esActivacion
+    ? { producto: "activacion", groupId: process.env.MAILERLITE_ACTIVACION_GROUP_ID }
+    : { producto: "academia", groupId: process.env.MAILERLITE_ACADEMIA_GROUP_ID };
+}
+
+async function addToMailerLite(
+  email: string,
+  name: string,
+  destino: Destino
+): Promise<void> {
   const apiKey = process.env.MAILERLITE_ACADEMIA_API_KEY;
-  const groupId = process.env.MAILERLITE_ACADEMIA_GROUP_ID;
+  const { groupId, producto } = destino;
 
   if (!apiKey || !groupId) {
-    console.warn("MailerLite Academia no configurado");
+    console.warn(`MailerLite no configurado para ${producto}`);
     return;
   }
 
@@ -82,8 +113,38 @@ export default async function handler(
     const email = session.customer_details?.email ?? "";
     const name = session.customer_details?.name ?? "";
 
+    // El evento no trae los productos: hay que pedirlos aparte. Si falla,
+    // respondemos 500 para que Stripe reintente en vez de mandar la compra
+    // al grupo equivocado. Reintentar es seguro: MailerLite actualiza al
+    // suscriptor si ya existe.
+    let idsComprados: string[];
+    try {
+      const items = await stripe.checkout.sessions.listLineItems(session.id, {
+        limit: 100,
+      });
+      idsComprados = items.data.flatMap((item) => {
+        const price = item.price;
+        if (!price) return [];
+        const productId =
+          typeof price.product === "string" ? price.product : price.product.id;
+        return [price.id, productId];
+      });
+    } catch (err) {
+      console.error("No se pudieron leer los productos de la compra", err);
+      return res.status(500).end("Line items error");
+    }
+
+    const destino = resolverDestino(idsComprados);
+    // Deja en los logs de Vercel qué IDs trae cada compra: así se sacan los
+    // valores para STRIPE_ACTIVACION_IDS con una compra de prueba.
+    console.info("Compra Stripe", {
+      session: session.id,
+      ids: idsComprados,
+      destino: destino.producto,
+    });
+
     if (email) {
-      await addToMailerLite(email, name);
+      await addToMailerLite(email, name, destino);
     }
   }
 
