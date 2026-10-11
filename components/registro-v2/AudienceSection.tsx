@@ -2,10 +2,9 @@ import { RotateCcw, BookOpen, Signpost, Sparkles } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useRevealLight } from "@/hooks/useRevealLight";
 
-// Estas cards ya no usan LearnCard: la sección de arriba ("Un entrenamiento
-// en el que comprenderás") tiene las mismas, y repetirlas hacía que las dos
-// secciones se leyeran como una sola. Aquí van en vidrio esmerilado, más
-// sobrias, con numeración para darles un aire más formal.
+// Cards de vidrio esmerilado, sobrias y con numeración para darles un aire
+// más formal. La sección de arriba ("Un entrenamiento en el que
+// comprenderás") es una lista sin recuadros, así las dos no se confunden.
 const items = [
   {
     icon: RotateCcw,

@@ -1,9 +1,8 @@
 import Head from "next/head";
 import AnnouncementBar from "@/components/registro-v2/AnnouncementBar";
 import HeroSectionMC from "@/components/registro-v2/HeroSectionMC";
+import ForYouSection from "@/components/registro-v2/ForYouSection";
 import ClassContentSection from "@/components/registro-v2/ClassContentSection";
-import AccessPassSection from "@/components/registro-v2/AccessPassSection";
-import TestimonialsSection from "@/components/registro-v2/TestimonialsSection";
 import AudienceSection from "@/components/registro-v2/AudienceSection";
 import AboutAidaSection from "@/components/registro-v2/AboutAidaSection";
 import ClosingSection from "@/components/registro-v2/ClosingSection";
@@ -18,10 +17,10 @@ export default function RegistroV2() {
   return (
     <>
       <Head>
-        <title>Entrenamiento Práctico Gratuito — De la teoría espiritual a cambios reales | Aida Qui</title>
+        <title>Entrenamiento Práctico Gratuito — 3 horas para llevar a la práctica años de trabajo interior | Aida Qui</title>
         <meta
           name="description"
-          content="Entrenamiento práctico para llevar tus años de conocimiento espiritual a cambios reales en tus decisiones, tus relaciones y tu vida cotidiana. 17 de octubre, online por Zoom."
+          content="3 horas para que lo que ya sabes sobre tus miedos, heridas y patrones empiece a cambiar cómo decides y cómo te relacionas. Entrenamiento práctico y gratuito, 17 de octubre, online por Zoom."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -29,13 +28,9 @@ export default function RegistroV2() {
         <AnnouncementBar />
         <HeroSectionMC />
         <StarDivider />
+        <ForYouSection />
         <ClassContentSection />
-        {/* Pase y testimonios comparten un único fondo marrón: el fundido
-            hacia la sección clara de abajo lo hace el final de testimonios. */}
-        <div className="rv2-dark-band">
-          <AccessPassSection />
-          <TestimonialsSection />
-        </div>
+        <StarDivider />
         <AudienceSection />
         <AboutAidaSection />
         <ClosingSection />

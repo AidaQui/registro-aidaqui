@@ -60,18 +60,18 @@ export default function HeroSectionMC() {
 
           <MasterclassBadge />
 
-          {/* La promesa entera es el h1. "Entrenamiento Espiritual Práctico" va
-              arriba en grande como gancho, y el resto de la frase la completa. */}
+          {/* La promesa es el h1. Va en mayúsculas por CSS: escrita así en el
+              código, los lectores de pantalla no la deletrean. "Años de
+              trabajo interior" lleva el reflejo de luz. */}
           <h1 id="hero-title-rv2" className="hero-title rv2-promise">
-            <span className="rv2-promise__kicker">Entrenamiento Espiritual Práctico</span>{" "}
-            para llevar tus años de conocimiento espiritual a{" "}
-            <em className="rv2-promise__accent">cambios reales</em> en tus
-            decisiones, tus relaciones y tu vida cotidiana.
+            3 horas para llevar a la práctica{" "}
+            <em className="rv2-promise__accent">años de trabajo interior</em>
           </h1>
 
           <p className="hero-description rv2-hero-description">
-            Ya no necesitas más información o teoría. Necesitas ser la persona
-            capaz de <strong>SOSTENER</strong> los cambios que pides.
+            Para que lo que ya sabes sobre tus miedos, heridas y patrones empiece
+            a cambiar cómo decides, cómo te relacionas y qué haces cuando vuelves
+            a enfrentarte a las mismas situaciones.
           </p>
 
           <form className="mc-form" onSubmit={handleSubmit}>

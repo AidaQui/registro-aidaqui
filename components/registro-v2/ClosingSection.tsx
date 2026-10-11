@@ -75,8 +75,13 @@ export default function ClosingSection() {
         </h2>
 
         <div className="rv2-closing-copy" data-reveal>
-          <p className="rv2-closing-lead">{evento.bajada}</p>
-          <p className="rv2-closing-punch">{evento.remate}</p>
+          <p className="rv2-closing-question">¿Cuántos años llevas trabajando en ti?</p>
+          <p className="rv2-closing-lead">
+            Ahora dedica 3 horas a identificar qué te está frenando y sal con
+            un <strong>paso a paso</strong> claro para dejar de reaccionar como
+            siempre y empezar a tomar decisiones diferentes cuando aparezcan el
+            miedo, las dudas o los mismos problemas de siempre.
+          </p>
         </div>
 
         <ul className="closing-times" aria-label="Horarios por país" data-reveal-group>

@@ -26,12 +26,9 @@ export const evento = {
   ],
   // Mismo instante en UTC, para la cuenta regresiva del announcement bar
   inicio: "2026-10-17T16:00:00Z",
-  bajada:
-    "Una preparación para atravesar el portal 19/10 con más consciencia, claridad y dirección.",
-  remate: "Deja el bypass espiritual y conviértete en tu propio caso de éxito.",
 };
 
-/** Lo que se comprende en el entrenamiento (cards de la landing y de gracias) */
+/** Lo que se comprende en el entrenamiento (lista de ClassContentSection) */
 export const aprendizajes: { icon: LucideIcon; text: React.ReactNode }[] = [
   {
     icon: Repeat2,
@@ -55,8 +52,9 @@ export const aprendizajes: { icon: LucideIcon; text: React.ReactNode }[] = [
     icon: Anchor,
     text: (
       <>
-        Cómo llevar tu consciencia a la práctica y sostener tus cambios cuando
-        aparecen las dudas, el miedo o las situaciones de siempre.
+        Cómo llevar tu trabajo espiritual a la práctica para sostener tus
+        cambios cuando aparecen las dudas, el miedo o las situaciones de
+        siempre.
       </>
     ),
   },

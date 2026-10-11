@@ -18,7 +18,7 @@ const isMobileNow = () => window.matchMedia(MOBILE_QUERY).matches;
 // Armado como la sección "Soy Pilar Sousa" de lp.pilarsousa.es/bootcamp:
 // la foto no va en un marco sino de fondo, y se funde con la sección (hacia
 // abajo en mobile; hacia la izquierda y abajo en escritorio). En mobile el
-// título se coloca por CSS arriba de la foto, centrado sobre el cielo.
+// título se coloca por CSS arriba de la foto, centrado sobre el fondo claro.
 export default function AboutAidaSection() {
   const ref = useScrollReveal<HTMLElement>();
   const [open, setOpen] = useState(false);
@@ -30,8 +30,8 @@ export default function AboutAidaSection() {
     <section ref={ref} className="rv2-aida" aria-labelledby="rv2-aida-title">
       <div className="rv2-aida__media">
         <Image
-          src="/aida/quien-es-aida.png"
-          alt="Aida Qui meditando en una terraza al atardecer"
+          src="/aida/aida-quien-es-v2.png"
+          alt="Aida Qui riendo frente a su computadora, en una sala de madera"
           fill
           sizes="(max-width: 860px) 100vw, 56vw"
           className="rv2-aida__img"

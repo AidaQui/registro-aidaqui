@@ -1,4 +1,4 @@
-// Badge "Experiencia online" con espigas y animación CONTINUA.
+// Badge "Entrenamiento práctico y gratuito" con espigas y animación CONTINUA.
 // Misma pieza que la de /masterclass; los colores de esta copia se pisan en
 // globals.css bajo .hero-section--rv2 (bloque REGISTRO V2).
 
@@ -8,7 +8,7 @@ export default function MasterclassBadge() {
   return (
     <div className="mc-wheat-badge" aria-label="Tipo de evento">
       <Radio className="mc-badge-icon" size={16} strokeWidth={2.2} aria-hidden="true" />
-      Experiencia online
+      Entrenamiento práctico y gratuito
 
       <span className="mc-wheat mc-wheat--1" aria-hidden="true">
         <svg viewBox="0 0 26.3 65.33" xmlns="http://www.w3.org/2000/svg">
