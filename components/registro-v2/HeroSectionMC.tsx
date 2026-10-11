@@ -43,10 +43,10 @@ export default function HeroSectionMC() {
 
           <MasterclassBadge />
 
-          {/* La promesa entera es el h1. "Entrenamiento práctico" va arriba en
-              grande como gancho, y el resto de la frase la completa. */}
+          {/* La promesa entera es el h1. "Entrenamiento Espiritual Práctico" va
+              arriba en grande como gancho, y el resto de la frase la completa. */}
           <h1 id="hero-title-ent" className="hero-title ent-promise">
-            <span className="ent-promise__kicker">Entrenamiento práctico</span>{" "}
+            <span className="ent-promise__kicker">Entrenamiento Espiritual Práctico</span>{" "}
             para llevar tus años de conocimiento espiritual a{" "}
             <em className="ent-promise__accent">cambios reales</em> en tus
             decisiones, tus relaciones y tu vida cotidiana.

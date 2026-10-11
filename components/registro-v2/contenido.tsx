@@ -7,14 +7,16 @@ export const evento = {
   nombre: "Entrenamiento Espiritual Práctico",
   fecha: "17 de Octubre",
   formato: "Online por Zoom",
-  // 19h en España es horario de verano (CEST, UTC+2): el cambio de hora
+  // 18h en España es horario de verano (CEST, UTC+2): el cambio de hora
   // europeo es el 25/10, así que el 17/10 todavía rige. Argentina y Colombia
   // no cambian de hora.
   horarios: [
-    { hora: "19HS", pais: "España" },
-    { hora: "14HS", pais: "Argentina" },
-    { hora: "12HS", pais: "Colombia" },
+    { hora: "18HS", pais: "España" },
+    { hora: "13HS", pais: "Argentina" },
+    { hora: "11HS", pais: "Colombia" },
   ],
+  // Mismo instante en UTC, para la cuenta regresiva del announcement bar
+  inicio: "2026-10-17T16:00:00Z",
   bajada:
     "Una preparación para atravesar el portal 19/10 con más consciencia, claridad y dirección.",
   remate: "Deja el bypass espiritual y conviértete en tu propio caso de éxito.",

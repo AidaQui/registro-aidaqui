@@ -1,7 +1,9 @@
 import Head from "next/head";
+import AnnouncementBar from "@/components/registro-v2/AnnouncementBar";
 import HeroSectionMC from "@/components/registro-v2/HeroSectionMC";
 import ClassContentSection from "@/components/registro-v2/ClassContentSection";
 import AccessPassSection from "@/components/registro-v2/AccessPassSection";
+import TestimonialsSection from "@/components/registro-v2/TestimonialsSection";
 import AudienceSection from "@/components/registro-v2/AudienceSection";
 import AboutAidaSection from "@/components/registro-v2/AboutAidaSection";
 import ClosingSection from "@/components/registro-v2/ClosingSection";
@@ -22,10 +24,16 @@ export default function Entrenamiento() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="ent">
+        <AnnouncementBar />
         <HeroSectionMC />
         <StarDivider />
         <ClassContentSection />
-        <AccessPassSection />
+        {/* Pase y testimonios comparten un único fondo marrón: el fundido
+            hacia la sección clara de abajo lo hace el final de testimonios. */}
+        <div className="ent-dark-band">
+          <AccessPassSection />
+          <TestimonialsSection />
+        </div>
         <AudienceSection />
         <AboutAidaSection />
         <ClosingSection />

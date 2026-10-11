@@ -21072,7 +21072,7 @@ body {
    -------------------------------------------------------------------------- */
 
 .hero-section--ent .hero-bg {
-  background-image: url("/registro-v2/hero.webp");
+  background-image: url("/registro-v2/banner-web-registro.jpg");
   background-position: 62% 30%;
 }
 
@@ -21267,7 +21267,7 @@ body {
   }
 
   .hero-section--ent .hero-bg {
-    background-image: url("/registro-v2/hero-mobile.webp");
+    background-image: url("/registro-v2/banner-mobile.jpg");
     background-size: 100% auto;
     background-position: top center;
   }
@@ -21847,6 +21847,299 @@ body {
 .ent .pass-meta-value,
 .ent .pass-barcode {
   color: var(--ent-ink);
+}
+
+/* --------------------------------------------------------------------------
+   3b. PASE + TESTIMONIOS: UNA SOLA BANDA MARRÓN
+   -------------------------------------------------------------------------- */
+
+/* El fondo del pase pasa a la banda que envuelve pase y testimonios, así el
+   marrón sigue de corrido sin costura. El pase conserva su fundido de arriba
+   y el de abajo lo hace ahora el final de testimonios. */
+.ent-dark-band {
+  position: relative;
+  background:
+    radial-gradient(circle 640px at 80% 0%, rgba(226, 178, 112, 0.24), transparent 58%),
+    radial-gradient(circle 720px at 0% 100%, rgba(201, 123, 100, 0.3), transparent 60%),
+    linear-gradient(165deg, #3a2116 0%, #24150d 60%, #1a0f09 100%);
+}
+
+.ent .ent-dark-band .access-pass-bg,
+.ent .ent-dark-band .access-pass::after {
+  display: none;
+}
+
+.ent .ent-dark-band .access-pass {
+  padding-bottom: 72px;
+}
+
+.testi-ent {
+  position: relative;
+  padding: 8px 0 clamp(120px, 12vw, 152px);
+}
+
+.testi-ent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 72px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgb(246 230 213) 0%,
+    rgb(246 230 213 / 0.55) 38%,
+    rgb(246 230 213 / 0.15) 72%,
+    rgb(246 230 213 / 0) 100%
+  );
+}
+
+.testi-ent__shell {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.testi-ent__title {
+  margin: 0;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.testi-ent__title em {
+  font-style: italic;
+  background-image: linear-gradient(92deg, #f6d6a6, #e8b27c, #f6d6a6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* La captura de Trustpilot es blanca: se presenta como una tarjeta más */
+.testi-ent__trustpilot {
+  display: block;
+  width: clamp(220px, 24vw, 290px);
+  height: auto;
+  margin: 24px auto clamp(28px, 3vw, 40px);
+  border-radius: 18px;
+  box-shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* Sobre un fondo con degradés, los velos de color de las puntas dejaban un
+   rectángulo visible: aquí las puntas se desvanecen con máscara. */
+.testi-ent .testi-marquee {
+  z-index: 2;
+  padding: 8px 0 24px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.testi-ent .testi-marquee::before,
+.testi-ent .testi-marquee::after {
+  display: none;
+}
+
+/* Tarjetas en el mismo papel crema del pase */
+.ent .testi-card {
+  border-color: rgba(226, 178, 112, 0.4);
+  background: linear-gradient(150deg, #fff8f1 0%, #f7e3d1 100%);
+  box-shadow: 0 24px 50px -22px rgba(0, 0, 0, 0.6);
+}
+
+.ent .testi-card__avatar {
+  background: linear-gradient(160deg, var(--ent-rose) 0%, var(--ent-terra) 100%);
+  color: #fff8f1;
+}
+
+.ent .testi-card__name,
+.ent .testi-modal__title {
+  color: var(--ent-ink);
+}
+
+.ent .testi-card__title {
+  color: var(--ent-earth);
+}
+
+.ent .testi-card__meta {
+  color: var(--ent-muted);
+}
+
+.ent .testi-card__text,
+.ent .testi-modal__body p {
+  color: #4a3428;
+}
+
+.ent .testi-card__more {
+  border-color: rgba(169, 82, 59, 0.35);
+  background: rgba(169, 82, 59, 0.08);
+  color: var(--ent-terra);
+}
+
+.ent .testi-card__more:hover {
+  border-color: rgba(169, 82, 59, 0.55);
+  background: rgba(169, 82, 59, 0.16);
+}
+
+/* Pop-up: se monta fuera de la sección pero dentro de main.ent */
+.ent .testi-modal {
+  background: rgba(26, 15, 9, 0.6);
+}
+
+.ent .testi-modal__panel {
+  border-color: rgba(226, 178, 112, 0.4);
+  background: linear-gradient(180deg, #fff8f1 0%, #f7e3d1 100%);
+  box-shadow: 0 24px 60px rgba(26, 15, 9, 0.45);
+}
+
+.ent .testi-modal__close {
+  background: rgba(169, 82, 59, 0.1);
+  color: var(--ent-terra);
+}
+
+.ent .testi-modal__close:hover {
+  background: rgba(169, 82, 59, 0.18);
+}
+
+.ent .testi-modal__body {
+  scrollbar-color: rgba(169, 82, 59, 0.35) transparent;
+}
+
+.ent .testi-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(169, 82, 59, 0.35);
+}
+
+@media (max-width: 520px) {
+  .ent .ent-dark-band .access-pass {
+    padding-bottom: 56px;
+  }
+
+  .testi-ent::after {
+    height: 56px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ANNOUNCEMENT BAR
+   -------------------------------------------------------------------------- */
+
+/* Fija arriba durante todo el scroll: sticky dentro de main.ent, que
+   envuelve la página entera. */
+.ent-announce {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 28px;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(226, 178, 112, 0.35);
+  background: linear-gradient(90deg, #2a170e 0%, #4a2416 50%, #2a170e 100%);
+  color: #fde9d6;
+  font-family: var(--font-jost), Arial, sans-serif;
+}
+
+.ent-announce__text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 10px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ent-announce__name {
+  display: contents;
+}
+
+.ent-announce__sep {
+  color: var(--ent-gold);
+  font-size: 10px;
+}
+
+.ent-announce__countdown {
+  display: flex;
+  gap: 6px;
+}
+
+.ent-announce__unit {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 4px 9px;
+  border: 1px solid rgba(226, 178, 112, 0.35);
+  border-radius: 8px;
+  background: rgba(253, 233, 214, 0.08);
+}
+
+.ent-announce__num {
+  min-width: 2ch;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+}
+
+.ent-announce__label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ent-gold-light);
+}
+
+.ent-announce__live {
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--ent-terra);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .ent-announce {
+    gap: 6px;
+    padding: 8px 12px;
+  }
+
+  .ent-announce__text {
+    gap: 4px 8px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .ent-announce__name {
+    display: none;
+  }
+
+  .ent-announce__unit {
+    padding: 3px 7px;
+  }
+
+  .ent-announce__num {
+    font-size: 13px;
+  }
+
+  .ent-announce__label {
+    font-size: 9.5px;
+  }
 }
 
 /* --------------------------------------------------------------------------
