@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CalendarDays, Clock, Radio, Sparkles, type LucideIcon } from "lucide-react";
 import { evento } from "@/components/registro-v2/contenido";
 
 type Restante = { d: number; h: number; m: number; s: number };
@@ -19,8 +20,38 @@ function calcularRestante(ahora: number): Restante | null {
 
 const dosCifras = (n: number) => String(n).padStart(2, "0");
 
+const espana = evento.horarios.find((h) => h.pais === "España");
+
+/** Lo que dice la barra, cada cosa con su ícono */
+const datos: { icon: LucideIcon; texto: string }[] = [
+  { icon: Radio, texto: "3 horas en vivo" },
+  { icon: Sparkles, texto: evento.nombre },
+  { icon: CalendarDays, texto: evento.fecha },
+  ...(espana ? [{ icon: Clock, texto: `${espana.hora} ${espana.pais}` }] : []),
+];
+
+/** Una tanda de datos, separados sólo por espacio (los íconos ya marcan
+ *  dónde empieza cada uno) */
+function Datos({ copia = false }: { copia?: boolean }) {
+  return (
+    <ul
+      className={`rv2-announce__items${copia ? " rv2-announce__items--copia" : ""}`}
+      aria-hidden={copia || undefined}
+    >
+      {datos.map(({ icon: Icon, texto }) => (
+        <li className="rv2-announce__item" key={texto}>
+          <Icon className="rv2-announce__icon" size={14} strokeWidth={2.2} aria-hidden="true" />
+          <span>{texto}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /**
  * Barra fija arriba de toda la página: qué es, cuándo y cuánto falta.
+ * En escritorio los datos van en una fila; en mobile no entran y pasan en
+ * un carrusel infinito (la tanda va dos veces y se corre media pista).
  * La cuenta se calcula recién en el cliente; en el render del servidor van
  * guiones para que la hidratación no choque con la hora del navegador.
  */
@@ -34,8 +65,6 @@ export default function AnnouncementBar() {
     return () => window.clearInterval(id);
   }, []);
 
-  const espana = evento.horarios.find((h) => h.pais === "España");
-
   const unidades: { valor: number | undefined; label: string }[] = [
     { valor: restante?.d, label: "días" },
     { valor: restante?.h, label: "hs" },
@@ -45,25 +74,12 @@ export default function AnnouncementBar() {
 
   return (
     <div className="rv2-announce" role="region" aria-label="Próximo entrenamiento">
-      <p className="rv2-announce__text">
-        <span>3 horas en vivo</span>
-        {/* En mobile el nombre se oculta: la barra es fija y con él ocupaba
-            tres renglones */}
-        <span className="rv2-announce__name">
-          <span className="rv2-announce__sep" aria-hidden="true">✦</span>
-          <span>{evento.nombre}</span>
-        </span>
-        <span className="rv2-announce__sep" aria-hidden="true">✦</span>
-        <span>{evento.fecha}</span>
-        {espana && (
-          <>
-            <span className="rv2-announce__sep" aria-hidden="true">✦</span>
-            <span>
-              {espana.hora} {espana.pais}
-            </span>
-          </>
-        )}
-      </p>
+      <div className="rv2-announce__ticker">
+        <div className="rv2-announce__track">
+          <Datos />
+          <Datos copia />
+        </div>
+      </div>
 
       {restante === null ? (
         <p className="rv2-announce__live">¡Estamos en vivo!</p>

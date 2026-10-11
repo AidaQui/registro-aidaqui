@@ -64,37 +64,46 @@ export default function ClosingSection() {
         />
       </div>
 
+      {/* Dos bloques, que en escritorio van en dos columnas: el evento
+          (fecha y horarios, a la derecha) y la invitación (pregunta, párrafo
+          y botones, a la izquierda). En mobile se disuelven y cada pieza toma
+          su lugar por CSS, con la pregunta y el párrafo antes de los
+          horarios. */}
       <div className="closing-shell">
-        <p className="closing-eyebrow" data-reveal>
-          <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
-          {evento.nombre}
-        </p>
-
-        <h2 id="closing-title" className="closing-title" data-reveal="title">
-          {evento.fecha}
-        </h2>
-
-        <div className="rv2-closing-copy" data-reveal>
-          <p className="rv2-closing-question">¿Cuántos años llevas trabajando en ti?</p>
-          <p className="rv2-closing-lead">
-            Ahora dedica 3 horas a identificar qué te está frenando y sal con
-            un <strong>paso a paso</strong> claro para dejar de reaccionar como
-            siempre y empezar a tomar decisiones diferentes cuando aparezcan el
-            miedo, las dudas o los mismos problemas de siempre.
+        <div className="rv2-closing-main">
+          <p className="closing-eyebrow" data-reveal>
+            <CalendarDays size={15} strokeWidth={2} aria-hidden="true" />
+            {evento.nombre}
           </p>
+
+          <h2 id="closing-title" className="closing-title" data-reveal="title">
+            {evento.fecha}
+          </h2>
+
+          <ul className="closing-times" aria-label="Horarios por país" data-reveal-group>
+            {evento.horarios.map(({ hora, pais }) => (
+              <li key={pais}>
+                <span className="closing-time-h">{hora}</span>
+                <span className="closing-time-c">{pais}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <ul className="closing-times" aria-label="Horarios por país" data-reveal-group>
-          {evento.horarios.map(({ hora, pais }) => (
-            <li key={pais}>
-              <span className="closing-time-h">{hora}</span>
-              <span className="closing-time-c">{pais}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="rv2-closing-action">
+          <div className="rv2-closing-copy" data-reveal>
+            <p className="rv2-closing-question">¿Cuántos años llevas trabajando en ti?</p>
+            <p className="rv2-closing-lead">
+              Ahora dedica 3 horas a identificar qué te está frenando y sal con
+              un <strong>paso a paso</strong> claro para dejar de reaccionar como
+              siempre y empezar a tomar decisiones diferentes cuando aparezcan el
+              miedo, las dudas o los mismos problemas de siempre.
+            </p>
+          </div>
 
-        <div className="closing-cta rv2-closing-cta">
-          <CtaLanding />
+          <div className="closing-cta rv2-closing-cta">
+            <CtaLanding />
+          </div>
         </div>
       </div>
 

@@ -23236,15 +23236,16 @@ body {
   .rv2-promise__accent { animation: none; }
 }
 
-/* La descripción baja de jerarquía: más chica, más fina y en gris cálido,
-   para que la promesa sea lo primero que se lee. */
+/* La descripción baja de jerarquía: más chica que la promesa, para que
+   ésta sea lo primero que se lee. En peso medio: a 400 se veía fina sobre
+   la foto, y en negrita (600) los cinco renglones le competían al título. */
 .hero-section--rv2 .rv2-hero-description {
   max-width: 500px;
   padding-left: 14px;
   border-left: 2px solid rgba(254, 220, 171, 0.45);
   color: #ffffff;
   font-size: 17px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.6;
   text-shadow: 0 1px 10px rgba(24, 23, 11, 0.6);
 }
@@ -23331,33 +23332,33 @@ body {
     background-color: #f6dccf;
   }
 
-  /* hero-mobile.webp (desde hero/heroseccion-v2-mobile.png, sin recorte):
-     ella sentada arriba, centrada, y debajo el deck de madera libre. A todo
-     el ancho, ella ocupa hasta ~170vw: la cara entre 26 y 51vw y el regazo
-     cerca de 100vw. */
+  /* hero-mobile.webp (desde hero/heroseccion-v2-mobile.png): ella sentada
+     arriba, centrada, y debajo el deck de madera libre. El PNG ya viene sin
+     la franja de follaje vacía que había arriba de la cabeza. A todo el
+     ancho, la cara queda entre 11 y 34vw y el collar en ~56vw. */
   .hero-section--rv2 .hero-bg {
     background-image: url("/registro-v2/hero-mobile.webp");
     background-size: 100% auto;
     background-position: center top;
   }
 
-  /* El velo acompaña al contenido: arranca a la altura del regazo, así cara,
-     manos y torso quedan limpios. Va bastante opaco porque el vestido es
-     malva oscuro y el texto pasa por encima de las piernas. */
+  /* El velo acompaña al contenido: arranca debajo del mentón y a la altura
+     del collar ya está casi opaco, así la cara queda limpia y el texto se
+     lee sobre los brazos y el vestido. */
   .hero-section--rv2::before {
     background: linear-gradient(
       to bottom,
       rgba(251, 235, 226, 0) 0,
-      rgba(251, 235, 226, 0) 86vw,
-      rgba(251, 235, 226, 0.9) 116vw,
+      rgba(251, 235, 226, 0) 40vw,
+      rgba(251, 235, 226, 0.9) 64vw,
       rgba(251, 235, 226, 0.94) 100%
     );
   }
 
-  /* El contenido arranca debajo del regazo. Más abajo (sobre el deck
-     libre, ~170vw) el formulario quedaba fuera de la primera pantalla. */
+  /* El badge va a la altura del collar (pedido de Aida): así el formulario
+     entra bien en la primera pantalla. */
   .hero-section--rv2 .hero-shell {
-    padding-top: clamp(330px, 104vw, 500px);
+    padding-top: clamp(180px, 54vw, 260px);
   }
 
   .hero-section--rv2 .rv2-promise {
@@ -23944,26 +23945,109 @@ body {
   font-family: var(--font-jost), Arial, sans-serif;
 }
 
-.rv2-announce__text {
+/* Datos del evento (AnnouncementBar). En escritorio, una fila fija con sólo
+   la primera tanda. Entre dato y dato sólo espacio (--announce-gap): los
+   íconos ya marcan dónde empieza cada uno, y con ✦ además se veía cargado. */
+.rv2-announce {
+  --announce-gap: 34px;
+}
+
+.rv2-announce__ticker {
+  min-width: 0;
+}
+
+.rv2-announce__track {
   display: flex;
-  flex-wrap: wrap;
+}
+
+.rv2-announce__items {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px 10px;
+  gap: var(--announce-gap);
   margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.rv2-announce__name {
-  display: contents;
+.rv2-announce__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
 
-.rv2-announce__sep {
-  color: var(--rv2-gold);
-  font-size: 10px;
+.rv2-announce__icon {
+  flex-shrink: 0;
+  color: var(--rv2-gold-light);
+}
+
+.rv2-announce__items--copia {
+  display: none;
+}
+
+/* Hasta 960px los datos no entran en una fila: pasan en un carrusel
+   infinito a todo el ancho de la barra (el margen negativo come su padding),
+   con las puntas desvanecidas, y la cuenta regresiva queda debajo. La pista
+   lleva la tanda dos veces y se corre la mitad: al reiniciar, la copia está
+   exactamente donde estaba la original. */
+@media (max-width: 960px) {
+  .rv2-announce__ticker {
+    flex: 1 1 100%;
+    margin: 0 -20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .rv2-announce__track {
+    width: max-content;
+    animation: rv2-ticker 22s linear infinite;
+  }
+
+  /* El mismo espacio que entre dos datos, al final de cada tanda: así la
+     unión entre una tanda y su copia no se nota */
+  .rv2-announce__items {
+    padding-right: var(--announce-gap);
+  }
+
+  .rv2-announce__items--copia {
+    display: flex;
+  }
+}
+
+@keyframes rv2-ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Sin movimiento: una sola tanda, partida en renglones y centrada */
+@media (max-width: 960px) and (prefers-reduced-motion: reduce) {
+  .rv2-announce__ticker {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .rv2-announce__track {
+    width: auto;
+    justify-content: center;
+    animation: none;
+  }
+
+  .rv2-announce__items {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
+    padding-right: 0;
+    white-space: normal;
+  }
+
+  .rv2-announce__items--copia {
+    display: none;
+  }
 }
 
 .rv2-announce__countdown {
@@ -24010,19 +24094,25 @@ body {
 }
 
 @media (max-width: 600px) {
+  /* Menos espacio entre datos que en escritorio: la letra es más chica */
   .rv2-announce {
+    --announce-gap: 28px;
     gap: 6px;
     padding: 8px 12px;
   }
 
-  .rv2-announce__text {
-    gap: 4px 8px;
+  .rv2-announce__ticker {
+    margin: 0 -12px;
+  }
+
+  .rv2-announce__items {
     font-size: 11px;
     letter-spacing: 0.1em;
   }
 
-  .rv2-announce__name {
-    display: none;
+  .rv2-announce__icon {
+    width: 12px;
+    height: 12px;
   }
 
   .rv2-announce__unit {
@@ -24459,9 +24549,12 @@ body {
 /* Con cuatro países no entran en una fila en mobile: grilla de 2x2 en vez
    de tres arriba y uno suelto abajo. */
 @media (max-width: 480px) {
+  /* width: 100% porque en la columna flex del cierre los márgenes auto
+     encogían la grilla a su contenido en vez de llevarla a 300px */
   .rv2 .closing-times {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
@@ -24476,6 +24569,78 @@ body {
 
   .rv2 .closing-times {
     margin-bottom: 24px;
+  }
+}
+
+/* En una columna (mobile y tablet) el orden es otro que en el HTML: la
+   pregunta y el párrafo van antes de los horarios. Los dos bloques se
+   disuelven (display: contents) y cada pieza toma su lugar con order. Sólo
+   los botones son enfocables y van últimos en los dos órdenes, así que el
+   tab no salta. */
+@media (max-width: 1079px) {
+  .rv2 .closing-shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rv2-closing-main,
+  .rv2-closing-action {
+    display: contents;
+  }
+
+  .rv2 .closing-eyebrow { order: 1; align-self: center; }
+  .rv2 .closing-title   { order: 2; }
+  .rv2-closing-copy     { order: 3; }
+  .rv2 .closing-times   { order: 4; }
+  .rv2-closing-cta      { order: 5; }
+}
+
+/* Escritorio: dos columnas, centradas en alto. A la izquierda la invitación
+   (la pregunta, el párrafo y los botones); a la derecha el evento (la fecha
+   y los horarios). En el HTML el evento va primero, para que la fecha (el
+   h2 de la sección) se lea antes: el cruce lo hace order. Todo en una
+   columna de 760px dejaba la sección muy alta y los costados vacíos. La
+   columna del evento toma el ancho de su contenido (la fila de horarios) y
+   la de la invitación se queda con el resto. */
+@media (min-width: 1080px) {
+  .rv2 .closing-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: clamp(48px, 5vw, 80px);
+    max-width: 1140px;
+    padding: 112px 40px 104px;
+  }
+
+  .rv2-closing-action {
+    order: -1;
+  }
+
+  .rv2 .closing-title {
+    margin-bottom: 28px;
+  }
+
+  /* Horarios un poco más angostos: los cuatro en una fila, sin que la
+     columna izquierda le quite demasiado lugar al párrafo */
+  .rv2 .closing-times {
+    gap: 14px;
+    margin-bottom: 0;
+  }
+
+  .rv2 .closing-times li {
+    min-width: 104px;
+    padding: 18px 16px;
+  }
+
+  .rv2-closing-copy {
+    max-width: 540px;
+    margin-bottom: 28px;
+  }
+
+  /* A 27px la pregunta se partía en dos renglones; a 21px entra en uno
+     desde ~1200px de ancho. */
+  .rv2-closing-question {
+    font-size: 21px;
   }
 }
 
