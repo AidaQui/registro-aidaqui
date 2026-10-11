@@ -21194,11 +21194,11 @@ body {
   max-width: 500px;
   padding-left: 14px;
   border-left: 2px solid rgba(243, 211, 161, 0.45);
-  color: rgba(240, 228, 218, 0.72);
+  color: #ffffff;
   font-size: 17px;
   font-weight: 400;
   line-height: 1.6;
-  text-shadow: 0 1px 10px rgba(20, 10, 5, 0.5);
+  text-shadow: 0 1px 10px rgba(20, 10, 5, 0.6);
 }
 
 .ent-hero-description strong {
@@ -21287,7 +21287,7 @@ body {
      pecho de ella y tapaba media foto. Ahora empieza a la altura de la
      cintura y se ve el retrato entero. */
   .hero-section--ent .hero-shell {
-    padding-top: clamp(340px, 104vw, 480px);
+    padding-top: clamp(240px, 104vw, 480px);
   }
 
   .hero-section--ent .ent-promise {

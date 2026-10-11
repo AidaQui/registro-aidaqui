@@ -5,7 +5,6 @@ import AccessPassSection from "@/components/registro-v2/AccessPassSection";
 import AudienceSection from "@/components/registro-v2/AudienceSection";
 import AboutAidaSection from "@/components/registro-v2/AboutAidaSection";
 import ClosingSection from "@/components/registro-v2/ClosingSection";
-import FloatingWhatsApp from "@/components/registro-v2/FloatingWhatsApp";
 import StarDivider from "@/components/registro-v2/StarDivider";
 
 // Copia de /masterclass con otra promesa y la paleta de la terraza
@@ -30,7 +29,6 @@ export default function Entrenamiento() {
         <AudienceSection />
         <AboutAidaSection />
         <ClosingSection />
-        <FloatingWhatsApp />
       </main>
     </>
   );
