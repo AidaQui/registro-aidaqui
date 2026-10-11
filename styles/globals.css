@@ -23127,23 +23127,26 @@ body {
    1. HERO
    -------------------------------------------------------------------------- */
 
-/* Foto de la v2: ella a la derecha, a contraluz del atardecer */
+/* Foto de la v2 (hero/heroseccion-v2-pc.png): retrato de ella en una sala
+   de madera, con la cara a ~69% del ancho: con cover cae a la derecha del
+   texto y fuera del velo oscuro. */
 .hero-section--rv2 .hero-bg {
   background-image: url("/registro-v2/hero.webp");
   background-position: 62% 30%;
 }
 
-/* A la izquierda de la foto están el olivo y el cielo encendido, justo
-   donde va el texto: un velo de oliva profundo que se abre antes de
-   llegar a ella. */
+/* Detrás del texto queda la pared de madera de la foto: un sombreado casi
+   negro la apaga, para que el contenido se destaque y la madera no
+   compita. Se mantiene fuerte hasta el final de la columna de texto (~42%)
+   y se abre antes de llegar al pelo de ella (~58%). */
 .hero-section--rv2::before {
   display: block;
   background: linear-gradient(
     90deg,
-    rgba(36, 35, 17, 0.86) 0%,
-    rgba(36, 35, 17, 0.72) 30%,
-    rgba(36, 35, 17, 0.35) 46%,
-    rgba(36, 35, 17, 0) 60%
+    rgba(10, 9, 7, 0.9) 0%,
+    rgba(10, 9, 7, 0.86) 32%,
+    rgba(10, 9, 7, 0.6) 44%,
+    rgba(10, 9, 7, 0) 58%
   );
 }
 
@@ -23316,9 +23319,9 @@ body {
   .hero-section--rv2::before {
     background: linear-gradient(
       90deg,
-      rgba(36, 35, 17, 0.86) 0%,
-      rgba(36, 35, 17, 0.62) 70%,
-      rgba(36, 35, 17, 0.45) 100%
+      rgba(10, 9, 7, 0.88) 0%,
+      rgba(10, 9, 7, 0.66) 70%,
+      rgba(10, 9, 7, 0.5) 100%
     );
   }
 }
@@ -23332,33 +23335,35 @@ body {
     background-color: #f6dccf;
   }
 
-  /* hero-mobile.webp (desde hero/heroseccion-v2-mobile.png): ella sentada
-     arriba, centrada, y debajo el deck de madera libre. El PNG ya viene sin
-     la franja de follaje vacía que había arriba de la cabeza. A todo el
-     ancho, la cara queda entre 11 y 34vw y el collar en ~56vw. */
+  /* hero-mobile.webp (desde hero/heroseccion-v2-mobile.png): ella hasta el
+     pecho en la sala de madera, con bastante pared arriba; a todo el ancho
+     mide 137vw. Sube 30vw para sacar esa franja vacía: así la cabeza
+     arranca en ~5vw, el mentón queda en ~44vw y la foto termina en
+     ~107vw. */
   .hero-section--rv2 .hero-bg {
     background-image: url("/registro-v2/hero-mobile.webp");
     background-size: 100% auto;
-    background-position: center top;
+    background-position: center -30vw;
   }
 
-  /* El velo acompaña al contenido: arranca debajo del mentón y a la altura
-     del collar ya está casi opaco, así la cara queda limpia y el texto se
-     lee sobre los brazos y el vestido. */
+  /* El velo arranca en el mentón y ya está casi opaco donde empieza el
+     título, así la cara queda limpia y el texto se lee sobre el saco. A
+     104vw es opaco del todo: tapa el borde de abajo de la foto, que
+     termina antes que la sección. */
   .hero-section--rv2::before {
     background: linear-gradient(
       to bottom,
       rgba(251, 235, 226, 0) 0,
-      rgba(251, 235, 226, 0) 40vw,
-      rgba(251, 235, 226, 0.9) 64vw,
-      rgba(251, 235, 226, 0.94) 100%
+      rgba(251, 235, 226, 0) 44vw,
+      rgba(251, 235, 226, 0.9) 60vw,
+      rgb(251, 235, 226) 104vw
     );
   }
 
-  /* El badge va a la altura del collar (pedido de Aida): así el formulario
-     entra bien en la primera pantalla. */
+  /* El badge va justo debajo del mentón: lo más arriba posible sin tapar
+     la cara, para que el formulario entre en la primera pantalla. */
   .hero-section--rv2 .hero-shell {
-    padding-top: clamp(180px, 54vw, 260px);
+    padding-top: clamp(170px, 48vw, 235px);
   }
 
   .hero-section--rv2 .rv2-promise {
@@ -24989,6 +24994,18 @@ body {
   line-height: 0;
 }
 
+/* El botón del grupo va en verde WhatsApp y no en el naranja de los CTA:
+   así se entiende de un vistazo a dónde lleva. El texto, en verde muy
+   oscuro: el blanco sobre este verde da 2:1, éste pasa de 6:1. */
+.rv2 .pearl-btn.rv2-gracias__vip {
+  --pearl-bg: #25d366;
+  background-color: #25d366;
+}
+
+.rv2 .rv2-gracias__vip .pearl-wrap {
+  color: #073d1d;
+}
+
 /* Soporte: secundario y sin relleno, para no competir con el grupo.
    Centrado en una fila del ancho de la card (460px): sobre el eje de la
    card en escritorio; en mobile la card ocupa todo y queda al centro. */
@@ -25016,10 +25033,12 @@ body {
     border-color 0.25s ease;
 }
 
+/* El ícono, en verde WhatsApp como el botón del grupo */
 .rv2-support span {
   display: inline-flex;
   font-size: 1.15em;
   line-height: 0;
+  color: #25d366;
 }
 
 .rv2-support:hover {
@@ -25067,32 +25086,34 @@ body {
   border-top: 1px solid rgba(254, 220, 171, 0.12);
 }
 
-/* Mobile: dejamos la imagen despejada arriba y apoyamos el contenido
-   sobre el fundido de la piedra, más abajo que en la landing. */
+/* Mobile: la foto arriba casi entera y el contenido debajo. */
 @media (max-width: 480px) {
-  /* El contenido ocupa el final de la pantalla; el espacio libre queda
-     arriba de forma automática, sin sumar un padding fijo a su altura. */
+  /* La foto es la de la landing (sube 30vw y termina en ~107vw): aquí se
+     deja ver hasta los hombros y el saco, y el contenido arranca donde ella
+     termina. La página puede scrollear al final: la prioridad es que se vea
+     la foto y que el contenido respire, no que todo entre en una pantalla. */
   .rv2-gracias.hero-section--rv2 .hero-shell {
     min-height: calc(100svh - 57px);
-    justify-content: flex-end;
-    padding: 20px 0 16px;
+    justify-content: flex-start;
+    padding: clamp(330px, 92vw, 440px) 0 48px;
   }
 
-  /* El velo baja con el texto para dejar la cara y el torso visibles. */
+  /* Velo recién sobre el final de la foto: casi opaco donde empieza el
+     rótulo y opaco del todo antes del borde de abajo de la foto, que así
+     no se marca como una línea detrás del contenido. */
   .rv2-gracias.hero-section--rv2::before {
     background: linear-gradient(
       to bottom,
       rgba(251, 235, 226, 0) 0,
-      rgba(251, 235, 226, 0) 28%,
-      rgba(251, 235, 226, 0.9) 55%,
-      rgba(251, 235, 226, 0.94) 100%
+      rgba(251, 235, 226, 0) 74vw,
+      rgba(251, 235, 226, 0.92) 92vw,
+      rgb(251, 235, 226) 104vw
     );
   }
 
-  /* Soporte 15px más abajo que el resto del ritmo de la columna */
   .rv2-gracias__support-row {
     max-width: none;
-    margin-top: 0;
+    margin-top: 12px;
   }
 
   /* Malva más oscuro que el de los acentos: el rótulo es chico y va sobre
@@ -25116,25 +25137,33 @@ body {
 
   /* La hero de la landing limita el contenido a 330px; aquí usa casi todo
      el ancho, y la card del último paso se estira un poco más que el texto
-     (queda a 12px de cada borde en un teléfono de 390px). */
+     (queda a 12px de cada borde en un teléfono de 390px). Con el ritmo de
+     10px y la card apretada se leía todo pegado: más aire entre las piezas,
+     la card del último paso bien separada de la barra y más espacio
+     adentro de ella. */
   .rv2-gracias .hero-copy {
     max-width: none;
     padding: 0 20px;
-    gap: 10px;
+    gap: 20px;
   }
 
   .rv2-gracias__step {
     width: calc(100% + 16px);
     max-width: none;
+    margin-top: 36px;
     margin-right: -8px;
     margin-left: -8px;
-    padding: 22px 20px 16px;
+    padding: 36px 24px 28px;
+  }
+
+  .rv2-gracias__step-title {
+    margin-bottom: 12px;
   }
 
   .rv2-gracias__step-body {
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.45;
+    margin-bottom: 26px;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .rv2-gracias-page .rv2-footer {
@@ -25163,5 +25192,10 @@ body {
     border-color: rgba(161, 106, 132, 0.35);
     background: rgba(255, 255, 255, 0.5);
     color: var(--rv2-ink);
+  }
+
+  /* Verde más profundo: el de WhatsApp sobre la piedra clara daba 2:1 */
+  .rv2-gracias .rv2-support span {
+    color: #1a9e4f;
   }
 }
