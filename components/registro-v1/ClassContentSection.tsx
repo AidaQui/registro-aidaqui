@@ -1,5 +1,5 @@
-import LearnCard from "@/components/registro-v2/LearnCard";
-import { aprendizajes } from "@/components/registro-v2/contenido";
+import LearnCard from "@/components/registro-v1/LearnCard";
+import { aprendizajes } from "@/components/registro-v1/contenido";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useRevealLight } from "@/hooks/useRevealLight";
 

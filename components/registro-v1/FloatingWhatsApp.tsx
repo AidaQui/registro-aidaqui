@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { whatsappGroupUrl, WhatsAppIcon } from "@/components/registro-v2/whatsapp";
+import { whatsappGroupUrl, WhatsAppIcon } from "@/components/registro-v1/whatsapp";
 
 // id de la sección de cierre (ClosingSection): ahí ya está el mismo botón
 // junto al CTA, así que el flotante se retira mientras esa sección se ve.

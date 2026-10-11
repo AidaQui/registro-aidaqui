@@ -3,8 +3,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // LightRays se toma de /masterclass a propósito: es un efecto genérico que se
 // configura sólo por props, así que compartirlo no ata una landing a la otra.
 import LightRays from "@/components/masterclass/LightRays";
-import { evento } from "@/components/registro-v2/contenido";
-import { soporteUrl, WhatsAppIcon } from "@/components/registro-v2/whatsapp";
+import { evento } from "@/components/registro-v1/contenido";
+import { soporteUrl, WhatsAppIcon } from "@/components/registro-v1/whatsapp";
 
 /** Fila de la landing: CTA al formulario y, al lado, el botón redondo de
  *  WhatsApp a soporte (el grupo se comparte recién en la página de gracias) */

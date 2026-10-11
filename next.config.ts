@@ -3,6 +3,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   devIndicators: false,
+  async redirects() {
+    return [
+      {
+        // This landing lived at /registro-v2 before being renamed to
+        // /registro-v1; old links (ads, emails) keep working. Temporary (307)
+        // on purpose: remove it when a new landing takes /registro-v2.
+        source: "/registro-v2/:path*",
+        destination: "/registro-v1/:path*",
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

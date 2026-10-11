@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { evento } from "@/components/registro-v2/contenido";
+import { evento } from "@/components/registro-v1/contenido";
 
 type Restante = { d: number; h: number; m: number; s: number };
 

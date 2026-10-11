@@ -1,4 +1,4 @@
-// Links e ícono de WhatsApp de registro-v2. Los usan el cierre de la
+// Links e ícono de WhatsApp de registro-v1. Los usan el cierre de la
 // landing y la página de gracias.
 
 /** Grupo VIP del entrenamiento: ahí se envía el enlace de acceso a la sesión. */

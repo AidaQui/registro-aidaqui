@@ -1,13 +1,13 @@
 import Head from "next/head";
-import AnnouncementBar from "@/components/registro-v2/AnnouncementBar";
-import HeroSectionMC from "@/components/registro-v2/HeroSectionMC";
-import ClassContentSection from "@/components/registro-v2/ClassContentSection";
-import AccessPassSection from "@/components/registro-v2/AccessPassSection";
-import TestimonialsSection from "@/components/registro-v2/TestimonialsSection";
-import AudienceSection from "@/components/registro-v2/AudienceSection";
-import AboutAidaSection from "@/components/registro-v2/AboutAidaSection";
-import ClosingSection from "@/components/registro-v2/ClosingSection";
-import StarDivider from "@/components/registro-v2/StarDivider";
+import AnnouncementBar from "@/components/registro-v1/AnnouncementBar";
+import HeroSectionMC from "@/components/registro-v1/HeroSectionMC";
+import ClassContentSection from "@/components/registro-v1/ClassContentSection";
+import AccessPassSection from "@/components/registro-v1/AccessPassSection";
+import TestimonialsSection from "@/components/registro-v1/TestimonialsSection";
+import AudienceSection from "@/components/registro-v1/AudienceSection";
+import AboutAidaSection from "@/components/registro-v1/AboutAidaSection";
+import ClosingSection from "@/components/registro-v1/ClosingSection";
+import StarDivider from "@/components/registro-v1/StarDivider";
 
 // Copia de /masterclass con otra promesa y la paleta de la terraza
 // mediterránea. La clase "ent" del <main> es la que activa esa paleta en

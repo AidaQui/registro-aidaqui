@@ -1,7 +1,7 @@
 import Head from "next/head";
-import GraciasHero from "@/components/registro-v2/GraciasHero";
+import GraciasHero from "@/components/registro-v1/GraciasHero";
 
-// Gracias de registro-v2: una sola pantalla con lo único que falta hacer
+// Gracias de registro-v1: una sola pantalla con lo único que falta hacer
 // (entrar al grupo de WhatsApp), más el pie. Tuvo debajo los chips de fecha,
 // un repaso del contenido y el cierre de la landing, pero repetía todo lo
 // que la persona acababa de leer.

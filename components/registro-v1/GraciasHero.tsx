@@ -1,6 +1,6 @@
-import { whatsappGroupUrl, WhatsAppIcon, SoporteLink } from "@/components/registro-v2/whatsapp";
+import { whatsappGroupUrl, WhatsAppIcon, SoporteLink } from "@/components/registro-v1/whatsapp";
 
-// Primera pantalla de /registro-v2/gracias. Reusa la hero de la landing
+// Primera pantalla de /registro-v1/gracias. Reusa la hero de la landing
 // (misma foto, mismo velo y mismo comportamiento en mobile) para que el
 // paso del formulario a esta página se sienta continuo, y pone arriba de
 // todo lo único que falta hacer: entrar al grupo de WhatsApp.

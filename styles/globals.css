@@ -21037,7 +21037,7 @@ body {
 
 
 /* ==========================================================================
-   REGISTRO V2 — /registro-v2 y /registro-v2/gracias
+   REGISTRO V1 — /registro-v1 y /registro-v1/gracias
    ==========================================================================
 
    Copia de /masterclass para el test de promesas: cambia el copy y la paleta,
@@ -21046,7 +21046,8 @@ body {
    dorada, verde oliva y tierra oscura.
 
    El prefijo de las clases es "ent" por "entrenamiento", la promesa de esta
-   variante (la ruta se llamó /entrenamiento hasta que pasó a registro-v2).
+   variante (la ruta se llamó /entrenamiento, después /registro-v2 y quedó
+   en /registro-v1 al numerar las landings de registro en orden).
 
    Todo cuelga de .ent (el <main> de la página) o de los modificadores
    --ent, porque las clases base (.hero-section, .learn-card, .closing...) las
@@ -21072,7 +21073,7 @@ body {
    -------------------------------------------------------------------------- */
 
 .hero-section--ent .hero-bg {
-  background-image: url("/registro-v2/banner-web-registro.jpg");
+  background-image: url("/registro-v1/banner-web-registro.jpg");
   background-position: 62% 30%;
 }
 
@@ -21274,7 +21275,7 @@ body {
   }
 
   .hero-section--ent .hero-bg {
-    background-image: url("/registro-v2/banner-mobile.jpg");
+    background-image: url("/registro-v1/banner-mobile.jpg");
     background-size: 100% auto;
     background-position: top center;
   }
@@ -22768,7 +22769,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   7. PÁGINA DE GRACIAS — /registro-v2/gracias
+   7. PÁGINA DE GRACIAS — /registro-v1/gracias
    -------------------------------------------------------------------------- */
 
 /* Una sola pantalla y el pie. Reusa la hero de la landing

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { CalendarDays, Video } from "lucide-react";
-import MasterclassBadge from "@/components/registro-v2/MasterclassBadge";
-import { evento } from "@/components/registro-v2/contenido";
+import MasterclassBadge from "@/components/registro-v1/MasterclassBadge";
+import { evento } from "@/components/registro-v1/contenido";
 
 export default function HeroSectionMC() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function HeroSectionMC() {
         throw new Error("No se pudo completar el registro");
       }
 
-      router.push("/registro-v2/gracias");
+      router.push("/registro-v1/gracias");
     } catch {
       setError("Hubo un problema. Por favor, intentá de nuevo.");
       setSubmitting(false);
