@@ -15,7 +15,7 @@ export const WhatsAppIcon = () => (
   </svg>
 );
 
-/** Botón secundario de soporte: el mismo en el cierre y en gracias. */
+/** Botón secundario de soporte de la página de gracias. */
 export const SoporteLink = () => (
   <a
     href={soporteUrl}

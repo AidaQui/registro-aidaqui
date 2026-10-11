@@ -21125,7 +21125,7 @@ body {
 .ent-promise__kicker {
   display: block;
   margin-bottom: 12px;
-  font-size: clamp(42px, 4.3vw, 58px);
+  font-size: 36px;
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: -0.015em;
@@ -21305,7 +21305,7 @@ body {
   }
 
   .ent-promise__kicker {
-    font-size: clamp(28px, 8.6vw, 36px);
+    font-size: 28px;
     background-image: linear-gradient(100deg, #8a3a22 0%, #b0583c 55%, #c9745a 100%);
     filter: none;
   }
@@ -22363,8 +22363,9 @@ body {
     padding: 0 0 80px;
   }
 
-  /* Difuminada abajo (hacia el texto) y también un poco arriba: el título
-     se apoya ahí y el empalme con la sección anterior queda suave. */
+  /* Difuminada abajo (hacia el texto) y también arriba: el fundido de arriba
+     llega hasta el 30% para que el titular, que va en el top, se lea limpio
+     sobre el fondo y no sobre la foto. */
   .ent-aida__media {
     position: relative;
     top: auto;
@@ -22372,9 +22373,9 @@ body {
     bottom: auto;
     width: 100%;
     height: var(--aida-media-h);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 52%, transparent 96%);
+    -webkit-mask-image: linear-gradient(#0000 0%, #000 30% 52%, #0000 95%);
     -webkit-mask-composite: source-over;
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 52%, transparent 96%);
+    mask-image: linear-gradient(#0000 0%, #000 30% 52%, #0000 95%);
     mask-composite: add;
   }
 
@@ -22918,17 +22919,8 @@ body {
 }
 
 /* Soporte: secundario y sin relleno, para no competir con el grupo.
-   En gracias va centrado en una fila del ancho de la card (460px): sobre el
-   eje de la card en escritorio; en mobile la card ocupa todo y queda al
-   centro. En la landing va debajo del CTA del cierre. */
-.ent-closing-support {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
+   Centrado en una fila del ancho de la card (460px): sobre el eje de la
+   card en escritorio; en mobile la card ocupa todo y queda al centro. */
 .ent-gracias__support-row {
   display: flex;
   justify-content: center;

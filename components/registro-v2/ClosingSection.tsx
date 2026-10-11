@@ -4,9 +4,10 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // configura sólo por props, así que compartirlo no ata una landing a la otra.
 import LightRays from "@/components/masterclass/LightRays";
 import { evento } from "@/components/registro-v2/contenido";
-import { whatsappGroupUrl, WhatsAppIcon, SoporteLink } from "@/components/registro-v2/whatsapp";
+import { soporteUrl, WhatsAppIcon } from "@/components/registro-v2/whatsapp";
 
-/** Fila de la landing: CTA al formulario y, al lado, el botón redondo de WhatsApp */
+/** Fila de la landing: CTA al formulario y, al lado, el botón redondo de
+ *  WhatsApp a soporte (el grupo se comparte recién en la página de gracias) */
 function CtaLanding() {
   return (
     <>
@@ -23,11 +24,11 @@ function CtaLanding() {
       {/* Mismo botón perla que el CTA, en versión redonda: así los dos
           se leen como un par y no como dos estilos distintos. */}
       <a
-        href={whatsappGroupUrl}
+        href={soporteUrl}
         className="pearl-btn ent-wa-pearl"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Unirme al grupo de WhatsApp"
+        aria-label="Hablar con soporte por WhatsApp"
       >
         <div className="pearl-wrap">
           <p>
@@ -89,10 +90,6 @@ export default function ClosingSection() {
 
         <div className="closing-cta ent-closing-cta" data-reveal>
           <CtaLanding />
-        </div>
-
-        <div className="ent-closing-support" data-reveal>
-          <SoporteLink />
         </div>
       </div>
 
