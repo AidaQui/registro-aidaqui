@@ -1,0 +1,40 @@
+import Head from "next/head";
+import AnnouncementBar from "@/components/registro-v3/AnnouncementBar";
+import HeroSectionMC from "@/components/registro-v3/HeroSectionMC";
+import ForYouSection from "@/components/registro-v3/ForYouSection";
+import ClassContentSection from "@/components/registro-v3/ClassContentSection";
+import AudienceSection from "@/components/registro-v3/AudienceSection";
+import AboutAidaSection from "@/components/registro-v3/AboutAidaSection";
+import ClosingSection from "@/components/registro-v3/ClosingSection";
+import StarDivider from "@/components/registro-v3/StarDivider";
+import { fuentesV3 } from "@/components/registro-v3/fuentes";
+
+// Copia exacta de /registro-v2 para la siguiente variante del test de
+// promesas. La clase "rv3" del <main> activa su bloque REGISTRO V3 en
+// globals.css, así que /registro-v2, /registro-v1 y /masterclass no se
+// enteran de sus cambios.
+export default function RegistroV3() {
+  return (
+    <>
+      <Head>
+        <title>Entrenamiento Práctico Gratuito — 3 horas para llevar a la práctica años de trabajo interior | Aida Qui</title>
+        <meta
+          name="description"
+          content="3 horas para que lo que ya sabes sobre tus miedos, heridas y patrones empiece a cambiar cómo decides y cómo te relacionas. Entrenamiento práctico y gratuito, 17 de octubre, online por Zoom."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <main className={`rv3 ${fuentesV3}`}>
+        <AnnouncementBar />
+        <HeroSectionMC />
+        <StarDivider />
+        <ForYouSection />
+        <ClassContentSection />
+        <StarDivider />
+        <AudienceSection />
+        <AboutAidaSection />
+        <ClosingSection />
+      </main>
+    </>
+  );
+}
