@@ -35,7 +35,7 @@ export default function AccessPassSection() {
         <p className="access-pass-eyebrow" data-reveal>Al final de este entrenamiento</p>
         <h2 id="access-pass-title" className="access-pass-title" data-reveal="title">
           Abriremos una oportunidad única para que formes parte de la{" "}
-          <span className="access-pass-brand">Academia ADN 3.0</span>
+          <span className="access-pass-brand">Academia ADN 4.0</span>
         </h2>
 
         <div className="pass-stage" data-reveal>
@@ -65,7 +65,7 @@ export default function AccessPassSection() {
 
               <div className="pass-tier">
                 <p className="pass-tier-label">Tu acceso</p>
-                <p className="pass-tier-value">Academia ADN 3.0</p>
+                <p className="pass-tier-value">Academia ADN 4.0</p>
               </div>
 
               <div className="pass-meta">
@@ -100,7 +100,7 @@ export default function AccessPassSection() {
                     );
                   })}
                 </svg>
-                <span className="pass-barcode-code">ADN-3.0 · AIDA QUI</span>
+                <span className="pass-barcode-code">ADN-4.0 · AIDA QUI</span>
               </div>
             </div>
 
