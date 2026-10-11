@@ -8,12 +8,14 @@ export const evento = {
   fecha: "17 de Octubre",
   formato: "Online por Zoom",
   // 18h en España es horario de verano (CEST, UTC+2): el cambio de hora
-  // europeo es el 25/10, así que el 17/10 todavía rige. Argentina y Colombia
-  // no cambian de hora.
+  // europeo es el 25/10, así que el 17/10 todavía rige. Argentina, Colombia
+  // y México no cambian de hora (México eliminó el horario de verano en 2022:
+  // CDMX es UTC-6 todo el año; sólo Quintana Roo va en UTC-5).
   horarios: [
     { hora: "18HS", pais: "España" },
     { hora: "13HS", pais: "Argentina" },
     { hora: "11HS", pais: "Colombia" },
+    { hora: "10HS", pais: "México" },
   ],
   // Mismo instante en UTC, para la cuenta regresiva del announcement bar
   inicio: "2026-10-17T16:00:00Z",

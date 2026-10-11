@@ -21216,7 +21216,14 @@ body {
 }
 
 .hero-section--ent .mc-wheat-badge {
+  gap: 8px;
   box-shadow: 0 6px 16px rgba(201, 123, 100, 0.4);
+}
+
+/* Ícono de transmisión en vivo delante de "Experiencia online" */
+.hero-section--ent .mc-badge-icon {
+  flex-shrink: 0;
+  color: var(--ent-terra);
 }
 
 /* Chips en píldora, como el badge y los botones: con el radio de 10px de
@@ -21277,17 +21284,17 @@ body {
     background: linear-gradient(
       to bottom,
       rgba(245, 227, 209, 0) 0,
-      rgba(245, 227, 209, 0) 86vw,
-      rgba(245, 227, 209, 0.86) 118vw,
+      rgba(245, 227, 209, 0) 50vw,
+      rgba(245, 227, 209, 0.86) 80vw,
       rgba(245, 227, 209, 0.92) 100%
     );
   }
 
-  /* Bajado ~115px respecto de la primera versión: el badge caía sobre el
-     pecho de ella y tapaba media foto. Ahora empieza a la altura de la
-     cintura y se ve el retrato entero. */
+  /* Con la foto nueva (ella más arriba en el encuadre) el contenido arrancaba
+     a la altura de los pies y quedaba muy abajo. Ahora sube a las caderas:
+     cara y torso siguen limpios y el formulario entra antes en pantalla. */
   .hero-section--ent .hero-shell {
-    padding-top: clamp(240px, 104vw, 480px);
+    padding-top: clamp(200px, 66vw, 320px);
   }
 
   .hero-section--ent .ent-promise {
@@ -21355,12 +21362,18 @@ body {
     font-size: 13px;
   }
 
-  /* Badge "Entrenamiento gratuito" más chico: a tamaño completo competía
+  /* Badge "Experiencia online" más chico: a tamaño completo competía
      con el título de la promesa. Las espigas se achican en proporción. */
   .hero-section--ent .mc-wheat-badge {
+    gap: 6px;
     padding: 8px 18px;
     font-size: 11px;
     letter-spacing: 0.1em;
+  }
+
+  .hero-section--ent .mc-badge-icon {
+    width: 13px;
+    height: 13px;
   }
 
   .hero-section--ent .mc-wheat--1 { right: 14px; width: 11px; }
@@ -22483,7 +22496,7 @@ body {
 .ent .closing-time-c { color: rgba(246, 205, 184, 0.9); }
 
 /* ---- Horarios que titilan de a uno ----
-   Ciclo de 6s con las tarjetas desfasadas 2s: cada una se enciende ~1,2s
+   Ciclo de 8s con las cuatro tarjetas desfasadas 2s: cada una se enciende ~1,8s
    (hora en dorado blanquecino con brillo, filo dorado en la tarjeta) y le
    pasa la posta a la siguiente, así nunca hay dos encendidas a la vez.
    El filo va en un ::after y no en el box-shadow del <li>: animar ése le
@@ -22499,11 +22512,11 @@ body {
     inset 0 0 18px rgba(243, 211, 161, 0.16);
   opacity: 0;
   pointer-events: none;
-  animation: ent-time-glow 6s ease-in-out infinite;
+  animation: ent-time-glow 8s ease-in-out infinite;
 }
 
 .ent .closing-time-h {
-  animation: ent-time-twinkle 6s ease-in-out infinite;
+  animation: ent-time-twinkle 8s ease-in-out infinite;
 }
 
 .ent .closing-times li:nth-child(2)::after,
@@ -22516,17 +22529,22 @@ body {
   animation-delay: 4s;
 }
 
+.ent .closing-times li:nth-child(4)::after,
+.ent .closing-times li:nth-child(4) .closing-time-h {
+  animation-delay: 6s;
+}
+
 @keyframes ent-time-glow {
-  0%, 30%, 100% { opacity: 0; }
-  12%           { opacity: 1; }
+  0%, 22.5%, 100% { opacity: 0; }
+  9%              { opacity: 1; }
 }
 
 @keyframes ent-time-twinkle {
-  0%, 30%, 100% {
+  0%, 22.5%, 100% {
     color: #ffffff;
     text-shadow: none;
   }
-  12% {
+  9% {
     color: #fff1d6;
     text-shadow:
       0 0 10px rgba(255, 236, 200, 0.9),
@@ -22538,6 +22556,18 @@ body {
   .ent .closing-times li::after,
   .ent .closing-time-h {
     animation: none;
+  }
+}
+
+/* Con cuatro países no entran en una fila en mobile: grilla de 2x2 en vez
+   de tres arriba y uno suelto abajo. */
+@media (max-width: 480px) {
+  .ent .closing-times {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 .ent .closing-footer-copy { color: rgba(246, 205, 184, 0.6); }
@@ -22888,8 +22918,17 @@ body {
 }
 
 /* Soporte: secundario y sin relleno, para no competir con el grupo.
-   Centrado en una fila del ancho de la card (460px): sobre el eje de la
-   card en escritorio; en mobile la card ocupa todo y queda al centro. */
+   En gracias va centrado en una fila del ancho de la card (460px): sobre el
+   eje de la card en escritorio; en mobile la card ocupa todo y queda al
+   centro. En la landing va debajo del CTA del cierre. */
+.ent-closing-support {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .ent-gracias__support-row {
   display: flex;
   justify-content: center;
@@ -22897,7 +22936,7 @@ body {
   max-width: 460px;
 }
 
-.ent-gracias__support {
+.ent-support {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -22914,18 +22953,18 @@ body {
     border-color 0.25s ease;
 }
 
-.ent-gracias__support span {
+.ent-support span {
   display: inline-flex;
   font-size: 1.15em;
   line-height: 0;
 }
 
-.ent-gracias__support:hover {
+.ent-support:hover {
   border-color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.12);
 }
 
-.ent-gracias__support:focus-visible {
+.ent-support:focus-visible {
   outline: 2px solid var(--ent-gold-light);
   outline-offset: 3px;
 }
@@ -23030,7 +23069,9 @@ body {
     font-size: 14.5px;
   }
 
-  .ent-gracias__support {
+  /* Sólo en gracias: en mobile va sobre la piedra clara. En el cierre de la
+     landing el fondo sigue oscuro y conserva el estilo claro. */
+  .ent-gracias .ent-support {
     border-color: rgba(169, 82, 59, 0.35);
     background: rgba(255, 255, 255, 0.5);
     color: var(--ent-ink);

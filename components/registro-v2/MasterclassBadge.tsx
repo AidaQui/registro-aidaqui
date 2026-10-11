@@ -2,9 +2,12 @@
 // Misma pieza que la de /masterclass; los colores de esta copia se pisan en
 // globals.css bajo .hero-section--ent (bloque ENTRENAMIENTO).
 
+import { Radio } from "lucide-react";
+
 export default function MasterclassBadge() {
   return (
     <div className="mc-wheat-badge" aria-label="Tipo de evento">
+      <Radio className="mc-badge-icon" size={16} strokeWidth={2.2} aria-hidden="true" />
       Experiencia online
 
       <span className="mc-wheat mc-wheat--1" aria-hidden="true">

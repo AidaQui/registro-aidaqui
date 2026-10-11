@@ -4,7 +4,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // configura sólo por props, así que compartirlo no ata una landing a la otra.
 import LightRays from "@/components/masterclass/LightRays";
 import { evento } from "@/components/registro-v2/contenido";
-import { whatsappGroupUrl, WhatsAppIcon } from "@/components/registro-v2/whatsapp";
+import { whatsappGroupUrl, WhatsAppIcon, SoporteLink } from "@/components/registro-v2/whatsapp";
 
 /** Fila de la landing: CTA al formulario y, al lado, el botón redondo de WhatsApp */
 function CtaLanding() {
@@ -43,7 +43,6 @@ export default function ClosingSection() {
   const ref = useScrollReveal<HTMLElement>();
 
   return (
-    // id="cierre": FloatingWhatsApp lo observa para retirarse aquí
     <section ref={ref} id="cierre" className="closing" aria-labelledby="closing-title">
       <div className="closing-bg" aria-hidden="true" />
       <div className="closing-orb closing-orb--gold" aria-hidden="true" />
@@ -90,6 +89,10 @@ export default function ClosingSection() {
 
         <div className="closing-cta ent-closing-cta" data-reveal>
           <CtaLanding />
+        </div>
+
+        <div className="ent-closing-support" data-reveal>
+          <SoporteLink />
         </div>
       </div>
 

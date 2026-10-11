@@ -1,4 +1,4 @@
-import { whatsappGroupUrl, WhatsAppIcon } from "@/components/registro-v2/whatsapp";
+import { whatsappGroupUrl, WhatsAppIcon, SoporteLink } from "@/components/registro-v2/whatsapp";
 
 // Primera pantalla de /registro-v2/gracias. Reusa la hero de la landing
 // (misma foto, mismo velo y mismo comportamiento en mobile) para que el
@@ -57,6 +57,12 @@ export default function GraciasHero() {
                 </p>
               </div>
             </a>
+          </div>
+
+          {/* Fila del mismo ancho que la card: el botón queda centrado
+              sobre el eje de la card y no sobre toda la columna */}
+          <div className="ent-gracias__support-row">
+            <SoporteLink />
           </div>
         </div>
       </div>
