@@ -2,7 +2,20 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { CalendarDays, Video } from "lucide-react";
 import MasterclassBadge from "@/components/registro-v1/MasterclassBadge";
-import { evento } from "@/components/registro-v1/contenido";
+import { evento, VARIANTE } from "@/components/registro-v1/contenido";
+
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+
+/** UTM con los que la persona llegó a la landing (se guardan con el registro) */
+function leerUtm(): Record<string, string> {
+  const params = new URLSearchParams(window.location.search);
+  return Object.fromEntries(
+    UTM_KEYS.flatMap((key) => {
+      const valor = params.get(key);
+      return valor ? [[key, valor]] : [];
+    })
+  );
+}
 
 export default function HeroSectionMC() {
   const router = useRouter();
@@ -21,12 +34,16 @@ export default function HeroSectionMC() {
       const resp = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({ name, email, source: VARIANTE, utm: leerUtm() }),
       });
 
       if (!resp.ok) {
         throw new Error("No se pudo completar el registro");
       }
+
+      // Conversión en GA4, con la variante para comparar landings
+      const { gtag } = window as unknown as { gtag?: (...args: unknown[]) => void };
+      gtag?.("event", "registro_completado", { variante: VARIANTE });
 
       router.push("/registro-v1/gracias");
     } catch {

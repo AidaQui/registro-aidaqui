@@ -3,6 +3,13 @@ import { Repeat2, Compass, Anchor, type LucideIcon } from "lucide-react";
 // Datos del evento y textos que comparten la landing y la página de gracias.
 // Si cambia la fecha o la hora, se cambia sólo aquí.
 
+/**
+ * Nombre de esta landing en la tabla `registros` y en el evento de GA4.
+ * Al copiar la carpeta para una variante nueva, cambiarlo por la ruta nueva
+ * (registro-v2, ...): es lo que separa los registros de cada una.
+ */
+export const VARIANTE = "registro-v1";
+
 export const evento = {
   nombre: "Entrenamiento Espiritual Práctico",
   fecha: "17 de Octubre",
