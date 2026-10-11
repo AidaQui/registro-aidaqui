@@ -22,8 +22,7 @@ export default function TestimonialsSection() {
       <section ref={ref} className="testi-ent" aria-labelledby="testi-ent-title">
         <div className="testi-ent__shell">
           <h2 id="testi-ent-title" className="testi-ent__title" data-reveal="title">
-            Esto es lo que cuentan quienes ya atravesaron{" "}
-            <em>Academia ADN</em>.
+            Para tener <em>resultados como estos</em>:
           </h2>
 
           <img
