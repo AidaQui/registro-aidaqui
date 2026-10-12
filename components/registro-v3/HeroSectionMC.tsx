@@ -96,9 +96,7 @@ export default function HeroSectionMC() {
             <button type="submit" className="pearl-btn" disabled={submitting}>
               <div className="pearl-wrap">
                 <p>
-                  <span className="pearl-star" aria-hidden="true">✦</span>
                   {submitting ? "Reservando..." : "Reservar mi plaza ahora"}
-                  <span className="pearl-star" aria-hidden="true">✦</span>
                 </p>
               </div>
             </button>

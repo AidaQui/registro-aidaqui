@@ -2,6 +2,9 @@ import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+// Importada (no por ruta) para que Next la versione por contenido: si se
+// reemplaza el archivo con el mismo nombre, no queda la versión vieja en caché.
+import fotoAida from "@/public/aida/quien-es-aida-v3.png";
 
 // Mismo corte que el CSS de .rv3-aida: la bio sólo se pliega en mobile; en
 // escritorio va entera y el botón "Leer más" no se muestra.
@@ -30,8 +33,8 @@ export default function AboutAidaSection() {
     <section ref={ref} className="rv3-aida" aria-labelledby="rv3-aida-title">
       <div className="rv3-aida__media">
         <Image
-          src="/aida/aida-quien-es-v2.png"
-          alt="Aida Qui riendo frente a su computadora, en una sala de madera"
+          src={fotoAida}
+          alt="Aida Qui sonriendo en una sala de madera, con un buzo gris"
           fill
           sizes="(max-width: 860px) 100vw, 56vw"
           className="rv3-aida__img"
@@ -100,9 +103,7 @@ export default function AboutAidaSection() {
             <a href="#registro" className="pearl-btn pearl-btn--scroll">
               <div className="pearl-wrap">
                 <p>
-                  <span className="pearl-star" aria-hidden="true">✦</span>
                   <span className="pearl-label">Haz clic aquí para registrarte gratis</span>
-                  <span className="pearl-star" aria-hidden="true">✦</span>
                 </p>
               </div>
             </a>

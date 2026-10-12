@@ -3,6 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 // LightRays se toma de /masterclass a propósito: es un efecto genérico que se
 // configura sólo por props, así que compartirlo no ata una landing a la otra.
 import LightRays from "@/components/masterclass/LightRays";
+import Marea from "@/components/registro-v3/Marea";
 import { evento } from "@/components/registro-v3/contenido";
 import { soporteUrl, WhatsAppIcon } from "@/components/registro-v3/whatsapp";
 
@@ -13,11 +14,7 @@ function CtaLanding() {
     <>
       <a href="#registro" className="pearl-btn pearl-btn--scroll">
         <div className="pearl-wrap">
-          <p>
-            <span className="pearl-star" aria-hidden="true">✦</span>
-            Quiero registrarme
-            <span className="pearl-star" aria-hidden="true">✦</span>
-          </p>
+          <p>Quiero registrarme</p>
         </div>
       </a>
 
@@ -46,12 +43,13 @@ export default function ClosingSection() {
   return (
     <section ref={ref} id="cierre" className="closing" aria-labelledby="closing-title">
       <div className="closing-bg" aria-hidden="true" />
+      <Marea />
       <div className="closing-orb closing-orb--gold" aria-hidden="true" />
       <div className="closing-orb closing-orb--violet" aria-hidden="true" />
       <div className="closing-rays" aria-hidden="true">
         <LightRays
           raysOrigin="top-center"
-          raysColor="#f3c79a"
+          raysColor="#cfe0e6"
           raysSpeed={0.8}
           lightSpread={1.1}
           rayLength={1.3}
