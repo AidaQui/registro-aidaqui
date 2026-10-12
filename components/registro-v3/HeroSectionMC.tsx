@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { CalendarDays, Video } from "lucide-react";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import MasterclassBadge from "@/components/registro-v3/MasterclassBadge";
 import { evento, VARIANTE } from "@/components/registro-v3/contenido";
 
@@ -21,6 +23,7 @@ export default function HeroSectionMC() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState<string | undefined>();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,13 +31,19 @@ export default function HeroSectionMC() {
     e.preventDefault();
     if (submitting) return;
     setError("");
+
+    if (!phone || !isValidPhoneNumber(phone)) {
+      setError("Revisa el número de teléfono.");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
       const resp = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, source: VARIANTE, utm: leerUtm() }),
+        body: JSON.stringify({ name, email, phone, source: VARIANTE, utm: leerUtm() }),
       });
 
       if (!resp.ok) {
@@ -92,6 +101,15 @@ export default function HeroSectionMC() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+            />
+            {/* mc-input le da el estilo de los otros campos de esta landing */}
+            <PhoneInput
+              international
+              defaultCountry="ES"
+              placeholder="Tu número de teléfono"
+              className="mc-input mc-phone"
+              value={phone}
+              onChange={setPhone}
             />
             <button type="submit" className="pearl-btn" disabled={submitting}>
               <div className="pearl-wrap">

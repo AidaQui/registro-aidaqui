@@ -2478,6 +2478,52 @@ body {
   background: rgba(255, 255, 255, 0.96);
 }
 
+/* Teléfono con selector de país (react-phone-number-input). El contenedor
+   lleva .mc-input, así que toma borde, fondo y sombra del tema de cada
+   landing; aquí sólo se reparte el padding hacia el <input> real
+   (.PhoneInputInput) para que mida lo mismo que los otros campos. El foco y
+   el placeholder van aparte porque caen en el <input>, no en el contenedor. */
+.mc-phone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.mc-phone:focus-within {
+  border-color: var(--color-violet-main);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.mc-phone .PhoneInputInput {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.mc-phone .PhoneInputInput::placeholder {
+  color: rgba(46, 32, 64, 0.38);
+}
+
+.mc-phone .PhoneInputCountryIcon {
+  width: 26px;
+  height: 19px;
+  box-shadow: none;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mc-phone .PhoneInputCountrySelectArrow {
+  color: currentColor;
+  opacity: 0.6;
+}
+
 /* Pearl button */
 .pearl-btn {
   --pearl-bg: #080808;
@@ -21242,8 +21288,10 @@ body {
   color: var(--ent-ink);
 }
 
-.ent .mc-input::placeholder { color: rgba(61, 31, 18, 0.42); }
-.ent .mc-input:focus { border-color: var(--ent-rose); }
+.ent .mc-input::placeholder,
+.ent .mc-phone .PhoneInputInput::placeholder { color: rgba(61, 31, 18, 0.42); }
+.ent .mc-input:focus,
+.ent .mc-phone:focus-within { border-color: var(--ent-rose); }
 
 /* Todos los CTA en terracota, también los de WhatsApp (el botón redondo y
    los de la página de gracias): se pidió que combinaran con el resto. */
@@ -21344,11 +21392,13 @@ body {
       inset 0 1px 2px rgba(74, 36, 22, 0.06);
   }
 
-  .hero-section--ent .mc-input::placeholder {
+  .hero-section--ent .mc-input::placeholder,
+  .hero-section--ent .mc-phone .PhoneInputInput::placeholder {
     color: rgba(61, 31, 18, 0.55);
   }
 
-  .hero-section--ent .mc-input:focus {
+  .hero-section--ent .mc-input:focus,
+  .hero-section--ent .mc-phone:focus-within {
     border-color: var(--ent-terra);
     box-shadow:
       0 0 0 3px rgba(169, 82, 59, 0.15),
@@ -23293,8 +23343,10 @@ body {
   color: var(--rv2-ink);
 }
 
-.rv2 .mc-input::placeholder { color: rgba(52, 51, 26, 0.42); }
-.rv2 .mc-input:focus { border-color: var(--rv2-rose); }
+.rv2 .mc-input::placeholder,
+.rv2 .mc-phone .PhoneInputInput::placeholder { color: rgba(52, 51, 26, 0.42); }
+.rv2 .mc-input:focus,
+.rv2 .mc-phone:focus-within { border-color: var(--rv2-rose); }
 
 /* Todos los CTA en naranja, también los de WhatsApp (el botón redondo y
    los de la página de gracias). El texto va en oliva oscuro y no en
@@ -23470,11 +23522,13 @@ body {
       inset 0 1px 2px rgba(63, 61, 30, 0.06);
   }
 
-  .hero-section--rv2 .mc-input::placeholder {
+  .hero-section--rv2 .mc-input::placeholder,
+  .hero-section--rv2 .mc-phone .PhoneInputInput::placeholder {
     color: rgba(52, 51, 26, 0.55);
   }
 
-  .hero-section--rv2 .mc-input:focus {
+  .hero-section--rv2 .mc-input:focus,
+  .hero-section--rv2 .mc-phone:focus-within {
     border-color: var(--rv2-mauve);
     box-shadow:
       0 0 0 3px rgba(161, 106, 132, 0.15),
@@ -25494,8 +25548,10 @@ body {
   color: var(--rv3-ink);
 }
 
-.rv3 .mc-input::placeholder { color: rgba(31, 45, 40, 0.42); }
-.rv3 .mc-input:focus { border-color: var(--rv3-sage-soft); }
+.rv3 .mc-input::placeholder,
+.rv3 .mc-phone .PhoneInputInput::placeholder { color: rgba(31, 45, 40, 0.42); }
+.rv3 .mc-input:focus,
+.rv3 .mc-phone:focus-within { border-color: var(--rv3-sage-soft); }
 
 /* CTA de vidrio, medio transparentes y sin estrellas (también el botón
    redondo de WhatsApp). Sobre fondo claro, vidrio pino oscuro (pino-2):
@@ -25671,11 +25727,13 @@ body {
       inset 0 1px 2px rgba(30, 48, 41, 0.06);
   }
 
-  .hero-section--rv3 .mc-input::placeholder {
+  .hero-section--rv3 .mc-input::placeholder,
+  .hero-section--rv3 .mc-phone .PhoneInputInput::placeholder {
     color: rgba(31, 45, 40, 0.55);
   }
 
-  .hero-section--rv3 .mc-input:focus {
+  .hero-section--rv3 .mc-input:focus,
+  .hero-section--rv3 .mc-phone:focus-within {
     border-color: var(--rv3-teal);
     box-shadow:
       0 0 0 3px rgba(79, 127, 116, 0.15),
