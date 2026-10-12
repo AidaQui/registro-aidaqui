@@ -23314,6 +23314,70 @@ body {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
+/* El botón de la hero va de vidrio, como los de la v3: naranja
+   translúcido, más transparente en el centro (--vidrio-centro) y más
+   cargado hacia el borde (--vidrio-borde, como sombra interna), con filo
+   claro y lo de atrás desenfocado. Sólo el de la hero: los demás CTA de la
+   v2 siguen macizos. En mobile va sobre el velo rosado, con el texto en
+   oliva; arriba de 480px, ver más abajo. */
+.hero-section--rv2 .pearl-btn {
+  --vidrio-centro: rgba(252, 156, 81, 0.55);
+  --vidrio-borde: rgba(252, 156, 81, 0.85);
+  --pearl-bg: var(--vidrio-centro);
+  background-color: var(--pearl-bg);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 0 16px 3px var(--vidrio-borde),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.2),
+    inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.16),
+    0 14px 30px -14px rgba(60, 36, 16, 0.5);
+}
+
+.hero-section--rv2 .pearl-btn:hover {
+  box-shadow:
+    inset 0 0 16px 3px var(--vidrio-borde),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 0.3rem 0.6rem rgba(255, 255, 255, 0.28),
+    inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.24),
+    0 18px 34px -14px rgba(60, 36, 16, 0.55);
+}
+
+.hero-section--rv2 .pearl-btn:active {
+  box-shadow:
+    inset 0 0 16px 3px var(--vidrio-borde),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 0.3rem 0.6rem rgba(255, 255, 255, 0.2),
+    0 8px 18px -10px rgba(60, 36, 16, 0.45);
+}
+
+.hero-section--rv2 .pearl-wrap::before {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Tablet y escritorio: detrás está el velo casi negro, que oscurece el
+   naranja translúcido. Ahí el oliva no se leería: el texto pasa a blanco,
+   con un halo oscuro que lo despega de lo que se ve a través. */
+@media (min-width: 481px) {
+  .hero-section--rv2 .pearl-btn {
+    --vidrio-centro: rgba(252, 156, 81, 0.32);
+    --vidrio-borde: rgba(252, 156, 81, 0.7);
+  }
+
+  .hero-section--rv2 .pearl-wrap {
+    color: #ffffff;
+  }
+
+  .hero-section--rv2 .pearl-wrap p {
+    text-shadow:
+      0 1px 2px rgba(10, 9, 7, 0.5),
+      0 0 4px rgba(10, 9, 7, 0.4),
+      0 0 12px rgba(10, 9, 7, 0.55);
+  }
+}
+
 /* Tablet: una sola columna, el texto pasa por encima de ella → velo parejo */
 @media (min-width: 481px) and (max-width: 1023px) {
   .hero-section--rv2::before {
@@ -25003,7 +25067,16 @@ body {
 }
 
 .rv2 .rv2-gracias__vip .pearl-wrap {
-  color: #073d1d;
+  color: #052611;
+}
+
+/* Texto nítido: sin sombras (las de los otros botones, sobre letras
+   oscuras, dejaban los bordes borrosos) y por encima del brillo de la
+   perla, que si no le aclaraba la mitad de arriba. */
+.rv2 .rv2-gracias__vip .pearl-wrap p {
+  position: relative;
+  z-index: 1;
+  text-shadow: none;
 }
 
 /* Soporte: secundario y sin relleno, para no competir con el grupo.
