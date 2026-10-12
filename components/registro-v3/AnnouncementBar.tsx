@@ -30,28 +30,40 @@ const datos: { icon: LucideIcon; texto: string }[] = [
   ...(espana ? [{ icon: Clock, texto: `${espana.hora} ${espana.pais}` }] : []),
 ];
 
+/** En escritorio la cuenta regresiva va en el medio: dos datos a cada lado */
+const mitades = [
+  { lado: "a", items: datos.slice(0, 2) },
+  { lado: "b", items: datos.slice(2) },
+];
+
 /** Una tanda de datos, separados sólo por espacio (los íconos ya marcan
- *  dónde empieza cada uno) */
+ *  dónde empieza cada uno), partida en sus dos mitades */
 function Datos({ copia = false }: { copia?: boolean }) {
   return (
-    <ul
-      className={`rv3-announce__items${copia ? " rv3-announce__items--copia" : ""}`}
-      aria-hidden={copia || undefined}
-    >
-      {datos.map(({ icon: Icon, texto }) => (
-        <li className="rv3-announce__item" key={texto}>
-          <Icon className="rv3-announce__icon" size={14} strokeWidth={2.2} aria-hidden="true" />
-          <span>{texto}</span>
-        </li>
+    <>
+      {mitades.map(({ lado, items }) => (
+        <ul
+          key={lado}
+          className={`rv3-announce__items rv3-announce__items--${lado}${copia ? " rv3-announce__items--copia" : ""}`}
+          aria-hidden={copia || undefined}
+        >
+          {items.map(({ icon: Icon, texto }) => (
+            <li className="rv3-announce__item" key={texto}>
+              <Icon className="rv3-announce__icon" size={14} strokeWidth={2.2} aria-hidden="true" />
+              <span>{texto}</span>
+            </li>
+          ))}
+        </ul>
       ))}
-    </ul>
+    </>
   );
 }
 
 /**
  * Barra fija arriba de toda la página: qué es, cuándo y cuánto falta.
- * En escritorio los datos van en una fila; en mobile no entran y pasan en
- * un carrusel infinito (la tanda va dos veces y se corre media pista).
+ * En escritorio los datos van en una fila, con la cuenta regresiva en el
+ * medio cuando hay ancho; en mobile no entran y pasan en un carrusel
+ * infinito (la tanda va dos veces y se corre media pista).
  * La cuenta se calcula recién en el cliente; en el render del servidor van
  * guiones para que la hidratación no choque con la hora del navegador.
  */
