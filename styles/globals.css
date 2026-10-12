@@ -25360,20 +25360,29 @@ body {
   --rv3-muted: #52625c;     /* texto secundario sobre claro */
   --rv3-cta: var(--rv3-pine);
 
+  /* Acento cálido: cobre, el del pelo de Aida y las luces de la foto del
+     hero. Toda la paleta es fría y de una misma familia, así que lo
+     importante (botones, íconos chicos, negritas) se perdía; el cobre es el
+     complementario de la salvia y lo despega sin chocar. Se usa poco, para
+     que siga marcando. */
+  --rv3-copper: #c47a43;
+  --rv3-copper-light: #e3b07a; /* sobre fondo oscuro */
+  --rv3-copper-deep: #9a5a2c;  /* texto e íconos sobre claro (5:1 sobre el papel) */
+
   /* Fondo oscuro del cierre: pino, con un resplandor salvia y celeste
      detrás del CTA. */
   --rv3-pine-1: #3e584d;
   --rv3-pine-2: #33493f;
   --rv3-pine-3: #283a32;
 
-  /* Tipografía: DM Serif Display + DM Sans (components/registro-v3/
+  /* Tipografía: Instrument Serif + DM Sans (components/registro-v3/
      fuentes.ts). Las reglas heredadas de la masterclass y de la v1 usan
      --font-fraunces y --font-jost: redefinidas aquí, toman las nuevas sin
      tocarlas una por una. */
-  --font-fraunces: var(--font-dm-serif);
+  --font-fraunces: var(--font-instrument-serif);
   --font-jost: var(--font-dm-sans);
   font-family: var(--font-dm-sans), Arial, sans-serif;
-  /* DM Serif Display tiene un solo peso: sin esto el navegador inventa una
+  /* Instrument Serif tiene un solo peso: sin esto el navegador inventa una
      negrita deformada en los títulos que piden 500, 600 o 700 */
   font-synthesis-weight: none;
 }
@@ -25427,7 +25436,8 @@ body {
    trabajo interior" como único acento. */
 .hero-section--rv3 .rv3-promise {
   font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(32px, 2.9vw, 42px);
+  /* Un 12% más que con DM Serif Display: Instrument Serif es más angosta */
+  font-size: clamp(36px, 3.25vw, 47px);
   font-weight: 400;
   line-height: 1.06;
   letter-spacing: -0.01em;
@@ -25509,7 +25519,7 @@ body {
 }
 
 .rv3-hero-description strong {
-  color: #ffffff;
+  color: var(--rv3-copper-light);
   font-weight: 600;
   letter-spacing: 0.04em;
 }
@@ -25530,7 +25540,7 @@ body {
 /* Ícono de transmisión en vivo delante de "Experiencia online" */
 .hero-section--rv3 .mc-badge-icon {
   flex-shrink: 0;
-  color: var(--rv3-teal);
+  color: var(--rv3-copper-deep);
 }
 
 /* Chips en píldora, como el badge y los botones: con el radio de 10px de
@@ -25540,7 +25550,7 @@ body {
   box-shadow: 0 4px 12px rgba(128, 170, 160, 0.3);
 }
 
-.hero-section--rv3 .mc-chip svg { color: #456155; }
+.hero-section--rv3 .mc-chip svg { color: var(--rv3-copper-deep); }
 .hero-section--rv3 .mc-wheat .fil0 { fill: var(--rv3-pine); }
 
 .rv3 .mc-input {
@@ -25563,8 +25573,11 @@ body {
    abajo). */
 .rv3 .pearl-btn,
 .rv3 .audience .audience-cta a.pearl-btn {
-  --vidrio-centro: rgba(51, 73, 63, 0.6);
-  --vidrio-borde: rgba(51, 73, 63, 0.8);
+  /* Vidrio cobre (antes pino): era verde sobre fondos verdes y pasaba
+     desapercibido. Cobre oscuro y más cargado que el pino, para que el
+     blanco siga leyéndose con el halo de las letras. */
+  --vidrio-centro: rgba(160, 92, 44, 0.8);
+  --vidrio-borde: rgba(122, 68, 30, 0.9);
   --pearl-bg: var(--vidrio-centro);
   background-color: var(--pearl-bg);
 }
@@ -25620,8 +25633,8 @@ body {
    lo oscuro de atrás se lee de sobra. */
 @media (min-width: 481px) {
   .hero-section--rv3 .pearl-btn {
-    --vidrio-centro: rgba(207, 221, 228, 0.1);
-    --vidrio-borde: rgba(207, 221, 228, 0.3);
+    --vidrio-centro: rgba(196, 122, 67, 0.42);
+    --vidrio-borde: rgba(227, 176, 122, 0.55);
     border-color: rgba(255, 255, 255, 0.5);
   }
 }
@@ -25629,8 +25642,8 @@ body {
 /* En el cierre, abajo, el resplandor salvia aclara lo de atrás: el vidrio
    va más transparente para que el blanco no baje de 4,5:1. */
 .rv3 .closing .pearl-btn {
-  --vidrio-centro: rgba(207, 221, 228, 0.06);
-  --vidrio-borde: rgba(207, 221, 228, 0.26);
+  --vidrio-centro: rgba(160, 92, 44, 0.6);
+  --vidrio-borde: rgba(227, 176, 122, 0.6);
   border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -25689,7 +25702,7 @@ body {
 
   .hero-section--rv3 .rv3-promise {
     color: var(--rv3-ink);
-    font-size: clamp(26px, 7.4vw, 30px);
+    font-size: clamp(29px, 8.3vw, 34px);
     line-height: 1.08;
     text-shadow: none;
   }
@@ -25708,7 +25721,7 @@ body {
     border-left-color: rgba(79, 127, 116, 0.35);
   }
 
-  .rv3-hero-description strong { color: var(--rv3-ink); }
+  .rv3-hero-description strong { color: var(--rv3-copper-deep); }
 
   /* "Reservar mi plaza ahora" se partía en dos renglones a 16px */
   .hero-section--rv3 .mc-form .pearl-wrap {
@@ -26353,9 +26366,9 @@ body {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  color: var(--rv3-teal);
+  color: var(--rv3-copper-deep);
   background: linear-gradient(150deg, #ffffff, #e9f0ee);
-  border: 1px solid rgba(79, 127, 116, 0.3);
+  border: 1px solid rgba(196, 122, 67, 0.4);
   box-shadow:
     0 0 0 5px rgba(244, 246, 243, 0.75),
     0 10px 18px -10px rgba(30, 48, 41, 0.4);
@@ -26830,7 +26843,7 @@ body {
 }
 
 .rv3-aida__text strong {
-  color: var(--rv3-teal);
+  color: var(--rv3-copper-deep);
   font-weight: 600;
 }
 
@@ -27139,7 +27152,7 @@ body {
 }
 
 .rv3-closing-lead strong {
-  color: var(--rv3-sky);
+  color: var(--rv3-copper-light);
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;

@@ -1,7 +1,7 @@
-import { DM_Serif_Display, DM_Sans } from "next/font/google";
+import { Instrument_Serif, DM_Sans } from "next/font/google";
 
 /*
- * Tipografía de registro-v3: DM Serif Display para títulos y DM Sans para
+ * Tipografía de registro-v3: Instrument Serif para títulos y DM Sans para
  * textos. Se cargan sólo en las páginas de la v3 (no en _app) para no
  * sumarle peso al resto del sitio.
  *
@@ -9,15 +9,17 @@ import { DM_Serif_Display, DM_Sans } from "next/font/google";
  * --font-jost con estas variables: así todas las reglas heredadas de la
  * masterclass y de la v1 toman las fuentes nuevas sin tocarlas una por una.
  *
- * DM Serif Display tiene un solo peso (400) y lleva su itálica real: los
- * acentos en itálica ("cambios reales", "Aida Qui") la usan.
+ * Instrument Serif tiene un solo peso (400) y lleva su itálica real: los
+ * acentos en itálica ("años de trabajo interior", "Aida Qui") la usan. Es
+ * más angosta que DM Serif Display, la de la v2: con el mismo tamaño se ve
+ * más chica, por eso los títulos de la v3 van más grandes.
  */
-const dmSerif = DM_Serif_Display({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-dm-serif",
+  variable: "--font-instrument-serif",
 });
 
 // Variable, como Jost en _app: sin `weight` cubre todo el rango
@@ -28,4 +30,4 @@ const dmSans = DM_Sans({
 });
 
 /** Clases que definen las dos variables; van en el <main> de cada página */
-export const fuentesV3 = `${dmSerif.variable} ${dmSans.variable}`;
+export const fuentesV3 = `${instrumentSerif.variable} ${dmSans.variable}`;
