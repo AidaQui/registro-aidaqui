@@ -19,6 +19,15 @@ function leerUtm(): Record<string, string> {
   );
 }
 
+/** Para cuando el link no trae UTM: el sitio que mandó a la persona y el
+ *  fbclid que Meta agrega a los clics desde Facebook e Instagram */
+function leerOrigen(): { referrer: string; fbclid: string | null } {
+  return {
+    referrer: document.referrer,
+    fbclid: new URLSearchParams(window.location.search).get("fbclid"),
+  };
+}
+
 export default function HeroSectionMC() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -43,7 +52,14 @@ export default function HeroSectionMC() {
       const resp = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, source: VARIANTE, utm: leerUtm() }),
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          source: VARIANTE,
+          utm: leerUtm(),
+          origen: leerOrigen(),
+        }),
       });
 
       if (!resp.ok) {

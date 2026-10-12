@@ -54,7 +54,7 @@ async function addToMailerLite(
  * antes de tener Supabase habilitado en el proyecto del cliente.
  *
  * `fila` lleva las columnas propias de cada tabla además de nombre, email y
- * teléfono (en `registros`: la variante y los UTM).
+ * teléfono (en `registros`: la variante, los UTM y el origen).
  *
  * Devuelve `{ skipped: true }` si no hay config, o el resultado del insert.
  */
@@ -73,7 +73,19 @@ async function saveToSupabase(
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   try {
-    const { error } = await supabase.from(table).insert(fila);
+    let { error } = await supabase.from(table).insert(fila);
+
+    // PGRST204 = la tabla no tiene alguna de las columnas. Pasa si se publica
+    // el código antes de correr el ALTER de las columnas de origen (ver
+    // docs/registros-supabase.sql): se guarda sin ellas antes que perder el
+    // registro.
+    if (error?.code === "PGRST204" && COLUMNAS_ORIGEN.some((c) => c in fila)) {
+      console.warn("Faltan columnas de origen en Supabase, se guarda sin ellas", error.message);
+      const sinOrigen = Object.fromEntries(
+        Object.entries(fila).filter(([c]) => !COLUMNAS_ORIGEN.includes(c))
+      );
+      ({ error } = await supabase.from(table).insert(sinOrigen));
+    }
 
     if (error) {
       // 23505 = unique_violation (email ya registrado) → lo tratamos como éxito
@@ -134,7 +146,35 @@ function limpiarUtm(utm: unknown): Record<string, string | null> {
   );
 }
 
-function resolverFuente(source: string, utm: unknown): SourceConfig {
+const COLUMNAS_ORIGEN = ["referrer", "fbclid"];
+
+/**
+ * De dónde vino la persona cuando el link no trae UTM: el sitio que la mandó
+ * (sólo el dominio: l.instagram.com, com.google.android.gm, ...) y el fbclid,
+ * que Meta agrega a todo clic que sale de Facebook o Instagram, anuncio u
+ * orgánico. También es texto del visitante: se valida y se acota.
+ */
+function limpiarOrigen(origen: unknown): Record<string, string | null> {
+  const datos = typeof origen === "object" && origen !== null ? (origen as Record<string, unknown>) : {};
+
+  let referrer: string | null = null;
+  if (typeof datos.referrer === "string" && datos.referrer) {
+    try {
+      const url = new URL(datos.referrer);
+      // Las apps de Android llegan como android-app://paquete/
+      referrer = (url.hostname || url.protocol.replace(/:$/, "")).slice(0, 200) || null;
+    } catch {
+      referrer = null;
+    }
+  }
+
+  const fbclid =
+    typeof datos.fbclid === "string" && /^[\w-]{1,500}$/.test(datos.fbclid) ? datos.fbclid : null;
+
+  return { referrer, fbclid };
+}
+
+function resolverFuente(source: string, utm: unknown, origen: unknown): SourceConfig {
   const registro = VARIANTE_REGISTRO.exec(source);
   if (registro) {
     // Cada variante usa su propio grupo (MAILERLITE_GROUP_ID_REGISTRO_V1, ...)
@@ -147,7 +187,7 @@ function resolverFuente(source: string, utm: unknown): SourceConfig {
     return {
       table: "registros",
       mailerliteGroupEnv: process.env[groupEnv] ? groupEnv : "MAILERLITE_GROUP_ID",
-      extra: { variante: source, ...limpiarUtm(utm) },
+      extra: { variante: source, ...limpiarUtm(utm), ...limpiarOrigen(origen) },
     };
   }
 
@@ -165,7 +205,7 @@ export default async function handler(
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
-  const { name, email, phone, source, utm } = req.body ?? {};
+  const { name, email, phone, source, utm, origen } = req.body ?? {};
 
   // Basic validation
   const trimmedName = typeof name === "string" ? name.trim() : "";
@@ -178,7 +218,7 @@ export default async function handler(
   }
 
   const trimmedSource = typeof source === "string" ? source.trim() : "";
-  const config = resolverFuente(trimmedSource, utm);
+  const config = resolverFuente(trimmedSource, utm, origen);
 
   const fila = {
     nombre: trimmedName,

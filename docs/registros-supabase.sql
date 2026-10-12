@@ -31,6 +31,14 @@ create table if not exists public.registros (
   utm_content text,
   utm_term text,
 
+  -- Para cuando el link no trae UTM. referrer: dominio del sitio que mandó a
+  -- la persona (l.instagram.com, com.google.android.gm, ...); vacío si
+  -- entró directo, o desde apps que no lo mandan (WhatsApp, muchas de mail).
+  -- fbclid: lo agrega Meta a todo clic desde Facebook o Instagram, anuncio u
+  -- orgánico.
+  referrer text,
+  fbclid text,
+
   -- La misma persona cuenta una vez por variante, pero puede aparecer en
   -- varias: si se anota en v1 y en v2, son dos conversiones distintas.
   constraint registros_variante_email_key unique (variante, email)
@@ -40,6 +48,10 @@ create index if not exists registros_variante_idx
   on public.registros (variante);
 create index if not exists registros_created_at_idx
   on public.registros (created_at desc);
+
+-- Si la tabla ya existía sin las columnas de origen (agregadas el 12/10):
+alter table public.registros add column if not exists referrer text;
+alter table public.registros add column if not exists fbclid text;
 
 -- RLS activo y sin políticas: nadie entra con las claves públicas.
 -- El endpoint usa la service role key, que las omite por diseño.
@@ -65,7 +77,15 @@ alter table public.registros enable row level security;
 -- group by variante, utm_source, utm_campaign
 -- order by variante, registros desc;
 
--- 3) Registros por día de una variante.
+-- 3) Los que llegaron sin UTM: de dónde vinieron.
+--
+-- select variante, referrer, (fbclid is not null) as desde_meta, count(*) as registros
+-- from public.registros
+-- where utm_source is null
+-- group by variante, referrer, desde_meta
+-- order by registros desc;
+
+-- 4) Registros por día de una variante.
 --
 -- select date_trunc('day', created_at) as dia, count(*) as registros
 -- from public.registros
