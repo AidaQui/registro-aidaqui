@@ -57,11 +57,17 @@ async function addToMailerLite(
  * teléfono (en `registros`: la variante, los UTM y el origen).
  *
  * Devuelve `{ skipped: true }` si no hay config, o el resultado del insert.
+ * Con `devolverId` pide también el id de la fila nueva (lo usa el panel del
+ * traficker); sólo para tablas que tienen columna id.
  */
 async function saveToSupabase(
   table: string,
-  fila: Record<string, unknown>
-): Promise<{ skipped: true } | { skipped: false; duplicate: boolean; error?: string }> {
+  fila: Record<string, unknown>,
+  devolverId = false
+): Promise<
+  | { skipped: true }
+  | { skipped: false; duplicate: boolean; error?: string; id?: string | null }
+> {
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -72,8 +78,17 @@ async function saveToSupabase(
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
+  async function insertar(datos: Record<string, unknown>) {
+    if (!devolverId) {
+      const { error } = await supabase.from(table).insert(datos);
+      return { id: null, error };
+    }
+    const { data, error } = await supabase.from(table).insert(datos).select("id").single();
+    return { id: data ? String((data as { id: unknown }).id) : null, error };
+  }
+
   try {
-    let { error } = await supabase.from(table).insert(fila);
+    let { id, error } = await insertar(fila);
 
     // PGRST204 = la tabla no tiene alguna de las columnas. Pasa si se publica
     // el código antes de correr el ALTER de las columnas de origen (ver
@@ -84,7 +99,7 @@ async function saveToSupabase(
       const sinOrigen = Object.fromEntries(
         Object.entries(fila).filter(([c]) => !COLUMNAS_ORIGEN.includes(c))
       );
-      ({ error } = await supabase.from(table).insert(sinOrigen));
+      ({ id, error } = await insertar(sinOrigen));
     }
 
     if (error) {
@@ -96,10 +111,62 @@ async function saveToSupabase(
       return { skipped: false, duplicate: false, error: "No se pudo guardar" };
     }
 
-    return { skipped: false, duplicate: false };
+    return { skipped: false, duplicate: false, id };
   } catch (err) {
     console.error("Error inesperado guardando en Supabase", err);
     return { skipped: false, duplicate: false, error: "No se pudo guardar" };
+  }
+}
+
+/**
+ * Reenvía cada lead nuevo de las landings de registro al panel del
+ * traficker (LEADS_WEBHOOK_URL), con su clave en Authorization, en el
+ * formato que acordamos con él: un registro por envío. Sale de aquí y no de
+ * un webhook de Supabase porque ése manda la fila completa: así se elige qué
+ * datos salen. Nombre, email y teléfono sólo van con
+ * LEADS_WEBHOOK_INCLUDE_PII=true (autorizado por Aida el 13/10).
+ *
+ * `sitio` es el dominio desde el que llegó la persona (el referrer), no el de
+ * la landing, que ya va en `landing`.
+ *
+ * Sin LEADS_WEBHOOK_URL no hace nada, y para cortarlo basta con borrarla.
+ * Igual que MailerLite, no lanza: si el panel falla o tarda más de 3 s, el
+ * registro sigue y queda en los logs.
+ */
+async function enviarAlPanel(fila: Record<string, unknown>, id: string | null): Promise<void> {
+  const url = process.env.LEADS_WEBHOOK_URL;
+  if (!url) return;
+
+  const conDatosPersonales = process.env.LEADS_WEBHOOK_INCLUDE_PII === "true";
+
+  const lead = {
+    id,
+    landing: fila.variante,
+    fecha: new Date().toISOString(),
+    ...(conDatosPersonales
+      ? { email: fila.email, nombre: fila.nombre, telefono: fila.telefono ?? null }
+      : {}),
+    ...Object.fromEntries(UTM_KEYS.map((key) => [key, fila[key] ?? null])),
+    sitio: fila.referrer ?? null,
+    fbclid: fila.fbclid ?? null,
+  };
+
+  try {
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.LEADS_WEBHOOK_SECRET ?? ""}`,
+      },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(3000),
+    });
+
+    if (!resp.ok) {
+      console.error("El panel de leads respondió con error", resp.status, await resp.text());
+    }
+  } catch (err) {
+    console.error("Error enviando el lead al panel", err);
   }
 }
 
@@ -230,7 +297,8 @@ export default async function handler(
   // Supabase es la fuente de verdad cuando está disponible, pero un problema
   // de infraestructura ahí (caído, pausado, DNS) no debe romper el alta del
   // usuario: MailerLite es la red de contención y ya dispara el email.
-  const guardado = await saveToSupabase(config.table, fila);
+  const esRegistro = config.table === "registros";
+  const guardado = await saveToSupabase(config.table, fila, esRegistro);
 
   // Red de emergencia, como en /api/diagnostico: si no se pudo guardar, el
   // registro queda en los logs con un prefijo buscable para recuperarlo.
@@ -241,12 +309,20 @@ export default async function handler(
   // Si Supabase no está configurado (skipped) o el registro es nuevo, lo
   // mandamos a MailerLite. Si ya existía (duplicate), lo reenviamos igual
   // por si se registró antes de configurar el email automático.
-  await addToMailerLite(
-    trimmedName,
-    trimmedEmail,
-    trimmedPhone,
-    process.env[config.mailerliteGroupEnv]
-  );
+  // Al panel del traficker sólo van las landings de registro, y no los
+  // duplicados: ya los recibió la primera vez.
+  const esNuevo = guardado.skipped || !guardado.duplicate;
+  const id = guardado.skipped ? null : (guardado.id ?? null);
+
+  await Promise.all([
+    addToMailerLite(
+      trimmedName,
+      trimmedEmail,
+      trimmedPhone,
+      process.env[config.mailerliteGroupEnv]
+    ),
+    esRegistro && esNuevo ? enviarAlPanel(fila, id) : Promise.resolve(),
+  ]);
 
   return res.status(200).json({ ok: true });
 }
