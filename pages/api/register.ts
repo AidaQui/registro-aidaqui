@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
+import { registrarLead } from "@/lib/sierra";
+import { atribucionDeJson } from "@/lib/sierra-atribucion";
 
 type Data = { ok: true } | { ok: false; error: string };
 
@@ -272,7 +274,7 @@ export default async function handler(
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
-  const { name, email, phone, source, utm, origen } = req.body ?? {};
+  const { name, email, phone, source, utm, origen, sierra } = req.body ?? {};
 
   // Basic validation
   const trimmedName = typeof name === "string" ? name.trim() : "";
@@ -323,6 +325,17 @@ export default async function handler(
     ),
     esRegistro && esNuevo ? enviarAlPanel(fila, id) : Promise.resolve(),
   ]);
+
+  // Panel de sierra labs: todas las landings, después de guardar y sólo los
+  // registros nuevos, igual que el panel del traficker. No lanza.
+  if (esNuevo) {
+    await registrarLead({
+      email: trimmedEmail,
+      name: trimmedName,
+      phone: trimmedPhone || null,
+      ...atribucionDeJson(sierra),
+    });
+  }
 
   return res.status(200).json({ ok: true });
 }

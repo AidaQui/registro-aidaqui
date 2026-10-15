@@ -14,6 +14,7 @@ import MagicRings from "@/components/diagnostico/MagicRings";
 import AdnParticles from "@/components/diagnostico/AdnParticles";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
+import { leerAtribucion } from "@/components/sierra-tracking";
 import { Dna, Eye, LockKeyhole, Play, Puzzle, Sparkles, Sprout } from "lucide-react";
 
 /*
@@ -210,6 +211,7 @@ export default function LeadMagnetPage() {
           phone: datos.telefono,
           answers: respuestas,
           open: abierta,
+          sierra: leerAtribucion(),
         }),
       });
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { CalendarDays, Video } from "lucide-react";
 import MasterclassBadge from "@/components/masterclass/MasterclassBadge";
+import { leerAtribucion } from "@/components/sierra-tracking";
 
 export default function HeroSectionMC() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function HeroSectionMC() {
       const resp = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({ name, email, sierra: leerAtribucion() }),
       });
 
       if (!resp.ok) {

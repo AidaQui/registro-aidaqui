@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Fraunces, Jost, Lora } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Clarity from "@/components/Clarity";
+import { SierraTracking } from "@/components/sierra-tracking";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <Analytics />
       <Clarity />
+      <SierraTracking />
     </main>
   );
 }

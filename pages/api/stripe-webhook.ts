@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
+import { registrarCompra } from "@/lib/sierra";
 
 export const config = {
   api: { bodyParser: false },
@@ -146,6 +147,26 @@ export default async function handler(
     if (email) {
       await addToMailerLite(email, name, destino);
     }
+
+    // Panel de sierra labs. event.id hace que los reintentos de Stripe no se
+    // cuenten dos veces. Las compras entran por Payment Links (no se crea la
+    // sesión en este repo), así que la metadata de atribución suele venir
+    // vacía. No lanza.
+    await registrarCompra({
+      id: event.id,
+      amount: (session.amount_total ?? 0) / 100,
+      currency: (session.currency ?? "usd").toUpperCase(),
+      email: email || null,
+      name: name || null,
+      phone: session.customer_details?.phone ?? null,
+      path: session.metadata?.sl_path ?? null,
+      utm: {
+        utm_source: session.metadata?.utm_source,
+        utm_medium: session.metadata?.utm_medium,
+        utm_campaign: session.metadata?.utm_campaign,
+        utm_content: session.metadata?.utm_content,
+      },
+    });
   }
 
   return res.status(200).json({ received: true });

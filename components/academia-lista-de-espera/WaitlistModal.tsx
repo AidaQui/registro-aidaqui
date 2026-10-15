@@ -8,6 +8,7 @@ import {
   startSmoothScroll,
   stopSmoothScroll,
 } from "@/components/academia-lista-de-espera/SmoothScroll";
+import { leerAtribucion } from "@/components/sierra-tracking";
 
 type Props = {
   open: boolean;
@@ -66,6 +67,7 @@ export default function WaitlistModal({ open, onClose }: Props) {
           email,
           phone,
           source: "academia-lista-de-espera",
+          sierra: leerAtribucion(),
         }),
       });
 

@@ -7,6 +7,8 @@ import {
   type Respuestas,
 } from "@/components/diagnostico/preguntas";
 import { FICHAS } from "@/components/diagnostico/resultados";
+import { registrarLead } from "@/lib/sierra";
+import { atribucionDeJson } from "@/lib/sierra-atribucion";
 
 /*
  * /api/diagnostico — guarda el resultado y lo empuja a MailerLite.
@@ -157,7 +159,7 @@ export default async function handler(
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
-  const { name, email, phone, answers, open } = req.body ?? {};
+  const { name, email, phone, answers, open, sierra } = req.body ?? {};
 
   const trimmedName = typeof name === "string" ? name.trim() : "";
   const trimmedEmail =
@@ -237,6 +239,14 @@ export default async function handler(
     trimmedPhone,
     ETIQUETA_MAILERLITE[diagnostico.dominante]
   );
+
+  // Panel de sierra labs, después de Supabase y MailerLite. No lanza.
+  await registrarLead({
+    email: trimmedEmail,
+    name: trimmedName || null,
+    phone: trimmedPhone || null,
+    ...atribucionDeJson(sierra),
+  });
 
   return res.status(200).json({ ok: true, patron: diagnostico.dominante });
 }
