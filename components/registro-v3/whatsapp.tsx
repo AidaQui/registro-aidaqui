@@ -3,7 +3,7 @@
 
 /** Grupo VIP del entrenamiento: ahí se envía el enlace de acceso a la sesión. */
 export const whatsappGroupUrl =
-  "https://chat.whatsapp.com/GboJikIWNLjAwaCOgGVsId";
+  "https://chat.whatsapp.com/BNT1tgeM4br5p2SNjNGO3r";
 
 /** Soporte: consultas puntuales, no el grupo. */
 export const soporteUrl = "https://wa.link/xnvgve";
