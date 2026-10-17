@@ -26,7 +26,7 @@ export default function ScarcitySection() {
         </p>
 
         <h2 id="scarcity-title" className="scarcity-title" data-reveal="title">
-          250 ALUMNOS POR EDICIÓN — YA QUEDAN POCAS PLAZAS
+          4ª EDICIÓN: SOLO 250 ALUMNOS — YA QUEDAN POCAS PLAZAS
         </h2>
 
         <div className="scarcity-hero-number" data-reveal>
