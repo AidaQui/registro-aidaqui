@@ -2,7 +2,7 @@
 const whatsappGroupUrl =
   "https://chat.whatsapp.com/FlSvsQGdwciLphfK15z3WD";
 
-const soporteUrl = "https://wa.link/o34ds1";
+const soporteUrl = "https://wa.link/b92t0c";
 
 const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
