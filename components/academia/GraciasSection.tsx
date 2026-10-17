@@ -1,4 +1,4 @@
-const whatsappGroupUrl = "https://chat.whatsapp.com/F0u6zEBiH5185pTdBz3tfB?mode=gi_t";
+const whatsappGroupUrl = "https://chat.whatsapp.com/LbXjImWrMOb3GoVkEJ8t3S";
 
 const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
