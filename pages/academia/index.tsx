@@ -12,7 +12,7 @@ export default function Academia() {
   return (
     <>
       <Head>
-        <title>Academia ADN 3.0 — Alineamiento Divino Natural | Aida Qui</title>
+        <title>Academia ADN 4.0 — Alineamiento Divino Natural | Aida Qui</title>
         <meta
           name="description"
           content="6 semanas para ordenar tu energía y crear resultados reales. Un entrenamiento experiencial para integrar tu espiritualidad y sostener coherencia en salud, relaciones, propósito y abundancia."

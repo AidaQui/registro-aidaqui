@@ -18,7 +18,7 @@ export default function GraciasSectionAcademia() {
         <div className="gracias-adn-badge" aria-hidden="true">✦</div>
 
         <h1 className="gracias-adn-title" id="gracias-adn-title">
-          ¡Ya eres parte de la <em>Academia ADN 3.0!</em>
+          ¡Ya eres parte de la <em>Academia ADN 4.0!</em>
         </h1>
 
         <p className="gracias-adn-lead">

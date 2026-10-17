@@ -57,7 +57,7 @@ export default function PricingTicketSection() {
           >
             {/* Stub lateral dorado */}
             <div className="ticket-stub" aria-hidden="true">
-              <span className="ticket-stub__label">ACADEMIA ADN 3.0</span>
+              <span className="ticket-stub__label">ACADEMIA ADN 4.0</span>
               <div className="ticket-stub__barcode">
                 <svg viewBox="0 0 36 200" preserveAspectRatio="none" role="presentation">
                   {Array.from({ length: 40 }).map((_, i) => {
