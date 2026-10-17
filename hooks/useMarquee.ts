@@ -43,6 +43,9 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
     };
 
     const onLeave = () => {
+      // Sin arrastre real no hay captura: si el puntero sale apretado, el
+      // pointerup no llega acá y la fila quedaría frenada.
+      if (dragging && !moved) dragging = false;
       if (!dragging) target = 1;
     };
 
@@ -52,15 +55,20 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
       target = 0;
       startX = e.clientX;
       startOffset = offset;
-      container.setPointerCapture(e.pointerId);
-      container.style.cursor = "grabbing";
     };
 
+    // La captura del puntero se toma recién cuando hay arrastre real. Si se
+    // tomara en el pointerdown, el pointerup y el click se redirigen al
+    // contenedor y un toque simple nunca llega al botón "Ver más".
     const onPointerMove = (e: PointerEvent) => {
       if (!dragging) return;
       const delta = e.clientX - startX;
-      if (Math.abs(delta) > 4) moved = true;
-      offset = startOffset + delta;
+      if (!moved && Math.abs(delta) > 4) {
+        moved = true;
+        container.setPointerCapture(e.pointerId);
+        container.style.cursor = "grabbing";
+      }
+      if (moved) offset = startOffset + delta;
     };
 
     // Tras arrastrar, el pointerup dispara un click: si hubo movimiento
@@ -75,7 +83,9 @@ export function useMarquee<T extends HTMLElement = HTMLElement>(
     const onPointerUp = (e: PointerEvent) => {
       if (!dragging) return;
       dragging = false;
-      container.releasePointerCapture(e.pointerId);
+      if (container.hasPointerCapture(e.pointerId)) {
+        container.releasePointerCapture(e.pointerId);
+      }
       container.style.cursor = "";
       // Solo retoma si el cursor ya salió del área
       if (!container.matches(":hover")) target = 1;
