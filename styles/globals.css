@@ -4067,16 +4067,17 @@ a.pearl-btn {
 .hero-adn {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  /* overflow: clip y NO hidden: hidden convierte la sección en contenedor de
+     scroll y anula el mínimo automático de aspect-ratio, así que el alto
+     queda clavado y el CTA se recorta contra la sección siguiente. Con clip
+     el alto es el de la imagen salvo que el texto necesite más. */
+  overflow: clip;
   background-color: #faf7f2;
-  /* El alto es un mínimo, no un valor fijo: el ratio de la imagen (1920x750,
-     39.06vw) o 620px, lo que sea mayor, y si el contenido necesita más la
-     sección crece. Con aspect-ratio + overflow:hidden el alto quedaba
-     clavado y en laptops de 1366px el CTA se recortaba contra la sección
-     siguiente. La grilla hace que .hero-adn-shell llene ese mínimo y centre
-     el texto. La imagen siempre cubre con object-fit: cover. */
+  /* Proporción real de la portada (1920x750): la composición está pensada
+     para verse entera, sin recorte. La grilla hace que .hero-adn-shell
+     llene ese alto y centre el texto. */
   display: grid;
-  min-height: max(620px, min(78vh, 760px), 39.06vw);
+  aspect-ratio: 1920 / 750;
 }
 
 /* Imagen de fondo: cubre la sección entera. El texto va por encima vía
@@ -4351,7 +4352,7 @@ a.pearl-btn {
 @media (max-width: 1023px) {
   /* El ratio panorámico no sirve en una columna: que mande el contenido */
   .hero-adn {
-    min-height: unset;
+    aspect-ratio: auto;
   }
 
   .hero-adn-shell {
@@ -4420,16 +4421,37 @@ a.pearl-btn {
 }
 
 /* ---- Short viewport (laptops ~700-800px tall) ---- */
-/* Se compactan los espacios para que el CTA entre en la primera pantalla */
-@media (max-height: 800px) and (min-width: 1024px) {
+/* ---- Laptops (1024-1799px) ----
+   El alto sale de la proporción de la imagen (1366px → 534px), así que el
+   texto se compacta para entrar sin estirar la sección ni recortar la
+   portada. Por debajo de ~1280px igual no entra y la sección crece. */
+@media (min-width: 1024px) and (max-width: 1799px) {
   .hero-adn-shell {
-    align-items: flex-start;
-    padding-top: clamp(36px, 6vh, 64px);
-    padding-bottom: clamp(40px, 7vh, 72px);
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
   .hero-adn-copy {
-    gap: 16px;
+    gap: 14px;
+  }
+
+  .hero-adn-urgency {
+    padding: 7px 14px;
+    font-size: 11px;
+  }
+
+  .hero-adn-title {
+    font-size: clamp(32px, 2.9vw, 45px);
+  }
+
+  .hero-adn-lead {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .hero-adn-cta {
+    margin-top: 4px;
+    padding: 13px 16px;
   }
 }
 
