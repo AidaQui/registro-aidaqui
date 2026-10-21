@@ -4137,6 +4137,33 @@ a.pearl-btn {
   max-width: 480px;
 }
 
+/* Halo blanco detrás del texto, anclado al bloque y no a la sección: en
+   pantallas anchas el texto se corre a la derecha y quedaba fuera del
+   .hero-adn-glow, sobre la parte clara y cargada de la portada. */
+@media (min-width: 1024px) {
+  .hero-adn-copy {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-adn-copy::before {
+    content: "";
+    position: absolute;
+    inset: -70px -110px -70px -90px;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 252, 246, 0.88) 0%,
+      rgba(255, 252, 246, 0.7) 40%,
+      rgba(255, 252, 246, 0.3) 62%,
+      transparent 74%
+    );
+    filter: blur(12px);
+    pointer-events: none;
+  }
+}
+
 /* ---- Pill de urgencia ---- */
 .hero-adn-urgency {
   display: inline-flex;
