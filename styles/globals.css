@@ -4069,14 +4069,18 @@ a.pearl-btn {
   width: 100%;
   overflow: hidden;
   background-color: #faf7f2;
-  /* Ratio panorámico como guía, pero min-height asegura que el CTA nunca quede cortado
-     en laptops de 700-750px de alto. La imagen siempre cubre con object-fit: cover. */
-  aspect-ratio: 1920 / 700;
-  min-height: max(620px, min(78vh, 760px));
+  /* El alto es un mínimo, no un valor fijo: el ratio de la imagen (1920x750,
+     39.06vw) o 620px, lo que sea mayor, y si el contenido necesita más la
+     sección crece. Con aspect-ratio + overflow:hidden el alto quedaba
+     clavado y en laptops de 1366px el CTA se recortaba contra la sección
+     siguiente. La grilla hace que .hero-adn-shell llene ese mínimo y centre
+     el texto. La imagen siempre cubre con object-fit: cover. */
+  display: grid;
+  min-height: max(620px, min(78vh, 760px), 39.06vw);
 }
 
-/* Imagen de fondo real: define el alto natural de la sección (ratio 1920x700)
-   sin zoom ni recorte. El texto va por encima en absoluto vía .hero-adn-shell. */
+/* Imagen de fondo: cubre la sección entera. El texto va por encima vía
+   .hero-adn-shell. */
 .hero-adn-bg {
   display: block;
   position: absolute;
@@ -4118,7 +4122,6 @@ a.pearl-btn {
   grid-template-columns: minmax(0, 45%) minmax(0, 55%);
   align-items: center;
   width: min(calc(100% - 48px), 1140px);
-  height: 100%;
   margin: 0 auto;
   /* Padding vertical evita que el contenido toque los bordes cuando min-height manda */
   padding-top: 40px;
@@ -4348,13 +4351,11 @@ a.pearl-btn {
 @media (max-width: 1023px) {
   /* El ratio panorámico no sirve en una columna: que mande el contenido */
   .hero-adn {
-    aspect-ratio: auto;
     min-height: unset;
   }
 
   .hero-adn-shell {
     grid-template-columns: 1fr;
-    height: auto;
     padding: clamp(72px, 12vw, 120px) 0;
   }
 
@@ -4374,8 +4375,6 @@ a.pearl-btn {
 /* ---- Mobile (≤ 600px) — imagen vertical (960x1500), contenido empujado abajo ---- */
 @media (max-width: 600px) {
   .hero-adn {
-    aspect-ratio: auto;
-    height: 800px;
     min-height: 800px;
   }
 
@@ -4386,7 +4385,6 @@ a.pearl-btn {
 
   .hero-adn-shell {
     width: 100%;
-    height: 100%;
     /* Contenido pegado arriba, máximo 50px de respiro al top */
     padding: 35px 24px 56px;
     align-items: start;
@@ -4422,11 +4420,16 @@ a.pearl-btn {
 }
 
 /* ---- Short viewport (laptops ~700-800px tall) ---- */
+/* Se compactan los espacios para que el CTA entre en la primera pantalla */
 @media (max-height: 800px) and (min-width: 1024px) {
   .hero-adn-shell {
     align-items: flex-start;
-    padding-top: clamp(48px, 8vh, 80px);
-    padding-bottom: clamp(56px, 10vh, 100px);
+    padding-top: clamp(36px, 6vh, 64px);
+    padding-bottom: clamp(40px, 7vh, 72px);
+  }
+
+  .hero-adn-copy {
+    gap: 16px;
   }
 }
 

@@ -9,10 +9,10 @@ export default function HeroSectionADN() {
           height={1500}
         />
         <img
-          src="/academia/background-1.jpg"
+          src="/academia/banner-aida-qui.jpg"
           alt=""
           width={1920}
-          height={700}
+          height={750}
           fetchPriority="high"
         />
       </picture>
