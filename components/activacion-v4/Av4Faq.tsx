@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import Av4Notch from "@/components/activacion-v4/Av4Notch";
+import Av4Monograma from "@/components/activacion-v4/Av4Monograma";
 import { FECHA_LIMITE_INSCRIPCION } from "@/components/activacion-v4/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Preguntas frecuentes: barras oscuras sobre fondo claro. Mismo copy que
+ * Preguntas frecuentes: barras oscuras estrechas sobre fondo claro. Copy de
  * FaqSection de /activacion. Botón + aria-expanded; pueden quedar varias
  * abiertas a la vez.
  */
@@ -54,18 +54,16 @@ export default function Av4Faq() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-sec--claro av4-faq"
+      className="av4-sec av4-faq"
       aria-labelledby="av4-faq-title"
     >
-      <span className="av4-monograma av4-monograma--faq" aria-hidden="true">
-        A
-      </span>
+      <Av4Monograma variante="faq" />
 
-      <div className="av4-shell">
+      <div className="av4-wrap">
         <div className="av4-head" data-reveal>
           <p className="av4-eyebrow">¿Te quedó alguna duda?</p>
           <h2 id="av4-faq-title" className="av4-title">
-            Preguntas <strong>frecuentes</strong>
+            Preguntas <b>frecuentes</b>
           </h2>
         </div>
 
@@ -85,7 +83,7 @@ export default function Av4Faq() {
                   >
                     <span>{pregunta}</span>
                     <ChevronDown
-                      size={20}
+                      size={18}
                       strokeWidth={2}
                       className="av4-faq__chevron"
                       aria-hidden="true"
@@ -107,8 +105,6 @@ export default function Av4Faq() {
           })}
         </div>
       </div>
-
-      <Av4Notch tono="claro" />
     </section>
   );
 }
