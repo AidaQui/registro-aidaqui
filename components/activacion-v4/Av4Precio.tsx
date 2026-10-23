@@ -1,4 +1,12 @@
-import { Check, ShieldCheck, Tag, Video } from "lucide-react";
+import {
+  Brain,
+  CalendarCheck,
+  Flower2,
+  Radio,
+  ShieldCheck,
+  Tag,
+  Video,
+} from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
@@ -11,11 +19,17 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 
 const INCLUYE = [
-  "Una experiencia guiada vía Zoom",
-  "Prácticas para integrar la experiencia en tu día a día.",
-  "Meditaciones para cultivar el amor, la alegría y la apertura a recibir.",
-  "Mi práctica para trabajar las creencias que te limitan.",
-  "Una canalización para el grupo en directo.",
+  { Icono: Video, t: "Una experiencia guiada vía Zoom" },
+  {
+    Icono: CalendarCheck,
+    t: "Prácticas para integrar la experiencia en tu día a día.",
+  },
+  {
+    Icono: Flower2,
+    t: "Meditaciones para cultivar el amor, la alegría y la apertura a recibir.",
+  },
+  { Icono: Brain, t: "Mi práctica para trabajar las creencias que te limitan." },
+  { Icono: Radio, t: "Una canalización para el grupo en directo." },
 ];
 
 export default function Av4Precio() {
@@ -27,7 +41,7 @@ export default function Av4Precio() {
     <section
       ref={ref}
       id="av4-precio"
-      className="av4-sec av4-precio"
+      className="av4-sec av4-sec--oscuro av4-precio"
       aria-labelledby="av4-precio-title"
     >
       <div className="av4-wrap">
@@ -56,10 +70,10 @@ export default function Av4Precio() {
             </div>
 
             <ul className="av4-plan__lista">
-              {INCLUYE.map((item) => (
-                <li key={item}>
-                  <Check size={15} strokeWidth={2.4} aria-hidden="true" />
-                  {item}
+              {INCLUYE.map(({ Icono, t }) => (
+                <li key={t}>
+                  <Icono size={20} strokeWidth={1.7} aria-hidden="true" />
+                  {t}
                 </li>
               ))}
             </ul>

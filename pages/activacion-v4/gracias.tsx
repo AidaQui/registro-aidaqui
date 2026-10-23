@@ -1,12 +1,19 @@
 import Head from "next/head";
-import { Inter_Tight } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import Av4Gracias from "@/components/activacion-v4/Av4Gracias";
 
-const sans = Inter_Tight({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-av4-sans",
+});
+const serif = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["italic"],
+  display: "swap",
+  variable: "--font-av4-serif",
 });
 
 export default function GraciasActivacionV4() {
@@ -23,7 +30,7 @@ export default function GraciasActivacionV4() {
             pasado por el registro. */}
         <meta name="robots" content="noindex" />
       </Head>
-      <main className={`av4 ${sans.variable}`}>
+      <main className={`av4 ${sans.variable} ${serif.variable}`}>
         <Av4Gracias />
       </main>
     </>

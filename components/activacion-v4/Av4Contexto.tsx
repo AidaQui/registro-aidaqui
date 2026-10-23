@@ -1,14 +1,15 @@
 import Image from "next/image";
+import { Flame, Gem, Shuffle, Users } from "lucide-react";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-/** Contexto: texto a la izquierda, foto enmarcada a la derecha. Copy literal. */
+/** Contexto: texto a la izquierda, foto a la derecha. Copy literal. */
 
 const LINEAS = [
-  "Relaciones que necesitan una nueva forma.",
-  "Prioridades que han cambiado.",
-  "Deseos que vuelven con fuerza.",
-  "Una necesidad cada vez más profunda de vivir con verdad.",
+  { Icono: Users, t: "Relaciones que necesitan una nueva forma." },
+  { Icono: Shuffle, t: "Prioridades que han cambiado." },
+  { Icono: Flame, t: "Deseos que vuelven con fuerza." },
+  { Icono: Gem, t: "Una necesidad cada vez más profunda de vivir con verdad." },
 ];
 
 export default function Av4Contexto() {
@@ -17,7 +18,7 @@ export default function Av4Contexto() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-ctx"
+      className="av4-sec av4-sec--claro av4-ctx"
       aria-labelledby="av4-contexto-title"
     >
       <div className="av4-wrap av4-dos">
@@ -55,8 +56,13 @@ export default function Av4Contexto() {
           </div>
 
           <ul className="av4-borde" data-reveal-group data-reveal-fade>
-            {LINEAS.map((t) => (
-              <li key={t}>{t}</li>
+            {LINEAS.map(({ Icono, t }) => (
+              <li key={t}>
+                <span className="av4-icono av4-icono--sm">
+                  <Icono size={22} strokeWidth={1.7} aria-hidden="true" />
+                </span>
+                {t}
+              </li>
             ))}
           </ul>
 
@@ -73,7 +79,7 @@ export default function Av4Contexto() {
             src="/activacion-v4/contexto.jpg"
             alt="Aida Qui meditando"
             fill
-            sizes="(max-width: 900px) 90vw, 480px"
+            sizes="(max-width: 900px) 90vw, 520px"
             className="av4-cover"
           />
         </div>

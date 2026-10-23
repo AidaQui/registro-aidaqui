@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Crown, Ear, Gem, Scale } from "lucide-react";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
@@ -6,6 +7,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * "Es momento": titular con la parte clave en dorado, párrafos y las cuatro
  * intenciones como tarjetas oscuras numeradas con foto.
  */
+
+const ICONOS = [Ear, Scale, Gem, Crown];
 
 const INTENCIONES = [
   {
@@ -35,7 +38,7 @@ export default function Av4Momento() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-momento"
+      className="av4-sec av4-sec--rosa av4-momento"
       aria-labelledby="av4-momento-title"
     >
       <div className="av4-wrap">
@@ -65,7 +68,9 @@ export default function Av4Momento() {
         </h3>
 
         <ol className="av4-intenciones" data-reveal-group data-reveal-fade>
-          {INTENCIONES.map(({ texto, foto }, i) => (
+          {INTENCIONES.map(({ texto, foto }, i) => {
+            const Icono = ICONOS[i];
+            return (
             <li key={texto} className="av4-intencion">
               <div className="av4-intencion__foto">
                 <Image
@@ -76,12 +81,18 @@ export default function Av4Momento() {
                   className="av4-cover"
                 />
               </div>
-              <span className="av4-intencion__num">
-                {String(i + 1).padStart(2, "0")}
-              </span>
+              <div className="av4-intencion__cab">
+                <span className="av4-intencion__num">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="av4-icono av4-icono--sm">
+                  <Icono size={22} strokeWidth={1.7} aria-hidden="true" />
+                </span>
+              </div>
               <p>{texto}</p>
             </li>
-          ))}
+            );
+          })}
         </ol>
 
         <p className="av4-gran-cierre" data-reveal>

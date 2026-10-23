@@ -17,7 +17,7 @@ import {
 export default function Av4Gracias() {
   return (
     <>
-      <section className="av4-sec av4-gracias" aria-labelledby="av4-gracias-title">
+      <section className="av4-sec av4-sec--oscuro av4-gracias" aria-labelledby="av4-gracias-title">
 
         <div className="av4-wrap av4-gracias__in">
           <Av4Lockup sello className="av4-lockup--centro" />

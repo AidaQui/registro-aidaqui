@@ -1,38 +1,52 @@
+import {
+  Compass,
+  Ear,
+  Heart,
+  Hourglass,
+  ShieldAlert,
+  Sparkles,
+} from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Identificación: título centrado y seis tarjetas oscuras. Cada afirmación del
- * cliente se parte en su primera cláusula (título dorado) y el resto (texto
- * gris), sin añadir palabras. Copy literal.
+ * Identificación: título centrado y seis tarjetas con icono. Cada afirmación
+ * del cliente se parte en su primera cláusula (título) y el resto (texto),
+ * sin añadir palabras. Copy literal.
  */
 
 const SENALES = [
   {
+    Icono: Heart,
     titulo: "Tu corazón te pide un cambio,",
     texto: "pero cuando intentas dar el paso aparecen las dudas.",
   },
   {
+    Icono: Compass,
     titulo: "Te cuesta reconocer qué quieres de verdad,",
     texto:
       "entre lo que esperan los demás y lo que te has acostumbrado a elegir.",
   },
   {
+    Icono: ShieldAlert,
     titulo: "Sientes que necesitas un cambio,",
     texto: "pero el miedo a equivocarte te mantiene en el mismo lugar.",
   },
   {
+    Icono: Ear,
     titulo: "Buscas respuestas y aprobación fuera,",
     texto:
       "aunque hay algo dentro de ti que lleva tiempo pidiendo ser escuchado.",
   },
   {
+    Icono: Hourglass,
     titulo: "Has trabajado mucho en ti,",
     texto:
       "pero sigues aplazando decisiones, callando lo que necesitas o dejando tus deseos para después.",
   },
   {
+    Icono: Sparkles,
     titulo: "Quieres vivir con propósito,",
     texto:
       "compartir tus dones y sentir que la vida que estás construyendo tiene sentido para ti.",
@@ -45,7 +59,7 @@ export default function Av4Identificacion() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-ident"
+      className="av4-sec av4-sec--claro av4-ident"
       aria-labelledby="av4-ident-title"
     >
       <div className="av4-wrap">
@@ -64,8 +78,11 @@ export default function Av4Identificacion() {
         </div>
 
         <ul className="av4-cards" data-reveal-group data-reveal-fade>
-          {SENALES.map(({ titulo, texto }) => (
+          {SENALES.map(({ Icono, titulo, texto }) => (
             <li key={titulo} className="av4-card">
+              <span className="av4-icono">
+                <Icono size={24} strokeWidth={1.7} aria-hidden="true" />
+              </span>
               <h3>{titulo}</h3>
               <p>{texto}</p>
             </li>

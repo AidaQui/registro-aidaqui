@@ -1,19 +1,17 @@
 import Image from "next/image";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
+import Av4Datos from "@/components/activacion-v4/Av4Datos";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
-import { EVENTO, HORARIOS } from "@/components/activacion-v4/config";
+import { EVENTO } from "@/components/activacion-v4/config";
 
 /**
- * Hero oscuro: logotipo, etiqueta, titular con la parte clave en dorado,
- * bajada, horarios y CTA a la izquierda; Aida fundida con el fondo a la
- * derecha. Debajo, la frase con los datos reales sobre una muesca curva.
+ * Hero en vino profundo: logotipo, etiqueta, titular, bajada, horarios y CTA;
+ * Aida fundida con el fondo a la derecha y la fila de datos reales debajo.
  */
 export default function Av4Hero() {
-  const principal = HORARIOS[0];
-
   return (
     <section className="av4-hero" aria-labelledby="av4-hero-title">
       <div className="av4-hero__foto" aria-hidden="true">
@@ -22,7 +20,7 @@ export default function Av4Hero() {
           alt=""
           fill
           priority
-          sizes="(max-width: 900px) 100vw, 620px"
+          sizes="(max-width: 1000px) 100vw, 700px"
           className="av4-cover"
         />
       </div>
@@ -62,11 +60,8 @@ export default function Av4Hero() {
         </div>
       </div>
 
-      <div className="av4-hero__frase">
-        <p>
-          {EVENTO.fechaCorta} · {principal.hora} {principal.pais} ·{" "}
-          {EVENTO.formato}
-        </p>
+      <div className="av4-wrap av4-hero__datos">
+        <Av4Datos />
       </div>
     </section>
   );

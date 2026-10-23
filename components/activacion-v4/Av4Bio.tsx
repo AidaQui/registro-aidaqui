@@ -13,7 +13,7 @@ export default function Av4Bio() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-bio"
+      className="av4-sec av4-sec--claro av4-bio"
       aria-labelledby="av4-bio-title"
     >
       <div className="av4-wrap av4-dos">

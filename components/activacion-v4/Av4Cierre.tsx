@@ -22,7 +22,7 @@ export default function Av4Cierre() {
     <>
       <section
         ref={ref}
-        className="av4-sec av4-cierre"
+        className="av4-sec av4-sec--oscuro av4-cierre"
         aria-label="Reserva tu plaza"
       >
         <div className="av4-cierre__fondo" aria-hidden="true" />

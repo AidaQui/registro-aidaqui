@@ -1,20 +1,16 @@
-import Image from "next/image";
+import { HeartHandshake, Signpost, Sparkles, Unlock } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
-import Av4Sello from "@/components/activacion-v4/Av4Sello";
+import Av4Macbook from "@/components/activacion-v4/Av4Macbook";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
-import { EVENTO } from "@/components/activacion-v4/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-/**
- * Experiencia: texto y lista con borde dorado a la izquierda, y un portátil
- * con una diapositiva "EN DIRECTO" a la derecha. Copy literal del cliente.
- */
+/** Experiencia: texto, MacBook y lista con iconos. Copy literal. */
 
 const PUNTOS = [
-  "Reconectar con lo que de verdad deseas.",
-  "Reconocer qué te está frenando.",
-  "Conectar con tu corazón y tu poder interior.",
-  "Dar una dirección concreta a lo que descubras.",
+  { Icono: Sparkles, t: "Reconectar con lo que de verdad deseas." },
+  { Icono: Unlock, t: "Reconocer qué te está frenando." },
+  { Icono: HeartHandshake, t: "Conectar con tu corazón y tu poder interior." },
+  { Icono: Signpost, t: "Dar una dirección concreta a lo que descubras." },
 ];
 
 export default function Av4Experiencia() {
@@ -23,7 +19,7 @@ export default function Av4Experiencia() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-exp"
+      className="av4-sec av4-sec--oscuro av4-exp"
       aria-labelledby="av4-exp-title"
     >
       <div className="av4-wrap av4-dos">
@@ -43,55 +39,40 @@ export default function Av4Experiencia() {
           <p className="av4-lema" data-reveal>
             Escucha tu verdad. Recupera la confianza para vivirla.
           </p>
-
-          <h3 className="av4-subtitulo" data-reveal>
-            <span className="av4-oro">Lo que experimentarás</span> dentro
-          </h3>
-          <p className="av4-texto av4-texto--izq" data-reveal>
-            A través de la meditación y una activación energética guiada:
-          </p>
-
-          <ul className="av4-borde" data-reveal-group data-reveal-fade>
-            {PUNTOS.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul>
-
-          <p className="av4-texto av4-texto--izq" data-reveal>
-            Llevaremos esa conexión a tu realidad: tus relaciones, tus
-            proyectos y las decisiones que tienes delante para reconocer{" "}
-            <strong>un siguiente paso</strong> y comprometerte contigo para
-            darlo.
-          </p>
-
-          <div className="av4-cta-fila" data-reveal>
-            <Av4Cta href="#av4-precio" />
-          </div>
         </div>
 
-        <div className="av4-portatil" data-reveal="right" aria-hidden="true">
-          <div className="av4-portatil__marco">
-            <div className="av4-portatil__pantalla">
-              <Image
-                src="/activacion-v4/experiencia.jpg"
-                alt=""
-                fill
-                sizes="(max-width: 900px) 90vw, 560px"
-                className="av4-cover"
-              />
-              <div className="av4-portatil__texto">
-                <span className="av4-portatil__vivo">EN DIRECTO</span>
-                <strong>
-                  Activación
-                  <br />
-                  del Corazón
-                </strong>
-                <span className="av4-portatil__zoom">{EVENTO.formato}</span>
-              </div>
-              <Av4Sello className="av4-portatil__sello" size={64} />
-            </div>
-          </div>
-          <div className="av4-portatil__base" />
+        <div data-reveal="right">
+          <Av4Macbook />
+        </div>
+      </div>
+
+      <div className="av4-wrap av4-exp__lista">
+        <h3 className="av4-subtitulo" data-reveal>
+          Lo que <span className="av4-oro">experimentarás</span> dentro
+        </h3>
+        <p className="av4-texto" data-reveal>
+          A través de la meditación y una activación energética guiada:
+        </p>
+
+        <ul className="av4-borde av4-borde--grid" data-reveal-group data-reveal-fade>
+          {PUNTOS.map(({ Icono, t }) => (
+            <li key={t}>
+              <span className="av4-icono av4-icono--sm">
+                <Icono size={22} strokeWidth={1.7} aria-hidden="true" />
+              </span>
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <p className="av4-texto" data-reveal>
+          Llevaremos esa conexión a tu realidad: tus relaciones, tus proyectos
+          y las decisiones que tienes delante para reconocer{" "}
+          <strong>un siguiente paso</strong> y comprometerte contigo para darlo.
+        </p>
+
+        <div className="av4-cta-fila av4-cta-fila--centro" data-reveal>
+          <Av4Cta href="#av4-precio" />
         </div>
       </div>
     </section>
