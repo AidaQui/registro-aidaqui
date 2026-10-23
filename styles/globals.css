@@ -28481,7 +28481,6 @@ body {
 .av4-hero {
   position: relative;
   overflow: hidden;
-  padding-bottom: 20px;
   color: #fff;
   background:
     radial-gradient(50% 60% at 78% 35%, rgba(201, 123, 123, 0.35), transparent 70%),
@@ -28510,9 +28509,11 @@ body {
   display: flex;
   align-items: center;
   width: min(1240px, 100% - 64px);
-  min-height: clamp(660px, 54vw, 820px);
+  /* El hero entero mide 750px en escritorio: por eso el titular, los
+     márgenes y la fila de datos van más contenidos que en el resto. */
+  min-height: 750px;
   margin-inline: auto;
-  padding-block: 56px 70px;
+  padding-block: 32px;
 }
 
 .av4-hero__copy {
@@ -28520,13 +28521,13 @@ body {
 }
 
 .av4-hero__tag {
-  margin-top: 40px;
+  margin-top: 26px;
 }
 
 .av4-hero__title {
-  margin-top: 24px;
+  margin-top: 18px;
   color: #fff;
-  font-size: clamp(40px, 5.2vw, 68px);
+  font-size: clamp(38px, 3.9vw, 52px);
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -0.03em;
@@ -28538,10 +28539,10 @@ body {
 }
 
 .av4 p.av4-hero__lead {
-  margin: 24px 0 26px;
-  max-width: 540px;
+  margin: 18px 0 24px;
+  max-width: 560px;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 400;
   line-height: 1.65;
 }
@@ -28584,81 +28585,88 @@ body {
   font-weight: 600;
 }
 
+/* En el hero los horarios van en grilla 2×2 y la CTA debajo toma el mismo
+   ancho: el bloque mide lo que su contenido más ancho (max-content). */
+.av4-hero__accion {
+  display: grid;
+  gap: 16px;
+  width: max-content;
+  max-width: 100%;
+}
+
 .av4-horarios--compacto {
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  margin-bottom: 30px;
 }
 
 .av4-horarios--oscuro {
   margin-block: 20px 8px;
 }
 
-.av4-prueba {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 28px;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.av4-prueba__sello {
-  width: 44px;
-  height: 44px;
-}
-
-/* Fila de datos reales. */
-.av4-hero__datos {
-  margin-top: -10px;
-}
-
+/* Datos reales en una píldora que rota: los cuatro ítems se apilan en la
+   misma celda de la grilla y cada uno se muestra 3s de un ciclo de 12s. */
 .av4-datos {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  display: inline-grid;
+  margin-top: 20px;
+  padding: 8px 16px;
+  border: 1px solid rgba(232, 180, 176, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(6px);
 }
 
 .av4-datos li {
+  grid-area: 1 / 1;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 22px 22px 20px;
-  border: 1px solid rgba(232, 180, 176, 0.3);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  align-items: center;
+  gap: 8px;
+  color: var(--av4-gold-soft);
+  font-size: 15px;
+  white-space: nowrap;
+  opacity: 0;
+  animation: av4-dato 12s infinite;
 }
 
-.av4-datos li:hover {
-  transform: translateY(-4px);
-  border-color: var(--av4-gold);
-}
+.av4-datos li:nth-child(2) { animation-delay: 3s; }
+.av4-datos li:nth-child(3) { animation-delay: 6s; }
+.av4-datos li:nth-child(4) { animation-delay: 9s; }
 
-.av4-datos__icono {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 10px;
-  border-radius: 50%;
-  background: linear-gradient(140deg, #e3c48a, #c9a15a);
-  color: var(--av4-wine);
+@keyframes av4-dato {
+  0%   { opacity: 0; transform: translateY(6px); }
+  4%   { opacity: 1; transform: translateY(0); }
+  21%  { opacity: 1; transform: translateY(0); }
+  25%  { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
 }
 
 .av4-datos strong {
   color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 600;
 }
 
 .av4-datos small {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+}
+
+.av4-datos small::before {
+  content: "· ";
+}
+
+/* Sin animación: los cuatro en fila, uno detrás de otro. */
+@media (prefers-reduced-motion: reduce) {
+  .av4-datos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    border-radius: 16px;
+  }
+
+  .av4-datos li {
+    opacity: 1;
+    animation: none;
+  }
 }
 
 /* ===== IDENTIFICACIÓN ===== */
@@ -29418,10 +29426,6 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .av4-datos {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .av4-bio .av4-collage {
     order: -1;
   }
@@ -29477,12 +29481,23 @@ body {
     height: 420px;
   }
 
-  .av4-datos li {
-    padding: 18px 16px;
+  /* En mobile el bloque de horarios + CTA ocupa todo el ancho. */
+  .av4-hero__accion {
+    width: 100%;
   }
 
-  .av4-datos strong {
-    font-size: 17px;
+  /* Dos columnas de ~170px no alcanzan para país y hora en una línea: la
+     hora baja debajo del país, alineada con el nombre. */
+  .av4-horarios--compacto .av4-horario {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    padding: 9px 12px;
+  }
+
+  .av4-horarios--compacto .av4-horario__hora {
+    flex-basis: 100%;
+    padding-left: 29px;
+    white-space: nowrap;
   }
 
   .av4-footer__in {
@@ -29496,7 +29511,6 @@ body {
   .av4-cta,
   .av4-card,
   .av4-intencion,
-  .av4-datos li,
   .av4-mosaico__foto img {
     transition: none;
   }

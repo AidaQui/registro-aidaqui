@@ -2,13 +2,13 @@ import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Datos from "@/components/activacion-v4/Av4Datos";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
-import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { EVENTO } from "@/components/activacion-v4/config";
 
 /**
- * Hero en vino profundo: logotipo, etiqueta, titular, bajada, horarios y CTA;
- * Aida fundida con el fondo a la derecha y la fila de datos reales debajo.
+ * Hero en vino profundo: logotipo, etiqueta, titular, bajada, horarios y CTA,
+ * con los datos reales rotando debajo; Aida fundida con el fondo a la derecha.
+ * En escritorio todo entra en 750px de alto.
  */
 export default function Av4Hero() {
   return (
@@ -37,21 +37,18 @@ export default function Av4Hero() {
             crear una vida que ames todos los días.
           </p>
 
-          <Av4Horarios compacto />
+          {/* Horarios y CTA comparten ancho: el botón mide lo mismo que la
+              grilla de horarios que tiene encima. */}
+          <div className="av4-hero__accion">
+            <Av4Horarios compacto />
 
-          {/* Va al pricing, no al checkout: saltar afuera sin ver qué incluye
-              ni cuánto cuesta es la fricción que más rebota. */}
-          <Av4Cta href="#av4-precio" />
-
-          <div className="av4-prueba">
-            <Av4Sello size={64} className="av4-prueba__sello" />
-            <span>Guiada en directo por Aida Qui</span>
+            {/* Va al pricing, no al checkout: saltar afuera sin ver qué incluye
+                ni cuánto cuesta es la fricción que más rebota. */}
+            <Av4Cta href="#av4-precio" />
           </div>
-        </div>
-      </div>
 
-      <div className="av4-wrap av4-hero__datos">
-        <Av4Datos />
+          <Av4Datos />
+        </div>
       </div>
     </section>
   );
