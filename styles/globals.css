@@ -28604,40 +28604,48 @@ body {
   margin-block: 20px 8px;
 }
 
-/* Datos reales en una píldora que rota: los cuatro ítems se apilan en la
-   misma celda de la grilla y cada uno se muestra 3s de un ciclo de 12s. */
+/* Datos reales en una cinta continua, del mismo ancho que el botón: la pista
+   lleva la lista dos veces y se desplaza -50% en bucle; la máscara funde los
+   bordes para que los ítems aparezcan y se desvanezcan. */
 .av4-datos {
-  display: inline-grid;
-  margin-top: 20px;
-  padding: 8px 16px;
-  border: 1px solid rgba(232, 180, 176, 0.3);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(6px);
+  /* width 0 + min-width 100%: ocupa el ancho del bloque pero no lo define.
+     Sin esto la pista (muy larga) estira el bloque y con él al botón. */
+  width: 0;
+  min-width: 100%;
+  overflow: hidden;
+  padding-block: 4px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.av4-datos__pista {
+  display: flex;
+  width: max-content;
+  animation: av4-datos-cinta 22s linear infinite;
+}
+
+.av4-datos:hover .av4-datos__pista {
+  animation-play-state: paused;
+}
+
+.av4-datos__lista {
+  display: flex;
+  flex: none;
 }
 
 .av4-datos li {
-  grid-area: 1 / 1;
   display: flex;
   align-items: center;
   gap: 8px;
+  padding-right: 34px;
   color: var(--av4-gold-soft);
   font-size: 15px;
   white-space: nowrap;
-  opacity: 0;
-  animation: av4-dato 12s infinite;
 }
 
-.av4-datos li:nth-child(2) { animation-delay: 3s; }
-.av4-datos li:nth-child(3) { animation-delay: 6s; }
-.av4-datos li:nth-child(4) { animation-delay: 9s; }
-
-@keyframes av4-dato {
-  0%   { opacity: 0; transform: translateY(6px); }
-  4%   { opacity: 1; transform: translateY(0); }
-  21%  { opacity: 1; transform: translateY(0); }
-  25%  { opacity: 0; transform: translateY(-6px); }
-  100% { opacity: 0; transform: translateY(-6px); }
+@keyframes av4-datos-cinta {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .av4-datos strong {
@@ -28654,18 +28662,25 @@ body {
   content: "· ";
 }
 
-/* Sin animación: los cuatro en fila, uno detrás de otro. */
+/* Sin animación: la cinta queda quieta, sin copia y sin máscara. */
 @media (prefers-reduced-motion: reduce) {
   .av4-datos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
-    border-radius: 16px;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
-  .av4-datos li {
-    opacity: 1;
+  .av4-datos__pista {
+    width: auto;
     animation: none;
+  }
+
+  .av4-datos__lista {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .av4-datos__lista--copia {
+    display: none;
   }
 }
 

@@ -37,17 +37,17 @@ export default function Av4Hero() {
             crear una vida que ames todos los días.
           </p>
 
-          {/* Horarios y CTA comparten ancho: el botón mide lo mismo que la
-              grilla de horarios que tiene encima. */}
+          {/* Horarios, CTA y cinta de datos comparten ancho: el botón y la
+              cinta miden lo mismo que la grilla de horarios. */}
           <div className="av4-hero__accion">
             <Av4Horarios compacto />
 
             {/* Va al pricing, no al checkout: saltar afuera sin ver qué incluye
                 ni cuánto cuesta es la fricción que más rebota. */}
             <Av4Cta href="#av4-precio" />
-          </div>
 
-          <Av4Datos />
+            <Av4Datos />
+          </div>
         </div>
       </div>
     </section>
