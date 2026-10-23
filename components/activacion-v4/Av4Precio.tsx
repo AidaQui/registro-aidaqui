@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { CircleCheck, ShieldCheck, Tag, Clapperboard } from "lucide-react";
+import { CircleCheck, ShieldCheck, Tag, Video } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import Av4Monograma from "@/components/activacion-v4/Av4Monograma";
-import { LINKS, PRECIO } from "@/components/activacion-v4/config";
+import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -15,14 +15,11 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 
 const INCLUYE = [
-  "Experiencia energética en vivo",
-  "Trabajo mental, emocional, físico y energético",
-  "Canalización y acompañamiento",
-  "Experiencia en comunidad",
-  "Grabación completa",
-  "Activación complementaria #1",
-  "Activación complementaria #2",
-  "Preparación previa al 10/10",
+  "Una experiencia guiada vía Zoom",
+  "Prácticas para integrar la experiencia en tu día a día.",
+  "Meditaciones para cultivar el amor, la alegría y la apertura a recibir.",
+  "Mi práctica para trabajar las creencias que te limitan.",
+  "Una canalización para el grupo en directo.",
 ];
 
 /** Miniaturas del portátil: las mismas imágenes de los carteles. */
@@ -54,8 +51,8 @@ export default function Av4Precio() {
         <div className="av4-head" data-reveal>
           <p className="av4-eyebrow">Todo lo que te vamos a entregar</p>
           <h2 id="av4-precio-title" className="av4-title">
-            Asegura tu acceso a la{" "}
-            <em className="av4-brand">Activación</em>
+            <b>¿Qué recibirás</b> por solo{" "}
+            <em className="av4-brand">{monto} euros</em>?
           </h2>
         </div>
 
@@ -103,6 +100,7 @@ export default function Av4Precio() {
               {PRECIO.tachado && (
                 <span className="av4-precio__tachado">{PRECIO.tachado}</span>
               )}
+              <span className="av4-precio__todo">Todo por</span>
               <span className="av4-precio__precio">
                 <span className="av4-precio__monto">{monto}</span>
                 <span className="av4-precio__moneda">{moneda}</span>
@@ -112,7 +110,11 @@ export default function Av4Precio() {
 
             {/* El único botón que sale de la página: aquí se paga, con lo que
                 incluye y cuánto cuesta a la vista. */}
-            <Av4Cta href={LINKS.registro} forma="caja" />
+            <Av4Cta
+              href={LINKS.registro}
+              forma="caja"
+              label="Quiero unirme a la activación"
+            />
 
             <ul className="av4-sellos">
               <li>
@@ -124,8 +126,8 @@ export default function Av4Precio() {
                 Pago único
               </li>
               <li>
-                <Clapperboard size={14} strokeWidth={1.6} aria-hidden="true" />
-                Grabación incluida
+                <Video size={14} strokeWidth={1.6} aria-hidden="true" />
+                {EVENTO.formato}
               </li>
             </ul>
           </div>

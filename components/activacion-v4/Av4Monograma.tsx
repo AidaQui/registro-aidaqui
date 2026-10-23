@@ -1,6 +1,6 @@
 type Props = {
   /** Posición/tamaño: lo decide el CSS según la sección. */
-  variante: "hero" | "video" | "precio" | "faq" | "gracias";
+  variante: "hero" | "ident" | "precio" | "momento" | "gracias";
 };
 
 /**

@@ -46,11 +46,11 @@ export default function Av4Bio() {
     >
       <div className="av4-wrap">
         <div className="av4-head" data-reveal>
-          <p className="av4-eyebrow">Quién te acompaña</p>
+          <p className="av4-eyebrow">Aida Qui</p>
           <h2 id="av4-bio-title" className="av4-title">
-            Conoce
+            ¿Quién guiará
             <br />
-            <b>a</b> <em className="av4-brand">Aida Qui</em>
+            <b>esta</b> <em className="av4-brand">experiencia</em>?
           </h2>
         </div>
       </div>

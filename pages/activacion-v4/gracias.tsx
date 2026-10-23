@@ -5,10 +5,10 @@ export default function GraciasActivacionV4() {
   return (
     <>
       <Head>
-        <title>¡Tu lugar está reservado! — Activación del Ser Multidimensional</title>
+        <title>¡Tu lugar está reservado! — Activación del Corazón y el Poder Interior</title>
         <meta
           name="description"
-          content="Ya eres parte de la Activación del Ser Multidimensional. Únete al grupo de WhatsApp para recibir el enlace de la sesión en vivo."
+          content="Ya eres parte de la Activación del Corazón y el Poder Interior. Únete al grupo de WhatsApp para recibir el enlace de la sesión en vivo."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* noindex: nadie debería llegar aquí desde un buscador sin haber

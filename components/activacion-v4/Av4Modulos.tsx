@@ -5,44 +5,33 @@ import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Sección OSCURA: carrusel horizontal de carteles altos, como los módulos de
- * la referencia. Cada cartel parte una frase de ExperienciaSection de
- * /activacion en una línea pequeña y un título grande en salvia.
+ * Sección OSCURA: la experiencia y "Lo que experimentarás dentro". Los cuatro
+ * carteles son las cuatro frases del copy, partidas en una línea pequeña y un
+ * título grande en salvia.
  *
- * Imágenes de /activacion-v2; a9d6b71518cf7f0361455aa66d945c39.jpg es un
- * archivo nuevo, todavía sin versionar.
+ * Imágenes de /activacion-v2.
  */
 
 const PUNTOS = [
   {
-    linea: "Liberar",
-    titulo: "Carga interna y energética",
+    linea: "Reconectar con",
+    titulo: "Lo que de verdad deseas",
     foto: "/activacion-v2/item6.jpg",
   },
   {
-    linea: "Generar mayor",
-    titulo: "Espacio mental y emocional",
+    linea: "Reconocer",
+    titulo: "Qué te está frenando",
     foto: "/activacion-v2/item5.jpg",
   },
   {
-    linea: "Reconectar con tu",
-    titulo: "Intuición",
+    linea: "Conectar con tu",
+    titulo: "Corazón y tu poder interior",
     foto: "/activacion-v2/item1.jpg",
   },
   {
-    linea: "Aumentar tu capacidad de",
-    titulo: "Integración",
-    foto: "/activacion-v2/a9d6b71518cf7f0361455aa66d945c39.jpg",
-  },
-  {
-    linea: "Regular tu sistema frente a",
-    titulo: "Nuevos cambios",
+    linea: "Dar una dirección concreta a",
+    titulo: "Lo que descubras",
     foto: "/activacion-v2/item3.jpg",
-  },
-  {
-    linea: "Sostener una nueva etapa desde",
-    titulo: "Mayor coherencia",
-    foto: "/activacion-v2/item2.jpg",
   },
 ];
 
@@ -67,16 +56,32 @@ export default function Av4Modulos() {
     >
       <div className="av4-wrap">
         <div className="av4-head" data-reveal>
-          <p className="av4-eyebrow">Lo que vamos a trabajar</p>
+          <p className="av4-eyebrow">La experiencia</p>
           <h2 id="av4-modulos-title" className="av4-title">
-            Todo lo que vas a vivir
-            <br />
-            <b>en la</b> <em className="av4-brand">Activación</em>
+            <b>Una experiencia energética</b> para reconectar con la{" "}
+            <em className="av4-brand">verdad de tu corazón</em>.
           </h2>
+          <p className="av4-texto av4-texto--oscuro">
+            Diseñada para ayudarte a reconocer lo que deseas de verdad,
+            trabajar los miedos que te frenan y activar tu poder interior para
+            crear una vida alineada con tu alma.
+          </p>
+          <p className="av4-lema">
+            Escucha tu verdad. Recupera la confianza para vivirla.
+          </p>
+        </div>
+
+        <div className="av4-head av4-head--sub" data-reveal>
+          <h3 className="av4-subtitle">
+            Lo que <em className="av4-brand">experimentarás</em> dentro
+          </h3>
+          <p className="av4-texto av4-texto--oscuro">
+            A través de la meditación y una activación energética guiada:
+          </p>
         </div>
       </div>
 
-      <div className="av4-carrusel" data-reveal>
+      <div className="av4-carrusel av4-carrusel--cuatro" data-reveal>
         <button
           type="button"
           className="av4-carrusel__flecha av4-carrusel__flecha--izq"
@@ -93,7 +98,7 @@ export default function Av4Modulos() {
                 src={foto}
                 alt=""
                 fill
-                sizes="(max-width: 700px) 60vw, 250px"
+                sizes="(max-width: 700px) 60vw, 300px"
                 className="av4-cover"
               />
               <div className="av4-poster__texto">
@@ -116,13 +121,13 @@ export default function Av4Modulos() {
 
       <div className="av4-wrap">
         <p className="av4-texto av4-texto--oscuro" data-reveal>
-          Una experiencia energética guiada diseñada para trabajar{" "}
-          <strong>profundamente con tu sistema</strong> y acompañarte a
-          integrar el momento que estás atravesando.
+          Llevaremos esa conexión a tu realidad: tus relaciones, tus proyectos
+          y las decisiones que tienes delante para reconocer{" "}
+          <strong>un siguiente paso</strong> y comprometerte contigo para darlo.
         </p>
 
         <div className="av4-cta-fila" data-reveal>
-          <Av4Cta href="#av4-precio" label="Quiero vivir esta activación" />
+          <Av4Cta href="#av4-precio" />
         </div>
       </div>
     </section>

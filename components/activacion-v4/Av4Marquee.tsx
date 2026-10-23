@@ -7,7 +7,7 @@ function Tramo() {
   return (
     <span className="av4-marquee__item">
       <span className="av4-marquee__nombre">ACTIVACIÓN</span>
-      <span className="av4-marquee__serif">del Ser Multidimensional</span>
+      <span className="av4-marquee__serif">del Corazón y el Poder Interior</span>
     </span>
   );
 }
