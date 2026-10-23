@@ -24,10 +24,10 @@ export type Horario = {
 
 /** Se renderiza como texto real: editable, accesible e indexable. */
 export const HORARIOS: Horario[] = [
-  { pais: "España", hora: "19:00 h" },
-  { pais: "Argentina", hora: "15:00 h" },
-  { pais: "México", hora: "12:00 h" },
-  { pais: "Colombia", hora: "13:00 h" },
+  { pais: "España", hora: "19:00 hs" },
+  { pais: "Argentina", hora: "15:00 hs" },
+  { pais: "México", hora: "12:00 hs" },
+  { pais: "Colombia", hora: "13:00 hs" },
 ];
 
 /**

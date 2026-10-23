@@ -1,7 +1,6 @@
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
-import Av4Monograma from "@/components/activacion-v4/Av4Monograma";
 import Av4WhatsAppIcon from "@/components/activacion-v4/Av4WhatsAppIcon";
 import {
   EVENTO,
@@ -26,11 +25,11 @@ export default function Av4Cierre() {
         className="av4-sec av4-sec--oscuro av4-cierre"
         aria-label="Reserva tu plaza"
       >
-        <Av4Monograma variante="gracias" />
+        <div className="av4-cierre__fondo" aria-hidden="true" />
 
         <div className="av4-wrap">
           <div className="av4-ticket" data-reveal>
-            <Av4Lockup tamano="grande" className="av4-lockup--centro" />
+            <Av4Lockup tamano="grande" sello className="av4-lockup--centro" />
 
             <p className="av4-ticket__fecha">
               {EVENTO.fechaCorta} · {principal.hora} {principal.pais}{" "}
@@ -43,10 +42,10 @@ export default function Av4Cierre() {
               {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
             </p>
 
-            <Av4Cta href="#av4-precio" forma="caja" />
+            <Av4Cta href="#av4-precio" tono="claro" />
           </div>
 
-          <p className="av4-despedida" data-reveal>
+          <p className="av4-despedida av4-cursiva" data-reveal>
             Te espero, alma bella.
           </p>
 

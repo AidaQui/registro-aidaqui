@@ -1,5 +1,14 @@
 import Head from "next/head";
+import { Cormorant_Garamond } from "next/font/google";
 import Av4Gracias from "@/components/activacion-v4/Av4Gracias";
+
+const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-av4-serif",
+});
 
 export default function GraciasActivacionV4() {
   return (
@@ -15,7 +24,7 @@ export default function GraciasActivacionV4() {
             pasado por el registro. */}
         <meta name="robots" content="noindex" />
       </Head>
-      <main className="av4">
+      <main className={`av4 ${serif.variable}`}>
         <Av4Gracias />
       </main>
     </>

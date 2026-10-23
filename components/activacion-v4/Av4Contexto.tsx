@@ -1,13 +1,7 @@
-import Image from "next/image";
-import { CircleCheck } from "lucide-react";
-import Av4Notch from "@/components/activacion-v4/Av4Notch";
+import Av4Marco from "@/components/activacion-v4/Av4Marco";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-/**
- * Contexto: collage de tarjetas inclinadas a la izquierda y el texto a la
- * derecha, con la maqueta del bloque "vas a aprender" de la referencia.
- * Copy literal del cliente.
- */
+/** Contexto (layout "O método" de Tayná). Copy literal del cliente. */
 
 const LINEAS = [
   "Relaciones que necesitan una nueva forma.",
@@ -22,49 +16,24 @@ export default function Av4Contexto() {
   return (
     <section
       ref={ref}
-      className="av4-sec av4-rec"
+      className="av4-sec av4-ctx"
       aria-labelledby="av4-contexto-title"
     >
-      <div className="av4-wrap av4-rec__grid">
-        {/* Tarjetas inclinadas y solapadas, como el collage de la referencia. */}
-        <div className="av4-collage" data-reveal="left" aria-hidden="true">
-          <div className="av4-collage__capa av4-collage__capa--3">
-            <Image
-              src="/activacion-v2/item4.jpg"
-              alt=""
-              fill
-              sizes="(max-width: 900px) 60vw, 340px"
-              className="av4-cover"
-            />
-          </div>
-          <div className="av4-collage__capa av4-collage__capa--2">
-            <Image
-              src="/activacion-v2/item2.jpg"
-              alt=""
-              fill
-              sizes="(max-width: 900px) 60vw, 340px"
-              className="av4-cover"
-            />
-          </div>
-          <div className="av4-collage__capa av4-collage__capa--1">
-            <Image
-              src="/activacion-v2/item1.jpg"
-              alt=""
-              fill
-              sizes="(max-width: 900px) 60vw, 340px"
-              className="av4-cover"
-            />
-          </div>
-        </div>
-
-        <div className="av4-rec__copy">
+      <div className="av4-wrap av4-ctx__grid">
+        <div className="av4-ctx__copy">
+          <span className="av4-pildora" data-reveal>
+            Este momento
+          </span>
           <h2
             id="av4-contexto-title"
             className="av4-title av4-title--izq"
             data-reveal="title"
           >
-            <b>En medio de tanto cambio</b>, volver a tu corazón{" "}
-            <em className="av4-brand">cobra un nuevo sentido</em>.
+            <b>En medio de tanto cambio</b>, volver a tu{" "}
+            <span className="av4-sel">
+              <span className="av4-sel__texto">corazón</span>
+            </span>{" "}
+            <span className="av4-acento">cobra un nuevo sentido</span>.
           </h2>
 
           <div className="av4-parrafos" data-reveal>
@@ -87,12 +56,9 @@ export default function Av4Contexto() {
             <p>Quizá también lo estás sintiendo.</p>
           </div>
 
-          <ul className="av4-lista" data-reveal-group data-reveal-fade>
+          <ul className="av4-lineas" data-reveal-group data-reveal-fade>
             {LINEAS.map((t) => (
-              <li key={t}>
-                <CircleCheck size={18} strokeWidth={1.6} aria-hidden="true" />
-                {t}
-              </li>
+              <li key={t}>{t}</li>
             ))}
           </ul>
 
@@ -103,9 +69,17 @@ export default function Av4Contexto() {
             comunidad.
           </p>
         </div>
-      </div>
 
-      <Av4Notch />
+        <div data-reveal="right">
+          <Av4Marco
+            src="/activacion-v4/contexto.jpg"
+            alt="Aida Qui meditando"
+            sizes="(max-width: 900px) 80vw, 480px"
+            bloque="sup-der"
+            proporcion="3 / 4"
+          />
+        </div>
+      </div>
     </section>
   );
 }

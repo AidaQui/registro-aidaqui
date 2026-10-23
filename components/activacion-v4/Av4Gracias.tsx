@@ -2,7 +2,6 @@ import { CalendarDays, Check } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
-import Av4Monograma from "@/components/activacion-v4/Av4Monograma";
 import Av4WhatsAppIcon from "@/components/activacion-v4/Av4WhatsAppIcon";
 import {
   EVENTO,
@@ -19,17 +18,16 @@ export default function Av4Gracias() {
   return (
     <>
       <section className="av4-sec av4-gracias" aria-labelledby="av4-gracias-title">
-        <Av4Monograma variante="gracias" />
 
         <div className="av4-wrap av4-gracias__in">
-          <Av4Lockup className="av4-lockup--centro" />
+          <Av4Lockup sello className="av4-lockup--centro" />
 
           <span className="av4-gracias__check" aria-hidden="true">
             <Check size={30} strokeWidth={2.4} />
           </span>
 
           <h1 id="av4-gracias-title" className="av4-title">
-            Tu lugar está <em className="av4-brand">reservado</em>.
+            Tu lugar está <span className="av4-acento">reservado</span>.
           </h1>
 
           <p className="av4-texto">
@@ -38,7 +36,7 @@ export default function Av4Gracias() {
           </p>
 
           <div className="av4-paso">
-            <p className="av4-eyebrow">Sólo te falta un paso</p>
+            <p className="av4-pildora">Sólo te falta un paso</p>
             <p className="av4-paso__texto">
               Únete al grupo de WhatsApp: allí compartimos el enlace de la
               sesión en vivo y los avisos previos al encuentro.

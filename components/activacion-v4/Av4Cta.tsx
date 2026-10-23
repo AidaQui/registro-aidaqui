@@ -1,22 +1,21 @@
-import { ArrowDownRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { CTA_LABEL, LINKS } from "@/components/activacion-v4/config";
 
 type Props = {
   label?: string;
   /** Un ancla hace scroll en la página; por defecto va al checkout externo. */
   href?: string;
-  /** "pildora" es el botón de las secciones; "caja" el de la tarjeta de precio. */
-  forma?: "pildora" | "caja";
+  /** "claro" para fondos oscuros: píldora crema con texto ciruela. */
+  tono?: "caramelo" | "claro";
   className?: string;
-  /** Sustituye la flecha ↘ (p. ej. por el icono de WhatsApp). */
   icono?: React.ReactNode;
 };
 
-/** CTA bronce con texto en mayúsculas y flecha ↘, como en la referencia. */
+/** Píldora con un botón circular blanco y una flecha dentro, a la derecha. */
 export default function Av4Cta({
   label = CTA_LABEL,
   href = LINKS.registro,
-  forma = "pildora",
+  tono = "caramelo",
   className = "",
   icono,
 }: Props) {
@@ -25,19 +24,13 @@ export default function Av4Cta({
   return (
     <a
       href={href}
-      className={`av4-cta av4-cta--${forma} ${className}`.trim()}
+      className={`av4-cta av4-cta--${tono} ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
     >
-      {icono}
       <span className="av4-cta__label">{label}</span>
-      {!icono && (
-        <ArrowDownRight
-          size={20}
-          strokeWidth={2.2}
-          className="av4-cta__arrow"
-          aria-hidden="true"
-        />
-      )}
+      <span className="av4-cta__circulo" aria-hidden="true">
+        {icono ?? <ArrowUpRight size={20} strokeWidth={1.6} />}
+      </span>
     </a>
   );
 }
