@@ -29210,13 +29210,18 @@ body {
   gap: 18px;
 }
 
+/* Tarjeta = foto vertical completa. Una sombra interna desde abajo oscurece
+   la base para que el número y el texto, blancos, se lean sobre la foto. */
 .av4-intencion {
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  min-height: 470px;
   overflow: hidden;
   border: 1px solid rgba(201, 161, 90, 0.4);
   border-radius: 16px;
-  background: #fff;
+  background: var(--av4-wine);
   box-shadow: 0 24px 40px -30px rgba(74, 20, 38, 0.5);
   transition:
     transform 0.25s ease,
@@ -29229,35 +29234,46 @@ body {
 }
 
 .av4-intencion__foto {
-  position: relative;
-  aspect-ratio: 4 / 3.2;
+  position: absolute;
+  inset: 0;
 }
 
 .av4-intencion__foto img {
-  object-position: 50% 15%;
+  object-position: 50% 20%;
+}
+
+.av4-intencion__foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 -260px 140px -60px rgba(53, 16, 28, 0.95);
+}
+
+.av4-intencion__cab,
+.av4-intencion p {
+  position: relative;
+  z-index: 1;
 }
 
 .av4-intencion__cab {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 22px 0;
+  padding: 0 22px;
 }
 
 .av4-intencion__num {
-  color: var(--av4-gold);
+  color: var(--av4-gold-soft);
   font-size: 40px;
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
 }
 
-.av4-intencion p {
-  padding: 12px 22px 26px;
-  color: var(--av4-ink);
+.av4 .av4-intencion p {
+  padding: 10px 22px 24px;
+  color: #fff;
   font-size: 17px;
   font-weight: 500;
-  line-height: 1.55;
+  line-height: 1.5;
+  text-shadow: 0 1px 8px rgba(53, 16, 28, 0.5);
 }
 
 .av4 p.av4-gran-cierre {
@@ -29830,24 +29846,65 @@ body {
 
 /* ===== Divisor y MacBook vivo ===== */
 
+/* Mismo rosa que las secciones de los lados: sin fondo propio se veía una
+   franja de otro color entre testimonios y "Es momento". */
 .av4-divisor {
+  background: var(--av4-rose-bg);
+}
+
+.av4-divisor__in {
   display: flex;
   align-items: center;
-  gap: 18px;
-  width: min(900px, 100% - 48px);
+  gap: 16px;
+  width: min(760px, 100% - 48px);
   margin: 0 auto;
-  padding: 22px 0;
+  padding: 18px 0;
 }
 
 .av4-divisor__linea {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--av4-gold), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 161, 90, 0.7));
 }
 
-.av4-divisor__sello {
-  width: 52px;
-  height: 52px;
+.av4-divisor__linea:last-child {
+  background: linear-gradient(90deg, rgba(201, 161, 90, 0.7), transparent);
+}
+
+.av4-divisor__flecha {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(201, 161, 90, 0.6);
+  border-radius: 50%;
+  color: var(--av4-gold);
+  animation: av4-divisor-flecha 2.4s ease-in-out infinite;
+}
+
+@keyframes av4-divisor-flecha {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-divisor__flecha {
+    animation: none;
+  }
+}
+
+/* La "A" itálica de Playfair se inclina hacia la izquierda y visualmente se
+   come el espacio: "conAida". Un poco de aire sólo acá. */
+.av4-testi .av4-title .av4-oro {
+  margin-left: 0.12em;
+}
+
+/* Salto de línea sólo en escritorio (titular de testimonios en 2 líneas). */
+@media (max-width: 999px) {
+  .av4-br-web {
+    display: none;
+  }
 }
 
 .av4-testi.av4-sec--rosa {

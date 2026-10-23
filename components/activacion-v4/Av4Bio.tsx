@@ -29,7 +29,7 @@ export default function Av4Bio() {
           </div>
           <div className="av4-collage__a">
             <Image
-              src="/activacion-v4/momento-3.jpg"
+              src="/activacion-v4/momento-2.jpg"
               alt=""
               fill
               sizes="(max-width: 900px) 40vw, 200px"
