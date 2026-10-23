@@ -60,8 +60,8 @@ export default function Av4Momento() {
           </p>
         </div>
 
-        <h3 className="av4-subtitulo av4-subtitulo--centro" data-reveal>
-          Mi intención para este encuentro es:
+        <h3 className="av4-subtitulo av4-subtitulo--centro av4-intencion-titulo" data-reveal>
+          Mi <span className="av4-oro">intención</span> para este encuentro es:
         </h3>
 
         <ol className="av4-intenciones" data-reveal-group data-reveal-fade>
@@ -76,12 +76,15 @@ export default function Av4Momento() {
                   className="av4-cover"
                 />
               </div>
-              <div className="av4-intencion__cab">
+              {/* Bloque de alto fijo en escritorio: número y texto arrancan a
+                  la misma altura en las cuatro tarjetas aunque los textos
+                  tengan largos distintos. */}
+              <div className="av4-intencion__texto">
                 <span className="av4-intencion__num">
                   {String(i + 1).padStart(2, "0")}
                 </span>
+                <p>{texto}</p>
               </div>
-              <p>{texto}</p>
             </li>
           ))}
         </ol>

@@ -91,7 +91,10 @@ export default function TestimonialModal({ testimonial, onClose }: Props) {
           {testimonial.title}
         </h3>
 
-        <div className="testi-modal__body">
+        {/* data-lenis-prevent: con el modal abierto Lenis está detenido y
+            cancela la rueda en toda la página; sin esta marca el testimonio
+            largo no se podía scrollear con el mouse. */}
+        <div className="testi-modal__body" data-lenis-prevent>
           {testimonial.body.split("\n\n").map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}

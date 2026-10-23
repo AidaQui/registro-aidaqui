@@ -31,9 +31,9 @@ export default function Av4Testimonios() {
           <div className="av4-head" data-reveal>
             <Av4Tag>Testimonios</Av4Tag>
             <h2 id="av4-testi-title" className="av4-title">
-              Lo que dicen quienes ya han trabajado{" "}
+              Lo que dicen quienes ya han{" "}
               <br className="av4-br-web" />
-              con <span className="av4-oro">Aida</span>
+              trabajado con <span className="av4-oro">Aida</span>
             </h2>
             <img
               src="/lista-de-espera/testimonios/trutspilot.png"

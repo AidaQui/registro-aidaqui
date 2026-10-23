@@ -28219,6 +28219,21 @@ body {
   margin: 52px 0 30px;
 }
 
+/* "Mi intención para este encuentro es:" marcado: más grande, con la palabra
+   clave en el acento y una línea dorada corta debajo. */
+.av4-intencion-titulo {
+  font-size: clamp(32px, 3.6vw, 46px);
+}
+
+.av4-intencion-titulo::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin: 18px auto 0;
+  background: var(--av4-gold);
+}
+
 .av4-texto {
   max-width: 660px;
   margin: 22px auto 0;
@@ -28264,6 +28279,12 @@ body {
   max-width: 680px;
   margin-inline: auto;
   text-align: center;
+}
+
+/* En "Es momento" los párrafos siguen al titular: el margen del .av4-head
+   (hasta 64px) los separaba demasiado. */
+.av4-momento .av4-head {
+  margin-bottom: 22px;
 }
 
 /* ---- CTA principal ---- */
@@ -28491,7 +28512,7 @@ body {
 .av4-hero__foto {
   position: absolute;
   inset: 0;
-  background: url("/activacion-v4/hero-bg.jpg") 50% center / cover no-repeat;
+  background: url("/registro-v2/hero.webp") 50% center / cover no-repeat;
 }
 
 .av4-hero__foto::after {
@@ -29249,14 +29270,15 @@ body {
   box-shadow: inset 0 -260px 140px -60px rgba(53, 16, 28, 0.95);
 }
 
-.av4-intencion__cab,
-.av4-intencion p {
+/* Mismo alto en las cuatro tarjetas (el del texto más largo) y contenido
+   alineado arriba: números y textos arrancan en la misma línea. */
+.av4-intencion__texto {
   position: relative;
   z-index: 1;
-}
-
-.av4-intencion__cab {
-  padding: 0 22px;
+  display: flex;
+  flex-direction: column;
+  height: 252px;
+  padding: 0 22px 24px;
 }
 
 .av4-intencion__num {
@@ -29268,7 +29290,7 @@ body {
 }
 
 .av4 .av4-intencion p {
-  padding: 10px 22px 24px;
+  padding-top: 10px;
   color: #fff;
   font-size: 17px;
   font-weight: 500;
@@ -29303,7 +29325,15 @@ body {
   inset: 0;
   background:
     linear-gradient(rgba(53, 16, 28, 0.84), rgba(53, 16, 28, 0.94)),
-    url("/activacion-v4/cierre.jpg") center / cover no-repeat;
+    url("/registro-v3/hero.webp") center / cover no-repeat;
+}
+
+@media (max-width: 700px) {
+  .av4-cierre__fondo {
+    background:
+      linear-gradient(rgba(53, 16, 28, 0.84), rgba(53, 16, 28, 0.94)),
+      url("/registro-v3/hero-mobile.webp") center top / cover no-repeat;
+  }
 }
 
 .av4-ticket {
@@ -29451,7 +29481,7 @@ body {
     inset: auto;
     width: 100%;
     height: min(100vw, 560px);
-    background: url("/activacion-v4/hero-bg-mobile.jpg") 60% center / cover no-repeat;
+    background: url("/registro-v2/hero-mobile.webp") 50% top / cover no-repeat;
   }
 
   .av4-hero__foto::after {
@@ -29533,6 +29563,11 @@ body {
   /* En mobile el bloque de horarios + CTA ocupa todo el ancho. */
   .av4-hero__accion {
     width: 100%;
+  }
+
+  /* Una tarjeta por fila: no hay nada que alinear, el bloque toma su alto. */
+  .av4-intencion__texto {
+    height: auto;
   }
 
   /* Dos columnas de ~170px no alcanzan para país y hora en una línea: la
@@ -29844,55 +29879,7 @@ body {
   }
 }
 
-/* ===== Divisor y MacBook vivo ===== */
-
-/* Mismo rosa que las secciones de los lados: sin fondo propio se veía una
-   franja de otro color entre testimonios y "Es momento". */
-.av4-divisor {
-  background: var(--av4-rose-bg);
-}
-
-.av4-divisor__in {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: min(760px, 100% - 48px);
-  margin: 0 auto;
-  padding: 18px 0;
-}
-
-.av4-divisor__linea {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 161, 90, 0.7));
-}
-
-.av4-divisor__linea:last-child {
-  background: linear-gradient(90deg, rgba(201, 161, 90, 0.7), transparent);
-}
-
-.av4-divisor__flecha {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(201, 161, 90, 0.6);
-  border-radius: 50%;
-  color: var(--av4-gold);
-  animation: av4-divisor-flecha 2.4s ease-in-out infinite;
-}
-
-@keyframes av4-divisor-flecha {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(4px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .av4-divisor__flecha {
-    animation: none;
-  }
-}
+/* ===== Titular de testimonios y MacBook vivo ===== */
 
 /* La "A" itálica de Playfair se inclina hacia la izquierda y visualmente se
    come el espacio: "conAida". Un poco de aire sólo acá. */
