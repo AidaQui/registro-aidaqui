@@ -8,7 +8,7 @@ import {
   startSmoothScroll,
   stopSmoothScroll,
 } from "@/components/academia-lista-de-espera/SmoothScroll";
-import { leerAtribucion } from "@/components/sierra-tracking";
+import { leerAtribucion, recordarPersona } from "@/components/sierra-tracking";
 
 type Props = {
   open: boolean;
@@ -74,6 +74,9 @@ export default function WaitlistModal({ open, onClose }: Props) {
       if (!resp.ok) {
         throw new Error("No se pudo completar el registro");
       }
+
+      // Sierra: recuerda a la persona registrada para atribuir sus clics posteriores.
+      recordarPersona(email);
 
       router.push("/lista-de-espera/gracias");
     } catch {

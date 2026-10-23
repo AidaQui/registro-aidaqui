@@ -14,7 +14,7 @@ import MagicRings from "@/components/diagnostico/MagicRings";
 import AdnParticles from "@/components/diagnostico/AdnParticles";
 import AcademiaBadge from "@/components/academia-lista-de-espera/AcademiaBadge";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
-import { leerAtribucion } from "@/components/sierra-tracking";
+import { leerAtribucion, recordarPersona } from "@/components/sierra-tracking";
 import { Dna, Eye, LockKeyhole, Play, Puzzle, Sparkles, Sprout } from "lucide-react";
 
 /*
@@ -217,6 +217,9 @@ export default function LeadMagnetPage() {
 
       const data = await resp.json();
       if (!resp.ok || !data.ok) throw new Error("fallo");
+
+      // Sierra: recuerda a la persona registrada para atribuir sus clics posteriores.
+      recordarPersona(datos.email);
 
       setCodigo(data.patron as Codigo);
       setListo(true);

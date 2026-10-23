@@ -5,7 +5,7 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import MasterclassBadge from "@/components/registro-v2/MasterclassBadge";
 import { evento, VARIANTE } from "@/components/registro-v2/contenido";
-import { leerAtribucion } from "@/components/sierra-tracking";
+import { leerAtribucion, recordarPersona } from "@/components/sierra-tracking";
 
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
 
@@ -67,6 +67,9 @@ export default function HeroSectionMC() {
       if (!resp.ok) {
         throw new Error("No se pudo completar el registro");
       }
+
+      // Sierra: recuerda a la persona registrada para atribuir sus clics posteriores.
+      recordarPersona(email);
 
       // Conversión en GA4, con la variante para comparar landings
       const { gtag } = window as unknown as { gtag?: (...args: unknown[]) => void };
