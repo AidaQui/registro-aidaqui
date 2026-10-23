@@ -59,7 +59,6 @@ export default function ActivacionV4() {
         <Av4Bio />
         <Av4Conector color={ROSA} />
         <Av4Testimonios />
-        <Av4Conector color={ROSA} />
         <Av4Momento />
         <Av4Conector color={VINO} />
         <Av4Cierre />

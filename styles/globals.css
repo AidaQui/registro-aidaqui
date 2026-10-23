@@ -2933,7 +2933,6 @@ a.pearl-btn {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  perspective: 1100px;
 }
 
 /* ---- Card portada desde styled-components a nuestros tokens ---- */
@@ -28089,7 +28088,6 @@ body {
 
 .av4-sec--rosa {
   background:
-    radial-gradient(50% 40% at 50% 0%, rgba(255, 255, 255, 0.6), transparent 70%),
     var(--av4-rose-bg);
 }
 
@@ -28710,8 +28708,20 @@ body {
 .av4-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 20px 0;
 }
+
+/* Carpetas en un cajón: se solapan unos píxeles y cada una queda sobre la
+   anterior. */
+.av4-card {
+  margin-inline: -8px;
+}
+
+.av4-card:nth-child(2) { z-index: 2; }
+.av4-card:nth-child(3) { z-index: 3; }
+.av4-card:nth-child(4) { z-index: 1; }
+.av4-card:nth-child(5) { z-index: 2; }
+.av4-card:nth-child(6) { z-index: 3; }
 
 .av4-card {
   position: relative;
@@ -29149,7 +29159,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 470px;
+  min-height: 480px;
   overflow: hidden;
   border: 1px solid rgba(201, 161, 90, 0.4);
   border-radius: 16px;
@@ -29174,39 +29184,60 @@ body {
   object-position: 50% 20%;
 }
 
+/* Degradado fuerte desde abajo: sirve con cualquier foto vertical. */
 .av4-intencion__foto::after {
   content: "";
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 -260px 140px -60px rgba(53, 16, 28, 0.95);
+  background: linear-gradient(
+    180deg,
+    rgba(53, 16, 28, 0) 28%,
+    rgba(53, 16, 28, 0.55) 58%,
+    rgba(53, 16, 28, 0.95) 100%
+  );
 }
 
-/* Mismo alto en las cuatro tarjetas (el del texto más largo) y contenido
-   alineado arriba: números y textos arrancan en la misma línea. */
+/* Panel de cristal al pie: mismo alto y misma posición en las cuatro. */
 .av4-intencion__texto {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  height: 252px;
-  padding: 0 22px 24px;
+  height: 262px;
+  margin: 12px;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(53, 16, 28, 0.5);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
+/* Etiqueta fina "01 ——". */
 .av4-intencion__num {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: var(--av4-gold-soft);
-  font-size: 40px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   line-height: 1;
-  letter-spacing: -0.04em;
+}
+
+.av4-intencion__num::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--av4-gold), transparent);
 }
 
 .av4 .av4-intencion p {
-  padding-top: 10px;
+  padding-top: 12px;
   color: #fff;
   font-size: 17px;
   font-weight: 500;
   line-height: 1.5;
-  text-shadow: 0 1px 8px rgba(53, 16, 28, 0.5);
 }
 
 .av4 p.av4-gran-cierre {
@@ -29990,7 +30021,7 @@ body {
 /* Forma troquelada: muesca arriba y medias lunas a los lados a la altura de
    la perforación (--y). Las tres máscaras se intersecan. */
 .av4-tk__forma {
-  --y: 176px;
+  --y: 218px;
   position: relative;
   padding: 0 clamp(22px, 3vw, 32px) 0;
   border-radius: 18px;
@@ -30135,24 +30166,9 @@ body {
   perspective: 1100px;
 }
 
-.av4-et__flota {
-  animation: av4-flota 6s ease-in-out infinite;
-}
-
-@keyframes av4-flota {
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.av4-et__inclina {
-  --rx: 0deg;
-  --ry: 0deg;
+.av4-et__sombra {
   filter: drop-shadow(0 34px 40px rgba(0, 0, 0, 0.55))
     drop-shadow(0 0 28px rgba(201, 161, 90, 0.25));
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-  transform-style: preserve-3d;
-  transition: transform 0.18s ease-out;
 }
 
 .av4-et__forma {
@@ -30245,15 +30261,15 @@ body {
   bottom: 0;
   left: -50%;
   width: 40%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.07), transparent);
   transform: skewX(-20deg);
-  animation: av4-barrido 5s ease-in-out infinite 1s;
+  animation: av4-barrido 11s ease-in-out infinite 2s;
   pointer-events: none;
 }
 
 @keyframes av4-barrido {
   0%,
-  55% {
+  60% {
     left: -50%;
   }
   100% {
@@ -30322,9 +30338,6 @@ body {
     margin-bottom: -6px;
   }
 
-  .av4-et__inclina {
-    transform: none !important;
-  }
 }
 
 @media (max-width: 700px) {
@@ -30382,21 +30395,11 @@ body {
   }
 
   .av4-tk__forma {
-    --y: 168px;
+    --y: 212px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .av4-et__flota,
-  .av4-et__brillo {
-    animation: none;
-  }
-
-  .av4-et__inclina {
-    transform: none !important;
-    transition: none;
-  }
-
   .av4-et__brillo {
     display: none;
   }
@@ -30415,26 +30418,149 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Hero mobile: la cara de Aida va arriba, a la vista, y el contenido arranca
-   debajo. Con 92px de foto libre el CTA entra en el primer pantallazo de un
-   390x844 por encima del GradualBlur fijo (7rem) del borde inferior. */
+/* Hero móvil: la cara de Aida entera arriba (la foto mide 1070x1168 y llena
+   el ancho); el logotipo y el contenido arrancan debajo, sobre su pecho, con
+   un degradado a vino. */
 @media (max-width: 640px) {
   .av4-hero__foto {
-    height: 480px;
-    background: url("/registro-v2/hero-mobile.jpg") 50% -36px / 100% auto no-repeat;
+    height: 460px;
+    background: url("/registro-v2/hero-mobile.jpg") 50% 0 / 100% auto no-repeat;
   }
 
   .av4-hero__foto::after {
     background: linear-gradient(
       180deg,
       rgba(74, 20, 38, 0) 0%,
-      rgba(74, 20, 38, 0.15) 22%,
-      rgba(74, 20, 38, 0.7) 42%,
-      var(--av4-wine) 70%
+      rgba(74, 20, 38, 0) 40%,
+      rgba(74, 20, 38, 0.78) 56%,
+      var(--av4-wine) 80%
     );
   }
 
   .av4-hero__shell {
-    padding-top: 92px;
+    padding-top: 204px;
+    padding-bottom: 22px;
   }
+
+  .av4-hero__tag {
+    margin-top: 10px;
+  }
+
+  .av4-hero__title {
+    margin-top: 18px;
+    font-size: clamp(32px, 8.6vw, 38px);
+  }
+
+  .av4 p.av4-hero__lead {
+    margin: 10px 0 14px;
+  }
+
+  .av4-hero__accion {
+    gap: 10px;
+  }
+
+  .av4-horarios--compacto {
+    gap: 6px;
+  }
+
+  .av4-horarios--compacto .av4-horario {
+    padding: 6px 10px;
+    row-gap: 0;
+  }
+
+  .av4-hero__copy .av4-cta {
+    min-height: 56px;
+  }
+}
+
+.av4-tk .av4-lockup__sello {
+  width: 52px;
+  height: 52px;
+}
+
+/* Al pasar el ratón la carpeta sube, pasa al frente y las vecinas se apartan. */
+@media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
+  .av4-card:hover {
+    z-index: 10;
+    transform: translateY(-14px) scale(1.03);
+  }
+
+  .av4-card:nth-child(1):hover ~ .av4-card:nth-child(2),
+  .av4-card:nth-child(2):hover ~ .av4-card:nth-child(3),
+  .av4-card:nth-child(4):hover ~ .av4-card:nth-child(5),
+  .av4-card:nth-child(5):hover ~ .av4-card:nth-child(6),
+  .av4-card:nth-child(2):hover ~ .av4-card:nth-child(3) {
+    transform: translateX(14px);
+  }
+
+  .av4-card:nth-child(2):hover + .av4-card:nth-child(3),
+  .av4-card:nth-child(1):hover + .av4-card:nth-child(2),
+  .av4-card:nth-child(4):hover + .av4-card:nth-child(5),
+  .av4-card:nth-child(5):hover + .av4-card:nth-child(6) {
+    transform: translateX(14px);
+  }
+
+  .av4-card:nth-child(2):has(+ .av4-card:nth-child(3):hover),
+  .av4-card:nth-child(1):has(~ .av4-card:nth-child(2):hover),
+  .av4-card:nth-child(5):has(+ .av4-card:nth-child(6):hover),
+  .av4-card:nth-child(4):has(~ .av4-card:nth-child(5):hover) {
+    transform: translateX(-14px);
+  }
+}
+
+/* Móvil: pila de carpetas. Cada una se queda pegada un poco más abajo que la
+   anterior y las siguientes suben a tapar, dejando a la vista la pestaña y
+   el título. */
+@media (max-width: 700px) {
+  .av4-cards {
+    display: block;
+  }
+
+  .av4-card {
+    position: sticky;
+    top: calc(84px + var(--i, 0) * 66px);
+    margin: 0 0 22px;
+  }
+
+  .av4-card:nth-child(1) { --i: 0; z-index: 1; }
+  .av4-card:nth-child(2) { --i: 1; z-index: 2; }
+  .av4-card:nth-child(3) { --i: 2; z-index: 3; }
+  .av4-card:nth-child(4) { --i: 3; z-index: 4; }
+  .av4-card:nth-child(5) { --i: 4; z-index: 5; }
+  .av4-card:nth-child(6) { --i: 5; z-index: 6; }
+
+  .av4-card:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .av4-card {
+    position: relative;
+    top: auto;
+    margin: 0;
+  }
+
+  .av4-card:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 701px) {
+  .av4-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Es momento: un brillo suave que nace lejos del borde superior. */
+.av4-momento {
+  background:
+    radial-gradient(50% 30% at 50% 22%, rgba(255, 255, 255, 0.45), transparent 75%),
+    var(--av4-rose-bg);
 }

@@ -12,29 +12,13 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * Cierre con una entrada de evento: cuerpo y talón separados por una
- * perforación, con muescas troqueladas. Inclinación 3D que sigue al ratón
- * (sólo con puntero de ratón), brillo que la barre, flotación suave y entrada
- * al hacer scroll. Todo el movimiento se apaga con prefers-reduced-motion.
+ * perforación, con muescas troqueladas. Quieta: sólo entra al hacer scroll y
+ * un brillo muy suave la barre de vez en cuando (se apaga con
+ * prefers-reduced-motion).
  */
 export default function Av4Cierre() {
   const ref = useScrollReveal<HTMLElement>();
   const principal = HORARIOS[0];
-
-  const inclinar = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    el.style.setProperty("--rx", `${(-y * 9).toFixed(2)}deg`);
-    el.style.setProperty("--ry", `${(x * 12).toFixed(2)}deg`);
-  };
-
-  const enderezar = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.style.setProperty("--rx", "0deg");
-    e.currentTarget.style.setProperty("--ry", "0deg");
-  };
 
   return (
     <>
@@ -47,12 +31,8 @@ export default function Av4Cierre() {
 
         <div className="av4-wrap">
           <div className="av4-et" data-reveal>
-            <div className="av4-et__flota">
-              <div
-                className="av4-et__inclina"
-                onPointerMove={inclinar}
-                onPointerLeave={enderezar}
-              >
+            <div className="av4-et__sombra">
+              <div>
                 <div className="av4-et__forma">
                   <div className="av4-et__cuerpo">
                     <Av4Lockup

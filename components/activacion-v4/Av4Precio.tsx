@@ -60,7 +60,7 @@ export default function Av4Precio() {
           <div className="av4-tk" data-reveal>
             <div className="av4-tk__forma">
               <div className="av4-tk__arriba">
-                <Av4Lockup tamano="grande" className="av4-lockup--centro" />
+                <Av4Lockup tamano="grande" sello className="av4-lockup--centro" />
                 <span className="av4-tk__pildora">{PRECIO.nota}</span>
               </div>
 
