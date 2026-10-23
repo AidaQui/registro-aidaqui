@@ -17,12 +17,16 @@ export default function Av4Cta({
   icono,
 }: Props) {
   const interno = href.startsWith("#") || href.startsWith("/");
+  // PixelBridge no es un dominio de checkout que el kit de Sierra reconozca:
+  // se marca a mano para que el panel cuente el clic al checkout.
+  const checkout = href === LINKS.registro;
 
   return (
     <a
       href={href}
       className={`av4-cta ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
+      {...(checkout && { "data-sierra": "checkout", "data-sierra-target": "Checkout 27€" })}
     >
       {icono}
       <span className="av4-cta__label">{label}</span>
