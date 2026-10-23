@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import { EVENTO, HORARIOS } from "@/components/activacion-v4/config";
@@ -10,9 +11,27 @@ import { EVENTO, HORARIOS } from "@/components/activacion-v4/config";
  */
 export default function Av4Macbook() {
   const principal = HORARIOS[0];
+  const ref = useRef<HTMLDivElement>(null);
+
+  /* Dispara la entrada escalonada cuando el portátil entra en pantalla. */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.dataset.vivo = "si";
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div className="av4-mac" aria-hidden="true">
+    <div className="av4-mac" ref={ref} aria-hidden="true">
       <div className="av4-mac__tapa">
         <div className="av4-mac__bisel">
           <span className="av4-mac__camara" />

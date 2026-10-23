@@ -70,7 +70,9 @@ export default function Av4Contexto() {
           </p>
         </div>
 
-        <div className="av4-foto" data-reveal="right">
+        <div className="av4-ctx__foto" data-reveal="right">
+          <div className="av4-foto">
+            <div className="av4-foto__img">
           <Image
             src="/activacion-v4/contexto.jpg"
             alt="Aida Qui meditando"
@@ -78,6 +80,8 @@ export default function Av4Contexto() {
             sizes="(max-width: 900px) 90vw, 520px"
             className="av4-cover"
           />
+          </div>
+          </div>
         </div>
       </div>
     </section>

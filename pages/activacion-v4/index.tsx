@@ -8,7 +8,7 @@ import Av4Precio from "@/components/activacion-v4/Av4Precio";
 import Av4Bio from "@/components/activacion-v4/Av4Bio";
 import Av4Momento from "@/components/activacion-v4/Av4Momento";
 import Av4Testimonios from "@/components/activacion-v4/Av4Testimonios";
-import Av4Mosaico from "@/components/activacion-v4/Av4Mosaico";
+import Av4Divisor from "@/components/activacion-v4/Av4Divisor";
 import Av4Cierre from "@/components/activacion-v4/Av4Cierre";
 import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
@@ -47,7 +47,7 @@ export default function ActivacionV4() {
         <Av4Precio />
         <Av4Bio />
         <Av4Testimonios />
-        <Av4Mosaico />
+        <Av4Divisor />
         <Av4Momento />
         <Av4Cierre />
       </main>

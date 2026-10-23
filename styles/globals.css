@@ -28238,7 +28238,7 @@ body {
 
 .av4 p.av4-lema {
   margin-top: 22px;
-  color: var(--av4-gold-soft);
+  color: #fff;
   font-family: var(--av4-serif);
   font-size: clamp(22px, 2.4vw, 28px);
   font-style: italic;
@@ -28674,11 +28674,13 @@ body {
 .av4-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
 }
 
 .av4-card {
-  padding: 32px 28px 34px;
+  position: relative;
+  overflow: hidden;
+  padding: 24px 24px 24px;
   border: 1px solid rgba(201, 161, 90, 0.35);
   border-radius: 16px;
   background: #fff;
@@ -28696,16 +28698,21 @@ body {
 }
 
 .av4-card h3 {
-  margin-top: 20px;
+  position: relative;
+  margin-top: 0;
+  /* El número de fondo ocupa la esquina superior derecha: el título le deja
+     ese espacio para no pisarse con el trazo. */
+  padding: 16px 84px 0 0;
   color: var(--av4-wine);
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.015em;
 }
 
 .av4-card p {
-  margin-top: 12px;
+  position: relative;
+  margin-top: 8px;
   font-size: 17px;
   line-height: 1.6;
 }
@@ -28781,16 +28788,65 @@ body {
   margin-block: 30px;
 }
 
-.av4-foto {
+.av4-ctx .av4-dos {
+  align-items: start;
+}
+
+.av4-ctx__foto {
   position: relative;
+  align-self: stretch;
+}
+
+/* Manchas difusas detrás del cristal para que el efecto se note sobre el marfil. */
+.av4-ctx__foto::before,
+.av4-ctx__foto::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(46px);
+  pointer-events: none;
+}
+
+.av4-ctx__foto::before {
+  top: 6%;
+  left: -8%;
+  width: 280px;
+  height: 280px;
+  background: rgba(201, 123, 123, 0.55);
+}
+
+.av4-ctx__foto::after {
+  right: -6%;
+  bottom: 12%;
+  width: 260px;
+  height: 260px;
+  background: rgba(201, 161, 90, 0.55);
+}
+
+.av4-foto {
+  position: sticky;
+  top: 100px;
+  z-index: 1;
   width: 100%;
   max-width: 500px;
-  aspect-ratio: 4 / 5;
   margin-inline: auto;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 30px 60px -30px rgba(74, 20, 38, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.av4-foto__img {
+  position: relative;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  border: 6px solid #fff;
-  border-radius: 18px;
-  box-shadow: 0 40px 70px -35px rgba(74, 20, 38, 0.6);
+  border-radius: 14px;
 }
 
 .av4-foto img {
@@ -28950,39 +29006,6 @@ body {
 }
 
 /* ===== MOSAICO ===== */
-
-.av4-mosaico {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  height: clamp(160px, 18vw, 260px);
-  background: var(--av4-wine-deep);
-}
-
-.av4-mosaico__foto {
-  position: relative;
-  overflow: hidden;
-}
-
-.av4-mosaico__foto::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(74, 20, 38, 0.1), rgba(74, 20, 38, 0.35));
-  transition: opacity 0.3s ease;
-}
-
-.av4-mosaico__foto:hover::after {
-  opacity: 0;
-}
-
-.av4-mosaico__foto img {
-  object-position: 50% 25%;
-  transition: transform 0.6s ease;
-}
-
-.av4-mosaico__foto:hover img {
-  transform: scale(1.06);
-}
 
 /* ===== PRECIO ===== */
 
@@ -29430,11 +29453,6 @@ body {
     order: -1;
   }
 
-  .av4-mosaico {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 1fr;
-    height: 360px;
-  }
 }
 
 @media (max-width: 700px) {
@@ -29511,7 +29529,7 @@ body {
   .av4-cta,
   .av4-card,
   .av4-intencion,
-  .av4-mosaico__foto img {
+  .av4-datos li {
     transition: none;
   }
 }
@@ -29519,12 +29537,28 @@ body {
 /* ===== Testimonios, número de tarjeta, modal ===== */
 
 .av4-card .av4-num {
-  display: inline-block;
-  color: var(--av4-gold);
-  font-size: 44px;
+  position: absolute;
+  top: -10px;
+  right: 6px;
+  color: transparent;
+  font-size: 88px;
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
+  -webkit-text-stroke: 1.5px rgba(201, 161, 90, 0.32);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Único motivo: una línea dorada fina sobre el título. */
+.av4-card::before {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 24px;
+  width: 34px;
+  height: 2px;
+  background: var(--av4-gold);
 }
 
 .av4-testi.av4-sec--rosa {
@@ -29777,4 +29811,151 @@ body {
   .av4-marquee {
     overflow-x: auto;
   }
+}
+
+/* ===== Divisor y MacBook vivo ===== */
+
+.av4-divisor {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: min(900px, 100% - 48px);
+  margin: 0 auto;
+  padding: 22px 0;
+}
+
+.av4-divisor__linea {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--av4-gold), transparent);
+}
+
+.av4-divisor__sello {
+  width: 52px;
+  height: 52px;
+}
+
+.av4-testi.av4-sec--rosa {
+  padding-bottom: clamp(40px, 5vw, 64px);
+}
+
+.av4-mac__foto {
+  animation: av4-kenburns 18s ease-in-out infinite alternate;
+}
+
+@keyframes av4-kenburns {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.12) translate(-2%, 1%);
+  }
+}
+
+.av4-mac__vivo i {
+  animation: av4-latido 1.6s ease-in-out infinite;
+}
+
+@keyframes av4-latido {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 77, 94, 0.7);
+  }
+  50% {
+    transform: scale(1.25);
+    box-shadow: 0 0 10px 5px rgba(255, 77, 94, 0.35);
+  }
+}
+
+.av4-mac__slide > * {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.av4-mac[data-vivo="si"] .av4-mac__slide > * {
+  animation: av4-entra 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.av4-mac[data-vivo="si"] .av4-mac__slide > :nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.av4-mac[data-vivo="si"] .av4-mac__slide > :nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.av4-mac[data-vivo="si"] .av4-mac__slide > :nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes av4-entra {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.av4-mac__zoom {
+  position: relative;
+  overflow: hidden;
+}
+
+.av4-mac__zoom::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70%;
+  width: 50%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transform: skewX(-20deg);
+  animation: av4-brillo 3.4s ease-in-out infinite 1.6s;
+}
+
+@keyframes av4-brillo {
+  0%,
+  60% {
+    left: -70%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .av4-foto {
+    position: relative;
+    top: auto;
+  }
+
+  .av4-ctx__foto {
+    align-self: auto;
+  }
+
+  .av4-cards {
+    gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-mac__foto,
+  .av4-mac__vivo i,
+  .av4-mac__zoom::after {
+    animation: none;
+  }
+
+  .av4-mac__slide > * {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+}
+
+.av4-collage__a img {
+  object-position: 50% 12%;
+}
+
+.av4-collage__b img {
+  object-position: 50% 25%;
 }
