@@ -28552,9 +28552,14 @@ body {
   letter-spacing: -0.03em;
 }
 
-.av4-hero .av4-oro {
+/* En el titular del hero el acento va en la misma sans que "Deja de
+   posponer" (la itálica serif se leía mal): sólo cambia el color. */
+.av4 .av4-hero .av4-oro {
   color: var(--av4-gold-soft);
-  font-size: 0.92em;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  letter-spacing: inherit;
 }
 
 .av4 p.av4-hero__lead {
@@ -30410,7 +30415,7 @@ body {
 }
 
 /* Dentro del ticket de precio el texto del botón es el más largo de la
-   página ("Quiero unirme a la activación"): un punto menos para que entre
+   página: un punto menos para que entre siempre
    en una línea en escritorio. */
 .av4-tk .av4-cta {
   gap: 12px;
@@ -30437,39 +30442,41 @@ body {
     );
   }
 
+  /* El alto lo define el contenido: espaciado cómodo en vez de forzar todo
+     en el primer pantallazo, y aire abajo para la cinta de datos y la
+     pestaña del conector que asoma desde la sección siguiente. */
   .av4-hero__shell {
     padding-top: 204px;
-    padding-bottom: 22px;
+    padding-bottom: 72px;
   }
 
   .av4-hero__tag {
-    margin-top: 10px;
+    margin-top: 16px;
   }
 
   .av4-hero__title {
-    margin-top: 18px;
+    margin-top: 20px;
     font-size: clamp(32px, 8.6vw, 38px);
   }
 
   .av4 p.av4-hero__lead {
-    margin: 10px 0 14px;
+    margin: 16px 0 24px;
   }
 
   .av4-hero__accion {
-    gap: 10px;
+    gap: 14px;
   }
 
   .av4-horarios--compacto {
-    gap: 6px;
+    gap: 8px;
   }
 
   .av4-horarios--compacto .av4-horario {
-    padding: 6px 10px;
-    row-gap: 0;
+    padding: 9px 12px;
   }
 
-  .av4-hero__copy .av4-cta {
-    min-height: 56px;
+  .av4-datos {
+    margin-top: 6px;
   }
 }
 
