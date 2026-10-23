@@ -9,11 +9,13 @@ export const config = {
 /**
  * Un mismo webhook recibe las compras de todos los productos de la cuenta de
  * Stripe. Cada compra va al grupo de MailerLite de su producto, y ese grupo
- * dispara su propia automatización (Academia, mail post compra de Activación).
+ * dispara su propia automatización (Academia, mail post compra de Activación,
+ * Activación del Corazón).
  *
- * `STRIPE_ACTIVACION_IDS` admite IDs de producto (prod_…) o de precio
- * (price_…), separados por coma. Lo que no coincide con Activación sigue
- * yendo a Academia, que es el comportamiento que había antes de separar.
+ * `STRIPE_CORAZON_IDS` y `STRIPE_ACTIVACION_IDS` admiten IDs de producto
+ * (prod_…) o de precio (price_…), separados por coma. Se revisa primero
+ * Corazón, después Activación; lo que no coincide con ninguno sigue yendo a
+ * Academia, que es el comportamiento que había antes de separar.
  */
 function parseIdList(value: string | undefined): string[] {
   return (value ?? "")
@@ -25,12 +27,18 @@ function parseIdList(value: string | undefined): string[] {
 type Destino = { producto: string; groupId: string | undefined };
 
 function resolverDestino(idsComprados: string[]): Destino {
-  const idsActivacion = parseIdList(process.env.STRIPE_ACTIVACION_IDS);
-  const esActivacion = idsComprados.some((id) => idsActivacion.includes(id));
+  const compro = (variable: string | undefined) => {
+    const ids = parseIdList(variable);
+    return idsComprados.some((id) => ids.includes(id));
+  };
 
-  return esActivacion
-    ? { producto: "activacion", groupId: process.env.MAILERLITE_ACTIVACION_GROUP_ID }
-    : { producto: "academia", groupId: process.env.MAILERLITE_ACADEMIA_GROUP_ID };
+  if (compro(process.env.STRIPE_CORAZON_IDS)) {
+    return { producto: "corazon", groupId: process.env.MAILERLITE_CORAZON_GROUP_ID };
+  }
+  if (compro(process.env.STRIPE_ACTIVACION_IDS)) {
+    return { producto: "activacion", groupId: process.env.MAILERLITE_ACTIVACION_GROUP_ID };
+  }
+  return { producto: "academia", groupId: process.env.MAILERLITE_ACADEMIA_GROUP_ID };
 }
 
 async function addToMailerLite(
@@ -152,11 +160,16 @@ export default async function handler(
     // cuenten dos veces. Las compras entran por Payment Links (no se crea la
     // sesión en este repo): la landing y el anuncio llegan en
     // client_reference_id, que el kit agrega al link al hacer clic. Si el
-    // botón pasa por un redirector (PixelBridge) no llega, y la compra de
-    // Activación cae en SIERRA_ACTIVACION_PATH. No lanza.
+    // botón pasa por un redirector (PixelBridge) no llega, y la compra cae en
+    // la ruta de su producto: SIERRA_ACTIVACION_PATH, o SIERRA_CORAZON_PATH
+    // (por defecto /activacion-v4, la única landing que lo vende). No lanza.
     const referencia = atribucionDeReferencia(session.client_reference_id);
     const rutaPorProducto =
-      destino.producto === "activacion" ? process.env.SIERRA_ACTIVACION_PATH?.trim() || null : null;
+      destino.producto === "activacion"
+        ? process.env.SIERRA_ACTIVACION_PATH?.trim() || null
+        : destino.producto === "corazon"
+          ? process.env.SIERRA_CORAZON_PATH?.trim() || "/activacion-v4"
+          : null;
     await registrarCompra({
       id: event.id,
       amount: (session.amount_total ?? 0) / 100,
