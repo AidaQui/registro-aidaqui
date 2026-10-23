@@ -2,9 +2,9 @@
  * Fuente única de todo lo que cambia entre ediciones: título, fecha,
  * horarios, precio y enlaces de conversión.
  *
- * PENDIENTE DEL CLIENTE: LINKS.registro, LINKS.soporte y GRUPO_WHATSAPP
- * siguen siendo los de la edición anterior hasta que el cliente confirme los
- * nuevos. Cambiar el registro rompe el embudo, no sólo el botón.
+ * LINKS.registro y GRUPO_WHATSAPP son los de esta edición (confirmados por el
+ * cliente el 23/10/2026). LINKS.soporte sigue siendo el de la edición
+ * anterior. Cambiar el registro rompe el embudo, no sólo el botón.
  */
 
 export const EVENTO = {
@@ -31,16 +31,18 @@ export const HORARIOS: Horario[] = [
 ];
 
 /**
- * Enlaces de conversión. `registro` es el redirector donde viven el registro
- * y su página de gracias.
+ * Enlaces de conversión. `registro` es el redirector de PixelBridge: dispara
+ * el píxel de Meta y manda al link de pago de Stripe de 27€. Como no es un
+ * link de Stripe, la compra no trae el anuncio de origen: el webhook la ubica
+ * en esta landing con SIERRA_ACTIVACION_PATH.
  */
 export const LINKS = {
-  registro: "https://pixelbridge-theta.vercel.app/go",
+  registro: "https://pixelbridge-theta.vercel.app/go/27",
   soporte: "https://wa.link/insiui",
 } as const;
 
 /** Grupo de WhatsApp de la experiencia (página de gracias). */
-export const GRUPO_WHATSAPP = "https://chat.whatsapp.com/CXDD2XxJkJkBE90CEMjZeX";
+export const GRUPO_WHATSAPP = "https://chat.whatsapp.com/G1AN4bv8fnvKr2IVREeY7x";
 
 export const CTA_LABEL = "Quiero reservar mi plaza";
 
