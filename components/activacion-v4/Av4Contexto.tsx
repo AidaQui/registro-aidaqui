@@ -1,7 +1,8 @@
-import Av4Marco from "@/components/activacion-v4/Av4Marco";
+import Image from "next/image";
+import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-/** Contexto (layout "O método" de Tayná). Copy literal del cliente. */
+/** Contexto: texto a la izquierda, foto enmarcada a la derecha. Copy literal. */
 
 const LINEAS = [
   "Relaciones que necesitan una nueva forma.",
@@ -19,21 +20,18 @@ export default function Av4Contexto() {
       className="av4-sec av4-ctx"
       aria-labelledby="av4-contexto-title"
     >
-      <div className="av4-wrap av4-ctx__grid">
-        <div className="av4-ctx__copy">
-          <span className="av4-pildora" data-reveal>
-            Este momento
-          </span>
+      <div className="av4-wrap av4-dos">
+        <div className="av4-dos__copy">
+          <div data-reveal>
+            <Av4Tag>Este momento</Av4Tag>
+          </div>
           <h2
             id="av4-contexto-title"
             className="av4-title av4-title--izq"
-            data-reveal="title"
+            data-reveal
           >
-            <b>En medio de tanto cambio</b>, volver a tu{" "}
-            <span className="av4-sel">
-              <span className="av4-sel__texto">corazón</span>
-            </span>{" "}
-            <span className="av4-acento">cobra un nuevo sentido</span>.
+            En medio de tanto cambio, volver a tu corazón{" "}
+            <span className="av4-oro">cobra un nuevo sentido</span>.
           </h2>
 
           <div className="av4-parrafos" data-reveal>
@@ -56,13 +54,13 @@ export default function Av4Contexto() {
             <p>Quizá también lo estás sintiendo.</p>
           </div>
 
-          <ul className="av4-lineas" data-reveal-group data-reveal-fade>
+          <ul className="av4-borde" data-reveal-group data-reveal-fade>
             {LINEAS.map((t) => (
               <li key={t}>{t}</li>
             ))}
           </ul>
 
-          <p className="av4-texto av4-texto--izq" data-reveal>
+          <p className="av4-parrafos av4-parrafos--solo" data-reveal>
             Volver al corazón es parte de esa transformación:{" "}
             <strong>recuperar una guía interior</strong> desde la que elegir con
             más consciencia lo que queremos crear, individualmente y como
@@ -70,13 +68,13 @@ export default function Av4Contexto() {
           </p>
         </div>
 
-        <div data-reveal="right">
-          <Av4Marco
+        <div className="av4-foto" data-reveal="right">
+          <Image
             src="/activacion-v4/contexto.jpg"
             alt="Aida Qui meditando"
-            sizes="(max-width: 900px) 80vw, 480px"
-            bloque="sup-der"
-            proporcion="3 / 4"
+            fill
+            sizes="(max-width: 900px) 90vw, 480px"
+            className="av4-cover"
           />
         </div>
       </div>

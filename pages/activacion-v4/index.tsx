@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Cormorant_Garamond } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import Av4Hero from "@/components/activacion-v4/Av4Hero";
 import Av4Identificacion from "@/components/activacion-v4/Av4Identificacion";
 import Av4Experiencia from "@/components/activacion-v4/Av4Experiencia";
@@ -11,13 +11,12 @@ import Av4Cierre from "@/components/activacion-v4/Av4Cierre";
 import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
-/* Serif de alto contraste para titulares; sólo se carga en las páginas v4. */
-const serif = Cormorant_Garamond({
+/* Grotesca (la más cercana a Neue Haas Grotesk); sólo se carga en las páginas v4. */
+const sans = Inter_Tight({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["400", "500"],
   display: "swap",
-  variable: "--font-av4-serif",
+  variable: "--font-av4-sans",
 });
 
 export default function ActivacionV4() {
@@ -32,7 +31,7 @@ export default function ActivacionV4() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <SmoothScroll />
-      <main className={`av4 ${serif.variable}`}>
+      <main className={`av4 ${sans.variable}`}>
         <Av4Hero />
         <Av4Identificacion />
         <Av4Experiencia />

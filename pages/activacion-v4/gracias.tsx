@@ -1,13 +1,12 @@
 import Head from "next/head";
-import { Cormorant_Garamond } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import Av4Gracias from "@/components/activacion-v4/Av4Gracias";
 
-const serif = Cormorant_Garamond({
+const sans = Inter_Tight({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["400", "500"],
   display: "swap",
-  variable: "--font-av4-serif",
+  variable: "--font-av4-sans",
 });
 
 export default function GraciasActivacionV4() {
@@ -24,7 +23,7 @@ export default function GraciasActivacionV4() {
             pasado por el registro. */}
         <meta name="robots" content="noindex" />
       </Head>
-      <main className={`av4 ${serif.variable}`}>
+      <main className={`av4 ${sans.variable}`}>
         <Av4Gracias />
       </main>
     </>

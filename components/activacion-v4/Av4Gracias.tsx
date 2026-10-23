@@ -27,7 +27,7 @@ export default function Av4Gracias() {
           </span>
 
           <h1 id="av4-gracias-title" className="av4-title">
-            Tu lugar está <span className="av4-acento">reservado</span>.
+            Tu lugar está <span className="av4-oro">reservado</span>.
           </h1>
 
           <p className="av4-texto">
@@ -36,7 +36,7 @@ export default function Av4Gracias() {
           </p>
 
           <div className="av4-paso">
-            <p className="av4-pildora">Sólo te falta un paso</p>
+            <p className="av4-tag av4-tag--bloque">Sólo te falta un paso</p>
             <p className="av4-paso__texto">
               Únete al grupo de WhatsApp: allí compartimos el enlace de la
               sesión en vivo y los avisos previos al encuentro.

@@ -5,17 +5,14 @@ type Props = {
   label?: string;
   /** Un ancla hace scroll en la página; por defecto va al checkout externo. */
   href?: string;
-  /** "claro" para fondos oscuros: píldora crema con texto ciruela. */
-  tono?: "caramelo" | "claro";
   className?: string;
   icono?: React.ReactNode;
 };
 
-/** Píldora con un botón circular blanco y una flecha dentro, a la derecha. */
+/** Botón rectangular con degradado dorado a crema y flecha ↗. */
 export default function Av4Cta({
   label = CTA_LABEL,
   href = LINKS.registro,
-  tono = "caramelo",
   className = "",
   icono,
 }: Props) {
@@ -24,13 +21,12 @@ export default function Av4Cta({
   return (
     <a
       href={href}
-      className={`av4-cta av4-cta--${tono} ${className}`.trim()}
+      className={`av4-cta ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
     >
-      <span className="av4-cta__label">{label}</span>
-      <span className="av4-cta__circulo" aria-hidden="true">
-        {icono ?? <ArrowUpRight size={20} strokeWidth={1.6} />}
-      </span>
+      {icono}
+      <span>{label}</span>
+      {!icono && <ArrowUpRight size={18} strokeWidth={1.8} aria-hidden="true" />}
     </a>
   );
 }

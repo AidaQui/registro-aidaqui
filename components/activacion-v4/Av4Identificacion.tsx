@@ -1,21 +1,42 @@
-import Av4Divisor from "@/components/activacion-v4/Av4Divisor";
-import Av4Marco from "@/components/activacion-v4/Av4Marco";
-import Av4Sello from "@/components/activacion-v4/Av4Sello";
+import Av4Cta from "@/components/activacion-v4/Av4Cta";
+import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Identificación (layout "Para quem é indicada" de Tayná): titular con
- * palabra resaltada, párrafo y foto con sello a la izquierda; seis tarjetas
- * numeradas a la derecha. Copy literal del cliente.
+ * Identificación: título centrado y seis tarjetas oscuras. Cada afirmación del
+ * cliente se parte en su primera cláusula (título dorado) y el resto (texto
+ * gris), sin añadir palabras. Copy literal.
  */
 
 const SENALES = [
-  "Tu corazón te pide un cambio, pero cuando intentas dar el paso aparecen las dudas.",
-  "Te cuesta reconocer qué quieres de verdad, entre lo que esperan los demás y lo que te has acostumbrado a elegir.",
-  "Sientes que necesitas un cambio, pero el miedo a equivocarte te mantiene en el mismo lugar.",
-  "Buscas respuestas y aprobación fuera, aunque hay algo dentro de ti que lleva tiempo pidiendo ser escuchado.",
-  "Has trabajado mucho en ti, pero sigues aplazando decisiones, callando lo que necesitas o dejando tus deseos para después.",
-  "Quieres vivir con propósito, compartir tus dones y sentir que la vida que estás construyendo tiene sentido para ti.",
+  {
+    titulo: "Tu corazón te pide un cambio,",
+    texto: "pero cuando intentas dar el paso aparecen las dudas.",
+  },
+  {
+    titulo: "Te cuesta reconocer qué quieres de verdad,",
+    texto:
+      "entre lo que esperan los demás y lo que te has acostumbrado a elegir.",
+  },
+  {
+    titulo: "Sientes que necesitas un cambio,",
+    texto: "pero el miedo a equivocarte te mantiene en el mismo lugar.",
+  },
+  {
+    titulo: "Buscas respuestas y aprobación fuera,",
+    texto:
+      "aunque hay algo dentro de ti que lleva tiempo pidiendo ser escuchado.",
+  },
+  {
+    titulo: "Has trabajado mucho en ti,",
+    texto:
+      "pero sigues aplazando decisiones, callando lo que necesitas o dejando tus deseos para después.",
+  },
+  {
+    titulo: "Quieres vivir con propósito,",
+    texto:
+      "compartir tus dones y sentir que la vida que estás construyendo tiene sentido para ti.",
+  },
 ];
 
 export default function Av4Identificacion() {
@@ -27,59 +48,39 @@ export default function Av4Identificacion() {
       className="av4-sec av4-ident"
       aria-labelledby="av4-ident-title"
     >
-      <div className="av4-wrap av4-ident__grid">
-        <div className="av4-ident__izq">
-          <h2 id="av4-ident-title" className="av4-title av4-title--izq" data-reveal="title">
-            <b>Sientes que algo</b> tiene que{" "}
-            <span className="av4-sel">
-              <span className="av4-sel__texto">cambiar</span>
-            </span>
-            .<br />
-            Y ya no quieres seguir ignorándolo.
+      <div className="av4-wrap">
+        <div className="av4-head" data-reveal>
+          <Av4Tag>Para ti</Av4Tag>
+          <h2 id="av4-ident-title" className="av4-title">
+            Sientes que algo tiene que cambiar.
+            <br />
+            <span className="av4-oro">Y ya no quieres seguir ignorándolo.</span>
           </h2>
-
-          <p className="av4-texto av4-texto--izq" data-reveal>
+          <p className="av4-texto">
             Por fuera sigues con tu vida. Pero por dentro reconoces que hay
             decisiones, relaciones o formas de vivir que ya no se corresponden
             con lo que <strong>de verdad quieres</strong>.
           </p>
-
-          <div data-reveal>
-            <Av4Marco
-              src="/activacion-v4/identificacion.jpg"
-              alt="Aida Qui caminando al atardecer"
-              sizes="(max-width: 900px) 80vw, 440px"
-              bloque="ninguno"
-              proporcion="4 / 5"
-              sello={
-                <Av4Sello
-                  className="av4-marco__sello av4-marco__sello--izq"
-                  size={110}
-                />
-              }
-            />
-          </div>
         </div>
 
-        <div className="av4-ident__der">
-          <ol className="av4-tarjetas" data-reveal-group data-reveal-fade>
-            {SENALES.map((texto, i) => (
-              <li key={texto} className="av4-tarjeta">
-                <span className="av4-num">{String(i + 1).padStart(2, "0")}</span>
-                <p>{texto}</p>
-              </li>
-            ))}
-          </ol>
+        <ul className="av4-cards" data-reveal-group data-reveal-fade>
+          {SENALES.map(({ titulo, texto }) => (
+            <li key={titulo} className="av4-card">
+              <h3>{titulo}</h3>
+              <p>{texto}</p>
+            </li>
+          ))}
+        </ul>
 
-          <p className="av4-cierre-texto" data-reveal>
+        <div className="av4-pie-fila" data-reveal>
+          <p>
             Esta activación es un espacio para{" "}
             <strong>reconectar con la verdad de tu corazón</strong> y recuperar
             el poder interior para empezar a actuar en coherencia con ella.
           </p>
+          <Av4Cta href="#av4-precio" />
         </div>
       </div>
-
-      <Av4Divisor />
     </section>
   );
 }

@@ -12,7 +12,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * Tarjeta final tipo entrada, en el estilo de la tarjeta de precio (borde
- * dorado sobre degradado oscuro-oliva), el cierre en serif cursiva y el pie.
+ * dorado sobre degradado oscuro-oliva), el cierre y el pie.
  */
 export default function Av4Cierre() {
   const ref = useScrollReveal<HTMLElement>();
@@ -22,7 +22,7 @@ export default function Av4Cierre() {
     <>
       <section
         ref={ref}
-        className="av4-sec av4-sec--oscuro av4-cierre"
+        className="av4-sec av4-cierre"
         aria-label="Reserva tu plaza"
       >
         <div className="av4-cierre__fondo" aria-hidden="true" />
@@ -42,10 +42,10 @@ export default function Av4Cierre() {
               {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
             </p>
 
-            <Av4Cta href="#av4-precio" tono="claro" />
+            <Av4Cta href="#av4-precio" />
           </div>
 
-          <p className="av4-despedida av4-cursiva" data-reveal>
+          <p className="av4-despedida" data-reveal>
             Te espero, alma bella.
           </p>
 
