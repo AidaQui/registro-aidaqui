@@ -62,13 +62,25 @@ export function scrollSuaveA(id: string) {
  * Lenis toma el scroll de la ventana: si se agrega un carrusel o panel con
  * scroll propio, hay que marcarlo con data-lenis-prevent.
  */
-export default function SmoothScroll() {
+type Props = {
+  /** Segundos que tarda en asentarse cada golpe de rueda. */
+  duration?: number;
+  /** Cuánto avanza cada golpe de rueda (1 = lo nativo). */
+  wheelMultiplier?: number;
+};
+
+/* Los valores por defecto son los de la lista de espera y las landings que la
+   copiaron; una página larga como /activacion-v4 los pide más ágiles. */
+export default function SmoothScroll({
+  duration = 2,
+  wheelMultiplier = 0.65,
+}: Props = {}) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({
-      duration: 2,
-      wheelMultiplier: 0.65,
+      duration,
+      wheelMultiplier,
       anchors: true,
     });
     instance = lenis;
@@ -85,7 +97,7 @@ export default function SmoothScroll() {
       lenis.destroy();
       instance = null;
     };
-  }, []);
+  }, [duration, wheelMultiplier]);
 
   return null;
 }

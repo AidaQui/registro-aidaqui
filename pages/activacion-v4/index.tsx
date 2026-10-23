@@ -38,7 +38,8 @@ export default function ActivacionV4() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <SmoothScroll />
+      {/* Más ágil que el default: la página es larga y con 2s se sentía lenta. */}
+      <SmoothScroll duration={1.1} wheelMultiplier={1} />
       <main className={`av4 ${sans.variable} ${serif.variable}`}>
         <Av4Hero />
         <Av4Identificacion />
