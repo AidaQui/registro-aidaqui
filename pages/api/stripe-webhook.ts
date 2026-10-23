@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
-import { registrarCompra } from "@/lib/sierra";
+import { atribucionDeReferencia, registrarCompra } from "@/lib/sierra";
 
 export const config = {
   api: { bodyParser: false },
@@ -150,8 +150,13 @@ export default async function handler(
 
     // Panel de sierra labs. event.id hace que los reintentos de Stripe no se
     // cuenten dos veces. Las compras entran por Payment Links (no se crea la
-    // sesión en este repo), así que la metadata de atribución suele venir
-    // vacía. No lanza.
+    // sesión en este repo): la landing y el anuncio llegan en
+    // client_reference_id, que el kit agrega al link al hacer clic. Si el
+    // botón pasa por un redirector (PixelBridge) no llega, y la compra de
+    // Activación cae en SIERRA_ACTIVACION_PATH. No lanza.
+    const referencia = atribucionDeReferencia(session.client_reference_id);
+    const rutaPorProducto =
+      destino.producto === "activacion" ? process.env.SIERRA_ACTIVACION_PATH?.trim() || null : null;
     await registrarCompra({
       id: event.id,
       amount: (session.amount_total ?? 0) / 100,
@@ -159,12 +164,12 @@ export default async function handler(
       email: email || null,
       name: name || null,
       phone: session.customer_details?.phone ?? null,
-      path: session.metadata?.sl_path ?? null,
+      path: session.metadata?.sl_path ?? referencia?.path ?? rutaPorProducto,
       utm: {
-        utm_source: session.metadata?.utm_source,
+        utm_source: session.metadata?.utm_source ?? referencia?.utm?.utm_source,
         utm_medium: session.metadata?.utm_medium,
-        utm_campaign: session.metadata?.utm_campaign,
-        utm_content: session.metadata?.utm_content,
+        utm_campaign: session.metadata?.utm_campaign ?? referencia?.utm?.utm_campaign,
+        utm_content: session.metadata?.utm_content ?? referencia?.utm?.utm_content,
       },
     });
   }
