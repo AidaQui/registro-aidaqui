@@ -9,7 +9,7 @@ type Props = {
   icono?: React.ReactNode;
 };
 
-/** Botón rectangular con degradado dorado a crema y flecha ↗. */
+/** CTA principal: dorado con brillo, círculo oscuro con flecha y sombra dorada. */
 export default function Av4Cta({
   label = CTA_LABEL,
   href = LINKS.registro,
@@ -25,8 +25,10 @@ export default function Av4Cta({
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
     >
       {icono}
-      <span>{label}</span>
-      {!icono && <ArrowUpRight size={18} strokeWidth={1.8} aria-hidden="true" />}
+      <span className="av4-cta__label">{label}</span>
+      <span className="av4-cta__circulo" aria-hidden="true">
+        <ArrowUpRight size={22} strokeWidth={2.4} />
+      </span>
     </a>
   );
 }

@@ -4,13 +4,11 @@ import Av4Gracias from "@/components/activacion-v4/Av4Gracias";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-av4-sans",
 });
 const serif = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600"],
   style: ["italic"],
   display: "swap",
   variable: "--font-av4-serif",

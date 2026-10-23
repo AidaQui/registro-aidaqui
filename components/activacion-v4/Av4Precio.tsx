@@ -1,12 +1,4 @@
-import {
-  Brain,
-  CalendarCheck,
-  Flower2,
-  Radio,
-  ShieldCheck,
-  Tag,
-  Video,
-} from "lucide-react";
+import { Check, ShieldCheck, Tag, Video } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
@@ -19,17 +11,11 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 
 const INCLUYE = [
-  { Icono: Video, t: "Una experiencia guiada vía Zoom" },
-  {
-    Icono: CalendarCheck,
-    t: "Prácticas para integrar la experiencia en tu día a día.",
-  },
-  {
-    Icono: Flower2,
-    t: "Meditaciones para cultivar el amor, la alegría y la apertura a recibir.",
-  },
-  { Icono: Brain, t: "Mi práctica para trabajar las creencias que te limitan." },
-  { Icono: Radio, t: "Una canalización para el grupo en directo." },
+  "Una experiencia guiada vía Zoom",
+  "Prácticas para integrar la experiencia en tu día a día.",
+  "Meditaciones para cultivar el amor, la alegría y la apertura a recibir.",
+  "Mi práctica para trabajar las creencias que te limitan.",
+  "Una canalización para el grupo en directo.",
 ];
 
 export default function Av4Precio() {
@@ -70,9 +56,9 @@ export default function Av4Precio() {
             </div>
 
             <ul className="av4-plan__lista">
-              {INCLUYE.map(({ Icono, t }) => (
+              {INCLUYE.map((t) => (
                 <li key={t}>
-                  <Icono size={20} strokeWidth={1.7} aria-hidden="true" />
+                  <Check size={20} strokeWidth={2.4} aria-hidden="true" />
                   {t}
                 </li>
               ))}

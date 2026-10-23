@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Datos from "@/components/activacion-v4/Av4Datos";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
@@ -14,16 +13,7 @@ import { EVENTO } from "@/components/activacion-v4/config";
 export default function Av4Hero() {
   return (
     <section className="av4-hero" aria-labelledby="av4-hero-title">
-      <div className="av4-hero__foto" aria-hidden="true">
-        <Image
-          src="/activacion-v4/hero-aida.jpg"
-          alt=""
-          fill
-          priority
-          sizes="(max-width: 1000px) 100vw, 700px"
-          className="av4-cover"
-        />
-      </div>
+      <div className="av4-hero__foto" aria-hidden="true" />
 
       <div className="av4-hero__shell">
         <div className="av4-hero__copy">

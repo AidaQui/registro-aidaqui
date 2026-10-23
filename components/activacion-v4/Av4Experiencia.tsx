@@ -1,4 +1,3 @@
-import { HeartHandshake, Signpost, Sparkles, Unlock } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Macbook from "@/components/activacion-v4/Av4Macbook";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
@@ -7,10 +6,10 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 /** Experiencia: texto, MacBook y lista con iconos. Copy literal. */
 
 const PUNTOS = [
-  { Icono: Sparkles, t: "Reconectar con lo que de verdad deseas." },
-  { Icono: Unlock, t: "Reconocer qué te está frenando." },
-  { Icono: HeartHandshake, t: "Conectar con tu corazón y tu poder interior." },
-  { Icono: Signpost, t: "Dar una dirección concreta a lo que descubras." },
+  "Reconectar con lo que de verdad deseas.",
+  "Reconocer qué te está frenando.",
+  "Conectar con tu corazón y tu poder interior.",
+  "Dar una dirección concreta a lo que descubras.",
 ];
 
 export default function Av4Experiencia() {
@@ -55,11 +54,8 @@ export default function Av4Experiencia() {
         </p>
 
         <ul className="av4-borde av4-borde--grid" data-reveal-group data-reveal-fade>
-          {PUNTOS.map(({ Icono, t }) => (
+          {PUNTOS.map((t) => (
             <li key={t}>
-              <span className="av4-icono av4-icono--sm">
-                <Icono size={22} strokeWidth={1.7} aria-hidden="true" />
-              </span>
               {t}
             </li>
           ))}

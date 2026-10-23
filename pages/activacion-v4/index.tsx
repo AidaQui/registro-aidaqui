@@ -7,21 +7,21 @@ import Av4Contexto from "@/components/activacion-v4/Av4Contexto";
 import Av4Precio from "@/components/activacion-v4/Av4Precio";
 import Av4Bio from "@/components/activacion-v4/Av4Bio";
 import Av4Momento from "@/components/activacion-v4/Av4Momento";
+import Av4Testimonios from "@/components/activacion-v4/Av4Testimonios";
 import Av4Mosaico from "@/components/activacion-v4/Av4Mosaico";
 import Av4Cierre from "@/components/activacion-v4/Av4Cierre";
 import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
-/* Fuentes sólo para las páginas v4: sans para el texto y serif cursiva para los acentos. */
+/* Fuentes sólo para las páginas v4: sans para el texto y serif cursiva para los acentos.
+   Sin `weight`: son variables, y listar pesos las pide como estáticas (ver _app.tsx). */
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-av4-sans",
 });
 const serif = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600"],
   style: ["italic"],
   display: "swap",
   variable: "--font-av4-serif",
@@ -46,6 +46,7 @@ export default function ActivacionV4() {
         <Av4Contexto />
         <Av4Precio />
         <Av4Bio />
+        <Av4Testimonios />
         <Av4Mosaico />
         <Av4Momento />
         <Av4Cierre />

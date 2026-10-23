@@ -28266,51 +28266,109 @@ body {
   text-align: center;
 }
 
-/* ---- CTA: rectangular, degradado dorado ---- */
+/* ---- CTA principal ---- */
 
 .av4-cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 18px;
   max-width: 100%;
-  min-height: 56px;
-  padding: 0 32px;
-  border-radius: 8px;
-  background: linear-gradient(100deg, #c9a15a 0%, #e3c48a 100%);
+  min-height: 66px;
+  padding: 0 12px 0 34px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(105deg, #b8873a 0%, #e8c677 38%, #f6dfa3 55%, #d9aa55 100%);
   color: #2b1a1f;
   font-family: var(--av4-sans);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-align: left;
   text-decoration: none;
   text-transform: uppercase;
-  box-shadow: 0 14px 28px -14px rgba(201, 161, 90, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(255, 236, 190, 0.5) inset,
+    0 18px 38px -12px rgba(224, 170, 70, 0.75),
+    0 0 40px -6px rgba(227, 196, 138, 0.55);
   transition:
     transform 0.25s ease,
-    filter 0.25s ease;
+    box-shadow 0.25s ease;
 }
 
 .av4 a.av4-cta {
   color: #2b1a1f;
 }
 
+/* Barrido de brillo. */
+.av4-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: skewX(-20deg);
+  animation: av4-brillo 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes av4-brillo {
+  0%,
+  55% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
 .av4-cta:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.06);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(255, 236, 190, 0.7) inset,
+    0 26px 46px -12px rgba(224, 170, 70, 0.9),
+    0 0 56px -4px rgba(227, 196, 138, 0.8);
 }
 
 .av4-cta:focus-visible {
-  outline: 3px solid var(--av4-rose);
+  outline: 3px solid #fff;
   outline-offset: 3px;
 }
 
-.av4-cta svg {
+.av4-cta__label {
+  position: relative;
+  z-index: 1;
+}
+
+.av4-cta__circulo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
   flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--av4-wine);
+  color: var(--av4-gold-soft);
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s ease;
+}
+
+.av4-cta:hover .av4-cta__circulo {
+  transform: rotate(45deg);
 }
 
 .av4-cta--bloque {
+  display: flex;
+  width: 100%;
+}
+
+/* En el hero la CTA ocupa todo el ancho de la columna de texto. */
+.av4-hero__copy .av4-cta {
   display: flex;
   width: 100%;
 }
@@ -28433,10 +28491,8 @@ body {
 
 .av4-hero__foto {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: min(56%, 800px);
+  inset: 0;
+  background: url("/activacion-v4/hero-bg.jpg") 50% center / cover no-repeat;
 }
 
 .av4-hero__foto::after {
@@ -28444,14 +28500,8 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, var(--av4-wine) 0%, rgba(74, 20, 38, 0.6) 30%, rgba(74, 20, 38, 0) 68%),
-    linear-gradient(0deg, var(--av4-wine) 0%, rgba(74, 20, 38, 0) 26%),
-    radial-gradient(90% 90% at 60% 40%, transparent 60%, rgba(53, 16, 28, 0.6) 100%);
-}
-
-.av4-hero__foto img {
-  object-position: 50% 18%;
-  filter: saturate(1.05) contrast(1.02);
+    linear-gradient(90deg, rgba(74, 20, 38, 0.97) 0%, rgba(74, 20, 38, 0.9) 34%, rgba(74, 20, 38, 0.35) 62%, rgba(74, 20, 38, 0) 82%),
+    linear-gradient(0deg, var(--av4-wine) 0%, rgba(74, 20, 38, 0) 22%);
 }
 
 .av4-hero__shell {
@@ -29032,9 +29082,11 @@ body {
 }
 
 .av4 .av4-plan .av4-cta {
-  background: var(--av4-wine);
+  box-shadow: 0 14px 28px -12px rgba(43, 26, 31, 0.6);
+}
+
+.av4 .av4-plan .av4-cta .av4-cta__circulo {
   color: var(--av4-gold-soft);
-  box-shadow: none;
 }
 
 .av4 .av4-plan .av4-cta span {
@@ -29334,8 +29386,10 @@ body {
 @media (max-width: 1000px) {
   .av4-hero__foto {
     position: relative;
+    inset: auto;
     width: 100%;
-    height: min(110vw, 600px);
+    height: min(100vw, 560px);
+    background: url("/activacion-v4/hero-bg-mobile.jpg") 60% center / cover no-repeat;
   }
 
   .av4-hero__foto::after {
@@ -29445,5 +29499,268 @@ body {
   .av4-datos li,
   .av4-mosaico__foto img {
     transition: none;
+  }
+}
+
+/* ===== Testimonios, número de tarjeta, modal ===== */
+
+.av4-card .av4-num {
+  display: inline-block;
+  color: var(--av4-gold);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.av4-testi.av4-sec--rosa {
+  background: var(--av4-rose-bg);
+}
+
+.av4-testi__trust {
+  width: min(240px, 60vw);
+  height: auto;
+  margin-top: 26px;
+  border-radius: 14px;
+}
+
+.av4-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 0 12px;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.av4-marquee::before,
+.av4-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(40px, 10vw, 180px);
+  pointer-events: none;
+}
+
+.av4-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #f5e6e1 10%, rgba(245, 230, 225, 0));
+}
+
+.av4-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #f5e6e1 10%, rgba(245, 230, 225, 0));
+}
+
+.av4-marquee__track {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+.av4-tcard {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: clamp(290px, 30vw, 380px);
+  height: 380px;
+  padding: 26px 28px;
+  border: 1px solid rgba(201, 161, 90, 0.4);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 36px -28px rgba(74, 20, 38, 0.5);
+}
+
+.av4-tcard__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.av4-tcard__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--av4-wine-2), var(--av4-wine-deep));
+  color: var(--av4-gold-soft);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.av4-tcard__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.av4-tcard__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.av4-tcard__name {
+  color: var(--av4-wine);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.av4-tcard__meta {
+  color: var(--av4-ink-soft);
+  font-size: 14px;
+}
+
+.av4-tcard__stars {
+  width: 116px;
+  height: auto;
+}
+
+.av4-tcard__title {
+  margin: 0;
+  color: var(--av4-ink);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.av4 .av4-tcard__text {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--av4-ink-soft);
+  font-size: 16px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  white-space: pre-line;
+}
+
+.av4-tcard__more {
+  align-self: flex-start;
+  padding: 10px 22px;
+  border: 1px solid var(--av4-gold);
+  border-radius: 8px;
+  background: rgba(201, 161, 90, 0.14);
+  color: var(--av4-wine);
+  cursor: pointer;
+  font-family: var(--av4-sans);
+  font-size: 15px;
+  font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.av4-tcard__more:hover {
+  background: rgba(201, 161, 90, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Pop-up reutilizado: sólo se reviste con la paleta v4. */
+.av4-modal-scope .testi-modal {
+  background: rgba(53, 16, 28, 0.7);
+  font-family: var(--font-av4-sans), "Plus Jakarta Sans", Arial, sans-serif;
+}
+
+.av4-modal-scope .testi-modal__panel {
+  border-color: rgba(201, 161, 90, 0.6);
+  background: #fbf6f1;
+  box-shadow: 0 30px 70px rgba(53, 16, 28, 0.55);
+}
+
+.av4-modal-scope .testi-card__avatar {
+  background: linear-gradient(160deg, #5b1a2e, #35101c);
+  color: #e3c48a;
+  font-family: inherit;
+}
+
+.av4-modal-scope .testi-card__name,
+.av4-modal-scope .testi-modal__title {
+  color: #4a1426;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.av4-modal-scope .testi-card__meta {
+  color: #5a4249;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.av4-modal-scope .testi-modal__body p {
+  color: #2b1a1f;
+  font-family: inherit;
+  font-size: 17px;
+}
+
+.av4-modal-scope .testi-modal__close {
+  background: rgba(74, 20, 38, 0.08);
+  color: #4a1426;
+}
+
+@media (max-width: 700px) {
+  .av4-tcard {
+    width: clamp(270px, 80vw, 330px);
+    height: 400px;
+    padding: 22px;
+  }
+
+  /* A 17px "QUIERO RESERVAR MI PLAZA" se partía en dos líneas a 390px. */
+  .av4-cta {
+    gap: 12px;
+    padding-left: 20px;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+  }
+
+  .av4-cta__circulo {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Dentro de tarjetas el botón es más angosto: se le devuelve ancho
+     achicando el padding de la tarjeta, no el texto. */
+  .av4-pie-fila {
+    padding: 24px 18px;
+  }
+
+  .av4-plan__cuerpo {
+    padding-inline: 18px;
+  }
+
+  .av4-ticket {
+    padding-inline: 18px;
+  }
+
+  .av4-pie-fila .av4-cta,
+  .av4-plan .av4-cta,
+  .av4-ticket .av4-cta {
+    padding-left: 16px;
+    padding-right: 10px;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-cta::before {
+    animation: none;
+    display: none;
+  }
+
+  .av4-marquee {
+    overflow-x: auto;
   }
 }
