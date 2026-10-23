@@ -8,6 +8,7 @@ import Av4Precio from "@/components/activacion-v4/Av4Precio";
 import Av4Bio from "@/components/activacion-v4/Av4Bio";
 import Av4Momento from "@/components/activacion-v4/Av4Momento";
 import Av4Testimonios from "@/components/activacion-v4/Av4Testimonios";
+import Av4Conector from "@/components/activacion-v4/Av4Conector";
 import Av4Cierre from "@/components/activacion-v4/Av4Cierre";
 import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
@@ -26,6 +27,11 @@ const serif = Playfair_Display({
   variable: "--font-av4-serif",
 });
 
+/* Fondos exactos de cada sección (ver .av4 en globals.css). */
+const MARFIL = "#fbf6f1";
+const ROSA = "#f5e6e1";
+const VINO = "#4a1426";
+
 export default function ActivacionV4() {
   return (
     <>
@@ -41,13 +47,21 @@ export default function ActivacionV4() {
       <SmoothScroll duration={1.1} wheelMultiplier={1} />
       <main className={`av4 ${sans.variable} ${serif.variable}`}>
         <Av4Hero />
+        <Av4Conector color={MARFIL} />
         <Av4Identificacion />
+        <Av4Conector color={VINO} variante="onda" />
         <Av4Experiencia />
+        <Av4Conector color={MARFIL} />
         <Av4Contexto />
+        <Av4Conector color={VINO} />
         <Av4Precio />
+        <Av4Conector color={MARFIL} variante="onda" />
         <Av4Bio />
+        <Av4Conector color={ROSA} />
         <Av4Testimonios />
+        <Av4Conector color={ROSA} />
         <Av4Momento />
+        <Av4Conector color={VINO} />
         <Av4Cierre />
       </main>
       <GradualBlur height="7rem" strength={2} divCount={6} />

@@ -1,13 +1,14 @@
 import { Check, ShieldCheck, Tag, Video } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
-import Av4Sello from "@/components/activacion-v4/Av4Sello";
+import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Tarjeta única de precio, como la del plan anual de la referencia: cabecera
- * beige, fondo dorado y filas con borde. Sin segundo plan, sin tachado y sin
- * garantía.
+ * Precio con el diseño de la referencia: lo incluido a ambos lados y, en el
+ * centro, una entrada troquelada (muesca arriba, medias lunas a los lados,
+ * línea de perforación y código de barras decorativo). Sin logos de pago
+ * inventados: sólo lo que es cierto. En móvil la entrada va primero.
  */
 
 const INCLUYE = [
@@ -17,6 +18,21 @@ const INCLUYE = [
   "Mi práctica para trabajar las creencias que te limitan.",
   "Una canalización para el grupo en directo.",
 ];
+
+function Lista({ items, lado }: { items: string[]; lado: "izq" | "der" }) {
+  return (
+    <ul className={`av4-pr__lado av4-pr__lado--${lado}`} data-reveal-group data-reveal-fade>
+      {items.map((t) => (
+        <li key={t}>
+          <span className="av4-pr__ico" aria-hidden="true">
+            <Check size={18} strokeWidth={2.6} />
+          </span>
+          <span>{t}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function Av4Precio() {
   const ref = useScrollReveal<HTMLElement>();
@@ -38,55 +54,57 @@ export default function Av4Precio() {
           </h2>
         </div>
 
-        <div className="av4-plan" data-reveal>
-          <Av4Sello className="av4-plan__sello" size={110} />
-          <p className="av4-plan__cab">ACTIVACIÓN DEL CORAZÓN · PAGO ÚNICO</p>
+        <div className="av4-pr">
+          <Lista items={INCLUYE.slice(0, 3)} lado="izq" />
 
-          <div className="av4-plan__cuerpo">
-            <div className="av4-plan__cifra">
-              {PRECIO.tachado && (
-                <span className="av4-plan__tachado">{PRECIO.tachado}</span>
-              )}
-              <span className="av4-plan__todo">Todo por</span>
-              <span className="av4-plan__precio">
-                <span className="av4-plan__monto">{monto}</span>
-                <span className="av4-plan__moneda">{moneda}</span>
-              </span>
-              <span className="av4-plan__nota">{PRECIO.nota}</span>
+          <div className="av4-tk" data-reveal>
+            <div className="av4-tk__forma">
+              <div className="av4-tk__arriba">
+                <Av4Lockup tamano="grande" className="av4-lockup--centro" />
+                <span className="av4-tk__pildora">{PRECIO.nota}</span>
+              </div>
+
+              <div className="av4-tk__perf" aria-hidden="true" />
+
+              <div className="av4-tk__abajo">
+                {PRECIO.tachado && (
+                  <span className="av4-tk__tachado">{PRECIO.tachado}</span>
+                )}
+                <span className="av4-tk__todo">Todo por</span>
+                <span className="av4-tk__precio">
+                  <span className="av4-tk__monto">{monto}</span>
+                  <span className="av4-tk__moneda">{moneda}</span>
+                </span>
+
+                {/* El único botón que sale de la página: aquí se paga, con lo
+                    que incluye y cuánto cuesta a la vista. */}
+                <Av4Cta
+                  href={LINKS.registro}
+                  label="Quiero unirme a la activación"
+                  className="av4-cta--bloque"
+                />
+
+                <ul className="av4-sellos">
+                  <li>
+                    <ShieldCheck size={15} strokeWidth={1.8} aria-hidden="true" />
+                    Compra segura
+                  </li>
+                  <li>
+                    <Tag size={15} strokeWidth={1.8} aria-hidden="true" />
+                    Pago único
+                  </li>
+                  <li>
+                    <Video size={15} strokeWidth={1.8} aria-hidden="true" />
+                    {EVENTO.formato}
+                  </li>
+                </ul>
+              </div>
+
+              <div className="av4-barras" aria-hidden="true" />
             </div>
-
-            <ul className="av4-plan__lista">
-              {INCLUYE.map((t) => (
-                <li key={t}>
-                  <Check size={20} strokeWidth={2.4} aria-hidden="true" />
-                  {t}
-                </li>
-              ))}
-            </ul>
-
-            {/* El único botón que sale de la página: aquí se paga, con lo que
-                incluye y cuánto cuesta a la vista. */}
-            <Av4Cta
-              href={LINKS.registro}
-              label="Quiero unirme a la activación"
-              className="av4-cta--bloque"
-            />
-
-            <ul className="av4-sellos">
-              <li>
-                <ShieldCheck size={14} strokeWidth={1.8} aria-hidden="true" />
-                Compra segura
-              </li>
-              <li>
-                <Tag size={14} strokeWidth={1.8} aria-hidden="true" />
-                Pago único
-              </li>
-              <li>
-                <Video size={14} strokeWidth={1.8} aria-hidden="true" />
-                {EVENTO.formato}
-              </li>
-            </ul>
           </div>
+
+          <Lista items={INCLUYE.slice(3)} lado="der" />
         </div>
       </div>
     </section>

@@ -28082,7 +28082,7 @@ body {
 
 .av4-sec--claro {
   background:
-    radial-gradient(45% 40% at 90% 0%, rgba(232, 180, 176, 0.28), transparent 70%),
+    radial-gradient(40% 30% at 90% 30%, rgba(232, 180, 176, 0.28), transparent 70%),
     radial-gradient(40% 40% at 0% 100%, rgba(201, 161, 90, 0.14), transparent 70%),
     var(--av4-ivory);
 }
@@ -28100,7 +28100,7 @@ body {
   --t-accent: var(--av4-gold-soft);
   color: #fff;
   background:
-    radial-gradient(55% 50% at 85% 0%, rgba(201, 123, 123, 0.3), transparent 70%),
+    radial-gradient(45% 36% at 85% 40%, rgba(201, 123, 123, 0.3), transparent 70%),
     radial-gradient(45% 45% at 5% 100%, rgba(201, 161, 90, 0.18), transparent 70%),
     var(--av4-wine);
 }
@@ -28715,22 +28715,48 @@ body {
 
 .av4-card {
   position: relative;
-  overflow: hidden;
-  padding: 24px 24px 24px;
-  border: 1px solid rgba(201, 161, 90, 0.35);
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 20px 40px -30px rgba(74, 20, 38, 0.45);
+  padding-top: 26px;
+  filter: drop-shadow(0 18px 22px rgba(74, 20, 38, 0.16));
   transition:
     transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+    filter 0.25s ease;
+}
+
+/* Pestaña de carpeta: sobresale por arriba a la izquierda y se funde con el
+   cuerpo; lleva el único motivo (la línea dorada). */
+.av4-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 104px;
+  height: 27px;
+  border: 1px solid rgba(201, 161, 90, 0.5);
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  background:
+    linear-gradient(var(--av4-gold), var(--av4-gold)) 50% 13px / 34px 2px no-repeat,
+    #fff;
+}
+
+.av4-card__in {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 24px 24px;
+  border: 1px solid rgba(201, 161, 90, 0.5);
+  border-radius: 0 16px 16px 16px;
+  background: #fff;
 }
 
 .av4-card:hover {
   transform: translateY(-6px);
+  filter: drop-shadow(0 26px 28px rgba(74, 20, 38, 0.28));
+}
+
+.av4-card:hover::before,
+.av4-card:hover .av4-card__in {
   border-color: var(--av4-gold);
-  box-shadow: 0 30px 50px -28px rgba(74, 20, 38, 0.55);
 }
 
 .av4-card h3 {
@@ -28738,7 +28764,7 @@ body {
   margin-top: 0;
   /* El número de fondo ocupa la esquina superior derecha: el título le deja
      ese espacio para no pisarse con el trazo. */
-  padding: 16px 84px 0 0;
+  padding: 0 84px 0 0;
   color: var(--av4-wine);
   font-size: 21px;
   font-weight: 700;
@@ -29045,121 +29071,6 @@ body {
 
 /* ===== PRECIO ===== */
 
-.av4-plan {
-  position: relative;
-  max-width: 500px;
-  margin-inline: auto;
-  border-radius: 16px;
-  background: linear-gradient(180deg, #f1dcab 0%, #c9a15a 100%);
-  box-shadow: 0 50px 90px -40px rgba(0, 0, 0, 0.7);
-  color: #2b1a1f;
-}
-
-.av4-plan__sello {
-  position: absolute;
-  top: -62px;
-  right: -36px;
-  z-index: 3;
-  width: 104px;
-  height: 104px;
-}
-
-.av4 p.av4-plan__cab {
-  font-size: 16px;
-  padding: 16px 20px;
-  border-radius: 16px 16px 0 0;
-  background: var(--av4-ivory);
-  color: var(--av4-wine);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-align: center;
-}
-
-.av4 .av4-plan p,
-.av4 .av4-plan li,
-.av4 .av4-plan span {
-  color: #2b1a1f;
-}
-
-.av4-plan__cuerpo {
-  padding: 30px 30px 32px;
-}
-
-.av4-plan__cifra {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 22px;
-  border-bottom: 1px solid rgba(43, 26, 31, 0.25);
-}
-
-.av4-plan__todo,
-.av4-plan__nota {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.av4-plan__precio {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 4px;
-  line-height: 1;
-}
-
-.av4-plan__monto {
-  margin-block: 6px;
-  font-size: clamp(68px, 7vw, 88px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-
-.av4-plan__moneda {
-  margin-top: 12px;
-  font-size: 32px;
-  font-weight: 700;
-}
-
-.av4-plan__lista {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 24px 0 26px;
-}
-
-.av4-plan__lista li {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 12px 16px;
-  border: 1px solid rgba(43, 26, 31, 0.2);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.28);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.45;
-}
-
-.av4-plan__lista svg {
-  flex: none;
-  margin-top: 1px;
-  color: var(--av4-wine);
-}
-
-.av4 .av4-plan .av4-cta {
-  box-shadow: 0 14px 28px -12px rgba(43, 26, 31, 0.6);
-}
-
-.av4 .av4-plan .av4-cta .av4-cta__circulo {
-  color: var(--av4-gold-soft);
-}
-
-.av4 .av4-plan .av4-cta span {
-  color: inherit;
-}
-
 .av4-sellos {
   display: flex;
   flex-wrap: wrap;
@@ -29336,36 +29247,6 @@ body {
   }
 }
 
-.av4-ticket {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 540px;
-  margin-inline: auto;
-  padding: clamp(30px, 4vw, 46px);
-  border: 1px solid rgba(201, 161, 90, 0.7);
-  border-radius: 16px;
-  background: rgba(74, 20, 38, 0.82);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9);
-}
-
-.av4 p.av4-ticket__fecha {
-  margin-top: 24px;
-  color: #fff;
-  font-size: 19px;
-  font-weight: 700;
-}
-
-.av4 p.av4-ticket__formato {
-  margin: 16px 0 26px;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 17px;
-  font-weight: 500;
-}
-
 .av4 p.av4-despedida {
   position: relative;
   margin-top: 36px;
@@ -29476,27 +29357,61 @@ body {
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 1000px) {
+  /* Móvil: la foto va detrás de la parte alta del hero (Aida a la derecha)
+     y se funde con el vino; el contenido sube para que todo entre en la
+     primera pantalla. */
   .av4-hero__foto {
-    position: relative;
-    inset: auto;
+    position: absolute;
+    inset: 0 0 auto 0;
     width: 100%;
-    height: min(100vw, 560px);
-    background: url("/registro-v2/hero-mobile.webp") 50% top / cover no-repeat;
+    height: 420px;
+    background: url("/lista-de-espera/hero-mobile.jpg") 62px -6px / max(135%, 520px) auto no-repeat;
   }
 
   .av4-hero__foto::after {
     background:
-      linear-gradient(0deg, var(--av4-wine) 0%, rgba(74, 20, 38, 0) 45%),
-      radial-gradient(90% 90% at 50% 40%, transparent 60%, rgba(53, 16, 28, 0.6) 100%);
+      linear-gradient(90deg, rgba(74, 20, 38, 0.92) 0%, rgba(74, 20, 38, 0.55) 45%, rgba(74, 20, 38, 0.1) 80%),
+      linear-gradient(180deg, rgba(74, 20, 38, 0.2) 0%, rgba(74, 20, 38, 0.55) 48%, var(--av4-wine) 86%);
   }
 
   .av4-hero__shell {
     min-height: 0;
-    margin-top: -100px;
-    padding-block: 0 50px;
+    margin-top: 0;
+    padding-block: 22px 40px;
     width: min(640px, 100% - 40px);
   }
 
+  .av4-hero__tag {
+    margin-top: 16px;
+  }
+
+  .av4-hero .av4-tag {
+    padding: 8px 12px 8px 22px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .av4-hero__title {
+    margin-top: 40px;
+    font-size: clamp(34px, 9.4vw, 44px);
+  }
+
+  .av4 p.av4-hero__lead {
+    margin: 12px 0 16px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .av4-hero__accion {
+    gap: 12px;
+  }
+
+  .av4-hero__copy .av4-cta {
+    min-height: 60px;
+  }
+}
+
+@media (max-width: 1000px) {
   .av4-dos,
   .av4-bio .av4-dos {
     grid-template-columns: 1fr;
@@ -29544,16 +29459,6 @@ body {
     align-items: stretch;
     gap: 22px;
     padding: 26px 22px;
-  }
-
-  .av4-plan__sello {
-    right: -8px;
-    width: 84px;
-    height: 84px;
-  }
-
-  .av4-plan__cuerpo {
-    padding-inline: 18px;
   }
 
   .av4-collage {
@@ -29616,16 +29521,6 @@ body {
   user-select: none;
 }
 
-/* Único motivo: una línea dorada fina sobre el título. */
-.av4-card::before {
-  content: "";
-  position: absolute;
-  top: 26px;
-  left: 24px;
-  width: 34px;
-  height: 2px;
-  background: var(--av4-gold);
-}
 
 .av4-testi.av4-sec--rosa {
   background: var(--av4-rose-bg);
@@ -29851,17 +29746,7 @@ body {
     padding: 24px 18px;
   }
 
-  .av4-plan__cuerpo {
-    padding-inline: 18px;
-  }
-
-  .av4-ticket {
-    padding-inline: 18px;
-  }
-
-  .av4-pie-fila .av4-cta,
-  .av4-plan .av4-cta,
-  .av4-ticket .av4-cta {
+  .av4-pie-fila .av4-cta {
     padding-left: 16px;
     padding-right: 10px;
     gap: 8px;
@@ -30017,4 +29902,514 @@ body {
 
 .av4-collage__b img {
   object-position: 50% 25%;
+}
+
+/* ===== Conectores entre secciones ===== */
+
+.av4-conector {
+  position: relative;
+  z-index: 6;
+  height: 30px;
+  margin-top: -30px;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.av4-conector__tab {
+  display: block;
+  width: 160px;
+  height: 30px;
+  overflow: visible;
+}
+
+.av4-conector--onda {
+  height: 56px;
+  margin-top: -56px;
+}
+
+.av4-conector__onda {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.av4-conector--baja {
+  margin-top: 0;
+  margin-bottom: -30px;
+  transform: scaleY(-1);
+}
+
+/* ===== Tarjetas de identificación: nada más ===== */
+
+/* ===== Precio: lo incluido a los lados y la entrada al centro ===== */
+
+.av4-pr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 480px) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
+.av4-pr__lado {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.av4-pr__lado li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.av4-pr__ico {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #e3c48a, #c9a15a);
+  color: var(--av4-wine);
+}
+
+.av4-pr__lado--der {
+  padding-left: 4px;
+}
+
+.av4-tk {
+  filter: drop-shadow(0 40px 40px rgba(0, 0, 0, 0.5));
+}
+
+/* Forma troquelada: muesca arriba y medias lunas a los lados a la altura de
+   la perforación (--y). Las tres máscaras se intersecan. */
+.av4-tk__forma {
+  --y: 176px;
+  position: relative;
+  padding: 0 clamp(22px, 3vw, 32px) 0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fff8f1 0%, #f4e4d4 100%);
+  color: var(--av4-ink);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.7);
+  -webkit-mask-image:
+    radial-gradient(circle 20px at 50% 0, transparent 97%, #000),
+    radial-gradient(circle 16px at 0 var(--y), transparent 97%, #000),
+    radial-gradient(circle 16px at 100% var(--y), transparent 97%, #000);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(circle 20px at 50% 0, transparent 97%, #000),
+    radial-gradient(circle 16px at 0 var(--y), transparent 97%, #000),
+    radial-gradient(circle 16px at 100% var(--y), transparent 97%, #000);
+  mask-composite: intersect;
+}
+
+.av4-tk__arriba {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: var(--y);
+  padding-top: 18px;
+}
+
+.av4-tk .av4-lockup,
+.av4-tk .av4-lockup__l1 {
+  color: var(--av4-wine);
+}
+
+.av4-tk .av4-lockup__del {
+  color: var(--av4-gold);
+}
+
+.av4-tk .av4-lockup__script {
+  color: var(--av4-wine);
+}
+
+.av4-tk__pildora {
+  padding: 6px 18px;
+  border: 1px solid rgba(74, 20, 38, 0.3);
+  border-radius: 999px;
+  color: var(--av4-wine);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.av4-tk__perf {
+  position: absolute;
+  top: var(--y);
+  right: 24px;
+  left: 24px;
+  border-top: 2px dashed rgba(74, 20, 38, 0.3);
+}
+
+.av4-tk__abajo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0 22px;
+}
+
+.av4 .av4-tk__todo {
+  color: var(--av4-ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.av4-tk__precio {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 20px;
+  color: var(--av4-wine);
+  line-height: 1;
+}
+
+.av4-tk__monto {
+  font-size: clamp(72px, 7vw, 92px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.av4-tk__moneda {
+  margin-top: 12px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.av4-tk .av4-sellos {
+  margin-top: 18px;
+  color: var(--av4-ink-soft);
+}
+
+.av4-sellos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+  font-size: 15px;
+}
+
+.av4-sellos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+/* Código de barras decorativo. No codifica nada. */
+.av4-barras {
+  height: 44px;
+  margin: 6px 0 22px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--av4-wine) 0 2px,
+    transparent 2px 5px,
+    var(--av4-wine) 5px 6px,
+    transparent 6px 9px,
+    var(--av4-wine) 9px 12px,
+    transparent 12px 14px,
+    var(--av4-wine) 14px 15px,
+    transparent 15px 19px
+  );
+  opacity: 0.8;
+}
+
+/* ===== Cierre: entrada de evento ===== */
+
+.av4-et {
+  position: relative;
+  z-index: 3;
+  max-width: 820px;
+  margin-inline: auto;
+  perspective: 1100px;
+}
+
+.av4-et__flota {
+  animation: av4-flota 6s ease-in-out infinite;
+}
+
+@keyframes av4-flota {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.av4-et__inclina {
+  --rx: 0deg;
+  --ry: 0deg;
+  filter: drop-shadow(0 34px 40px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 28px rgba(201, 161, 90, 0.25));
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.18s ease-out;
+}
+
+.av4-et__forma {
+  --x: calc(100% - 210px);
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #5b1a2e 0%, #35101c 100%);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.7);
+  -webkit-mask-image:
+    radial-gradient(circle 18px at var(--x) 0, transparent 97%, #000),
+    radial-gradient(circle 18px at var(--x) 100%, transparent 97%, #000);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(circle 18px at var(--x) 0, transparent 97%, #000),
+    radial-gradient(circle 18px at var(--x) 100%, transparent 97%, #000);
+  mask-composite: intersect;
+}
+
+.av4-et__cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: clamp(28px, 4vw, 42px);
+}
+
+.av4 p.av4-et__fecha {
+  margin-top: 22px;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.av4 p.av4-et__formato {
+  margin: 14px 0 24px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.av4-et__talon {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 210px;
+  padding: 28px 18px;
+  border-left: 2px dashed rgba(53, 16, 28, 0.45);
+  background: linear-gradient(170deg, #f1dcab 0%, #c9a15a 100%);
+  color: var(--av4-wine);
+}
+
+.av4-et__admite {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.av4-et__barras {
+  flex: 1;
+  width: 70px;
+  min-height: 90px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--av4-wine) 0 2px,
+    transparent 2px 5px,
+    var(--av4-wine) 5px 6px,
+    transparent 6px 9px,
+    var(--av4-wine) 9px 12px,
+    transparent 12px 14px
+  );
+  opacity: 0.85;
+}
+
+.av4-et__sello {
+  width: 64px;
+  height: 64px;
+}
+
+.av4-et__brillo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -50%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: skewX(-20deg);
+  animation: av4-barrido 5s ease-in-out infinite 1s;
+  pointer-events: none;
+}
+
+@keyframes av4-barrido {
+  0%,
+  55% {
+    left: -50%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+.av4-soporte-fila {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+/* ===== Botón verde de soporte ===== */
+
+.av4-cta--verde {
+  background: linear-gradient(105deg, #128c7e 0%, #1fb868 45%, #25d366 70%, #128c7e 100%);
+  color: #fff;
+  box-shadow:
+    0 0 0 1px rgba(190, 255, 220, 0.4) inset,
+    0 18px 38px -12px rgba(37, 211, 102, 0.6),
+    0 0 40px -6px rgba(37, 211, 102, 0.4);
+}
+
+.av4 a.av4-cta--verde {
+  color: #fff;
+}
+
+.av4-cta--verde:hover {
+  box-shadow:
+    0 0 0 1px rgba(190, 255, 220, 0.6) inset,
+    0 26px 46px -12px rgba(37, 211, 102, 0.8),
+    0 0 56px -4px rgba(37, 211, 102, 0.6);
+}
+
+.av4-cta--verde .av4-cta__circulo {
+  background: #fff;
+  color: #128c7e;
+}
+
+.av4-cta--verde:hover .av4-cta__circulo {
+  transform: scale(1.08) rotate(-8deg);
+}
+
+/* ===== Responsive de esta tanda ===== */
+
+@media (max-width: 1000px) {
+  .av4-pr {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .av4-pr .av4-tk {
+    order: -1;
+    width: min(440px, 100%);
+  }
+
+  .av4-pr__lado {
+    width: min(520px, 100%);
+    gap: 18px;
+  }
+
+  .av4-pr__lado--izq {
+    margin-top: 12px;
+    margin-bottom: -6px;
+  }
+
+  .av4-et__inclina {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .av4-et__forma {
+    --x: 0;
+    --y: calc(100% - 150px);
+    flex-direction: column;
+    -webkit-mask-image:
+      radial-gradient(circle 16px at 0 var(--y), transparent 97%, #000),
+      radial-gradient(circle 16px at 100% var(--y), transparent 97%, #000);
+    mask-image:
+      radial-gradient(circle 16px at 0 var(--y), transparent 97%, #000),
+      radial-gradient(circle 16px at 100% var(--y), transparent 97%, #000);
+  }
+
+  .av4-et__talon {
+    flex-direction: row;
+    width: auto;
+    height: 150px;
+    padding: 18px 22px;
+    border-top: 2px dashed rgba(53, 16, 28, 0.45);
+    border-left: 0;
+  }
+
+  .av4-et__admite {
+    flex: 1;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .av4-et__barras {
+    flex: none;
+    width: 110px;
+    height: 70px;
+    min-height: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--av4-wine) 0 2px,
+      transparent 2px 5px,
+      var(--av4-wine) 5px 6px,
+      transparent 6px 9px,
+      var(--av4-wine) 9px 12px,
+      transparent 12px 14px
+    );
+  }
+
+  .av4-et__cuerpo {
+    padding-inline: 18px;
+  }
+
+  .av4-et .av4-cta {
+    padding-left: 16px;
+    padding-right: 10px;
+    gap: 8px;
+  }
+
+  .av4-tk__forma {
+    --y: 168px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-et__flota,
+  .av4-et__brillo {
+    animation: none;
+  }
+
+  .av4-et__inclina {
+    transform: none !important;
+    transition: none;
+  }
+
+  .av4-et__brillo {
+    display: none;
+  }
+}
+
+.av4 .av4-tk .av4-sellos li {
+  color: var(--av4-ink-soft);
+}
+
+/* Dentro del ticket de precio el texto del botón es el más largo de la
+   página ("Quiero unirme a la activación"): un punto menos para que entre
+   en una línea en escritorio. */
+.av4-tk .av4-cta {
+  gap: 12px;
+  font-size: 16px;
+  letter-spacing: 0.01em;
 }

@@ -54,12 +54,12 @@ export default function Av4Gracias() {
           </p>
           <Av4Horarios />
 
-          <p className="av4-gracias__soporte">
-            ¿Algún problema?{" "}
-            <a href={LINKS.soporte} target="_blank" rel="noopener noreferrer">
-              Escríbenos por WhatsApp
-            </a>
-          </p>
+          <p className="av4-gracias__soporte">¿Algún problema?</p>
+          <Av4Cta
+            href={LINKS.soporte}
+            label="Contacta con soporte"
+            variante="verde"
+          />
         </div>
       </section>
 

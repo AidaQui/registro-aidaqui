@@ -66,9 +66,12 @@ export default function Av4Identificacion() {
         <ul className="av4-cards" data-reveal-group data-reveal-fade>
           {SENALES.map(({ titulo, texto }, i) => (
             <li key={titulo} className="av4-card">
-              <span className="av4-num">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{titulo}</h3>
-              <p>{texto}</p>
+              <div className="av4-card__in">
+                <span className="av4-num">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{titulo}</h3>
+                <p>{texto}</p>
+              
+              </div>
             </li>
           ))}
         </ul>

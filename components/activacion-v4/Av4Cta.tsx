@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import Av4WhatsAppIcon from "@/components/activacion-v4/Av4WhatsAppIcon";
 import { CTA_LABEL, LINKS } from "@/components/activacion-v4/config";
 
 type Props = {
@@ -7,14 +8,17 @@ type Props = {
   href?: string;
   className?: string;
   icono?: React.ReactNode;
+  /** "verde" es el botón de WhatsApp/soporte: misma forma, otro color. */
+  variante?: "oro" | "verde";
 };
 
-/** CTA principal: dorado con brillo, círculo oscuro con flecha y sombra dorada. */
+/** CTA principal: dorado con brillo, círculo con flecha y sombra de color. */
 export default function Av4Cta({
   label = CTA_LABEL,
   href = LINKS.registro,
   className = "",
   icono,
+  variante = "oro",
 }: Props) {
   const interno = href.startsWith("#") || href.startsWith("/");
   // PixelBridge no es un dominio de checkout que el kit de Sierra reconozca:
@@ -24,14 +28,18 @@ export default function Av4Cta({
   return (
     <a
       href={href}
-      className={`av4-cta ${className}`.trim()}
+      className={`av4-cta av4-cta--${variante} ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
       {...(checkout && { "data-sierra": "checkout", "data-sierra-target": "Checkout 27€" })}
     >
       {icono}
       <span className="av4-cta__label">{label}</span>
       <span className="av4-cta__circulo" aria-hidden="true">
-        <ArrowUpRight size={22} strokeWidth={2.4} />
+        {variante === "verde" ? (
+          <Av4WhatsAppIcon />
+        ) : (
+          <ArrowUpRight size={22} strokeWidth={2.4} />
+        )}
       </span>
     </a>
   );
