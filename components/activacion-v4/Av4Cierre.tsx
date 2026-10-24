@@ -56,7 +56,7 @@ export default function Av4Cierre() {
                       {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
                     </p>
 
-                    <Av4Cta href="#av4-precio" />
+                    <Av4Cta href={LINKS.registro} ubicacion="cierre" />
                   </div>
 
                   <div className="av4-et__talon" aria-hidden="true">

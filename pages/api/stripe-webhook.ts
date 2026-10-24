@@ -130,11 +130,13 @@ export default async function handler(
     console.error("Webhook signature inválida");
     return res.status(400).end("Invalid signature");
   }
-  if (!claveCuenta) {
-    console.error("Falta la clave secreta de la cuenta de Stripe que firmó este evento");
+  // Claves para consultar la compra: primero la de la cuenta que firmó y, si
+  // no la encuentra, las otras. Evita depender de que firma y clave coincidan.
+  const claves = [...new Set([claveCuenta, ...cuentas.map((c) => c.key)])].filter((k): k is string => Boolean(k));
+  if (claves.length === 0) {
+    console.error("Falta la clave secreta de Stripe");
     return res.status(500).end("Config error");
   }
-  const stripe = new Stripe(claveCuenta, { apiVersion: "2026-06-24.dahlia" });
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
@@ -145,20 +147,28 @@ export default async function handler(
     // respondemos 500 para que Stripe reintente en vez de mandar la compra
     // al grupo equivocado. Reintentar es seguro: MailerLite actualiza al
     // suscriptor si ya existe.
-    let idsComprados: string[];
-    try {
-      const items = await stripe.checkout.sessions.listLineItems(session.id, {
-        limit: 100,
-      });
-      idsComprados = items.data.flatMap((item) => {
-        const price = item.price;
-        if (!price) return [];
-        const productId =
-          typeof price.product === "string" ? price.product : price.product.id;
-        return [price.id, productId];
-      });
-    } catch (err) {
-      console.error("No se pudieron leer los productos de la compra", err);
+    let idsComprados: string[] | null = null;
+    let ultimoError: unknown;
+    for (const clave of claves) {
+      try {
+        const items = await new Stripe(clave, { apiVersion: "2026-06-24.dahlia" }).checkout.sessions.listLineItems(
+          session.id,
+          { limit: 100 }
+        );
+        idsComprados = items.data.flatMap((item) => {
+          const price = item.price;
+          if (!price) return [];
+          const productId =
+            typeof price.product === "string" ? price.product : price.product.id;
+          return [price.id, productId];
+        });
+        break;
+      } catch (err) {
+        ultimoError = err;
+      }
+    }
+    if (!idsComprados) {
+      console.error("No se pudieron leer los productos de la compra", ultimoError);
       return res.status(500).end("Line items error");
     }
 

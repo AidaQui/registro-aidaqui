@@ -10,6 +10,8 @@ type Props = {
   icono?: React.ReactNode;
   /** "verde" es el botón de WhatsApp/soporte: misma forma, otro color. */
   variante?: "oro" | "verde";
+  /** Dónde está el botón de compra; el panel de Sierra lo muestra para saber cuál se usó. */
+  ubicacion?: string;
 };
 
 /** CTA principal: dorado con brillo, círculo con flecha y sombra de color. */
@@ -19,6 +21,7 @@ export default function Av4Cta({
   className = "",
   icono,
   variante = "oro",
+  ubicacion,
 }: Props) {
   const interno = href.startsWith("#") || href.startsWith("/");
   // PixelBridge no es un dominio de checkout que el kit de Sierra reconozca:
@@ -30,7 +33,7 @@ export default function Av4Cta({
       href={href}
       className={`av4-cta av4-cta--${variante} ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
-      {...(checkout && { "data-sierra": "checkout", "data-sierra-target": "Checkout 27€" })}
+      {...(checkout && { "data-sierra": "checkout", "data-sierra-target": ubicacion ? `Checkout 27€ · ${ubicacion}` : "Checkout 27€" })}
     >
       {icono}
       <span className="av4-cta__label">{label}</span>

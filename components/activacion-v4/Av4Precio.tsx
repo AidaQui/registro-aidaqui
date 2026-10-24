@@ -82,6 +82,7 @@ export default function Av4Precio() {
                   href={LINKS.registro}
                   label="Reservar mi plaza"
                   className="av4-cta--bloque"
+                  ubicacion="precio"
                 />
 
                 <ul className="av4-sellos">
