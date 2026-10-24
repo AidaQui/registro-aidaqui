@@ -31,13 +31,43 @@ export const HORARIOS: Horario[] = [
 ];
 
 /**
+ * Copia de la configuración que PixelBridge tiene para su link /go/27 (píxel de
+ * Meta y link de pago de Stripe de 27€). Se arma el link /go?c=… acá, en vez
+ * de usar el corto /go/27, para que el kit de Sierra pueda sumarle al link de
+ * Stripe de qué landing y de qué anuncio viene la persona: PixelBridge no
+ * reenvía nada por su cuenta, y sin esto las ventas llegan sin anuncio.
+ *
+ * ⚠ Si se cambia el píxel o el link de Stripe dentro de PixelBridge, hay que
+ * cambiarlo también acá, o el botón sigue mandando a lo viejo.
+ */
+const PIXELBRIDGE = {
+  p: "1942441866476662",
+  k: "",
+  s: "https://buy.stripe.com/8x27sDaowe1w8b8cYW2401f",
+  n: "",
+  v: "27",
+  c: "EUR",
+  t: "¡Gracias por tu compra!",
+  m: "Tu pedido ha sido procesado correctamente. Revisa tu email para más detalles.",
+};
+
+/** Mismo formato que PixelBridge: JSON en UTF-8, en base64. */
+function aBase64(texto: string): string {
+  let binario = "";
+  for (const byte of new TextEncoder().encode(texto)) binario += String.fromCharCode(byte);
+  return btoa(binario);
+}
+
+const PIXELBRIDGE_REGISTRO = `https://pixelbridge-theta.vercel.app/go?c=${encodeURIComponent(aBase64(JSON.stringify(PIXELBRIDGE)))}`;
+
+/**
  * Enlaces de conversión. `registro` es el redirector de PixelBridge: dispara
- * el píxel de Meta y manda al link de pago de Stripe de 27€. Como no es un
- * link de Stripe, la compra no trae el anuncio de origen: el webhook la ubica
- * en esta landing con SIERRA_ACTIVACION_PATH.
+ * el píxel de Meta y manda al link de pago de Stripe de 27€. Al hacer clic, el
+ * kit de Sierra le suma al link de Stripe la landing y el anuncio de origen
+ * (client_reference_id), y el webhook los manda al panel con la venta.
  */
 export const LINKS = {
-  registro: "https://pixelbridge-theta.vercel.app/go/27",
+  registro: PIXELBRIDGE_REGISTRO,
   soporte: "https://wa.link/insiui",
 } as const;
 
