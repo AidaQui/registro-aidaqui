@@ -10,10 +10,6 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const SENALES = [
   {
-    titulo: "Tu corazón te pide un cambio,",
-    texto: "pero cuando intentas dar el paso aparecen las dudas.",
-  },
-  {
     titulo: "Te cuesta reconocer qué quieres de verdad,",
     texto:
       "entre lo que esperan los demás y lo que te has acostumbrado a elegir.",
