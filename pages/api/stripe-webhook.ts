@@ -96,26 +96,45 @@ export default async function handler(
     return res.status(405).end("Method not allowed");
   }
 
-  const secret = process.env.STRIPE_ACADEMIA_WEBHOOK_SECRET;
-  if (!secret) {
+  // Hay dos cuentas de Stripe (la original y la nueva de la clienta). Cada una
+  // firma sus avisos con su propio secreto y se consulta con su propia clave:
+  // la firma indica de qué cuenta viene el evento.
+  const cuentas = [
+    { secret: process.env.STRIPE_ACADEMIA_WEBHOOK_SECRET, key: process.env.STRIPE_SECRET_KEY },
+    { secret: process.env.STRIPE_ACADEMIA_WEBHOOK_SECRET_2, key: process.env.STRIPE_SECRET_KEY_2 },
+  ].filter((c): c is { secret: string; key: string | undefined } => Boolean(c.secret));
+  if (cuentas.length === 0) {
     console.error("Falta STRIPE_ACADEMIA_WEBHOOK_SECRET");
     return res.status(500).end("Config error");
   }
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
-    apiVersion: "2026-06-24.dahlia",
-  });
-
   const rawBody = await getRawBody(req);
   const sig = req.headers["stripe-signature"] as string;
 
-  let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(rawBody, sig, secret);
-  } catch (err) {
-    console.error("Webhook signature inválida", err);
+  let event: Stripe.Event | null = null;
+  let claveCuenta: string | undefined;
+  for (const cuenta of cuentas) {
+    try {
+      event = new Stripe(cuenta.key ?? "", { apiVersion: "2026-06-24.dahlia" }).webhooks.constructEvent(
+        rawBody,
+        sig,
+        cuenta.secret
+      );
+      claveCuenta = cuenta.key;
+      break;
+    } catch {
+      /* firma de otra cuenta: se prueba la siguiente */
+    }
+  }
+  if (!event) {
+    console.error("Webhook signature inválida");
     return res.status(400).end("Invalid signature");
   }
+  if (!claveCuenta) {
+    console.error("Falta la clave secreta de la cuenta de Stripe que firmó este evento");
+    return res.status(500).end("Config error");
+  }
+  const stripe = new Stripe(claveCuenta, { apiVersion: "2026-06-24.dahlia" });
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
