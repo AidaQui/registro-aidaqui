@@ -29193,10 +29193,11 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(53, 16, 28, 0.25);
+  background: rgba(53, 16, 28, 0.2);
 }
 
-/* Panel de cristal que cubre toda la tarjeta. */
+/* Panel de cristal que cubre toda la tarjeta. Difuminado leve: las
+   ilustraciones tienen que seguir reconociéndose detrás del texto. */
 .av4-intencion__texto {
   position: relative;
   z-index: 1;
@@ -29207,9 +29208,9 @@ body {
   padding: 26px 22px 28px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 12px;
-  background: rgba(53, 16, 28, 0.45);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(53, 16, 28, 0.62) 0%, rgba(53, 16, 28, 0.3) 55%, rgba(53, 16, 28, 0.08) 100%);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
 }
 
 /* Etiqueta fina "01 ——". */
@@ -29300,8 +29301,10 @@ body {
   text-underline-offset: 3px;
 }
 
+/* El GradualBlur fijo ocupa los últimos 7rem del viewport: el footer deja
+   ese alto libre abajo para que su contenido quede por encima y se lea. */
 .av4-footer {
-  padding: 0 24px 44px;
+  padding: 0 24px calc(7rem + 32px);
   background: var(--av4-wine-deep);
 }
 
@@ -30317,9 +30320,12 @@ body {
     justify-items: center;
   }
 
+  /* Primero lo que incluye (debajo del titular), después el ticket: ver el
+     precio antes que el valor generaba fricción. */
   .av4-pr .av4-tk {
-    order: -1;
+    order: 3;
     width: min(440px, 100%);
+    margin-top: 16px;
   }
 
   .av4-pr__lado {
@@ -30328,8 +30334,12 @@ body {
   }
 
   .av4-pr__lado--izq {
-    margin-top: 12px;
+    order: 1;
     margin-bottom: -6px;
+  }
+
+  .av4-pr__lado--der {
+    order: 2;
   }
 
 }

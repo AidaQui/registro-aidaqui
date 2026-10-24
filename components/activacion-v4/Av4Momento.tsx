@@ -10,22 +10,22 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const INTENCIONES = [
   {
     texto: "Que puedas escucharte con más honestidad.",
-    foto: "/activacion-v4/momento-1.jpg",
+    foto: "/activacion-v4/intencion-1.webp",
   },
   {
     texto:
       "Que reconozcas dónde estás eligiendo por miedo, por costumbre o por la necesidad de aprobación.",
-    foto: "/activacion-v4/momento-2.jpg",
+    foto: "/activacion-v4/intencion-2.webp",
   },
   {
     texto:
       "Que vuelvas a dar valor a tus deseos y encuentres un paso concreto para empezar a honrarlos.",
-    foto: "/activacion-v4/momento-3.jpg",
+    foto: "/activacion-v4/intencion-3.webp",
   },
   {
     texto:
       "Y que recuperes tu poder para sostener lo que sabes que es verdad para ti: tomar esa decisión, expresar lo que necesitas y dar forma a la vida que de verdad quieres vivir.",
-    foto: "/activacion-v4/momento-4.jpg",
+    foto: "/activacion-v4/intencion-4.webp",
   },
 ];
 
