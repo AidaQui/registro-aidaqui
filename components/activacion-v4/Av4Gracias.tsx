@@ -10,7 +10,6 @@ import {
   GRUPO_WHATSAPP,
   HORARIOS,
   LINKS,
-  PRECIO,
 } from "@/components/activacion-v4/config";
 
 /**
@@ -52,7 +51,7 @@ export default function Av4Gracias() {
           </span>
 
           <h1 id="av4-gracias-title" className="av4-title">
-            Tu lugar está <span className="av4-oro">reservado</span>.
+            Tu lugar está reservado, <span className="av4-oro">alma bella</span>.
           </h1>
 
           <p className="av4-texto">
@@ -99,7 +98,7 @@ export default function Av4Gracias() {
                       nombres={{ México: "Ciudad de México" }}
                     />
                     <p className="av4-et__formato">
-                      {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
+                      {EVENTO.formato}
                     </p>
                     <p className="av4-gr__guarda">
                       Guárdalo en tu calendario para no perdértelo.
