@@ -29157,14 +29157,13 @@ body {
   gap: 18px;
 }
 
-/* Tarjeta = foto vertical completa. Una sombra interna desde abajo oscurece
-   la base para que el número y el texto, blancos, se lean sobre la foto. */
+/* La foto es el fondo de toda la tarjeta y el panel de vidrio la cubre
+   entera (con un margen que deja ver el borde de la foto). El alto lo da el
+   texto: la grilla iguala las cuatro al de la más larga. */
 .av4-intencion {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  min-height: 480px;
   overflow: hidden;
   border: 1px solid rgba(201, 161, 90, 0.4);
   border-radius: 16px;
@@ -29189,33 +29188,28 @@ body {
   object-position: 50% 20%;
 }
 
-/* Degradado fuerte desde abajo: sirve con cualquier foto vertical. */
+/* Velo suave y parejo: el vidrio de encima hace el resto. */
 .av4-intencion__foto::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(53, 16, 28, 0) 28%,
-    rgba(53, 16, 28, 0.55) 58%,
-    rgba(53, 16, 28, 0.95) 100%
-  );
+  background: rgba(53, 16, 28, 0.25);
 }
 
-/* Panel de cristal al pie: mismo alto y misma posición en las cuatro. */
+/* Panel de cristal que cubre toda la tarjeta. */
 .av4-intencion__texto {
   position: relative;
   z-index: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
-  height: 262px;
   margin: 12px;
-  padding: 18px 18px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 26px 22px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 12px;
-  background: rgba(53, 16, 28, 0.5);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  background: rgba(53, 16, 28, 0.45);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 /* Etiqueta fina "01 ——". */
@@ -29505,11 +29499,6 @@ body {
   /* En mobile el bloque de horarios + CTA ocupa todo el ancho. */
   .av4-hero__accion {
     width: 100%;
-  }
-
-  /* Una tarjeta por fila: no hay nada que alinear, el bloque toma su alto. */
-  .av4-intencion__texto {
-    height: auto;
   }
 
   /* Dos columnas de ~170px no alcanzan para país y hora en una línea: la
