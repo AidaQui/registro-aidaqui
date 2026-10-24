@@ -4,7 +4,14 @@ import type { NextConfig } from "next";
 // but the contact sees the landing's domain. The panel records the join and
 // redirects to Zoom; the redirect passes through the rewrite untouched.
 const sierraPanel = process.env.NEXT_PUBLIC_SIERRA_URL?.replace(/\/+$/, "");
-const sierraWebinar = sierraPanel ? [{ source: "/vivo/:token", destination: `${sierraPanel}/w/:token` }] : [];
+// Fixed WhatsApp group link of the launch (/grupo/<token>): the panel sends
+// each person to the current group and rotates when one fills up.
+const sierraWebinar = sierraPanel
+  ? [
+      { source: "/vivo/:token", destination: `${sierraPanel}/w/:token` },
+      { source: "/grupo/:token", destination: `${sierraPanel}/g/:token` },
+    ]
+  : [];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
