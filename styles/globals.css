@@ -28292,10 +28292,10 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 40px;
   max-width: 100%;
   min-height: 66px;
-  padding: 0 12px 0 34px;
+  padding: 0 12px 0 48px;
   overflow: hidden;
   border-radius: 12px;
   background: linear-gradient(105deg, #b8873a 0%, #e8c677 38%, #f6dfa3 55%, #d9aa55 100%);
@@ -28949,76 +28949,64 @@ body {
   margin-inline: auto;
 }
 
-/* Preguntas plegables: <details> nativo, sin JS. */
+/* Dos preguntas en tarjetas, lado a lado: icono, pregunta y respuesta. */
 .av4-exp__preguntas {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 760px;
-  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 28px);
 }
 
-.av4-plegable {
-  border: 1px solid rgba(201, 161, 90, 0.35);
-  border-radius: 14px;
-  background: rgba(201, 161, 90, 0.06);
-  transition: background 0.25s ease, border-color 0.25s ease;
+.av4-pregunta {
+  position: relative;
+  padding: clamp(28px, 3vw, 40px);
+  overflow: hidden;
+  border: 1px solid rgba(201, 161, 90, 0.28);
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(201, 161, 90, 0.16), transparent 60%),
+    rgba(255, 255, 255, 0.03);
 }
 
-.av4-plegable[open] {
-  border-color: var(--av4-gold);
-  background: rgba(201, 161, 90, 0.12);
+/* Filete dorado arriba, que se apaga hacia la derecha. */
+.av4-pregunta::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, var(--av4-gold), transparent 75%);
 }
 
-.av4-plegable summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 24px;
-  color: #fff;
-  font-size: clamp(19px, 2vw, 23px);
-  font-weight: 600;
-  line-height: 1.3;
-  cursor: pointer;
-  list-style: none;
-}
-
-.av4-plegable summary::-webkit-details-marker {
-  display: none;
-}
-
-.av4-plegable summary::after {
-  content: "+";
-  flex-shrink: 0;
+.av4-pregunta__icono {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(201, 161, 90, 0.5);
   border-radius: 50%;
-  border: 1px solid var(--av4-gold);
+  background: rgba(201, 161, 90, 0.1);
   color: var(--av4-gold);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1;
-  transition: transform 0.25s ease;
 }
 
-.av4-plegable[open] summary::after {
-  transform: rotate(45deg);
+.av4-pregunta__titulo {
+  margin-top: 22px;
+  color: #fff;
+  font-family: var(--av4-serif);
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
-.av4-plegable summary:focus-visible {
-  outline: 2px solid var(--av4-gold);
-  outline-offset: 2px;
-  border-radius: 14px;
-}
-
-.av4 .av4-plegable p {
-  margin: 0;
-  padding: 0 24px 22px;
+.av4 .av4-pregunta p {
+  margin-top: 14px;
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.7;
+}
+
+@media (max-width: 760px) {
+  .av4-exp__preguntas {
+    grid-template-columns: 1fr;
+  }
 }
 
 .av4-mac {

@@ -80,7 +80,7 @@ export default function Av4Precio() {
                     que incluye y cuánto cuesta a la vista. */}
                 <Av4Cta
                   href={LINKS.registro}
-                  label="Reservar mi plaza"
+                  label="Activa tu poder"
                   className="av4-cta--bloque"
                   ubicacion="precio"
                 />

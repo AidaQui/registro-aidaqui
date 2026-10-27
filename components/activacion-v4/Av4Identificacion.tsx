@@ -78,7 +78,7 @@ export default function Av4Identificacion() {
             <strong>reconectar con la verdad de tu corazón</strong> y recuperar
             el poder interior para empezar a actuar en coherencia con ella.
           </p>
-          <Av4Cta href="#av4-precio" />
+          <Av4Cta href="#av4-precio" label="Activa tu poder" />
         </div>
       </div>
     </section>

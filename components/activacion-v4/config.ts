@@ -74,7 +74,7 @@ export const LINKS = {
 /** Grupo de WhatsApp de la experiencia (página de gracias). */
 export const GRUPO_WHATSAPP = "https://chat.whatsapp.com/G1AN4bv8fnvKr2IVREeY7x";
 
-export const CTA_LABEL = "Quiero reservar mi plaza";
+export const CTA_LABEL = "Activa tu corazón";
 
 /**
  * Precio. La moneda es el EURO. `tachado` vacío oculta la línea de precio

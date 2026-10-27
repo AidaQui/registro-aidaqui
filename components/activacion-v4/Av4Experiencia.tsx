@@ -1,3 +1,4 @@
+import { Heart, HeartCrack } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Macbook from "@/components/activacion-v4/Av4Macbook";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
@@ -5,16 +6,28 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /** Experiencia: texto, MacBook, preguntas y lista de cambios. Copy literal. */
 
-/** Plegadas por defecto: la pregunta engancha, la respuesta se abre a demanda. */
+/** Dos preguntas en tarjetas: lo que guarda el corazón y lo que cuesta ignorarlo. */
 const PREGUNTAS = [
-  [
-    "¿Qué se guarda en tu corazón?",
-    "Lo que deseas de verdad, antes de que lo filtren el miedo y las expectativas de los demás. Las heridas que te hicieron cerrarte. Tu intuición. La sabiduría de tu alma.",
-  ],
-  [
-    "¿Qué pasa cuando vives desconectada de él?",
-    "Decides con la cabeza y te arrepientes con el cuerpo. Buscas aprobación fuera. Aguantas relaciones, trabajos y rutinas que ya no son tuyas.",
-  ],
+  {
+    icono: Heart,
+    pregunta: (
+      <>
+        ¿Qué se guarda en <span className="av4-oro">tu corazón</span>?
+      </>
+    ),
+    respuesta:
+      "Lo que deseas de verdad, antes de que lo filtren el miedo y las expectativas de los demás. Las heridas que te hicieron cerrarte. Tu intuición. La sabiduría de tu alma.",
+  },
+  {
+    icono: HeartCrack,
+    pregunta: (
+      <>
+        ¿Qué pasa cuando vives <span className="av4-oro">desconectada</span> de él?
+      </>
+    ),
+    respuesta:
+      "Decides con la cabeza y te arrepientes con el cuerpo. Buscas aprobación fuera. Aguantas relaciones, trabajos y rutinas que ya no son tuyas.",
+  },
 ];
 
 const CAMBIOS = [
@@ -58,11 +71,14 @@ export default function Av4Experiencia() {
 
       <div className="av4-wrap av4-exp__lista">
         <div className="av4-exp__preguntas" data-reveal-group data-reveal-fade>
-          {PREGUNTAS.map(([pregunta, respuesta]) => (
-            <details key={pregunta} className="av4-plegable">
-              <summary>{pregunta}</summary>
+          {PREGUNTAS.map(({ icono: Icono, pregunta, respuesta }) => (
+            <article key={respuesta} className="av4-pregunta">
+              <span className="av4-pregunta__icono" aria-hidden="true">
+                <Icono size={22} strokeWidth={1.8} />
+              </span>
+              <h3 className="av4-pregunta__titulo">{pregunta}</h3>
               <p>{respuesta}</p>
-            </details>
+            </article>
           ))}
         </div>
 
@@ -82,7 +98,7 @@ export default function Av4Experiencia() {
         </ul>
 
         <div className="av4-cta-fila av4-cta-fila--centro" data-reveal>
-          <Av4Cta href="#av4-precio" label="Activa tu corazón" />
+          <Av4Cta href="#av4-precio" />
         </div>
       </div>
     </section>
