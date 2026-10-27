@@ -11,9 +11,9 @@ export const EVENTO = {
   /** Nombre de la experiencia. */
   titulo: "Activación del Corazón y el Poder Interior",
   /** Rótulo corto de la fecha. */
-  fechaCorta: "7 de noviembre",
+  fechaCorta: "15 de noviembre",
   /** Forma larga para prosa. */
-  fechaLarga: "el 7 de noviembre",
+  fechaLarga: "el 15 de noviembre",
   formato: "Online vía Zoom",
 } as const;
 

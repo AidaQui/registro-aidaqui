@@ -28940,6 +28940,87 @@ body {
   margin-top: 0;
 }
 
+.av4-exp__lista .av4-exp__pregunta {
+  margin-top: clamp(44px, 5vw, 64px);
+}
+
+.av4-exp__cambios {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+/* Preguntas plegables: <details> nativo, sin JS. */
+.av4-exp__preguntas {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.av4-plegable {
+  border: 1px solid rgba(201, 161, 90, 0.35);
+  border-radius: 14px;
+  background: rgba(201, 161, 90, 0.06);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.av4-plegable[open] {
+  border-color: var(--av4-gold);
+  background: rgba(201, 161, 90, 0.12);
+}
+
+.av4-plegable summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  color: #fff;
+  font-size: clamp(19px, 2vw, 23px);
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  list-style: none;
+}
+
+.av4-plegable summary::-webkit-details-marker {
+  display: none;
+}
+
+.av4-plegable summary::after {
+  content: "+";
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--av4-gold);
+  color: var(--av4-gold);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+.av4-plegable[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.av4-plegable summary:focus-visible {
+  outline: 2px solid var(--av4-gold);
+  outline-offset: 2px;
+  border-radius: 14px;
+}
+
+.av4 .av4-plegable p {
+  margin: 0;
+  padding: 0 24px 22px;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
 .av4-mac {
   width: 100%;
   max-width: 600px;
