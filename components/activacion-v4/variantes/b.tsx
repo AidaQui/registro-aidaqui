@@ -16,4 +16,15 @@ import { CONTENIDO_V4, type Contenido } from "@/components/activacion-v4/conteni
  */
 export const CONTENIDO_B: Contenido = {
   ...CONTENIDO_V4,
+  hero: {
+    ...CONTENIDO_V4.hero,
+    // Retrato en óvalo centrado: para cambiar la foto, cambiar `src` y sus medidas.
+    retrato: {
+      forma: "ovalo",
+      src: "/activacion-v4/hero-lavanda.webp",
+      ancho: 700,
+      alto: 750,
+      posicion: "50% 22%",
+    },
+  },
 };

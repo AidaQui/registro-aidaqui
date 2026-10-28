@@ -31189,3 +31189,448 @@ body {
   --av4-display-leading: 1.1;
   --av4-accent-weight: 500;
 }
+
+/* ===== Heroes propios de las variantes de v4 =====
+ *
+ * Además de la paleta, cada variante tiene su propia composición de hero:
+ *   A · Arcilla    foto espejada a la izquierda, texto a la derecha
+ *   B · Lavanda    centrado, retrato ovalado con halo sobre fondo nocturno
+ *   C · Esmeralda  claro, texto a la izquierda y retrato en arco a la derecha
+ * B y C reciben el retrato por datos (hero.retrato en variantes/b|c.tsx, lo
+ * pinta Av4Hero con next/image); A sólo cambia la foto de fondo por CSS.
+ * Todo va con `.av4.av4--x` para ganarle en especificidad a las reglas base
+ * del hero (incluidas las de los media queries). v4 no se toca.
+ */
+
+/* ---- A · Arcilla: editorial cálido, espejado ---- */
+
+/* La foto va espejada (Aida a la izquierda, mirando al texto). Se espeja una
+   capa propia (::before) para que el degradado de ::after no se invierta. */
+.av4.av4--arcilla .av4-hero__foto {
+  background: none;
+}
+
+.av4.av4--arcilla .av4-hero__foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/masterclass/aida-1.jpg") 50% 50% / cover no-repeat;
+  transform: scaleX(-1);
+}
+
+/* El espresso entra desde la derecha, bajo el texto. */
+.av4.av4--arcilla .av4-hero__foto::after {
+  background:
+    linear-gradient(270deg, rgb(var(--av4-wine-rgb) / 0.97) 0%, rgb(var(--av4-wine-rgb) / 0.9) 34%, rgb(var(--av4-wine-rgb) / 0.3) 62%, rgb(var(--av4-wine-rgb) / 0) 82%),
+    linear-gradient(0deg, var(--av4-wine) 0%, rgb(var(--av4-wine-rgb) / 0) 22%);
+}
+
+.av4.av4--arcilla .av4-hero__shell {
+  justify-content: flex-end;
+}
+
+@media (max-width: 1000px) {
+  /* Tablet y móvil: foto arriba, sin espejar (la cara queda centrada), y el
+     texto debajo como en v4. */
+  .av4.av4--arcilla .av4-hero__foto::before {
+    transform: none;
+    background: url("/masterclass/aida-1.jpg") 66% 0 / cover no-repeat;
+  }
+
+  .av4.av4--arcilla .av4-hero__foto::after {
+    background: linear-gradient(180deg, rgb(var(--av4-wine-rgb) / 0.1) 0%, rgb(var(--av4-wine-rgb) / 0.5) 52%, var(--av4-wine) 88%);
+  }
+
+  .av4.av4--arcilla .av4-hero__shell {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Sin los brillos radiales del fondo base: dejaban un corte donde termina la foto. */
+  .av4.av4--arcilla .av4-hero {
+    background: var(--av4-wine);
+  }
+
+  .av4.av4--arcilla .av4-hero__foto::before {
+    background: url("/masterclass/aida-1-mobile.jpg") 50% 0 / 100% auto no-repeat;
+  }
+
+  .av4.av4--arcilla .av4-hero__foto::after {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--av4-wine-rgb) / 0) 0%,
+      rgb(var(--av4-wine-rgb) / 0) 40%,
+      rgb(var(--av4-wine-rgb) / 0.78) 56%,
+      var(--av4-wine) 80%
+    );
+  }
+}
+
+/* ---- B · Lavanda: centrado etéreo con retrato ovalado ---- */
+
+.av4.av4--lavanda .av4-hero {
+  background:
+    radial-gradient(34% 46% at 50% 26%, rgb(var(--av4-rose-rgb) / 0.36), transparent 74%),
+    radial-gradient(70% 38% at 50% 104%, rgb(var(--av4-gold-rgb) / 0.16), transparent 72%),
+    radial-gradient(100% 80% at 50% 0%, var(--av4-wine-2), transparent 78%),
+    var(--av4-wine);
+}
+
+/* Campo de estrellas muy tenue: cuatro capas de puntos con teselas de
+   distinto tamaño para que no se note el patrón; se desvanece hacia abajo. */
+.av4.av4--lavanda .av4-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 18px 26px, rgb(255 246 225 / 0.9), transparent 100%),
+    radial-gradient(1px 1px at 96px 70px, rgb(255 255 255 / 0.7), transparent 100%),
+    radial-gradient(1.5px 1.5px at 150px 130px, rgb(var(--av4-gold-soft-rgb) / 0.85), transparent 100%),
+    radial-gradient(1px 1px at 60px 160px, rgb(var(--av4-rose-soft-rgb) / 0.8), transparent 100%);
+  background-size: 190px 190px, 263px 263px, 347px 347px, 151px 151px;
+  -webkit-mask-image: radial-gradient(75% 85% at 50% 22%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(75% 85% at 50% 22%, #000 0%, transparent 100%);
+  opacity: 0.95;
+  animation: av4-hero-estrellas 9s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes av4-hero-estrellas {
+  from { opacity: 0.5; }
+  to   { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4.av4--lavanda .av4-hero::before {
+    animation: none;
+  }
+}
+
+.av4.av4--lavanda .av4-hero__shell {
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  padding-block: 30px 34px;
+  text-align: center;
+}
+
+/* Retrato ovalado: aro champán, halo lavanda y dos órbitas finas alrededor. */
+.av4.av4--lavanda .av4-hero__retrato {
+  order: -1;
+  position: relative;
+  flex: none;
+  width: 218px;
+  height: 262px;
+  margin-bottom: 22px;
+}
+
+.av4.av4--lavanda .av4-hero__retrato::before,
+.av4.av4--lavanda .av4-hero__retrato::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.av4.av4--lavanda .av4-hero__retrato::before {
+  inset: -14px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.38);
+}
+
+.av4.av4--lavanda .av4-hero__retrato::after {
+  inset: -30px;
+  border: 1px solid rgb(var(--av4-rose-soft-rgb) / 0.16);
+}
+
+.av4.av4--lavanda .av4-hero__marco {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1.5px rgb(var(--av4-gold-rgb) / 0.75),
+    0 0 0 8px rgb(var(--av4-rose-rgb) / 0.12),
+    0 0 64px 4px rgb(var(--av4-rose-rgb) / 0.5),
+    0 0 130px 18px rgb(var(--av4-gold-rgb) / 0.16);
+}
+
+/* Un velo índigo en la base funde el retrato con el marco. */
+.av4.av4--lavanda .av4-hero__marco::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 62%, rgb(var(--av4-wine-rgb) / 0.4) 100%);
+}
+
+.av4 .av4-hero__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Logotipo y etiqueta comparten fila; titular, bajada y acción, una fila cada
+   uno, todos centrados. */
+.av4.av4--lavanda .av4-hero__copy {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  column-gap: 36px;
+  max-width: 940px;
+}
+
+.av4.av4--lavanda .av4-hero__tag {
+  margin-top: 0;
+}
+
+.av4.av4--lavanda .av4-hero__title,
+.av4.av4--lavanda p.av4-hero__lead,
+.av4.av4--lavanda .av4-hero__accion {
+  grid-column: 1 / -1;
+}
+
+.av4.av4--lavanda .av4-hero__title {
+  margin-top: 18px;
+  max-width: 880px;
+}
+
+.av4.av4--lavanda p.av4-hero__lead {
+  margin: 12px auto 18px;
+  max-width: 720px;
+  text-wrap: balance;
+}
+
+@media (min-width: 1001px) {
+  /* Los cuatro horarios en una sola fila: el bloque queda ancho y bajo. */
+  .av4.av4--lavanda .av4-horarios--compacto {
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  .av4.av4--lavanda .av4-hero__shell {
+    padding-block: 34px 44px;
+  }
+
+  .av4.av4--lavanda .av4-hero__retrato {
+    width: 200px;
+    height: 240px;
+    margin-bottom: 30px;
+  }
+
+  .av4.av4--lavanda .av4-hero__copy {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+  }
+
+  .av4.av4--lavanda .av4-hero__tag {
+    margin-top: 16px;
+  }
+
+  .av4.av4--lavanda .av4-hero__title {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .av4.av4--lavanda .av4-hero__title {
+    margin-top: 18px;
+  }
+
+  .av4.av4--lavanda p.av4-hero__lead {
+    margin: 14px auto 22px;
+  }
+}
+
+/* ---- C · Esmeralda: claro, con arco ---- */
+
+/* Fondo crema que se tiñe de rosado detrás del arco y baja a arena, para que
+   la pestaña marfil del conector se distinga en la costura. */
+.av4.av4--esmeralda .av4-hero {
+  color: var(--av4-ink);
+  background:
+    radial-gradient(44% 72% at 80% 46%, rgb(var(--av4-rose-rgb) / 0.3), transparent 74%),
+    radial-gradient(40% 60% at 0% 0%, rgb(var(--av4-gold-rgb) / 0.16), transparent 70%),
+    linear-gradient(180deg, var(--av4-ivory) 0%, #ecdfca 100%);
+}
+
+/* El grano blanco sólo se ve sobre fondos oscuros. */
+.av4.av4--esmeralda .av4-hero::after {
+  display: none;
+}
+
+.av4.av4--esmeralda .av4-hero__shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 490px;
+  align-items: center;
+  gap: clamp(40px, 5vw, 80px);
+  padding-block: 56px;
+}
+
+.av4.av4--esmeralda .av4-hero__retrato {
+  position: relative;
+  justify-self: end;
+  width: 490px;
+  height: 610px;
+  margin-right: 20px;
+}
+
+/* Arco con marco de latón desplazado detrás y un filete interior. */
+.av4.av4--esmeralda .av4-hero__retrato::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--av4-gold);
+  border-radius: 999px 999px 24px 24px;
+  transform: translate(20px, 20px);
+  pointer-events: none;
+}
+
+.av4.av4--esmeralda .av4-hero__marco {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 999px 999px 24px 24px;
+  background: var(--av4-wine-deep);
+  box-shadow: 0 34px 60px -30px rgb(var(--av4-wine-deep-rgb) / 0.55);
+}
+
+.av4.av4--esmeralda .av4-hero__marco::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgb(255 255 255 / 0.55);
+  border-radius: 999px 999px 16px 16px;
+  pointer-events: none;
+}
+
+/* Ramita de línea fina que asoma sobre el borde del arco. */
+.av4.av4--esmeralda .av4-hero__rama {
+  position: absolute;
+  left: -70px;
+  bottom: 24px;
+  width: 128px;
+  height: auto;
+  color: #8a6a1f;
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.55));
+  pointer-events: none;
+}
+
+/* Texto: tinta esmeralda y latón oscuro (el dorado claro del tema oscuro no
+   contrasta sobre crema). */
+.av4.av4--esmeralda .av4-hero .av4-lockup {
+  color: var(--av4-wine);
+}
+
+.av4.av4--esmeralda .av4-hero .av4-lockup__del {
+  color: #7d5f1a;
+}
+
+.av4.av4--esmeralda .av4-hero .av4-lockup__script {
+  color: var(--av4-wine-2);
+}
+
+.av4.av4--esmeralda .av4-hero .av4-tag {
+  color: var(--av4-wine);
+}
+
+.av4.av4--esmeralda .av4-hero__title {
+  color: var(--av4-wine);
+}
+
+.av4.av4--esmeralda .av4-hero .av4-oro {
+  color: #8a6a1f;
+}
+
+.av4.av4--esmeralda p.av4-hero__lead {
+  color: var(--av4-ink-soft);
+}
+
+.av4.av4--esmeralda .av4-hero strong {
+  color: var(--av4-wine);
+}
+
+.av4.av4--esmeralda .av4-hero .av4-horario {
+  border-color: rgb(var(--av4-gold-rgb) / 0.6);
+  background: rgb(255 255 255 / 0.62);
+  color: var(--av4-ink);
+}
+
+.av4.av4--esmeralda .av4-hero .av4-horario__hora {
+  color: #7d5f1a;
+}
+
+/* La CTA del hero pasa a esmeralda profundo con letra champán: el latón
+   claro se perdía contra el fondo crema. */
+.av4.av4--esmeralda .av4-hero__copy a.av4-cta {
+  background: linear-gradient(105deg, var(--av4-wine-deep) 0%, #17564a 48%, var(--av4-wine) 100%);
+  color: var(--av4-gold-light);
+  box-shadow:
+    0 0 0 1px rgb(var(--av4-gold-rgb) / 0.65) inset,
+    0 18px 34px -14px rgb(var(--av4-wine-deep-rgb) / 0.65);
+}
+
+.av4.av4--esmeralda .av4-hero__copy a.av4-cta:hover {
+  box-shadow:
+    0 0 0 1px rgb(var(--av4-gold-rgb) / 0.9) inset,
+    0 26px 44px -14px rgb(var(--av4-wine-deep-rgb) / 0.75);
+}
+
+.av4.av4--esmeralda .av4-hero__copy a.av4-cta:focus-visible {
+  outline-color: var(--av4-wine);
+}
+
+.av4.av4--esmeralda .av4-hero__copy .av4-cta::before {
+  background: linear-gradient(100deg, transparent, rgb(var(--av4-gold-soft-rgb) / 0.35), transparent);
+}
+
+.av4.av4--esmeralda .av4-hero__copy .av4-cta__circulo {
+  background: var(--av4-gold-soft);
+  color: var(--av4-wine);
+  box-shadow: none;
+}
+
+/* Cinta de datos sobre fondo claro. */
+.av4.av4--esmeralda .av4-hero .av4-datos li {
+  color: #7d5f1a;
+}
+
+.av4.av4--esmeralda .av4-hero .av4-datos strong {
+  color: var(--av4-wine);
+}
+
+.av4.av4--esmeralda .av4-hero .av4-datos small {
+  color: var(--av4-ink-soft);
+}
+
+@media (max-width: 1000px) {
+  /* Arco arriba (más bajo) y el texto debajo. */
+  .av4.av4--esmeralda .av4-hero__shell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-block: 32px 44px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__retrato {
+    order: -1;
+    justify-self: center;
+    width: min(300px, 74vw);
+    height: min(370px, 91vw);
+    margin: 0 20px 38px 0;
+  }
+
+  .av4.av4--esmeralda .av4-hero__rama {
+    left: -34px;
+    bottom: 26px;
+    width: 76px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__title {
+    margin-top: 22px;
+  }
+}

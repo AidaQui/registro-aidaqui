@@ -16,4 +16,15 @@ import { CONTENIDO_V4, type Contenido } from "@/components/activacion-v4/conteni
  */
 export const CONTENIDO_C: Contenido = {
   ...CONTENIDO_V4,
+  hero: {
+    ...CONTENIDO_V4.hero,
+    // Retrato en arco, a la derecha del texto: para cambiar la foto, cambiar `src` y sus medidas.
+    retrato: {
+      forma: "arco",
+      src: "/activacion-v4/hero-esmeralda.webp",
+      ancho: 680,
+      alto: 750,
+      posicion: "50% 20%",
+    },
+  },
 };

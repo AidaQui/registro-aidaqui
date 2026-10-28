@@ -29,6 +29,22 @@ export type Contenido = {
   hero: {
     titular: ReactNode;
     bajada: ReactNode;
+    /**
+     * Retrato enmarcado opcional. Sin él, el hero es el de v4 (foto a pantalla
+     * completa que pone el CSS). Con él, el hero cambia de composición:
+     *   "ovalo" → centrado, retrato ovalado con halo arriba del texto
+     *   "arco"  → texto a la izquierda y retrato en arco a la derecha
+     * Para cambiar la foto de una variante, se cambia `src` (y su tamaño real).
+     */
+    retrato?: {
+      forma: "ovalo" | "arco";
+      src: string;
+      /** Medidas reales del archivo, para que next/image reserve el espacio. */
+      ancho: number;
+      alto: number;
+      /** object-position del encuadre dentro del marco (por defecto, centrado). */
+      posicion?: string;
+    };
   };
 
   identificacion: {
