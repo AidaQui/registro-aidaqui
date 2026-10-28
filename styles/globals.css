@@ -32217,3 +32217,423 @@ body {
 .av4-lockup__del:only-child {
   font-size: 1.5em;
 }
+
+
+/* ===== Landings por área: presentaciones alternativas de sección =====
+ *
+ * Se activan por datos (`disenio` en el Contenido de cada landing); ninguna
+ * toca la v4. Colores y fuentes salen de las variables del tema, así cada
+ * landing las pinta con su paleta.
+ */
+
+/* ---- Para ti · tarjetas con título ---- */
+
+.av4 .av4-cards--titulos {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.av4-tit {
+  grid-column: span 2;
+  position: relative;
+  overflow: hidden;
+  padding: 30px 28px 32px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.38);
+  border-radius: 18px;
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgb(var(--av4-gold-rgb) / 0.16), transparent 70%),
+    linear-gradient(160deg, var(--av4-wine-2), var(--av4-wine-deep));
+  box-shadow: 0 24px 40px -26px rgb(var(--av4-wine-deep-rgb) / 0.7);
+}
+
+.av4-tit:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+.av4-tit::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 2px;
+  margin-bottom: 18px;
+  background: var(--av4-gold);
+}
+
+.av4 .av4-tit h3 {
+  margin: 0;
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-serif);
+  font-size: clamp(24px, 2.2vw, 29px);
+  font-style: italic;
+  font-weight: var(--av4-accent-weight, 500);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.av4 .av4-tit p {
+  margin-top: 12px;
+  color: rgb(255 255 255 / 0.9);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.av4-pie-fila--ancho {
+  margin-top: 20px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
+  background: linear-gradient(100deg, var(--av4-wine-deep), var(--av4-wine) 70%);
+}
+
+@media (max-width: 1000px) {
+  .av4 .av4-cards--titulos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .av4-tit,
+  .av4-tit:nth-child(n + 4) {
+    grid-column: span 1;
+  }
+
+  .av4-tit:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .av4 .av4-cards--titulos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .av4-tit:last-child {
+    grid-column: auto;
+  }
+
+  .av4-tit {
+    padding: 24px 22px 26px;
+  }
+}
+
+/* ---- Qué cambia · tarjetas con foto ---- */
+
+.av4-cambia {
+  display: flex;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.av4-cambia__item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.av4-cambia__foto {
+  position: relative;
+  aspect-ratio: 3 / 4.5;
+  overflow: hidden;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.4);
+  border-radius: 22px;
+  background: var(--av4-wine-deep);
+  box-shadow: 0 26px 40px -26px rgb(0 0 0 / 0.7);
+}
+
+.av4-cambia__foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent 48%,
+    rgb(var(--av4-wine-deep-rgb) / 0.55) 70%,
+    rgb(var(--av4-wine-deep-rgb) / 0.94) 100%
+  );
+}
+
+.av4-cambia__foto img {
+  transition: transform 0.6s ease;
+}
+
+.av4-cambia__item:hover .av4-cambia__foto img {
+  transform: scale(1.05);
+}
+
+.av4-cambia__area {
+  position: absolute;
+  inset: auto 12px 22px;
+  z-index: 2;
+  color: #fff;
+  font-family: var(--av4-serif);
+  font-size: clamp(22px, 1.9vw, 27px);
+  font-style: italic;
+  font-weight: var(--av4-accent-weight, 500);
+  line-height: 1.15;
+  text-align: center;
+  text-shadow: 0 2px 14px rgb(0 0 0 / 0.5);
+  text-wrap: balance;
+}
+
+.av4 .av4-cambia__item p {
+  margin-top: 16px;
+  color: rgb(255 255 255 / 0.9);
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 1000px) {
+  /* Fila deslizable: se asoma la siguiente tarjeta para invitar a seguir. */
+  .av4-cambia {
+    margin-inline: -24px;
+    padding: 6px 24px 14px;
+    overflow-x: auto;
+    scroll-padding-inline: 24px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .av4-cambia::-webkit-scrollbar {
+    display: none;
+  }
+
+  .av4-cambia__item {
+    flex: 0 0 clamp(190px, 58vw, 250px);
+    scroll-snap-align: start;
+  }
+}
+
+/* ---- Precio · bento ---- */
+
+.av4-bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.av4-bento__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  grid-column: span 4;
+  min-height: 230px;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.34);
+  border-radius: 20px;
+  background:
+    radial-gradient(90% 70% at 0% 0%, rgb(var(--av4-gold-rgb) / 0.16), transparent 70%),
+    rgb(255 255 255 / 0.05);
+}
+
+.av4-bento__card:nth-child(4) {
+  grid-column: span 6;
+}
+
+.av4-bento__card:nth-child(n + 5) {
+  grid-column: span 3;
+}
+
+.av4-bento__card--foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--av4-wine-deep-rgb) / 0.1) 20%,
+    rgb(var(--av4-wine-deep-rgb) / 0.9) 100%
+  );
+}
+
+.av4-bento__ico,
+.av4-bento__txt {
+  position: relative;
+  z-index: 2;
+}
+
+.av4-bento__ico {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
+  color: var(--av4-wine-deep);
+}
+
+.av4-bento__txt {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+/* Banda dorada a todo el ancho, con una muesca abajo al centro (como los conectores). */
+.av4-banda {
+  position: relative;
+  width: 100vw;
+  margin: 40px calc(50% - 50vw) 56px;
+  padding: 18px 24px;
+  background: linear-gradient(90deg, var(--av4-cta-4), var(--av4-cta-3) 50%, var(--av4-cta-4));
+  color: var(--av4-cta-ink);
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.av4-banda::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 46px;
+  height: 17px;
+  background: var(--av4-cta-3);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform: translateX(-50%);
+}
+
+.av4-pr--bento {
+  grid-template-columns: minmax(0, 480px);
+  justify-content: center;
+}
+
+@media (max-width: 1000px) {
+  .av4-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .av4-bento__card,
+  .av4-bento__card:nth-child(4),
+  .av4-bento__card:nth-child(n + 5) {
+    grid-column: span 1;
+    min-height: 210px;
+  }
+
+  .av4-bento__card:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .av4-bento {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .av4-bento__card:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .av4-bento__card {
+    min-height: 190px;
+    padding: 20px;
+  }
+}
+
+/* ---- Bio · mosaico ---- */
+
+.av4-mosaico {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  aspect-ratio: 1 / 1.12;
+}
+
+.av4-mosaico__foto {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--av4-rose-bg);
+  box-shadow: 0 18px 30px -22px rgb(var(--av4-wine-rgb) / 0.55);
+}
+
+.av4-mosaico__foto:nth-child(1) { grid-area: 1 / 1 / 3 / 2; }
+.av4-mosaico__foto:nth-child(2) { grid-area: 1 / 2 / 2 / 4; }
+.av4-mosaico__foto:nth-child(3) { grid-area: 2 / 2 / 3 / 3; }
+.av4-mosaico__foto:nth-child(4) { grid-area: 2 / 3 / 4 / 4; }
+.av4-mosaico__foto:nth-child(5) { grid-area: 3 / 1 / 4 / 2; }
+.av4-mosaico__foto:nth-child(6) { grid-area: 3 / 2 / 4 / 3; }
+
+/* Con cinco fotos, la última ocupa el ancho de las dos columnas. */
+.av4-mosaico--5 .av4-mosaico__foto:nth-child(5) {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+.av4-bio .av4-cta-fila {
+  margin-top: 28px;
+}
+
+@media (max-width: 900px) {
+  .av4-mosaico {
+    aspect-ratio: auto;
+    height: 470px;
+    gap: 10px;
+  }
+}
+
+/* ---- Testimonios · muro ---- */
+
+.av4-muro {
+  column-count: 4;
+  column-gap: 18px;
+}
+
+.av4-tcard--muro {
+  padding: 22px 22px 24px;
+}
+
+@media (max-width: 1250px) {
+  .av4-muro {
+    column-count: 3;
+  }
+}
+
+.av4-tcard--muro {
+  display: flex;
+  width: auto;
+  height: auto;
+  margin-bottom: 18px;
+  break-inside: avoid;
+}
+
+.av4-tcard--muro .av4-tcard__text {
+  flex: none;
+}
+
+/* Los 20 juntos medían ~2900px en escritorio: se muestran 8 (6 en mobile) y
+   el resto con "Ver más". */
+.av4-muro:not(.av4-muro--todos) .av4-tcard--muro:nth-child(n + 9) {
+  display: none;
+}
+
+.av4-muro__mas {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+@media (max-width: 1000px) {
+  .av4-muro {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .av4-muro {
+    column-count: 1;
+  }
+
+  .av4-muro:not(.av4-muro--todos) .av4-tcard--muro:nth-child(n + 7) {
+    display: none;
+  }
+}

@@ -108,6 +108,23 @@ export const CONTENIDO_CODIGO_CORAZON: Contenido = {
     // Foto del área pendiente: se genera con IA (ver chat).
   },
 
+  // Presentación de cada sección (ver `Disenio` en contenido.tsx): lo que da ritmo propio a esta landing.
+  disenio: {
+    paraTi: "titulos",
+    precio: {
+      tipo: "bento",
+      fotos: [
+        { src: "/activacion-v4/experiencia.jpg", posicion: "50% 12%" }, // Zoom
+        undefined, // activación del corazón
+        { src: "/masterclass/aida-2.jpg", posicion: "34% 40%" }, // creencias
+        { src: "/activacion-v2/item2.jpg", posicion: "50% 35%" }, // canalización
+        undefined, // prácticas
+        { src: "/activacion-v4/contexto.jpg", posicion: "50% 40%" }, // meditaciones
+      ],
+    },
+    testimonios: "muro",
+  },
+
   cierre: {
     ...BASE_AREAS.cierre,
     titular: (

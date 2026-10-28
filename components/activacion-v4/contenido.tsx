@@ -30,6 +30,43 @@ export type FotoContenido = {
   posicion?: string;
 };
 
+/** Foto de una tarjeta de "Qué cambia" (una por área, en el orden de `experiencia.cambios`). */
+export type FotoCambia = {
+  src: string;
+  /** object-position del encuadre dentro de la tarjeta. */
+  posicion?: string;
+};
+
+/** Foto del mosaico de la bio. `ancho`/`alto` sólo reservan el espacio; el marco lo define el CSS. */
+export type FotoMosaico = {
+  src: string;
+  /** Sólo la foto con la persona principal lleva descripción; el resto es decorativa. */
+  alt?: string;
+  posicion?: string;
+};
+
+/**
+ * Presentaciones alternativas de cada sección. Todas son opcionales: sin ellas
+ * (v4 y los valores por defecto) la página se ve exactamente como siempre.
+ * Es el único interruptor: cada landing por área elige acá su ritmo.
+ */
+export type Disenio = {
+  /** "Para ti": "titulos" = tarjetas con la primera cláusula como título, sin números. */
+  paraTi?: "titulos";
+  /** "Qué cambia": "fotos" = tarjetas verticales con foto; `fotos` en el orden de `cambios`. */
+  cambia?: { tipo: "fotos"; fotos: FotoCambia[] };
+  /**
+   * Precio: "bento" = lo incluido en una cuadrícula de tarjetas, banda dorada
+   * y la entrada debajo. `fotos` va en el orden de `precio.incluye`; una
+   * posición vacía (undefined) es una tarjeta de sólo texto con icono.
+   */
+  precio?: { tipo: "bento"; fotos: (FotoCambia | undefined)[] };
+  /** Bio: "mosaico" = collage de fotos de distinto tamaño junto al texto. */
+  bio?: { tipo: "mosaico"; fotos: FotoMosaico[] };
+  /** Testimonios: "muro" = mampostería de tarjetas en columnas en vez del carrusel. */
+  testimonios?: "muro";
+};
+
 export type Contenido = {
   /**
    * Nombre de la landing en el logotipo (hero, entrada de precio, cierre y pie)
@@ -177,6 +214,9 @@ export type Contenido = {
     etiqueta: string;
     titular: ReactNode;
   };
+
+  /** Presentación alternativa de algunas secciones (ver `Disenio`). */
+  disenio?: Disenio;
 
   cierre: {
     /** Titular y subtítulo sobre la entrada. Opcionales (v4 no los lleva). */

@@ -1,4 +1,15 @@
-import { Check, ShieldCheck, Tag, Video } from "lucide-react";
+import Image from "next/image";
+import {
+  Check,
+  Compass,
+  Flower2,
+  ListChecks,
+  Radio,
+  ShieldCheck,
+  Sparkles,
+  Tag,
+  Video,
+} from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
@@ -11,6 +22,9 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * línea de perforación y código de barras decorativo). Sin logos de pago
  * inventados: sólo lo que es cierto. En móvil la entrada va primero.
  */
+
+/** Icono de cada tarjeta del bento, en el orden de `precio.incluye`. */
+const ICONOS_BENTO = [Video, Sparkles, Compass, Radio, ListChecks, Flower2];
 
 function Lista({ items, lado }: { items: string[]; lado: "izq" | "der" }) {
   return (
@@ -29,7 +43,8 @@ function Lista({ items, lado }: { items: string[]; lado: "izq" | "der" }) {
 
 export default function Av4Precio() {
   const ref = useScrollReveal<HTMLElement>();
-  const { precio: c, ctaCompra } = useContenido();
+  const { precio: c, ctaCompra, disenio } = useContenido();
+  const bento = disenio?.precio?.tipo === "bento" ? disenio.precio.fotos : null;
   const monto = PRECIO.actual.replace(/€/g, "").trim();
   const moneda = PRECIO.actual.includes("€") ? "€" : "";
 
@@ -47,8 +62,48 @@ export default function Av4Precio() {
           </h2>
         </div>
 
-        <div className="av4-pr">
-          <Lista items={c.incluye.slice(0, 3)} lado="izq" />
+        {bento && (
+          <>
+            {/* "Bento": lo incluido en tarjetas (unas con foto, otras con icono) y la banda de precio. */}
+            <ul className="av4-bento" data-reveal-group data-reveal-fade>
+              {c.incluye.map((texto, i) => {
+                const foto = bento[i];
+                const Icono = ICONOS_BENTO[i % ICONOS_BENTO.length];
+                return (
+                  <li
+                    key={texto}
+                    className={`av4-bento__card${foto ? " av4-bento__card--foto" : ""}`}
+                  >
+                    {foto && (
+                      <Image
+                        src={foto.src}
+                        alt=""
+                        aria-hidden="true"
+                        fill
+                        sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px"
+                        className="av4-cover"
+                        style={{ objectPosition: foto.posicion }}
+                      />
+                    )}
+                    <span className="av4-bento__ico" aria-hidden="true">
+                      <Icono size={20} strokeWidth={1.8} />
+                    </span>
+                    <span className="av4-bento__txt">{texto}</span>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="av4-banda" data-reveal>
+              <span>
+                {c.sellos.unico} · {PRECIO.actual}
+              </span>
+            </div>
+          </>
+        )}
+
+        <div className={`av4-pr${bento ? " av4-pr--bento" : ""}`}>
+          {!bento && <Lista items={c.incluye.slice(0, 3)} lado="izq" />}
 
           <div className="av4-tk" data-reveal>
             <div className="av4-tk__forma">
@@ -98,7 +153,7 @@ export default function Av4Precio() {
             </div>
           </div>
 
-          <Lista items={c.incluye.slice(3)} lado="der" />
+          {!bento && <Lista items={c.incluye.slice(3)} lado="der" />}
         </div>
       </div>
     </section>

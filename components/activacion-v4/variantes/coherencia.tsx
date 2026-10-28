@@ -107,6 +107,12 @@ export const CONTENIDO_COHERENCIA: Contenido = {
     foto: { src: "/activacion-v4/area-coherencia.webp", ancho: 620, alto: 750 },
   },
 
+  // Presentación de cada sección (ver `Disenio` en contenido.tsx): lo que da ritmo propio a esta landing.
+  disenio: {
+    paraTi: "titulos",
+    testimonios: "muro",
+  },
+
   cierre: {
     ...BASE_AREAS.cierre,
     titular: (

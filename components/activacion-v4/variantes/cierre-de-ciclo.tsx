@@ -119,6 +119,28 @@ export const CONTENIDO_CIERRE_DE_CICLO: Contenido = {
     // Foto del área pendiente: se genera con IA (ver chat).
   },
 
+  // Presentación de cada sección (ver `Disenio` en contenido.tsx): lo que da ritmo propio a esta landing.
+  disenio: {
+    cambia: { tipo: "fotos", fotos: [
+        { src: "/activacion-v4/cambia-cierre-decisiones.webp" },
+        { src: "/activacion-v4/cambia-cierre-relaciones.webp" },
+        { src: "/activacion-v4/cambia-cierre-trabajo.webp" },
+        { src: "/activacion-v4/cambia-cierre-dinero.webp" },
+        { src: "/activacion-v4/cambia-cierre-cuerpo.webp" },
+      ] },
+    bio: {
+      tipo: "mosaico",
+      fotos: [
+        { src: "/activacion-v4/momento-2.jpg", alt: "Aida Qui" },
+        { src: "/masterclass/aida-1.jpg", posicion: "62% 40%" },
+        { src: "/activacion-v4/contexto.jpg", posicion: "50% 30%" },
+        { src: "/activacion-v4/mosaico-escenario.webp", posicion: "30% 40%" },
+        { src: "/activacion-v4/momento-4.jpg", posicion: "50% 30%" },
+        { src: "/registro-v2/hero.webp", posicion: "82% 30%" },
+      ],
+    },
+  },
+
   cierre: {
     ...BASE_AREAS.cierre,
     titular: (

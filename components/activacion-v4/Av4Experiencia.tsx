@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Heart, HeartCrack } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Macbook from "@/components/activacion-v4/Av4Macbook";
@@ -21,7 +22,8 @@ type Props = {
 
 export default function Av4Experiencia({ modo }: Props) {
   const ref = useScrollReveal<HTMLElement>();
-  const { experiencia: c, ctaPrincipal } = useContenido();
+  const { experiencia: c, ctaPrincipal, disenio } = useContenido();
+  const conFotos = disenio?.cambia?.tipo === "fotos" ? disenio.cambia.fotos : null;
   const centrado = modo === "corazon";
 
   return (
@@ -85,15 +87,40 @@ export default function Av4Experiencia({ modo }: Props) {
           {c.tituloCambios}
         </h3>
 
-        <ul className="av4-borde av4-exp__cambios" data-reveal-group data-reveal-fade>
-          {c.cambios.map(([area, cambio]) => (
-            <li key={area}>
-              <span>
-                <strong>{area}:</strong> {cambio}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {conFotos ? (
+          /* "Tarjetas con foto": una por área, en fila con scroll-snap en móvil. */
+          <ul className="av4-cambia" data-reveal-group data-reveal-fade>
+            {c.cambios.map(([area, cambio], i) => (
+              <li key={area} className="av4-cambia__item">
+                <div className="av4-cambia__foto">
+                  {conFotos[i] && (
+                    <Image
+                      src={conFotos[i].src}
+                      alt=""
+                      aria-hidden="true"
+                      fill
+                      sizes="(max-width: 700px) 60vw, (max-width: 1100px) 30vw, 220px"
+                      className="av4-cover"
+                      style={{ objectPosition: conFotos[i].posicion }}
+                    />
+                  )}
+                  <span className="av4-cambia__area">{area}</span>
+                </div>
+                <p>{cambio}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="av4-borde av4-exp__cambios" data-reveal-group data-reveal-fade>
+            {c.cambios.map(([area, cambio]) => (
+              <li key={area}>
+                <span>
+                  <strong>{area}:</strong> {cambio}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {!centrado && (
           <div className="av4-cta-fila av4-cta-fila--centro" data-reveal>

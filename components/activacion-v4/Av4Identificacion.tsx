@@ -9,9 +9,31 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * sin añadir palabras. El copy vive en contenido.tsx.
  */
 
+/**
+ * Parte una frase en su primera cláusula (hasta la primera coma o dos puntos,
+ * que se quita del título) y el resto, sin tocar ni añadir palabras. Si no hay
+ * coma, todo va como texto y el título queda vacío.
+ */
+function partir(frase: string): { titulo: string; texto: string } {
+  const corte = frase.search(/[,:]/);
+  if (corte < 1) return { titulo: "", texto: frase };
+  return {
+    titulo: frase.slice(0, corte).trim(),
+    texto: frase.slice(corte + 1).trim(),
+  };
+}
+
 export default function Av4Identificacion() {
   const ref = useScrollReveal<HTMLElement>();
-  const { identificacion: c, ctaCompra } = useContenido();
+  const { identificacion: c, ctaCompra, disenio } = useContenido();
+  const conTitulos = disenio?.paraTi === "titulos";
+  // Las landings por área traen frases enteras (`items`); v4, título + texto.
+  const tarjetas = c.items
+    ? c.items.map(partir)
+    : c.senales.map(({ titulo, texto }) => ({
+        titulo: titulo.replace(/[,:]\s*$/, ""),
+        texto,
+      }));
 
   return (
     <section
@@ -28,7 +50,21 @@ export default function Av4Identificacion() {
           <p className="av4-texto">{c.texto}</p>
         </div>
 
-        {c.items ? (
+        {conTitulos ? (
+          /* "Tarjetas con título": sin números; la primera cláusula, en el color de acento. */
+          <ul
+            className="av4-cards av4-cards--titulos"
+            data-reveal-group
+            data-reveal-fade
+          >
+            {tarjetas.map(({ titulo, texto }) => (
+              <li key={texto} className="av4-tit">
+                {titulo && <h3>{titulo}</h3>}
+                <p>{texto}</p>
+              </li>
+            ))}
+          </ul>
+        ) : c.items ? (
           /* Landings por área: cada tarjeta lleva su número grande y la frase entera. */
           <ul
             className="av4-cards av4-cards--num"
@@ -58,7 +94,10 @@ export default function Av4Identificacion() {
           </ul>
         )}
 
-        <div className="av4-pie-fila" data-reveal>
+        <div
+          className={`av4-pie-fila${conTitulos ? " av4-pie-fila--ancho" : ""}`}
+          data-reveal
+        >
           <p>{c.cierre}</p>
           <Av4Cta href="#av4-precio" label={ctaCompra} />
         </div>

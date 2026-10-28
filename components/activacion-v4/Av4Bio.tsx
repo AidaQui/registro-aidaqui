@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
@@ -10,7 +11,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 export default function Av4Bio() {
   const ref = useScrollReveal<HTMLElement>();
-  const c = useContenido().bio;
+  const { bio: c, ctaCompra, disenio } = useContenido();
+  const mosaico = disenio?.bio?.tipo === "mosaico" ? disenio.bio.fotos : null;
 
   return (
     <section
@@ -19,6 +21,27 @@ export default function Av4Bio() {
       aria-labelledby="av4-bio-title"
     >
       <div className="av4-wrap av4-dos">
+        {mosaico ? (
+          /* "Mosaico": fotos de distinto tamaño; la 1.ª es la alta, la 2.ª la ancha. */
+          <div
+            className={`av4-mosaico av4-mosaico--${mosaico.length}`}
+            data-reveal="left"
+          >
+            {mosaico.map((f) => (
+              <div key={f.src} className="av4-mosaico__foto">
+                <Image
+                  src={f.src}
+                  alt={f.alt ?? ""}
+                  {...(!f.alt && { "aria-hidden": true })}
+                  fill
+                  sizes="(max-width: 900px) 46vw, 300px"
+                  className="av4-cover"
+                  style={{ objectPosition: f.posicion }}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
         <div className="av4-collage" data-reveal="left">
           <div className="av4-collage__alta">
             <Image
@@ -49,6 +72,7 @@ export default function Av4Bio() {
           </div>
           <Av4Sello className="av4-collage__sello" size={100} />
         </div>
+        )}
 
         <div className="av4-dos__copy">
           <div data-reveal>
@@ -63,6 +87,12 @@ export default function Av4Bio() {
               <p key={i}>{p}</p>
             ))}
           </div>
+
+          {mosaico && (
+            <div className="av4-cta-fila" data-reveal>
+              <Av4Cta href="#av4-precio" label={ctaCompra} />
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -106,6 +106,38 @@ export const CONTENIDO_MISION_ALMA: Contenido = {
     foto: { src: "/activacion-v4/area-mision.webp", ancho: 470, alto: 588, posicion: "50% 20%" },
   },
 
+  // Presentación de cada sección (ver `Disenio` en contenido.tsx): lo que da ritmo propio a esta landing.
+  disenio: {
+    cambia: { tipo: "fotos", fotos: [
+        { src: "/activacion-v4/cambia-mision-decisiones.webp" },
+        { src: "/activacion-v4/cambia-mision-relaciones.webp" },
+        { src: "/activacion-v4/cambia-mision-trabajo.webp" },
+        { src: "/activacion-v4/cambia-mision-dinero.webp" },
+        { src: "/activacion-v4/cambia-mision-cuerpo.webp" },
+      ] },
+    precio: {
+      tipo: "bento",
+      fotos: [
+        { src: "/activacion-v4/experiencia.jpg", posicion: "50% 12%" }, // Zoom
+        undefined, // activación del corazón
+        { src: "/masterclass/aida-2.jpg", posicion: "34% 40%" }, // creencias
+        { src: "/activacion-v2/item2.jpg", posicion: "50% 35%" }, // canalización
+        undefined, // prácticas
+        { src: "/activacion-v4/contexto.jpg", posicion: "50% 40%" }, // meditaciones
+      ],
+    },
+    bio: {
+      tipo: "mosaico",
+      fotos: [
+        { src: "/activacion-v4/momento-2.jpg", alt: "Aida Qui" },
+        { src: "/activacion-v4/bio-1.jpg", posicion: "50% 58%" },
+        { src: "/activacion-v4/momento-4.jpg", posicion: "50% 30%" },
+        { src: "/activacion-v4/mosaico-escenario.webp", posicion: "30% 40%" },
+        { src: "/registro-v2/hero.webp", posicion: "80% 30%" },
+      ],
+    },
+  },
+
   cierre: {
     ...BASE_AREAS.cierre,
     titular: (
