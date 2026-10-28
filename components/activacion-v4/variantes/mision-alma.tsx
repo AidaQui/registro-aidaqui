@@ -24,7 +24,7 @@ export const CONTENIDO_MISION_ALMA: Contenido = {
   ...BASE_AREAS,
 
   // Sin el precio en los botones (sí en la cinta y en la entrada).
-  ctaPrincipal: "Quiero mi plaza",
+  ctaPrincipal: "Quiero apuntarme",
 
   marca: {
     nombre: "Misión Alma",
@@ -157,6 +157,6 @@ export const CONTENIDO_MISION_ALMA: Contenido = {
       </>
     ),
     subtitulo: `${EL_DIA} activamos tu misión desde el corazón.`,
-    cta: "Quiero mi plaza",
+    cta: "Quiero apuntarme",
   },
 };

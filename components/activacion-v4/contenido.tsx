@@ -273,7 +273,7 @@ export const CONTENIDO_V4: Contenido = {
   },
 
   ctaPrincipal: CTA_LABEL,
-  ctaCompra: "Activa tu poder",
+  ctaCompra: "Quiero apuntarme",
 
   hero: {
     titular: (
@@ -335,7 +335,7 @@ export const CONTENIDO_V4: Contenido = {
     ],
     cierre: (
       <>
-        Esta activación es un espacio para{" "}
+        Esta inmersión es un espacio para{" "}
         <strong>reconectar con la verdad de tu corazón</strong> y recuperar el
         poder interior para empezar a actuar en coherencia con ella.
       </>

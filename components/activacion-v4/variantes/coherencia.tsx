@@ -22,7 +22,7 @@ export const CONTENIDO_COHERENCIA: Contenido = {
   ...BASE_AREAS,
 
   // Sin el precio en los botones (sí en la cinta y en la entrada).
-  ctaPrincipal: "Quiero mi plaza",
+  ctaPrincipal: "Quiero apuntarme",
 
   marca: {
     nombre: "Operación Coherencia",
@@ -130,6 +130,6 @@ export const CONTENIDO_COHERENCIA: Contenido = {
         Tu cuerpo ya ha hablado. {oro("La pregunta es si vas a escucharlo.")}
       </>
     ),
-    cta: "Quiero mi plaza",
+    cta: "Quiero apuntarme",
   },
 };

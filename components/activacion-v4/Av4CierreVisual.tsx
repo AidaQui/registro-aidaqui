@@ -344,7 +344,7 @@ export function CierreSobre({ cta }: Props) {
           rel="noopener noreferrer"
           data-sierra="checkout"
           data-sierra-target={`Checkout ${PRECIO.actual} · cierre-sobre`}
-          aria-label={`Quiero mi plaza: ${nombre}, ${EVENTO.fechaCorta}`}
+          aria-label={`Quiero apuntarme: ${nombre}, ${EVENTO.fechaCorta}`}
           style={{
             // rotateX va invertido: un puntero bajo el centro inclina el borde de arriba hacia vos.
             transform: `translateY(-50%) rotateY(${inclinacion.x * INCLINACION}deg) rotateX(${-inclinacion.y * INCLINACION}deg)`,
@@ -403,7 +403,7 @@ export function CierreSobre({ cta }: Props) {
             aria-hidden="true"
             style={{ transform: `translate3d(${etiqueta.x}px, ${etiqueta.y}px, 0)` }}
           >
-            Quiero mi plaza
+            Quiero apuntarme
           </span>
         )}
       </div>

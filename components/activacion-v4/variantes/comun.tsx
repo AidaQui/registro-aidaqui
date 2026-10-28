@@ -25,7 +25,7 @@ export const EL_DIA =
 /** Cierre del "Para ti": es el mismo en las cuatro. */
 export const PARA_TI_CIERRE = (
   <>
-    Esta activación es un espacio para reconectar con la verdad de tu corazón y
+    Esta inmersión es un espacio para reconectar con la verdad de tu corazón y
     recuperar el poder interior para empezar a actuar en coherencia en tu vida.
   </>
 );
@@ -39,7 +39,7 @@ export const EXPERIENCIA_TITULAR = (
 
 /** "A través de la meditación…": es la misma en las cuatro. */
 export const EXPERIENCIA_INTRO =
-  "A través de la meditación y una activación energética guiada vas a:";
+  "A través de la meditación y una inmersión energética guiada vas a:";
 
 /** Bloque B: los tres párrafos del cliente. */
 export const CONTEXTO_PARRAFOS: ReactNode[] = [
@@ -56,9 +56,9 @@ export const BASE_AREAS: Contenido = {
   ...CONTENIDO_V4,
 
   // Hero y precio: "Quiero mi plaza · 19€" (el monto sale de config.ts).
-  ctaPrincipal: `Quiero mi plaza · ${PRECIO.actual}`,
+  ctaPrincipal: `Quiero apuntarme · ${PRECIO.actual}`,
   // "Para ti", "La experiencia" y entrada de precio.
-  ctaCompra: "Quiero mi plaza",
+  ctaCompra: "Quiero apuntarme",
 
   // Bloque A · Por qué el corazón (idéntico al de v4 salvo "deberías" y "nutran").
   experiencia: {
@@ -98,7 +98,7 @@ export const BASE_AREAS: Contenido = {
     titular: () => <>¿Qué recibirás por solo {oro(PRECIO.actual)}?</>,
     incluye: [
       "Una experiencia guiada en directo vía Zoom.",
-      "Una activación energética del corazón y el poder interior.",
+      "Una inmersión energética del corazón y el poder interior.",
       "Mi práctica para trabajar las creencias que te limitan.",
       "Una canalización para el grupo en directo.",
       "Prácticas para integrar la experiencia en tu día a día.",
