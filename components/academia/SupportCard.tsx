@@ -1,4 +1,6 @@
-const soporteUrl = "https://wa.link/b92t0c";
+import { SOPORTE_WHATSAPP } from "@/lib/soporte";
+
+const soporteUrl = SOPORTE_WHATSAPP;
 
 const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

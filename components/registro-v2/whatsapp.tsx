@@ -1,3 +1,5 @@
+import { SOPORTE_WHATSAPP } from "@/lib/soporte";
+
 // Links e ícono de WhatsApp de registro-v2. Los usan el cierre de la
 // landing y la página de gracias.
 
@@ -6,7 +8,7 @@ export const whatsappGroupUrl =
   "https://chat.whatsapp.com/BNT1tgeM4br5p2SNjNGO3r";
 
 /** Soporte: consultas puntuales, no el grupo. */
-export const soporteUrl = "https://wa.link/xnvgve";
+export const soporteUrl = SOPORTE_WHATSAPP;
 
 export const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

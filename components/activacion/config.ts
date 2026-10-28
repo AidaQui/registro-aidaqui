@@ -1,3 +1,5 @@
+import { SOPORTE_WHATSAPP } from "@/lib/soporte";
+
 /**
  * Single source of truth for everything that changes between editions:
  * title, dates, schedules and conversion links.
@@ -44,7 +46,7 @@ export const HORARIOS: Horario[] = [
  */
 export const LINKS = {
   registro: "https://pixelbridge-theta.vercel.app/go",
-  soporte: "https://wa.link/hlo09w",
+  soporte: SOPORTE_WHATSAPP,
 } as const;
 
 export const CTA_LABEL = "Quiero reservar mi lugar";

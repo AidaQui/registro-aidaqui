@@ -1,11 +1,13 @@
+import { SOPORTE_WHATSAPP } from "@/lib/soporte";
+
 /**
  * Fuente única de todo lo que cambia entre ediciones: título, fecha,
  * horarios, precio y enlaces de conversión.
  *
  * GRUPO_WHATSAPP es el de esta edición (confirmado por el cliente el
- * 23/10/2026). LINKS.registro apunta al checkout de 19€ y LINKS.soporte al
- * WhatsApp de soporte nuevo (ambos del 28/10/2026). Cambiar el registro rompe
- * el embudo, no sólo el botón.
+ * 23/10/2026). LINKS.registro apunta al checkout de 19€ (28/10/2026) y
+ * LINKS.soporte sale de lib/soporte.ts, el mismo para todas las landings.
+ * Cambiar el registro rompe el embudo, no sólo el botón.
  */
 
 export const EVENTO = {
@@ -70,7 +72,7 @@ const PIXELBRIDGE_REGISTRO = `https://pixelbridge-theta.vercel.app/go?c=${encode
  */
 export const LINKS = {
   registro: PIXELBRIDGE_REGISTRO,
-  soporte: "https://wa.link/hlo09w",
+  soporte: SOPORTE_WHATSAPP,
 } as const;
 
 /** Grupo de WhatsApp de la experiencia (página de gracias). */

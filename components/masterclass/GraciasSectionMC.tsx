@@ -1,8 +1,10 @@
+import { SOPORTE_WHATSAPP } from "@/lib/soporte";
+
 // Link de invitación al grupo VIP de WhatsApp de la masterclass.
 const whatsappGroupUrl =
   "https://chat.whatsapp.com/FlSvsQGdwciLphfK15z3WD";
 
-const soporteUrl = "https://wa.link/b92t0c";
+const soporteUrl = SOPORTE_WHATSAPP;
 
 const WhatsAppIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
