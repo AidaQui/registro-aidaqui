@@ -44,7 +44,7 @@ export const HORARIOS: Horario[] = [
  */
 export const LINKS = {
   registro: "https://pixelbridge-theta.vercel.app/go",
-  soporte: "https://wa.link/insiui",
+  soporte: "https://wa.link/hlo09w",
 } as const;
 
 export const CTA_LABEL = "Quiero reservar mi lugar";

@@ -2,9 +2,10 @@
  * Fuente única de todo lo que cambia entre ediciones: título, fecha,
  * horarios, precio y enlaces de conversión.
  *
- * LINKS.registro y GRUPO_WHATSAPP son los de esta edición (confirmados por el
- * cliente el 23/10/2026). LINKS.soporte sigue siendo el de la edición
- * anterior. Cambiar el registro rompe el embudo, no sólo el botón.
+ * GRUPO_WHATSAPP es el de esta edición (confirmado por el cliente el
+ * 23/10/2026). LINKS.registro apunta al checkout de 19€ y LINKS.soporte al
+ * WhatsApp de soporte nuevo (ambos del 28/10/2026). Cambiar el registro rompe
+ * el embudo, no sólo el botón.
  */
 
 export const EVENTO = {
@@ -31,11 +32,12 @@ export const HORARIOS: Horario[] = [
 ];
 
 /**
- * Copia de la configuración que PixelBridge tiene para su link /go/27 (píxel de
- * Meta y link de pago de Stripe de 27€). Se arma el link /go?c=… acá, en vez
- * de usar el corto /go/27, para que el kit de Sierra pueda sumarle al link de
- * Stripe de qué landing y de qué anuncio viene la persona: PixelBridge no
- * reenvía nada por su cuenta, y sin esto las ventas llegan sin anuncio.
+ * Configuración de PixelBridge para el checkout del evento (píxel de Meta y
+ * link de pago de Stripe de 19€, producto prod_VWQOUxqU7A9U6e). Se arma el
+ * link /go?c=… acá, en vez de usar un link corto de PixelBridge, para que el
+ * kit de Sierra pueda sumarle al link de Stripe de qué landing y de qué
+ * anuncio viene la persona: PixelBridge no reenvía nada por su cuenta, y sin
+ * esto las ventas llegan sin anuncio.
  *
  * ⚠ Si se cambia el píxel o el link de Stripe dentro de PixelBridge, hay que
  * cambiarlo también acá, o el botón sigue mandando a lo viejo.
@@ -43,9 +45,9 @@ export const HORARIOS: Horario[] = [
 const PIXELBRIDGE = {
   p: "1942441866476662",
   k: "",
-  s: "https://buy.stripe.com/8x27sDaowe1w8b8cYW2401f",
+  s: "https://buy.stripe.com/fZudR1eEM9Lg2QO4sq2401g",
   n: "",
-  v: "27",
+  v: "19",
   c: "EUR",
   t: "¡Gracias por tu compra!",
   m: "Tu pedido ha sido procesado correctamente. Revisa tu email para más detalles.",
@@ -62,13 +64,13 @@ const PIXELBRIDGE_REGISTRO = `https://pixelbridge-theta.vercel.app/go?c=${encode
 
 /**
  * Enlaces de conversión. `registro` es el redirector de PixelBridge: dispara
- * el píxel de Meta y manda al link de pago de Stripe de 27€. Al hacer clic, el
+ * el píxel de Meta y manda al link de pago de Stripe de 19€. Al hacer clic, el
  * kit de Sierra le suma al link de Stripe la landing y el anuncio de origen
  * (client_reference_id), y el webhook los manda al panel con la venta.
  */
 export const LINKS = {
   registro: PIXELBRIDGE_REGISTRO,
-  soporte: "https://wa.link/insiui",
+  soporte: "https://wa.link/hlo09w",
 } as const;
 
 /** Grupo de WhatsApp de la experiencia (página de gracias). */
@@ -81,7 +83,7 @@ export const CTA_LABEL = "Activa tu corazón";
  * de referencia: un tachado que nadie ha pagado no persuade, molesta.
  */
 export const PRECIO = {
-  actual: "27€",
+  actual: "19€",
   tachado: "",
   nota: "Pago único",
 } as const;

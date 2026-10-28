@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import Av4WhatsAppIcon from "@/components/activacion-v4/Av4WhatsAppIcon";
-import { CTA_LABEL, LINKS } from "@/components/activacion-v4/config";
+import { CTA_LABEL, LINKS, PRECIO } from "@/components/activacion-v4/config";
 
 type Props = {
   label?: string;
@@ -33,7 +33,7 @@ export default function Av4Cta({
       href={href}
       className={`av4-cta av4-cta--${variante} ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
-      {...(checkout && { "data-sierra": "checkout", "data-sierra-target": ubicacion ? `Checkout 27€ · ${ubicacion}` : "Checkout 27€" })}
+      {...(checkout && { "data-sierra": "checkout", "data-sierra-target": ubicacion ? `Checkout ${PRECIO.actual} · ${ubicacion}` : `Checkout ${PRECIO.actual}` })}
     >
       {icono}
       <span className="av4-cta__label">{label}</span>

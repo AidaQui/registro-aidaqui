@@ -16,6 +16,10 @@ export const config = {
  * (prod_…) o de precio (price_…), separados por coma. Se revisa primero
  * Corazón, después Activación; lo que no coincide con ninguno sigue yendo a
  * Academia, que es el comportamiento que había antes de separar.
+ *
+ * `STRIPE_CORAZON_19EUR_IDS` es el producto de 19€ del evento del 15 de
+ * noviembre (prod_VWQOUxqU7A9U6e): va aparte para que se reconozca de un
+ * vistazo en Vercel, y cuenta como Corazón igual que `STRIPE_CORAZON_IDS`.
  */
 function parseIdList(value: string | undefined): string[] {
   return (value ?? "")
@@ -32,7 +36,7 @@ function resolverDestino(idsComprados: string[]): Destino {
     return idsComprados.some((id) => ids.includes(id));
   };
 
-  if (compro(process.env.STRIPE_CORAZON_IDS)) {
+  if (compro(process.env.STRIPE_CORAZON_IDS) || compro(process.env.STRIPE_CORAZON_19EUR_IDS)) {
     return { producto: "corazon", groupId: process.env.MAILERLITE_CORAZON_GROUP_ID };
   }
   if (compro(process.env.STRIPE_ACTIVACION_IDS)) {
