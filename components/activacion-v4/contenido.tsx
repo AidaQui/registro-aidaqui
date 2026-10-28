@@ -91,7 +91,7 @@ export type Contenido = {
     linea1: string;
     /** Segunda línea, en mayúsculas y color de acento (p. ej. "COHERENCIA"). */
     linea2: string;
-    /** Línea en cursiva bajo la segunda (sólo v4: "y el Poder Interior"). */
+    /** Línea opcional en cursiva bajo la segunda. */
     script?: string;
     /** Diapositiva del MacBook: [línea normal, línea en cursiva]. */
     macbook: [string, string];
@@ -245,11 +245,10 @@ export type Contenido = {
 
 export const CONTENIDO_V4: Contenido = {
   marca: {
-    nombre: "Activación del Corazón y el Poder Interior",
-    linea1: "ACTIVACIÓN",
-    linea2: "DEL CORAZÓN",
-    script: "y el Poder Interior",
-    macbook: ["Activación del Corazón", "y el Poder Interior"],
+    nombre: "Experiencia Energética",
+    linea1: "EXPERIENCIA",
+    linea2: "ENERGÉTICA",
+    macbook: ["Experiencia", "Energética"],
   },
 
   ctaPrincipal: CTA_LABEL,

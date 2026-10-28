@@ -7,7 +7,7 @@ import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import TestimonialModal from "@/components/academia-lista-de-espera/TestimonialModal";
 import {
-  testimonials,
+  testimonials as todosLosTestimonios,
   getInitials,
   type Testimonial,
 } from "@/components/academia-lista-de-espera/testimonials-data";
@@ -17,6 +17,12 @@ import {
  * /lista-de-espera). NO son de esta activación, y el titular lo dice así.
  * El modal se estiliza bajo .av4-modal-scope (ver globals.css).
  */
+/* El evento ya no se llama "Activación del Corazón": la opinión que lo nombra
+   así es real y no se edita, así que en estas landings no se muestra. */
+const testimonials = todosLosTestimonios.filter(
+  (t) => !/activaci[oó]n del coraz[oó]n/i.test(t.body),
+);
+
 export default function Av4Testimonios() {
   const ref = useScrollReveal<HTMLElement>();
   const trackRef = useMarquee<HTMLDivElement>();

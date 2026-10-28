@@ -12,7 +12,7 @@ import { SOPORTE_WHATSAPP } from "@/lib/soporte";
 
 export const EVENTO = {
   /** Nombre de la experiencia. */
-  titulo: "Activación del Corazón y el Poder Interior",
+  titulo: "Experiencia Energética",
   /** Rótulo corto de la fecha. */
   fechaCorta: "15 de noviembre",
   /** Forma larga para prosa. */
