@@ -22,6 +22,9 @@ export const DESCRIPCION_COHERENCIA =
 export const CONTENIDO_COHERENCIA: Contenido = {
   ...BASE_AREAS,
 
+  // Sin el precio en los botones (sí en la cinta y en la entrada).
+  ctaPrincipal: "Quiero mi plaza",
+
   marca: {
     nombre: "Operación Coherencia",
     linea1: "OPERACIÓN",
@@ -76,6 +79,8 @@ export const CONTENIDO_COHERENCIA: Contenido = {
     texto:
       "Primero activamos el corazón. Después llevamos lo que descubras a tu cuerpo, a tu descanso y a la forma en que vives cada día.",
     intro: EXPERIENCIA_INTRO,
+    // Foto de la pantalla del MacBook (otra que en las demás landings).
+    foto: { src: "/activacion-v2/item4.jpg", posicion: "50% 35%" },
     items: [
       "Sacar a tu cuerpo del modo alerta y volver a sentir calma.",
       "Reconocer qué situación de tu vida te está drenando la energía.",
@@ -102,8 +107,6 @@ export const CONTENIDO_COHERENCIA: Contenido = {
       "Recuperas la energía que gastabas sosteniendo lo que no es tuyo.",
       "Escuchas las señales de tu cuerpo antes de que tengan que gritar.",
     ],
-    aviso:
-      "Esta activación no sustituye a ningún tratamiento médico. Es un espacio para escucharte y empezar a vivir de una forma que tu cuerpo agradezca.",
     foto: { src: "/activacion-v4/area-coherencia.webp", ancho: 620, alto: 750 },
   },
 
@@ -111,6 +114,8 @@ export const CONTENIDO_COHERENCIA: Contenido = {
   disenio: {
     paraTi: "titulos",
     testimonios: "muro",
+    heroParaEnBajada: true,
+    prueba: "hero",
   },
 
   cierre: {
@@ -121,6 +126,6 @@ export const CONTENIDO_COHERENCIA: Contenido = {
       </>
     ),
     subtitulo: `${EL_DIA}, una noche para volver a ti y recuperar tu energía.`,
-    cta: BASE_AREAS.ctaPrincipal,
+    cta: "Quiero mi plaza",
   },
 };

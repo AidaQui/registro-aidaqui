@@ -51,8 +51,11 @@ export type FotoMosaico = {
  * Es el único interruptor: cada landing por área elige acá su ritmo.
  */
 export type Disenio = {
-  /** "Para ti": "titulos" = tarjetas con la primera cláusula como título, sin números. */
-  paraTi?: "titulos";
+  /**
+   * "Para ti": "titulos" = tarjetas con la primera cláusula como título, sin
+   * números; "cronologia" = filas con numeral grande sobre una línea vertical.
+   */
+  paraTi?: "titulos" | "cronologia";
   /** "Qué cambia": "fotos" = tarjetas verticales con foto; `fotos` en el orden de `cambios`. */
   cambia?: { tipo: "fotos"; fotos: FotoCambia[] };
   /**
@@ -60,11 +63,20 @@ export type Disenio = {
    * y la entrada debajo. `fotos` va en el orden de `precio.incluye`; una
    * posición vacía (undefined) es una tarjeta de sólo texto con icono.
    */
-  precio?: { tipo: "bento"; fotos: (FotoCambia | undefined)[] };
+  precio?:
+    | { tipo: "bento"; fotos: (FotoCambia | undefined)[] }
+    /** "polaroid" = tarjetas tipo foto instantánea con la frase al pie; una foto por frase. */
+    | { tipo: "polaroid"; fotos: FotoCambia[] };
   /** Bio: "mosaico" = collage de fotos de distinto tamaño junto al texto. */
   bio?: { tipo: "mosaico"; fotos: FotoMosaico[] };
   /** Testimonios: "muro" = mampostería de tarjetas en columnas en vez del carrusel. */
   testimonios?: "muro";
+  /** Hero: "Para mujeres que…" se funde como última frase de la bajada (subrayada). */
+  heroParaEnBajada?: boolean;
+  /** "La experiencia": el botón va bajo el MacBook en vez de en la columna de texto. */
+  ctaBajoMac?: boolean;
+  /** Prueba social (avatares + valoración ya mostrada en Testimonios): en el hero o junto al precio. */
+  prueba?: "hero" | "precio";
 };
 
 export type Contenido = {
@@ -141,6 +153,8 @@ export type Contenido = {
     /** "A través de la meditación y una activación energética guiada vas a:" */
     intro: string;
     items: string[];
+    /** Foto de la pantalla del MacBook. Sin ella, /activacion-v4/experiencia.jpg. */
+    foto?: FotoCambia;
   };
 
   /**

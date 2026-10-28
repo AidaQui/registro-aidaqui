@@ -27,6 +27,7 @@ export default function Av4Identificacion() {
   const ref = useScrollReveal<HTMLElement>();
   const { identificacion: c, ctaCompra, disenio } = useContenido();
   const conTitulos = disenio?.paraTi === "titulos";
+  const cronologia = disenio?.paraTi === "cronologia" && !!c.items;
   // Las landings por área traen frases enteras (`items`); v4, título + texto.
   const tarjetas = c.items
     ? c.items.map(partir)
@@ -50,7 +51,20 @@ export default function Av4Identificacion() {
           <p className="av4-texto">{c.texto}</p>
         </div>
 
-        {conTitulos ? (
+        {cronologia && c.items ? (
+          /* "Cronología": una fila por frase, con numeral grande sobre una línea vertical. */
+          <ol className="av4-crono" data-reveal-group data-reveal-fade>
+            {c.items.map((texto, i) => (
+              <li key={texto} className="av4-crono__fila">
+                <span className="av4-crono__n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="av4-crono__nodo" aria-hidden="true" />
+                <p>{texto}</p>
+              </li>
+            ))}
+          </ol>
+        ) : conTitulos ? (
           /* "Tarjetas con título": sin números; la primera cláusula, en el color de acento. */
           <ul
             className="av4-cards av4-cards--titulos"
@@ -95,7 +109,7 @@ export default function Av4Identificacion() {
         )}
 
         <div
-          className={`av4-pie-fila${conTitulos ? " av4-pie-fila--ancho" : ""}`}
+          className={`av4-pie-fila${conTitulos ? " av4-pie-fila--ancho" : ""}${cronologia ? " av4-pie-fila--crono" : ""}`}
           data-reveal
         >
           <p>{c.cierre}</p>

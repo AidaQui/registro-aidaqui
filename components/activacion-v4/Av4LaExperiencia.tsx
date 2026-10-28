@@ -10,8 +10,9 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 export default function Av4LaExperiencia() {
   const ref = useScrollReveal<HTMLElement>();
-  const { laExperiencia: c, ctaCompra } = useContenido();
+  const { laExperiencia: c, ctaCompra, disenio } = useContenido();
   if (!c) return null;
+  const ctaBajo = !!disenio?.ctaBajoMac;
 
   return (
     <section
@@ -40,13 +41,20 @@ export default function Av4LaExperiencia() {
             ))}
           </ul>
 
-          <div className="av4-cta-fila" data-reveal>
-            <Av4Cta href="#av4-precio" label={ctaCompra} />
-          </div>
+          {!ctaBajo && (
+            <div className="av4-cta-fila" data-reveal>
+              <Av4Cta href="#av4-precio" label={ctaCompra} />
+            </div>
+          )}
         </div>
 
-        <div data-reveal="right">
+        <div className={ctaBajo ? "av4-vive__mac" : undefined} data-reveal="right">
           <Av4Macbook />
+          {ctaBajo && (
+            <div className="av4-cta-fila av4-cta-fila--centro av4-vive__cta">
+              <Av4Cta href="#av4-precio" label={ctaCompra} />
+            </div>
+          )}
         </div>
       </div>
     </section>

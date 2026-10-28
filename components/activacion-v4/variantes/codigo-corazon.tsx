@@ -114,15 +114,17 @@ export const CONTENIDO_CODIGO_CORAZON: Contenido = {
     precio: {
       tipo: "bento",
       fotos: [
-        { src: "/activacion-v4/experiencia.jpg", posicion: "50% 12%" }, // Zoom
-        undefined, // activación del corazón
-        { src: "/masterclass/aida-2.jpg", posicion: "34% 40%" }, // creencias
-        { src: "/activacion-v2/item2.jpg", posicion: "50% 35%" }, // canalización
-        undefined, // prácticas
-        { src: "/activacion-v4/contexto.jpg", posicion: "50% 40%" }, // meditaciones
+        { src: "/activacion-v2/item2.jpg", posicion: "50% 40%" }, // Zoom en directo
+        { src: "/activacion-v4/area-coherencia.webp", posicion: "50% 30%" }, // activación del corazón
+        { src: "/activacion-v4/mosaico-escenario-original.webp", posicion: "50% 40%" }, // creencias: Aida guiando
+        { src: "/activacion-v2/item4.jpg", posicion: "50% 64%" }, // canalización: Aida con el icono de Zoom
+        { src: "/activacion-v2/item1.jpg", posicion: "50% 30%" }, // prácticas para el día a día
+        { src: "/activacion-v4/bio-1.jpg", posicion: "50% 45%" }, // meditaciones
       ],
     },
     testimonios: "muro",
+    heroParaEnBajada: true,
+    prueba: "precio",
   },
 
   cierre: {

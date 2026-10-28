@@ -11,14 +11,19 @@ import { EVENTO, HORARIOS, PRECIO } from "@/components/activacion-v4/config";
  * copia va con aria-hidden para que un lector de pantalla lea los datos una
  * sola vez. Con prefers-reduced-motion la cinta queda quieta y sin copia.
  */
-export default function Av4Datos() {
+/** Los datos de la cinta; también los usa la barra de anuncio de las landings por área. */
+export function datosItems() {
   const p = HORARIOS[0];
-  const items = [
+  return [
     { Icono: CalendarDays, t: EVENTO.fechaCorta, s: "Fecha" },
     { Icono: Clock, t: p.hora, s: `Hora de ${p.pais}` },
     { Icono: Video, t: EVENTO.formato, s: "Formato" },
     { Icono: Ticket, t: PRECIO.actual.replace("€", " €"), s: PRECIO.nota },
   ];
+}
+
+export default function Av4Datos() {
+  const items = datosItems();
 
   const lista = (copia: boolean) => (
     <ul

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- mismas imágenes servidas tal cual que en /lista-de-espera */
 import { useState } from "react";
+import { scrollSuaveA } from "@/components/academia-lista-de-espera/SmoothScroll";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useMarquee } from "@/hooks/useMarquee";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
@@ -25,10 +26,18 @@ export default function Av4Testimonios() {
   const muro = disenio?.testimonios === "muro";
   const [todos, setTodos] = useState(false);
 
+  /* "Ver menos": pliega el muro y vuelve al inicio de la sección para que quien
+     lee no quede perdido en medio de la página, ya más corta. */
+  const plegar = () => {
+    setTodos(false);
+    requestAnimationFrame(() => scrollSuaveA("av4-testimonios"));
+  };
+
   return (
     <>
       <section
         ref={ref}
+        id={disenio ? "av4-testimonios" : undefined}
         className="av4-sec av4-sec--rosa av4-testi"
         aria-labelledby="av4-testi-title"
       >
@@ -114,17 +123,16 @@ export default function Av4Testimonios() {
                 </article>
               ))}
             </div>
-            {!todos && (
-              <div className="av4-muro__mas">
-                <button
-                  type="button"
-                  className="av4-tcard__more"
-                  onClick={() => setTodos(true)}
-                >
-                  Ver más
-                </button>
-              </div>
-            )}
+            <div className="av4-muro__mas">
+              <button
+                type="button"
+                className="av4-tcard__more"
+                aria-expanded={todos}
+                onClick={() => (todos ? plegar() : setTodos(true))}
+              >
+                {todos ? "Ver menos" : "Ver más"}
+              </button>
+            </div>
           </div>
         ) : (
         <div className="av4-marquee" data-reveal>

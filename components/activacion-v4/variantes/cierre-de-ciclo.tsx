@@ -96,7 +96,7 @@ export const CONTENIDO_CIERRE_DE_CICLO: Contenido = {
       // se usó su propio ejemplo (11/11 y 12/12).
       "Los portales de cierre de año 11/11 y 12/12 son una ventana energética para cerrar lo que ya terminó. Lo que sueltes ahora no entra contigo al próximo ciclo.",
     ],
-    foto: { src: "/activacion-v4/contexto-cierre.webp", ancho: 600, alto: 750, posicion: "50% 20%" },
+    foto: { src: "/activacion-v4/contexto-cierre-real.webp", ancho: 800, alto: 1000, posicion: "50% 30%" },
   },
 
   area: {
@@ -121,20 +121,23 @@ export const CONTENIDO_CIERRE_DE_CICLO: Contenido = {
 
   // Presentación de cada sección (ver `Disenio` en contenido.tsx): lo que da ritmo propio a esta landing.
   disenio: {
+    paraTi: "cronologia",
+    prueba: "precio",
+    // Ilustraciones del diagnóstico (img-preguntas), una por área.
     cambia: { tipo: "fotos", fotos: [
-        { src: "/activacion-v4/cambia-cierre-decisiones.webp" },
-        { src: "/activacion-v4/cambia-cierre-relaciones.webp" },
-        { src: "/activacion-v4/cambia-cierre-trabajo.webp" },
-        { src: "/activacion-v4/cambia-cierre-dinero.webp" },
-        { src: "/activacion-v4/cambia-cierre-cuerpo.webp" },
+        { src: "/activacion-v4/cambia-cierre-q-decisiones.webp" },
+        { src: "/activacion-v4/cambia-cierre-q-relaciones.webp" },
+        { src: "/activacion-v4/cambia-cierre-q-trabajo.webp" },
+        { src: "/activacion-v4/cambia-cierre-q-dinero.webp" },
+        { src: "/activacion-v4/cambia-cierre-q-cuerpo.webp" },
       ] },
     bio: {
       tipo: "mosaico",
       fotos: [
         { src: "/activacion-v4/momento-2.jpg", alt: "Aida Qui" },
-        { src: "/masterclass/aida-1.jpg", posicion: "62% 40%" },
-        { src: "/activacion-v4/contexto.jpg", posicion: "50% 30%" },
-        { src: "/activacion-v4/mosaico-escenario.webp", posicion: "30% 40%" },
+        { src: "/activacion-v2/item4.jpg", posicion: "50% 30%" },
+        { src: "/activacion-v2/item1.jpg", posicion: "50% 30%" },
+        { src: "/activacion-v4/mosaico-escenario-original.webp", posicion: "50% 30%" },
         { src: "/activacion-v4/momento-4.jpg", posicion: "50% 30%" },
         { src: "/registro-v2/hero.webp", posicion: "82% 30%" },
       ],

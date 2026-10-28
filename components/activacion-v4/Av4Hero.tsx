@@ -2,6 +2,7 @@ import Image from "next/image";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Datos from "@/components/activacion-v4/Av4Datos";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
+import Av4Prueba from "@/components/activacion-v4/Av4Prueba";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { EVENTO } from "@/components/activacion-v4/config";
@@ -18,8 +19,10 @@ import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
  * (cada variante puede darle la suya).
  */
 export default function Av4Hero() {
-  const { hero, ctaPrincipal } = useContenido();
+  const { hero, ctaPrincipal, disenio } = useContenido();
   const { retrato } = hero;
+  // Algunas landings funden "Para mujeres que…" en la bajada, como última frase.
+  const paraEnBajada = !!disenio?.heroParaEnBajada && !!hero.paraMujeres;
 
   return (
     <section
@@ -42,9 +45,17 @@ export default function Av4Hero() {
             {hero.titular}
           </h1>
 
-          <p className="av4-hero__lead">{hero.bajada}</p>
+          <p className="av4-hero__lead">
+            {hero.bajada}
+            {paraEnBajada && (
+              <>
+                {" "}
+                <span className="av4-hero__para-in">{hero.paraMujeres}</span>
+              </>
+            )}
+          </p>
 
-          {hero.paraMujeres && (
+          {hero.paraMujeres && !paraEnBajada && (
             <p className="av4-hero__para">{hero.paraMujeres}</p>
           )}
 
@@ -59,6 +70,8 @@ export default function Av4Hero() {
 
             <Av4Datos />
           </div>
+
+          {disenio?.prueba === "hero" && <Av4Prueba className="av4-prueba--hero" />}
         </div>
 
         {retrato && (

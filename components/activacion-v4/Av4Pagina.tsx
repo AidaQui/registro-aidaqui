@@ -1,3 +1,4 @@
+import Av4Barra from "@/components/activacion-v4/Av4Barra";
 import Av4Hero from "@/components/activacion-v4/Av4Hero";
 import Av4Identificacion from "@/components/activacion-v4/Av4Identificacion";
 import Av4Experiencia from "@/components/activacion-v4/Av4Experiencia";
@@ -49,7 +50,12 @@ export default function Av4Pagina({
       {/* Más ágil que el default: la página es larga y con 2s se sentía lenta. */}
       <SmoothScroll duration={1.1} wheelMultiplier={1} />
       <Av4ContenidoProvider contenido={contenido}>
-        <main className={`av4 ${tema} ${fuentes}`.replace(/\s+/g, " ").trim()}>
+        <main
+          className={`av4 ${tema} ${estructura === "areas" ? "av4--areas" : ""} ${fuentes}`
+            .replace(/\s+/g, " ")
+            .trim()}
+        >
+          {estructura === "areas" && <Av4Barra />}
           <Av4Hero />
           {estructura === "areas" ? (
             <>

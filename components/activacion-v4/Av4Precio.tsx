@@ -11,6 +11,7 @@ import {
   Video,
 } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
+import Av4Prueba from "@/components/activacion-v4/Av4Prueba";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
 import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
@@ -45,6 +46,8 @@ export default function Av4Precio() {
   const ref = useScrollReveal<HTMLElement>();
   const { precio: c, ctaCompra, disenio } = useContenido();
   const bento = disenio?.precio?.tipo === "bento" ? disenio.precio.fotos : null;
+  const polaroid = disenio?.precio?.tipo === "polaroid" ? disenio.precio.fotos : null;
+  const enTarjetas = !!(bento || polaroid);
   const monto = PRECIO.actual.replace(/€/g, "").trim();
   const moneda = PRECIO.actual.includes("€") ? "€" : "";
 
@@ -61,6 +64,50 @@ export default function Av4Precio() {
             {c.titular(monto)}
           </h2>
         </div>
+
+        {polaroid && (
+          <>
+            {/* "Polaroid": cada frase de lo incluido al pie de su foto instantánea, ligeramente inclinada. */}
+            <ul className="av4-polas" data-reveal-group data-reveal-fade>
+              {c.incluye.map((texto, i) => {
+                const foto = polaroid[i];
+                return (
+                  <li key={texto} className="av4-pola">
+                    <figure>
+                      <span className="av4-pola__cinta" aria-hidden="true" />
+                      <span className="av4-pola__foto">
+                        {foto && (
+                          <Image
+                            src={foto.src}
+                            alt=""
+                            aria-hidden="true"
+                            fill
+                            sizes="(max-width: 700px) 80vw, (max-width: 1100px) 44vw, 340px"
+                            className="av4-cover"
+                            style={{ objectPosition: foto.posicion }}
+                          />
+                        )}
+                      </span>
+                      <figcaption>
+                        <span className="av4-pola__n" aria-hidden="true">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        {texto}
+                      </figcaption>
+                    </figure>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Nota de precio en línea sobre la entrada: sello con filetes, sin banda. */}
+            <p className="av4-nota-precio" data-reveal>
+              <span>
+                {c.sellos.unico} · {PRECIO.actual}
+              </span>
+            </p>
+          </>
+        )}
 
         {bento && (
           <>
@@ -102,8 +149,14 @@ export default function Av4Precio() {
           </>
         )}
 
-        <div className={`av4-pr${bento ? " av4-pr--bento" : ""}`}>
-          {!bento && <Lista items={c.incluye.slice(0, 3)} lado="izq" />}
+        {disenio?.prueba === "precio" && (
+          <div className="av4-prueba-fila" data-reveal>
+            <Av4Prueba className="av4-prueba--precio" />
+          </div>
+        )}
+
+        <div className={`av4-pr${enTarjetas ? " av4-pr--bento" : ""}`}>
+          {!enTarjetas && <Lista items={c.incluye.slice(0, 3)} lado="izq" />}
 
           <div className="av4-tk" data-reveal>
             <div className="av4-tk__forma">
@@ -153,7 +206,7 @@ export default function Av4Precio() {
             </div>
           </div>
 
-          {!bento && <Lista items={c.incluye.slice(3)} lado="der" />}
+          {!enTarjetas && <Lista items={c.incluye.slice(3)} lado="der" />}
         </div>
       </div>
     </section>

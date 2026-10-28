@@ -32637,3 +32637,778 @@ body {
     display: none;
   }
 }
+
+/* ===== Landings por área: correcciones, barra de anuncio, prueba social y microanimaciones =====
+ *
+ * Todo cuelga de `.av4--areas` (o de clases nuevas): v4 no lo usa.
+ */
+
+.av4--areas {
+  --av4-barra-h: 34px;
+}
+
+@media (max-width: 640px) {
+  .av4--areas {
+    --av4-barra-h: 30px;
+  }
+}
+
+/* ---- Barra de anuncio fija ---- */
+
+.av4-barra {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  height: var(--av4-barra-h);
+  overflow: hidden;
+  border-bottom: 1px solid rgb(var(--av4-gold-rgb) / 0.35);
+  background: var(--av4-wine-deep);
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-sans);
+  font-size: 13px;
+}
+
+.av4-barra__pista {
+  display: flex;
+  width: max-content;
+  animation: av4-barra-cinta 46s linear infinite;
+}
+
+.av4-barra:hover .av4-barra__pista {
+  animation-play-state: paused;
+}
+
+.av4-barra__grupo {
+  display: flex;
+  flex: none;
+}
+
+.av4-barra li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.av4-barra strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.av4-barra small {
+  color: rgb(255 255 255 / 0.75);
+  font-size: 12px;
+}
+
+.av4-barra small::before {
+  content: "· ";
+}
+
+.av4-barra li i {
+  width: 5px;
+  height: 5px;
+  margin-inline: 20px;
+  background: var(--av4-gold);
+  transform: rotate(45deg);
+}
+
+@keyframes av4-barra-cinta {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-barra__pista {
+    width: 100%;
+    justify-content: center;
+    animation: none;
+  }
+
+  .av4-barra__pista > ul:last-child,
+  .av4-barra__grupo li:nth-child(n + 5) {
+    display: none;
+  }
+
+  .av4-barra__grupo li:nth-child(4) i {
+    display: none;
+  }
+}
+
+/* Que la barra no tape el hero. */
+.av4--areas .av4-hero {
+  padding-top: var(--av4-barra-h);
+}
+
+/* ---- Hero: "Para mujeres que…" dentro de la bajada ---- */
+
+.av4 .av4-hero__para-in {
+  display: inline;
+  padding-inline: 2px;
+  background: linear-gradient(transparent 84%, rgb(var(--av4-gold-rgb) / 0.55) 84% 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-serif);
+  font-size: 1.1em;
+  font-style: italic;
+}
+
+.av4.av4--esmeralda .av4-hero__para-in {
+  color: #6b4f12;
+}
+
+/* ---- Prueba social (avatares + valoración ya mostrada en Testimonios) ---- */
+
+.av4-prueba {
+  --pb: var(--av4-wine);
+  --pt: #fff;
+  --ps: rgb(255 255 255 / 0.78);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--pt);
+  text-decoration: none;
+}
+
+.av4-prueba__pila {
+  display: flex;
+}
+
+.av4-prueba__pila img {
+  width: 38px;
+  height: 38px;
+  margin-left: -11px;
+  border: 2px solid var(--pb);
+  border-radius: 50%;
+  background: var(--av4-rose-bg);
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.av4-prueba__pila img:first-child {
+  margin-left: 0;
+}
+
+.av4-prueba:hover .av4-prueba__pila img {
+  transform: translateY(-3px);
+}
+
+.av4-prueba__txt {
+  display: grid;
+  gap: 2px;
+}
+
+.av4-prueba__estrellas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.av4-prueba__estrellas img {
+  display: block;
+  width: 82px;
+  height: auto;
+}
+
+.av4-prueba__estrellas strong {
+  color: var(--pt);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.av4-prueba small {
+  color: var(--ps);
+  font-size: 13px;
+}
+
+.av4-prueba--hero {
+  margin-top: 20px;
+}
+
+.av4.av4--esmeralda .av4-prueba--hero,
+.av4.av4--amanecer .av4-prueba--hero {
+  --pb: var(--av4-ivory);
+  --pt: var(--av4-wine);
+  --ps: var(--av4-ink-soft);
+}
+
+.av4-prueba-fila {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+/* ---- La experiencia: MacBook con el scroll, botón bajo el portátil ---- */
+
+.av4-mac__mov {
+  transform: perspective(1400px) translate3d(0, var(--mac-ty, 0px), 0) rotateX(var(--mac-rx, 0deg));
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .av4-mac__mov {
+    transform: perspective(1000px) translate3d(0, calc(var(--mac-ty, 0px) * 0.5), 0) rotateX(calc(var(--mac-rx, 0deg) * 0.7));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-mac__mov {
+    transform: none;
+    will-change: auto;
+  }
+}
+
+.av4-vive__mac {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.av4-vive__mac .av4-mac__mov {
+  width: 100%;
+}
+
+.av4-vive__mac .av4-vive__cta {
+  width: 100%;
+  margin-top: 56px;
+}
+
+/* ---- Área con foto: el panel ya no se pega a la foto en escritorio ---- */
+
+@media (min-width: 1001px) {
+  .av4-area__grid--foto {
+    column-gap: clamp(56px, 6vw, 96px);
+  }
+
+  .av4-area__grid--foto .av4-area__panel {
+    margin-left: 0;
+  }
+}
+
+/* ---- Testimonios: Ver más / Ver menos, 4 en móvil ---- */
+
+.av4-testi {
+  scroll-margin-top: var(--av4-barra-h, 0px);
+}
+
+@media (max-width: 700px) {
+  .av4-muro:not(.av4-muro--todos) .av4-tcard--muro:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+/* ---- Precio · polaroid (Misión Alma) ---- */
+
+.av4-polas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px 30px;
+  max-width: 1100px;
+  margin: 8px auto 0;
+  padding-inline: 10px;
+}
+
+.av4-pola {
+  transform: rotate(-2deg);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.av4-pola:nth-child(3n + 2) {
+  transform: rotate(1.6deg) translateY(14px);
+}
+
+.av4-pola:nth-child(3n) {
+  transform: rotate(-0.8deg);
+}
+
+.av4-pola figure {
+  position: relative;
+  margin: 0;
+  padding: 12px 12px 18px;
+  background: var(--av4-ivory);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 26px 36px -20px rgb(0 0 0 / 0.65);
+  transition: box-shadow 0.4s ease;
+}
+
+.av4-pola__cinta {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  z-index: 2;
+  width: 84px;
+  height: 24px;
+  background: rgb(var(--av4-gold-rgb) / 0.55);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.18);
+  transform: translateX(-50%) rotate(-3deg);
+}
+
+.av4-pola__foto {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 4.4;
+  overflow: hidden;
+  background: var(--av4-rose-bg);
+}
+
+.av4 .av4-pola figcaption {
+  display: grid;
+  gap: 6px;
+  margin-top: 14px;
+  padding-inline: 4px;
+  color: var(--av4-ink);
+  font-family: var(--av4-serif);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.av4-pola__n {
+  color: var(--av4-rose-text);
+  font-family: var(--av4-sans);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+/* Nota de precio: sello con filetes, en vez de la banda dorada. */
+.av4-nota-precio {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 560px;
+  margin: 54px auto 34px;
+}
+
+.av4-nota-precio::before,
+.av4-nota-precio::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--av4-gold-rgb) / 0.8));
+}
+
+.av4-nota-precio::after {
+  transform: scaleX(-1);
+}
+
+.av4-nota-precio span {
+  padding: 10px 24px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.8);
+  border-radius: 999px;
+  color: var(--av4-gold-soft);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+  .av4-polas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 20px;
+  }
+
+  .av4-pola:nth-child(n) {
+    transform: rotate(-1.6deg);
+  }
+
+  .av4-pola:nth-child(even) {
+    transform: rotate(1.4deg) translateY(14px);
+  }
+}
+
+@media (max-width: 640px) {
+  .av4-polas {
+    gap: 26px 14px;
+    padding-inline: 4px;
+  }
+
+  .av4-pola figure {
+    padding: 8px 8px 12px;
+  }
+
+  .av4 .av4-pola figcaption {
+    font-size: 14.5px;
+  }
+
+  .av4-nota-precio {
+    gap: 10px;
+    margin-top: 44px;
+  }
+
+  .av4-nota-precio span {
+    padding: 9px 16px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ---- Para ti · cronología (El Cierre de Ciclo) ---- */
+
+.av4-crono {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.av4-crono::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 149px;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--av4-gold) 8%, var(--av4-gold) 92%, transparent);
+}
+
+.av4-crono__fila {
+  display: grid;
+  grid-template-columns: 110px 40px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 20px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--av4-line);
+}
+
+.av4-crono__fila:last-child {
+  border-bottom: 0;
+}
+
+.av4-crono__n {
+  color: var(--av4-rose-text);
+  font-family: var(--av4-serif);
+  font-size: 68px;
+  font-style: italic;
+  font-weight: var(--av4-accent-weight, 500);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-align: right;
+}
+
+.av4-crono__nodo {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--av4-gold);
+  box-shadow: 0 0 0 6px var(--av4-ivory), 0 0 0 7px rgb(var(--av4-gold-rgb) / 0.6);
+  transition: transform 0.3s ease;
+}
+
+.av4 .av4-crono__fila p {
+  margin: 0;
+  color: var(--av4-ink);
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.av4-pie-fila--crono {
+  margin-top: 34px;
+}
+
+@media (max-width: 640px) {
+  .av4-crono::before {
+    left: 74px;
+  }
+
+  .av4-crono__fila {
+    grid-template-columns: 52px 26px minmax(0, 1fr);
+    column-gap: 10px;
+    padding: 20px 0;
+  }
+
+  .av4-crono__n {
+    font-size: 40px;
+  }
+
+  .av4 .av4-crono__fila p {
+    font-size: 17px;
+  }
+}
+
+/* ---- Esmeralda (Operación Coherencia): ritmo propio ---- */
+
+.av4.av4--esmeralda .av4-hero__rama {
+  transform-origin: 80% 100%;
+  animation: av4-rama-mece 7s ease-in-out infinite alternate;
+}
+
+@keyframes av4-rama-mece {
+  from { transform: rotate(-2.5deg); }
+  to   { transform: rotate(2deg); }
+}
+
+/* El halo "respira" detrás del arco. */
+.av4.av4--esmeralda .av4-hero__retrato::after {
+  content: "";
+  position: absolute;
+  inset: -8% -14% -6%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(var(--av4-gold-rgb) / 0.3), transparent);
+  animation: av4-respira 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes av4-respira {
+  from { opacity: 0.5; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1.04); }
+}
+
+/* Secciones claras con una trama de puntos muy fina y un brillo en la esquina. */
+.av4.av4--esmeralda .av4-ident,
+.av4.av4--esmeralda .av4-ctx,
+.av4.av4--esmeralda .av4-bio {
+  background-image:
+    radial-gradient(40% 50% at 100% 0%, rgb(var(--av4-gold-rgb) / 0.12), transparent 70%),
+    radial-gradient(rgb(var(--av4-gold-rgb) / 0.22) 1px, transparent 1.3px);
+  background-size: auto, 26px 26px;
+}
+
+.av4.av4--esmeralda .av4-area,
+.av4.av4--esmeralda .av4-vive {
+  background-image: radial-gradient(50% 60% at 0% 100%, rgb(var(--av4-gold-rgb) / 0.14), transparent 72%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4.av4--esmeralda .av4-hero__rama,
+  .av4.av4--esmeralda .av4-hero__retrato::after {
+    animation: none;
+  }
+}
+
+/* ---- Microanimaciones (sólo con puntero y sin reducir movimiento) ---- */
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .av4--areas :is(.av4-tit, .av4-card, .av4-bento__card, .av4-tcard--muro, .av4-mosaico__foto, .av4-cambia__item) {
+    transition:
+      transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+      box-shadow 0.35s ease;
+  }
+
+  .av4--areas :is(.av4-tit, .av4-card, .av4-bento__card, .av4-tcard--muro, .av4-mosaico__foto, .av4-cambia__item):hover {
+    transform: translateY(-6px);
+  }
+
+  .av4--areas .av4-pola:hover {
+    z-index: 3;
+    transform: rotate(0deg) translateY(-8px) scale(1.03);
+  }
+
+  .av4--areas .av4-pola:hover figure {
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.9) inset,
+      0 36px 46px -20px rgb(0 0 0 / 0.7);
+  }
+
+  .av4--areas .av4-crono__fila:hover .av4-crono__nodo {
+    transform: scale(1.4);
+  }
+
+  .av4--areas :is(.av4-bento__card--foto, .av4-mosaico__foto, .av4-pola__foto) img {
+    transition: transform 0.7s ease;
+  }
+
+  .av4--areas :is(.av4-bento__card--foto, .av4-mosaico__foto, .av4-pola__foto):hover img {
+    transform: scale(1.07);
+  }
+
+  .av4--areas .av4-cta__circulo svg {
+    transition: transform 0.25s ease;
+  }
+
+  .av4--areas .av4-cta:hover .av4-cta__circulo svg {
+    transform: translate(3px, -3px);
+  }
+
+  /* Entrada escalonada del texto del hero. */
+  .av4--areas .av4-hero__copy > * {
+    animation: av4-entra 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .av4--areas .av4-hero__copy > :nth-child(2) { animation-delay: 0.08s; }
+  .av4--areas .av4-hero__copy > :nth-child(3) { animation-delay: 0.16s; }
+  .av4--areas .av4-hero__copy > :nth-child(4) { animation-delay: 0.24s; }
+  .av4--areas .av4-hero__copy > :nth-child(5) { animation-delay: 0.32s; }
+  .av4--areas .av4-hero__copy > :nth-child(6) { animation-delay: 0.4s; }
+  .av4--areas .av4-hero__copy > :nth-child(7) { animation-delay: 0.48s; }
+}
+
+@keyframes av4-entra {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 640px) {
+  .av4-prueba {
+    gap: 10px;
+  }
+
+  .av4-prueba__pila img {
+    width: 32px;
+    height: 32px;
+    margin-left: -9px;
+  }
+
+  .av4-prueba__estrellas img {
+    width: 70px;
+  }
+
+  .av4-prueba small {
+    font-size: 11.5px;
+  }
+}
+
+.av4--areas p.av4-hero__lead {
+  text-wrap: pretty;
+}
+
+/* ---- Cierre de Ciclo: hero como una pila centrada y ordenada ----
+ * Logotipo, etiqueta, titular, bajada, línea "Para mujeres…", horarios, botón y
+ * cinta comparten un eje central; el botón mide lo normal (no todo el ancho). */
+
+.av4.av4--lavanda .av4-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 880px;
+  text-align: center;
+}
+
+.av4.av4--lavanda .av4-hero__tag {
+  margin-top: 18px;
+}
+
+.av4.av4--lavanda .av4-hero__title {
+  max-width: 800px;
+  margin-top: 28px;
+  font-size: clamp(34px, 3.5vw, 48px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.av4.av4--lavanda p.av4-hero__lead {
+  max-width: 640px;
+  margin: 22px auto 0;
+}
+
+.av4.av4--lavanda p.av4-hero__para {
+  max-width: 560px;
+  margin: 20px auto 0;
+  font-size: 23px;
+}
+
+.av4.av4--lavanda .av4-hero__accion {
+  width: 100%;
+  max-width: none;
+  margin-top: 32px;
+  gap: 20px;
+  justify-items: center;
+}
+
+.av4.av4--lavanda .av4-hero__accion .av4-cta {
+  width: min(100%, 420px);
+}
+
+.av4.av4--lavanda .av4-hero__accion .av4-datos {
+  width: min(100%, 560px);
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .av4.av4--lavanda .av4-hero__title {
+    margin-top: 22px;
+    font-size: 32px;
+  }
+
+  .av4.av4--lavanda p.av4-hero__para {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .av4.av4--lavanda .av4-hero__retrato {
+    width: 184px;
+    height: 222px;
+    margin-bottom: 40px;
+  }
+
+  .av4.av4--lavanda .av4-hero__shell {
+    padding-block: 26px 56px;
+  }
+
+  .av4.av4--lavanda .av4-hero__title {
+    margin-top: 22px;
+  }
+
+  .av4.av4--lavanda p.av4-hero__lead {
+    margin-top: 16px;
+  }
+
+  .av4.av4--lavanda p.av4-hero__para {
+    margin-top: 14px;
+  }
+
+  .av4.av4--lavanda .av4-hero__accion {
+    margin-top: 24px;
+    gap: 16px;
+  }
+
+  /* Tope de 800px de alto en escritorio: logotipo y etiqueta comparten fila,
+     retrato más chico, "Para mujeres…" en una línea y sin la cinta de datos
+     (repite lo mismo que la barra fija de arriba). */
+  .av4.av4--lavanda .av4-hero__copy {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    column-gap: 28px;
+  }
+
+  .av4.av4--lavanda .av4-hero__copy > :not(.av4-lockup, .av4-hero__tag) {
+    grid-column: 1 / -1;
+  }
+
+  .av4.av4--lavanda .av4-hero__tag {
+    margin-top: 0;
+  }
+
+  .av4.av4--lavanda .av4-hero__retrato {
+    width: 156px;
+    height: 188px;
+    margin-bottom: 34px;
+  }
+
+  .av4.av4--lavanda .av4-hero__title {
+    margin-top: 20px;
+    font-size: clamp(34px, 3.2vw, 44px);
+  }
+
+  .av4.av4--lavanda p.av4-hero__para {
+    max-width: 780px;
+    margin-top: 10px;
+    font-size: 20px;
+  }
+
+  .av4.av4--lavanda .av4-hero__accion {
+    margin-top: 20px;
+  }
+
+  .av4.av4--lavanda .av4-hero__accion .av4-datos {
+    display: none;
+  }
+}
