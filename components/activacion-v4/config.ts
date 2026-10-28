@@ -14,9 +14,9 @@ export const EVENTO = {
   /** Nombre de la experiencia. */
   titulo: "Experiencia Energética",
   /** Rótulo corto de la fecha. */
-  fechaCorta: "15 de noviembre",
+  fechaCorta: "14 de noviembre",
   /** Forma larga para prosa. */
-  fechaLarga: "el 15 de noviembre",
+  fechaLarga: "el 14 de noviembre",
   formato: "Online vía Zoom",
 } as const;
 
