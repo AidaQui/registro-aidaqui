@@ -28392,6 +28392,30 @@ body {
   width: 100%;
 }
 
+/* Full-width buttons: a three-column grid keeps the label on the true center
+   of the button and the arrow pinned right, whatever the padding or gap. */
+.av4-cta--bloque,
+.av4-hero__copy .av4-cta,
+.av4-gp__cta .av4-cta {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  padding-inline: 12px;
+}
+
+.av4-cta--bloque .av4-cta__label,
+.av4-hero__copy .av4-cta__label,
+.av4-gp__cta .av4-cta__label {
+  grid-column: 2;
+  text-align: center;
+}
+
+.av4-cta--bloque .av4-cta__circulo,
+.av4-hero__copy .av4-cta__circulo,
+.av4-gp__cta .av4-cta__circulo {
+  grid-column: 3;
+  justify-self: end;
+}
+
 .av4-cta-fila {
   display: flex;
   margin-top: 32px;
@@ -29550,6 +29574,23 @@ body {
     width: 100%;
     padding-inline: 18px;
     font-size: 15px;
+  }
+
+  /* On mobile every CTA is full width: same centered grid as on desktop. */
+  .av4 .av4-cta {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    padding-inline: 10px;
+  }
+
+  .av4 .av4-cta__label {
+    grid-column: 2;
+    text-align: center;
+  }
+
+  .av4 .av4-cta__circulo {
+    grid-column: 3;
+    justify-self: end;
   }
 
   .av4-cards,
