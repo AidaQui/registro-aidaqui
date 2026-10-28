@@ -23,6 +23,9 @@ export const DESCRIPCION_MISION_ALMA =
 export const CONTENIDO_MISION_ALMA: Contenido = {
   ...BASE_AREAS,
 
+  // Sin el precio en los botones (sí en la cinta y en la entrada).
+  ctaPrincipal: "Quiero mi plaza",
+
   marca: {
     nombre: "Misión Alma",
     linea1: "MISIÓN",
@@ -108,6 +111,10 @@ export const CONTENIDO_MISION_ALMA: Contenido = {
 
   // Presentación de cada sección (ver `Disenio` en contenido.tsx): lo que da ritmo propio a esta landing.
   disenio: {
+    // Para ti: un camino que se dibuja con el scroll entre los cinco puntos. Sin barra de anuncio.
+    paraTi: "camino",
+    // Botón perla (el de /activacion).
+    ctaEstilo: "perla",
     cambia: { tipo: "fotos", fotos: [
         { src: "/activacion-v4/cambia-mision-decisiones.webp" },
         { src: "/activacion-v4/cambia-mision-relaciones.webp" },
@@ -150,6 +157,6 @@ export const CONTENIDO_MISION_ALMA: Contenido = {
       </>
     ),
     subtitulo: `${EL_DIA} activamos tu misión desde el corazón.`,
-    cta: BASE_AREAS.ctaPrincipal,
+    cta: "Quiero mi plaza",
   },
 };

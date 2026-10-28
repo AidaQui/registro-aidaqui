@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
@@ -13,7 +14,47 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 export default function Av4Area() {
   const ref = useScrollReveal<HTMLElement>();
-  const { area: c } = useContenido();
+  const { area: c, disenio } = useContenido();
+  const progreso = !!disenio?.areaProgreso;
+  const lista = useRef<HTMLUListElement>(null);
+
+  /* Resultados que se encienden con el scroll: una línea dorada se llena hasta
+     la altura de la ventana (70%) y cada resultado se enciende al alcanzarlo. */
+  useEffect(() => {
+    const ul = lista.current;
+    if (!progreso || !ul) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Activa el estado apagado de los resultados; sin JS (o con movimiento reducido) se ven todos encendidos.
+    ul.classList.add("av4-area__lista--js");
+    const filas = Array.from(ul.children) as HTMLElement[];
+    let raf = 0;
+    const pintar = () => {
+      raf = 0;
+      const frente = window.innerHeight * 0.7;
+      const top = ul.getBoundingClientRect().top;
+      const centros = filas.map((f) => top + f.offsetTop + 18 + 15);
+      const primero = centros[0];
+      const ultimo = centros[centros.length - 1];
+      const llena = Math.max(0, Math.min(ultimo - primero, frente - primero));
+      ul.style.setProperty("--area-linea-top", `${primero - top}px`);
+      ul.style.setProperty("--area-linea-alto", `${ultimo - primero}px`);
+      ul.style.setProperty("--area-llena", `${llena}px`);
+      filas.forEach((f, i) => f.classList.toggle("av4-area__item--on", centros[i] <= frente));
+    };
+    const pedir = () => {
+      if (!raf) raf = requestAnimationFrame(pintar);
+    };
+    pintar();
+    window.addEventListener("scroll", pedir, { passive: true });
+    window.addEventListener("resize", pedir);
+    return () => {
+      window.removeEventListener("scroll", pedir);
+      window.removeEventListener("resize", pedir);
+      if (raf) cancelAnimationFrame(raf);
+      ul.classList.remove("av4-area__lista--js");
+    };
+  }, [progreso]);
+
   if (!c) return null;
   const foto = c.foto;
 
@@ -62,7 +103,10 @@ export default function Av4Area() {
 
         <div className="av4-area__panel" data-reveal="right">
           <p className="av4-area__cuando">{c.intro}</p>
-          <ul className="av4-area__lista">
+          <ul
+            ref={lista}
+            className={`av4-area__lista${progreso ? " av4-area__lista--prog" : ""}`}
+          >
             {c.items.map((t) => (
               <li key={t}>
                 <span className="av4-area__check" aria-hidden="true">

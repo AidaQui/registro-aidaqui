@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Av4WhatsAppIcon from "@/components/activacion-v4/Av4WhatsAppIcon";
 import { CTA_LABEL, LINKS, PRECIO } from "@/components/activacion-v4/config";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 
 type Props = {
   label?: string;
@@ -23,6 +24,8 @@ export default function Av4Cta({
   variante = "oro",
   ubicacion,
 }: Props) {
+  // Estilo propio de la landing (perla / vidrio); sin él, el dorado de siempre. El de soporte (verde) no cambia.
+  const estilo = useContenido().disenio?.ctaEstilo;
   const interno = href.startsWith("#") || href.startsWith("/");
   // PixelBridge no es un dominio de checkout que el kit de Sierra reconozca:
   // se marca a mano para que el panel cuente el clic al checkout.
@@ -31,7 +34,7 @@ export default function Av4Cta({
   return (
     <a
       href={href}
-      className={`av4-cta av4-cta--${variante} ${className}`.trim()}
+      className={`av4-cta av4-cta--${variante}${estilo && variante === "oro" ? ` av4-cta--${estilo}` : ""} ${className}`.trim()}
       {...(!interno && { target: "_blank", rel: "noopener noreferrer" })}
       {...(checkout && { "data-sierra": "checkout", "data-sierra-target": ubicacion ? `Checkout ${PRECIO.actual} · ${ubicacion}` : `Checkout ${PRECIO.actual}` })}
     >

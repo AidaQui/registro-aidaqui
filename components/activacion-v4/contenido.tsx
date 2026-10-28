@@ -35,6 +35,12 @@ export type FotoCambia = {
   src: string;
   /** object-position del encuadre dentro de la tarjeta. */
   posicion?: string;
+  /**
+   * Sólo en el bento del precio: "retrato" compone la tarjeta (textura dorada +
+   * foto en círculo) en vez de cubrirla entera con la foto. Para fotos que no
+   * aguantan un recorte apaisado.
+   */
+  formato?: "retrato";
 };
 
 /** Foto del mosaico de la bio. `ancho`/`alto` sólo reservan el espacio; el marco lo define el CSS. */
@@ -53,9 +59,10 @@ export type FotoMosaico = {
 export type Disenio = {
   /**
    * "Para ti": "titulos" = tarjetas con la primera cláusula como título, sin
-   * números; "cronologia" = filas con numeral grande sobre una línea vertical.
+   * números; "cronologia" = filas con numeral grande sobre una línea vertical;
+   * "camino" = tarjetas alternadas a ambos lados de un trazo que se dibuja con el scroll.
    */
-  paraTi?: "titulos" | "cronologia";
+  paraTi?: "titulos" | "cronologia" | "camino";
   /** "Qué cambia": "fotos" = tarjetas verticales con foto; `fotos` en el orden de `cambios`. */
   cambia?: { tipo: "fotos"; fotos: FotoCambia[] };
   /**
@@ -77,6 +84,20 @@ export type Disenio = {
   ctaBajoMac?: boolean;
   /** Prueba social (avatares + valoración ya mostrada en Testimonios): en el hero o junto al precio. */
   prueba?: "hero" | "precio";
+  /** Barra de anuncio fija arriba. Con ella, el hero no repite la cinta de datos. */
+  barra?: boolean;
+  /** Estilo del botón: "perla" (de /activacion) o "vidrio" (de /registro-v3). Sin él, el dorado de v4. */
+  ctaEstilo?: "perla" | "vidrio";
+  /**
+   * Visual del cierre en lugar de la entrada: "respira" (círculo que respira),
+   * "codigo" (dígitos de la fecha que giran como una cerradura) o "sobre"
+   * (sobre con sello que se abre). Sin él, la entrada de v4.
+   */
+  cierreVisual?: "respira" | "codigo" | "sobre";
+  /** "Para ti" (tarjetas con título): se pueden marcar las que sientes tuyas, con contador. */
+  paraTiMarcar?: boolean;
+  /** Sección del área: los resultados se encienden uno a uno con el scroll, sobre una línea que se llena. */
+  areaProgreso?: boolean;
 };
 
 export type Contenido = {
@@ -245,10 +266,10 @@ export type Contenido = {
 
 export const CONTENIDO_V4: Contenido = {
   marca: {
-    nombre: "Experiencia Energética",
-    linea1: "EXPERIENCIA",
+    nombre: "Inmersión Energética",
+    linea1: "INMERSIÓN",
     linea2: "ENERGÉTICA",
-    macbook: ["Experiencia", "Energética"],
+    macbook: ["Inmersión", "Energética"],
   },
 
   ctaPrincipal: CTA_LABEL,

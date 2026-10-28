@@ -116,12 +116,27 @@ export default function Av4Precio() {
               {c.incluye.map((texto, i) => {
                 const foto = bento[i];
                 const Icono = ICONOS_BENTO[i % ICONOS_BENTO.length];
+                const retrato = foto?.formato === "retrato";
                 return (
                   <li
                     key={texto}
-                    className={`av4-bento__card${foto ? " av4-bento__card--foto" : ""}`}
+                    className={`av4-bento__card${foto ? " av4-bento__card--foto" : ""}${retrato ? " av4-bento__card--retrato" : ""}`}
                   >
-                    {foto && (
+                    {foto && retrato && (
+                      /* Tarjeta compuesta: textura dorada detrás y la foto en un círculo enmarcado. */
+                      <span className="av4-bento__retrato" aria-hidden="true">
+                        <Image
+                          src={foto.src}
+                          alt=""
+                          aria-hidden="true"
+                          fill
+                          sizes="(max-width: 700px) 112px, 190px"
+                          className="av4-cover"
+                          style={{ objectPosition: foto.posicion }}
+                        />
+                      </span>
+                    )}
+                    {foto && !retrato && (
                       <Image
                         src={foto.src}
                         alt=""

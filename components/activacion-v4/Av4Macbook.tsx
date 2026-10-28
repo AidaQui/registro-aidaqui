@@ -35,8 +35,10 @@ export default function Av4Macbook() {
       const vh = window.innerHeight;
       // -1 (entrando por abajo) … 0 (centrado) … 1 (saliendo por arriba)
       const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh * 0.75)));
-      el.style.setProperty("--mac-ty", `${(p * 38).toFixed(1)}px`);
-      el.style.setProperty("--mac-rx", `${(p * 9).toFixed(2)}deg`);
+      // En escritorio el portátil va pegado (sticky) junto al texto: sólo se inclina un poco al entrar y salir.
+      const pegado = window.innerWidth > 900;
+      el.style.setProperty("--mac-ty", pegado ? "0px" : `${(p * 38).toFixed(1)}px`);
+      el.style.setProperty("--mac-rx", `${(p * (pegado ? 5 : 9)).toFixed(2)}deg`);
     };
     const pedir = () => {
       if (!raf) raf = requestAnimationFrame(pintar);

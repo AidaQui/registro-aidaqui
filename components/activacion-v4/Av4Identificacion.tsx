@@ -1,3 +1,6 @@
+import { useId, useState } from "react";
+import { Check } from "lucide-react";
+import Av4Camino from "@/components/activacion-v4/Av4Camino";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
@@ -28,6 +31,13 @@ export default function Av4Identificacion() {
   const { identificacion: c, ctaCompra, disenio } = useContenido();
   const conTitulos = disenio?.paraTi === "titulos";
   const cronologia = disenio?.paraTi === "cronologia" && !!c.items;
+  const camino = disenio?.paraTi === "camino" && !!c.items;
+  // "Marcar": las tarjetas con título se pueden tocar para marcar las que sientes tuyas.
+  const marcar = conTitulos && !!disenio?.paraTiMarcar;
+  const base = useId();
+  const [marcadas, setMarcadas] = useState<string[]>([]);
+  const alternar = (k: string) =>
+    setMarcadas((m) => (m.includes(k) ? m.filter((x) => x !== k) : [...m, k]));
   // Las landings por área traen frases enteras (`items`); v4, título + texto.
   const tarjetas = c.items
     ? c.items.map(partir)
@@ -51,7 +61,10 @@ export default function Av4Identificacion() {
           <p className="av4-texto">{c.texto}</p>
         </div>
 
-        {cronologia && c.items ? (
+        {camino && c.items ? (
+          /* "Camino": un trazo que se dibuja con el scroll y une los cinco puntos. */
+          <Av4Camino items={c.items} />
+        ) : cronologia && c.items ? (
           /* "Cronología": una fila por frase, con numeral grande sobre una línea vertical. */
           <ol className="av4-crono" data-reveal-group data-reveal-fade>
             {c.items.map((texto, i) => (
@@ -64,6 +77,50 @@ export default function Av4Identificacion() {
               </li>
             ))}
           </ol>
+        ) : marcar ? (
+          <>
+            {/* Se tocan las situaciones que sientes tuyas; un contador en vivo las cuenta. */}
+            <div className="av4-marca__guia" data-reveal>
+              <p>Toca las que sientes tuyas</p>
+              <p className="av4-marca__cuenta" aria-live="polite">
+                <span className="av4-marca__pips" aria-hidden="true">
+                  {tarjetas.map(({ texto }) => (
+                    <i
+                      key={texto}
+                      className={marcadas.includes(texto) ? "av4-marca__pip--on" : undefined}
+                    />
+                  ))}
+                </span>
+                <strong>{marcadas.length}</strong> de {tarjetas.length}
+              </p>
+            </div>
+            <ul
+              className="av4-cards av4-cards--titulos av4-cards--marca"
+              data-reveal-group
+              data-reveal-fade
+            >
+              {tarjetas.map(({ titulo, texto }, i) => {
+                const on = marcadas.includes(texto);
+                const id = `${base}-${i}`;
+                return (
+                  <li key={texto} className={`av4-tit${on ? " av4-tit--on" : ""}`}>
+                    {titulo && <h3 id={`${id}-t`}>{titulo}</h3>}
+                    <p id={`${id}-p`}>{texto}</p>
+                    <span className="av4-tit__marca" aria-hidden="true">
+                      <Check size={16} strokeWidth={3} />
+                    </span>
+                    <button
+                      type="button"
+                      className="av4-tit__btn"
+                      aria-pressed={on}
+                      aria-labelledby={`${id}-t ${id}-p`}
+                      onClick={() => alternar(texto)}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </>
         ) : conTitulos ? (
           /* "Tarjetas con título": sin números; la primera cláusula, en el color de acento. */
           <ul
@@ -109,7 +166,7 @@ export default function Av4Identificacion() {
         )}
 
         <div
-          className={`av4-pie-fila${conTitulos ? " av4-pie-fila--ancho" : ""}${cronologia ? " av4-pie-fila--crono" : ""}`}
+          className={`av4-pie-fila${conTitulos ? " av4-pie-fila--ancho" : ""}${cronologia ? " av4-pie-fila--crono" : ""}${camino ? " av4-pie-fila--camino" : ""}`}
           data-reveal
         >
           <p>{c.cierre}</p>

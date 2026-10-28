@@ -123,13 +123,16 @@ export const CONTENIDO_CIERRE_DE_CICLO: Contenido = {
   disenio: {
     paraTi: "cronologia",
     prueba: "precio",
-    // Ilustraciones del diagnóstico (img-preguntas), una por área.
+    barra: true,
+    // Cierre: sobre con el sello de Aida que se abre.
+    cierreVisual: "sobre",
+    // "Qué cambia": imágenes de transformación (no de dolor), una por área y en su orden.
     cambia: { tipo: "fotos", fotos: [
-        { src: "/activacion-v4/cambia-cierre-q-decisiones.webp" },
-        { src: "/activacion-v4/cambia-cierre-q-relaciones.webp" },
-        { src: "/activacion-v4/cambia-cierre-q-trabajo.webp" },
-        { src: "/activacion-v4/cambia-cierre-q-dinero.webp" },
-        { src: "/activacion-v4/cambia-cierre-q-cuerpo.webp" },
+        { src: "/activacion-v4/cambia-cierre-t-decisiones.webp" }, // camino hacia la luz
+        { src: "/activacion-v4/cambia-cierre-t-relaciones.webp" }, // manos en círculo con luz
+        { src: "/activacion-v4/cambia-cierre-t-trabajo.webp" }, // manos que sostienen el mundo
+        { src: "/activacion-v4/cambia-cierre-t-dinero.webp" }, // luz dorada en el bosque
+        { src: "/activacion-v4/cambia-cierre-t-cuerpo.webp" }, // mano en el pecho, espiral dorada
       ] },
     bio: {
       tipo: "mosaico",

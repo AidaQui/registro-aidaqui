@@ -117,7 +117,9 @@ export const CONTENIDO_CODIGO_CORAZON: Contenido = {
         { src: "/activacion-v2/item2.jpg", posicion: "50% 40%" }, // Zoom en directo
         { src: "/activacion-v4/area-coherencia.webp", posicion: "50% 30%" }, // activación del corazón
         { src: "/activacion-v4/mosaico-escenario-original.webp", posicion: "50% 40%" }, // creencias: Aida guiando
-        { src: "/activacion-v2/item4.jpg", posicion: "50% 64%" }, // canalización: Aida con el icono de Zoom
+        // Canalización: Aida con el icono de Zoom. En una tarjeta ancha la foto cuadrada se recortaba mal:
+        // va como retrato en círculo sobre la textura dorada.
+        { src: "/activacion-v2/item4.jpg", posicion: "50% 26%", formato: "retrato" },
         { src: "/activacion-v2/item1.jpg", posicion: "50% 30%" }, // prácticas para el día a día
         { src: "/activacion-v4/bio-1.jpg", posicion: "50% 45%" }, // meditaciones
       ],
@@ -125,6 +127,11 @@ export const CONTENIDO_CODIGO_CORAZON: Contenido = {
     testimonios: "muro",
     heroParaEnBajada: true,
     prueba: "precio",
+    barra: true,
+    // Cierre: la fecha como combinación que se abre.
+    cierreVisual: "codigo",
+    // Área: los resultados se encienden con el scroll.
+    areaProgreso: true,
   },
 
   cierre: {

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- mismas imágenes servidas tal cual que en /lista-de-espera */
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { scrollSuaveA } from "@/components/academia-lista-de-espera/SmoothScroll";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useMarquee } from "@/hooks/useMarquee";
@@ -32,11 +33,63 @@ export default function Av4Testimonios() {
   const muro = disenio?.testimonios === "muro";
   const [todos, setTodos] = useState(false);
 
-  /* "Ver menos": pliega el muro y vuelve al inicio de la sección para que quien
-     lee no quede perdido en medio de la página, ya más corta. */
-  const plegar = () => {
-    setTodos(false);
-    requestAnimationFrame(() => scrollSuaveA("av4-testimonios"));
+  const muroRef = useRef<HTMLDivElement>(null);
+  const animando = useRef(false);
+
+  /* Despliegue y pliegue animados. La altura del muro pasa de la de antes a la
+     de después con una curva suave; las tarjetas que aparecen entran en
+     cascada y las que se van se desvanecen primero. Con movimiento reducido
+     (o sin muro medible) el cambio es directo. */
+  const cambiar = (abrir: boolean) => {
+    const muroEl = muroRef.current;
+    const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!muroEl || reducido || animando.current) {
+      setTodos(abrir);
+      if (!abrir) requestAnimationFrame(() => scrollSuaveA("av4-testimonios"));
+      return;
+    }
+    animando.current = true;
+    const tarjetas = Array.from(muroEl.children) as HTMLElement[];
+    const visibles = window.matchMedia("(max-width: 700px)").matches ? 4 : 8;
+
+    const animarAltura = (h0: number, alTerminar: () => void) => {
+      const h1 = muroEl.offsetHeight;
+      muroEl.style.overflow = "hidden";
+      muroEl.style.height = `${h0}px`;
+      void muroEl.offsetHeight;
+      muroEl.style.transition = "height 0.85s cubic-bezier(0.22, 0.7, 0.2, 1)";
+      muroEl.style.height = `${h1}px`;
+      window.setTimeout(() => {
+        muroEl.style.transition = "";
+        muroEl.style.height = "";
+        muroEl.style.overflow = "";
+        animando.current = false;
+        alTerminar();
+      }, 900);
+    };
+
+    if (abrir) {
+      const h0 = muroEl.offsetHeight;
+      const ocultas = tarjetas.filter((t) => getComputedStyle(t).display === "none");
+      flushSync(() => setTodos(true));
+      ocultas.forEach((t, i) => {
+        t.style.setProperty("--d", `${120 + i * 70}ms`);
+        t.classList.add("av4-tcard--nueva");
+      });
+      animarAltura(h0, () => ocultas.forEach((t) => t.classList.remove("av4-tcard--nueva")));
+    } else {
+      const salen = tarjetas.slice(visibles);
+      salen.forEach((t) => t.classList.add("av4-tcard--sale"));
+      window.setTimeout(() => {
+        const h0 = muroEl.offsetHeight;
+        flushSync(() => setTodos(false));
+        salen.forEach((t) => t.classList.remove("av4-tcard--sale"));
+        animarAltura(h0, () => undefined);
+        /* Vuelve al inicio de la sección para que quien lee no quede perdido en
+           medio de la página, ya más corta. */
+        scrollSuaveA("av4-testimonios");
+      }, 380);
+    }
   };
 
   return (
@@ -67,6 +120,7 @@ export default function Av4Testimonios() {
         {muro ? (
           <div className="av4-wrap">
             <div
+              ref={muroRef}
               className={`av4-muro${todos ? " av4-muro--todos" : ""}`}
               data-reveal
             >
@@ -134,7 +188,7 @@ export default function Av4Testimonios() {
                 type="button"
                 className="av4-tcard__more"
                 aria-expanded={todos}
-                onClick={() => (todos ? plegar() : setTodos(true))}
+                onClick={() => cambiar(!todos)}
               >
                 {todos ? "Ver menos" : "Ver más"}
               </button>

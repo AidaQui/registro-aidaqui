@@ -32643,13 +32643,14 @@ body {
  * Todo cuelga de `.av4--areas` (o de clases nuevas): v4 no lo usa.
  */
 
-.av4--areas {
-  --av4-barra-h: 34px;
+/* La barra sólo existe donde la landing la pide (clase av4--barra, ver Av4Pagina). */
+.av4--barra {
+  --av4-barra-h: 40px;
 }
 
 @media (max-width: 640px) {
-  .av4--areas {
-    --av4-barra-h: 30px;
+  .av4--barra {
+    --av4-barra-h: 34px;
   }
 }
 
@@ -32668,12 +32669,14 @@ body {
   color: var(--av4-gold-soft);
   font-family: var(--av4-sans);
   font-size: 13px;
+  letter-spacing: 0.03em;
 }
 
 .av4-barra__pista {
   display: flex;
   width: max-content;
-  animation: av4-barra-cinta 46s linear infinite;
+  /* Lenta: cada vuelta tarda 80s (antes 46s) para que se lea sin correr. */
+  animation: av4-barra-cinta 80s linear infinite;
 }
 
 .av4-barra:hover .av4-barra__pista {
@@ -32688,7 +32691,7 @@ body {
 .av4-barra li {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   white-space: nowrap;
 }
 
@@ -32700,6 +32703,7 @@ body {
 .av4-barra small {
   color: rgb(255 255 255 / 0.75);
   font-size: 12px;
+  letter-spacing: 0.04em;
 }
 
 .av4-barra small::before {
@@ -32709,7 +32713,7 @@ body {
 .av4-barra li i {
   width: 5px;
   height: 5px;
-  margin-inline: 20px;
+  margin-inline: 44px;
   background: var(--av4-gold);
   transform: rotate(45deg);
 }
@@ -32736,9 +32740,14 @@ body {
   }
 }
 
-/* Que la barra no tape el hero. */
-.av4--areas .av4-hero {
+/* Que la barra no tape el hero (sólo donde hay barra) y que el hero no repita
+   la cinta de datos que ya muestra la barra. */
+.av4--barra .av4-hero {
   padding-top: var(--av4-barra-h);
+}
+
+.av4--barra .av4-hero .av4-datos {
+  display: none;
 }
 
 /* ---- Hero: "Para mujeres que…" dentro de la bajada ---- */
@@ -32784,15 +32793,35 @@ body {
   border-radius: 50%;
   background: var(--av4-rose-bg);
   object-fit: cover;
-  transition: transform 0.25s ease;
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.28s ease;
 }
 
 .av4-prueba__pila img:first-child {
   margin-left: 0;
 }
 
-.av4-prueba:hover .av4-prueba__pila img {
-  transform: translateY(-3px);
+/* Microanimación por avatar (sólo con puntero y sin reducir movimiento): el que
+   tiene el cursor sube, crece y pasa al frente; los vecinos se apartan un poco. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .av4-prueba__pila img {
+    position: relative;
+  }
+
+  .av4-prueba__pila img:hover {
+    z-index: 3;
+    transform: translateY(-6px) scale(1.22);
+    box-shadow: 0 10px 18px -8px rgb(0 0 0 / 0.55);
+  }
+
+  .av4-prueba__pila img:hover + img {
+    transform: translateX(6px);
+  }
+
+  .av4-prueba__pila img:has(+ img:hover) {
+    transform: translateX(-4px);
+  }
 }
 
 .av4-prueba__txt {
@@ -33276,6 +33305,11 @@ body {
   text-wrap: pretty;
 }
 
+/* Operación Coherencia: la bajada pegada al titular. */
+.av4.av4--esmeralda p.av4-hero__lead {
+  margin-top: 6px;
+}
+
 /* ---- Cierre de Ciclo: hero como una pila centrada y ordenada ----
  * Logotipo, etiqueta, titular, bajada, línea "Para mujeres…", horarios, botón y
  * cinta comparten un eje central; el botón mide lo normal (no todo el ancho). */
@@ -33339,76 +33373,1298 @@ body {
   }
 }
 
+/* ===== Landings por área · segunda ronda de correcciones =====
+ *
+ * Todo cuelga de `.av4--areas`, `.av4--barra` o de clases nuevas: v4 no lo usa.
+ */
+
+/* ---- Cierre de Ciclo: hero con el óvalo a la derecha y el texto a la izquierda ---- */
+
 @media (min-width: 1001px) {
-  .av4.av4--lavanda .av4-hero__retrato {
-    width: 184px;
-    height: 222px;
-    margin-bottom: 40px;
-  }
-
   .av4.av4--lavanda .av4-hero__shell {
-    padding-block: 26px 56px;
-  }
-
-  .av4.av4--lavanda .av4-hero__title {
-    margin-top: 22px;
-  }
-
-  .av4.av4--lavanda p.av4-hero__lead {
-    margin-top: 16px;
-  }
-
-  .av4.av4--lavanda p.av4-hero__para {
-    margin-top: 14px;
-  }
-
-  .av4.av4--lavanda .av4-hero__accion {
-    margin-top: 24px;
-    gap: 16px;
-  }
-
-  /* Tope de 800px de alto en escritorio: logotipo y etiqueta comparten fila,
-     retrato más chico, "Para mujeres…" en una línea y sin la cinta de datos
-     (repite lo mismo que la barra fija de arriba). */
-  .av4.av4--lavanda .av4-hero__copy {
     display: grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
-    justify-items: center;
+    grid-template-columns: minmax(0, 1fr) 400px;
     align-items: center;
-    column-gap: 28px;
+    gap: clamp(40px, 5vw, 80px);
+    padding-block: 34px;
+    text-align: left;
   }
 
-  .av4.av4--lavanda .av4-hero__copy > :not(.av4-lockup, .av4-hero__tag) {
-    grid-column: 1 / -1;
+  /* El óvalo conserva marco, aros y halo; sólo cambia de lado. */
+  .av4.av4--lavanda .av4-hero__retrato {
+    order: 0;
+    justify-self: center;
+    width: 336px;
+    height: 404px;
+    margin: 0 10px 0 0;
+  }
+
+  .av4.av4--lavanda .av4-hero__copy {
+    display: block;
+    max-width: 620px;
+    justify-content: start;
+    justify-items: start;
+    align-items: start;
+    text-align: left;
   }
 
   .av4.av4--lavanda .av4-hero__tag {
-    margin-top: 0;
-  }
-
-  .av4.av4--lavanda .av4-hero__retrato {
-    width: 156px;
-    height: 188px;
-    margin-bottom: 34px;
+    margin-top: 26px;
   }
 
   .av4.av4--lavanda .av4-hero__title {
-    margin-top: 20px;
-    font-size: clamp(34px, 3.2vw, 44px);
+    max-width: none;
+    margin-top: 18px;
+    font-size: clamp(36px, 3.7vw, 50px);
+    line-height: 1.08;
+    text-wrap: initial;
+  }
+
+  .av4.av4--lavanda p.av4-hero__lead {
+    max-width: 560px;
+    margin: 8px 0 22px;
+    text-wrap: pretty;
   }
 
   .av4.av4--lavanda p.av4-hero__para {
-    max-width: 780px;
-    margin-top: 10px;
-    font-size: 20px;
+    max-width: 560px;
+    margin: -6px 0 22px;
+    padding-left: 16px;
+    border-left: 2px solid var(--av4-gold);
+    font-size: 21px;
+    text-align: left;
+    text-wrap: initial;
   }
 
   .av4.av4--lavanda .av4-hero__accion {
-    margin-top: 20px;
+    width: auto;
+    max-width: none;
+    margin-top: 0;
+    gap: 16px;
+    justify-items: stretch;
   }
 
-  .av4.av4--lavanda .av4-hero__accion .av4-datos {
-    display: none;
+  .av4.av4--lavanda .av4-hero__accion .av4-cta,
+  .av4.av4--lavanda .av4-hero__accion .av4-horarios {
+    width: 100%;
   }
+
+  .av4.av4--lavanda .av4-horarios--compacto {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+}
+
+/* ---- Botones tomados de otras landings (por `disenio.ctaEstilo`) ---- */
+
+/* Perla (de /activacion, "frecuencia"): píldora con brillo húmedo, casquete
+   claro arriba y estrellitas a los lados del rótulo. Color: coral del amanecer. */
+.av4 a.av4-cta.av4-cta--perla {
+  gap: 18px;
+  padding: 0 10px 0 40px;
+  border-radius: 100px;
+  background: var(--av4-rose-text);
+  color: #fff;
+  letter-spacing: 0.04em;
+  box-shadow:
+    inset 0 0.3rem 0.9rem rgb(255 255 255 / 0.3),
+    inset 0 -0.1rem 0.3rem rgb(0 0 0 / 0.55),
+    inset 0 -0.4rem 0.9rem rgb(255 255 255 / 0.4),
+    0 1.2rem 1.4rem -0.4rem rgb(var(--av4-wine-deep-rgb) / 0.4),
+    0 0.5rem 0.5rem -0.3rem rgb(0 0 0 / 0.5);
+}
+
+.av4 a.av4-cta.av4-cta--perla:hover {
+  box-shadow:
+    inset 0 0.3rem 0.5rem rgb(255 255 255 / 0.4),
+    inset 0 -0.1rem 0.3rem rgb(0 0 0 / 0.55),
+    inset 0 -0.4rem 0.9rem rgb(255 255 255 / 0.6),
+    0 1.6rem 1.8rem -0.4rem rgb(var(--av4-wine-deep-rgb) / 0.45),
+    0 0.5rem 0.5rem -0.3rem rgb(0 0 0 / 0.5);
+}
+
+.av4-cta--perla::before {
+  inset: 12% 6% auto;
+  width: auto;
+  height: 42%;
+  border-radius: 22px 22px 0 0;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.34) 0%, transparent 100%);
+  box-shadow: inset 0 10px 8px -10px rgb(255 255 255 / 0.8);
+  transform: none;
+  animation: none;
+}
+
+.av4-cta--perla .av4-cta__label {
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+
+.av4-cta--perla .av4-cta__label::before,
+.av4-cta--perla .av4-cta__label::after {
+  content: "✦";
+  display: inline-block;
+  margin-inline: 0.55em;
+  font-size: 0.8em;
+  opacity: 0.9;
+}
+
+.av4-cta--perla .av4-cta__circulo {
+  background: rgb(255 255 255 / 0.94);
+  color: var(--av4-rose-text);
+  box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.5);
+}
+
+/* Vidrio (de /registro-v3): cristal esmerilado con borde claro y sombra
+   interior, en esmeralda. */
+.av4 a.av4-cta.av4-cta--vidrio,
+.av4.av4--esmeralda .av4-hero__copy a.av4-cta.av4-cta--vidrio {
+  --vi-centro: rgb(18 112 92 / 0.9);
+  --vi-borde: rgb(6 54 44 / 0.95);
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 999px;
+  background: var(--vi-centro);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  color: #fff;
+  box-shadow:
+    inset 0 0 16px 3px var(--vi-borde),
+    inset 0 1px 0 rgb(255 255 255 / 0.55),
+    inset 0 0.3rem 0.9rem rgb(255 255 255 / 0.18),
+    inset 0 -0.4rem 0.9rem rgb(255 255 255 / 0.14),
+    0 14px 30px -14px rgb(5 40 33 / 0.7);
+}
+
+.av4 a.av4-cta.av4-cta--vidrio:hover,
+.av4.av4--esmeralda .av4-hero__copy a.av4-cta.av4-cta--vidrio:hover {
+  box-shadow:
+    inset 0 0 16px 3px var(--vi-borde),
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    inset 0 0.3rem 0.6rem rgb(255 255 255 / 0.26),
+    inset 0 -0.4rem 0.9rem rgb(255 255 255 / 0.22),
+    0 18px 34px -14px rgb(5 40 33 / 0.8);
+}
+
+.av4-cta--vidrio::before,
+.av4.av4--esmeralda .av4-hero__copy .av4-cta--vidrio::before {
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.28), transparent);
+}
+
+.av4-cta--vidrio .av4-cta__label {
+  text-shadow:
+    0 1px 2px rgb(4 30 24 / 0.55),
+    0 0 10px rgb(4 30 24 / 0.55);
+}
+
+.av4 .av4-cta--vidrio .av4-cta__circulo,
+.av4.av4--esmeralda .av4-hero__copy .av4-cta--vidrio .av4-cta__circulo {
+  border: 1px solid rgb(255 255 255 / 0.55);
+  background: rgb(255 255 255 / 0.2);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+
+/* ---- La experiencia: el MacBook acompaña la lectura de la columna izquierda ---- */
+
+@media (min-width: 901px) {
+  .av4-vive .av4-dos {
+    align-items: start;
+  }
+
+  /* Pegado mientras el texto de la izquierda pasa; se suelta al final de la sección. */
+  .av4-vive .av4-dos > [data-reveal="right"] {
+    position: sticky;
+    top: calc(max(50vh - 230px, 24px) + var(--av4-barra-h, 0px));
+    align-self: start;
+  }
+}
+
+/* ---- Para ti · marcar lo que sientes tuyo (Operación Coherencia) ---- */
+
+.av4-marca__guia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 20px;
+  padding: 14px 20px;
+  border: 1px dashed rgb(var(--av4-gold-rgb) / 0.7);
+  border-radius: 14px;
+  background: rgb(var(--av4-gold-rgb) / 0.1);
+}
+
+.av4 .av4-marca__guia p {
+  margin: 0;
+  color: var(--av4-ink);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.av4 .av4-marca__guia p.av4-marca__cuenta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--av4-ink-soft);
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.av4-marca__cuenta strong {
+  min-width: 1ch;
+  color: var(--av4-rose-text);
+  font-family: var(--av4-serif);
+  font-size: 30px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.av4-marca__pips {
+  display: flex;
+  gap: 6px;
+}
+
+.av4-marca__pips i {
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid rgb(var(--av4-gold-rgb) / 0.9);
+  border-radius: 50%;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.av4-marca__pips i.av4-marca__pip--on {
+  background: var(--av4-gold);
+  box-shadow: 0 0 8px rgb(var(--av4-gold-rgb) / 0.8);
+  transform: scale(1.25);
+}
+
+.av4-cards--marca .av4-tit {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.av4-cards--marca .av4-tit::before {
+  transition: width 0.4s ease;
+}
+
+.av4-tit__btn {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.av4-tit__btn:focus-visible {
+  outline: 3px solid var(--av4-gold-soft);
+  outline-offset: -5px;
+}
+
+.av4-tit__marca {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid rgb(var(--av4-gold-rgb) / 0.7);
+  border-radius: 50%;
+  color: transparent;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.av4-cards--marca .av4-tit:not(.av4-tit--on):hover .av4-tit__marca {
+  border-color: var(--av4-gold-soft);
+  box-shadow: 0 0 0 4px rgb(var(--av4-gold-rgb) / 0.18);
+}
+
+.av4-tit--on {
+  border-color: var(--av4-gold);
+  background:
+    radial-gradient(80% 70% at 100% 0%, rgb(var(--av4-gold-rgb) / 0.4), transparent 72%),
+    linear-gradient(160deg, var(--av4-wine-2), var(--av4-wine));
+  box-shadow:
+    0 0 0 1px var(--av4-gold) inset,
+    0 26px 44px -24px rgb(var(--av4-gold-rgb) / 0.55);
+}
+
+.av4-cards--marca .av4-tit--on::before {
+  width: 72px;
+}
+
+.av4-tit--on .av4-tit__marca {
+  border-color: transparent;
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
+  color: var(--av4-wine-deep);
+  box-shadow: 0 0 0 5px rgb(var(--av4-gold-rgb) / 0.2);
+  transform: scale(1.1);
+}
+
+@media (max-width: 640px) {
+  .av4-marca__guia {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .av4 .av4-marca__guia p {
+    font-size: 13.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-cards--marca .av4-tit,
+  .av4-tit__marca,
+  .av4-marca__pips i {
+    transition: none;
+  }
+}
+
+/* ---- Para ti · camino (Misión Alma) ---- */
+
+.av4-camino {
+  position: relative;
+  max-width: 980px;
+  margin: 12px auto 0;
+}
+
+.av4-camino__svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.av4-camino__traza {
+  fill: none;
+  stroke: rgb(var(--av4-gold-rgb) / 0.55);
+  stroke-width: 2;
+  stroke-dasharray: 2 10;
+  stroke-linecap: round;
+}
+
+.av4-camino__trazo {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgb(var(--av4-gold-rgb) / 0.7));
+}
+
+.av4-camino__luz {
+  fill: #fff;
+  filter: drop-shadow(0 0 4px var(--av4-gold)) drop-shadow(0 0 9px var(--av4-gold));
+}
+
+.av4-camino__punta {
+  fill: #fff;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px var(--av4-gold)) drop-shadow(0 0 14px var(--av4-rose));
+}
+
+.av4-camino__lista {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.av4-camino__paso {
+  position: relative;
+  padding: 0 0 20px 74px;
+}
+
+.av4-camino__paso:last-child {
+  padding-bottom: 0;
+}
+
+.av4-camino__nodo {
+  position: absolute;
+  top: 50%;
+  left: 26px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-top: -10px;
+  border: 1.5px solid rgb(var(--av4-gold-rgb) / 0.8);
+  border-radius: 50%;
+  background: var(--av4-ivory);
+  box-shadow: 0 0 0 6px var(--av4-ivory);
+  color: var(--av4-rose-text);
+  font-family: var(--av4-serif);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 600;
+  transform: translate(-50%, -50%);
+  transition:
+    background 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.6s ease,
+    transform 0.6s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.av4-camino__nodo--on {
+  border-color: transparent;
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
+  box-shadow:
+    0 0 0 6px var(--av4-ivory),
+    0 0 0 7px rgb(var(--av4-gold-rgb) / 0.6),
+    0 0 26px 4px rgb(var(--av4-gold-rgb) / 0.55);
+  color: var(--av4-wine-deep);
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.av4-camino__tarj {
+  padding: 22px 24px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
+  border-radius: 18px;
+  background: linear-gradient(160deg, var(--av4-card-1, #fff), var(--av4-card-2, var(--av4-rose-bg)));
+  box-shadow: 0 22px 36px -26px rgb(var(--av4-wine-rgb) / 0.55);
+}
+
+.av4 .av4-camino__tarj p {
+  margin: 0;
+  color: var(--av4-ink);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.av4-pie-fila--camino {
+  margin-top: 40px;
+}
+
+@media (min-width: 701px) {
+  .av4-camino__paso {
+    display: flex;
+    align-items: center;
+    min-height: 150px;
+    padding: 0 0 26px;
+  }
+
+  .av4-camino__paso:nth-child(even) {
+    justify-content: flex-end;
+  }
+
+  .av4-camino__tarj {
+    width: calc(50% - 80px);
+    padding: 26px 30px;
+  }
+
+  .av4 .av4-camino__tarj p {
+    font-size: 19px;
+  }
+
+  .av4-camino__nodo {
+    left: calc(50% - 40px);
+    margin-top: -13px;
+  }
+
+  .av4-camino__paso:nth-child(even) .av4-camino__nodo {
+    left: calc(50% + 40px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-camino__nodo {
+    transition: none;
+  }
+}
+
+/* ---- Área · los resultados se encienden con el scroll (El Código Corazón) ---- */
+
+.av4-area__lista--prog {
+  position: relative;
+}
+
+.av4-area__lista--js::before,
+.av4-area__lista--js::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: var(--area-linea-top, 0);
+  width: 2px;
+  border-radius: 2px;
+}
+
+.av4-area__lista--js::before {
+  height: var(--area-linea-alto, 0);
+  background: rgb(255 255 255 / 0.16);
+}
+
+.av4-area__lista--js::after {
+  height: var(--area-llena, 0);
+  background: linear-gradient(180deg, var(--av4-gold-soft), var(--av4-gold));
+  box-shadow: 0 0 12px rgb(var(--av4-gold-rgb) / 0.8);
+}
+
+.av4 .av4-area__panel .av4-area__lista--js li {
+  opacity: 0.4;
+  transition: opacity 0.6s ease;
+}
+
+.av4 .av4-area__panel .av4-area__lista--js li.av4-area__item--on {
+  opacity: 1;
+}
+
+.av4-area__lista--js .av4-area__check {
+  position: relative;
+  z-index: 1;
+  border: 1.5px solid rgb(var(--av4-gold-rgb) / 0.7);
+  background: var(--av4-wine);
+  color: transparent;
+  transition:
+    background 0.5s ease,
+    color 0.4s ease,
+    box-shadow 0.6s ease,
+    transform 0.6s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.av4-area__lista--js .av4-area__item--on .av4-area__check {
+  border-color: transparent;
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
+  color: var(--av4-wine-deep);
+  box-shadow: 0 0 0 5px rgb(var(--av4-gold-rgb) / 0.2), 0 0 22px 2px rgb(var(--av4-gold-rgb) / 0.6);
+  transform: scale(1.1);
+}
+
+/* ---- Testimonios · muro: despliegue y pliegue animados ---- */
+
+.av4-muro .av4-tcard--sale {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition:
+    opacity 0.34s ease,
+    transform 0.34s ease;
+}
+
+.av4-muro .av4-tcard--nueva {
+  animation: av4-tcard-entra 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms) both;
+}
+
+@keyframes av4-tcard-entra {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-muro .av4-tcard--nueva {
+    animation: none;
+  }
+
+  .av4-muro .av4-tcard--sale {
+    transition: none;
+  }
+}
+
+/* ---- Precio · bento: tarjeta con la foto como retrato sobre la textura dorada ---- */
+
+.av4-bento__card--retrato {
+  justify-content: space-between;
+  background:
+    linear-gradient(90deg, rgb(var(--av4-wine-deep-rgb) / 0.7) 0%, rgb(var(--av4-wine-deep-rgb) / 0.42) 60%, rgb(var(--av4-wine-deep-rgb) / 0.12) 100%),
+    url("/activacion-v2/bg-gold.jpg") 50% 30% / cover no-repeat;
+}
+
+.av4-bento__card--retrato.av4-bento__card--foto::after {
+  background: linear-gradient(180deg, transparent 55%, rgb(var(--av4-wine-deep-rgb) / 0.55) 100%);
+}
+
+.av4-bento__card--retrato .av4-bento__txt {
+  max-width: 52%;
+}
+
+.av4-bento__retrato {
+  position: absolute;
+  top: 50%;
+  right: clamp(24px, 4vw, 52px);
+  z-index: 2;
+  width: clamp(150px, 15vw, 188px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px var(--av4-gold-soft),
+    0 0 0 9px rgb(var(--av4-gold-rgb) / 0.28),
+    0 22px 40px -12px rgb(0 0 0 / 0.65);
+  transform: translateY(-50%);
+}
+
+@media (max-width: 700px) {
+  .av4-bento__card--retrato .av4-bento__txt {
+    max-width: 100%;
+  }
+
+  .av4-bento__retrato {
+    top: 22px;
+    right: 22px;
+    width: 112px;
+    transform: none;
+  }
+}
+
+/* ---- Cierre · el círculo que respira (Operación Coherencia) ---- */
+
+.av4-resp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  margin-top: 8px;
+}
+
+.av4-resp__escena {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 500px);
+  aspect-ratio: 1;
+  container-type: inline-size;
+}
+
+/* Anillos concéntricos que se expanden con un leve retraso, como una onda. */
+.av4-resp__aro {
+  position: absolute;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.38);
+  border-radius: 50%;
+  animation: av4-resp-respira 8s ease-in-out infinite;
+}
+
+.av4-resp__aro--1 {
+  inset: 9%;
+  border-color: rgb(var(--av4-gold-rgb) / 0.5);
+  animation-delay: 0.3s;
+}
+
+.av4-resp__aro--2 {
+  inset: 3%;
+  border-color: rgb(var(--av4-gold-rgb) / 0.3);
+  animation-delay: 0.6s;
+}
+
+.av4-resp__aro--3 {
+  inset: -3%;
+  border-color: rgb(var(--av4-gold-rgb) / 0.16);
+  animation-delay: 0.9s;
+}
+
+.av4-resp__nucleo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 66%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.65);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 30%, rgb(var(--av4-gold-rgb) / 0.26), transparent 62%),
+    radial-gradient(circle at 50% 50%, var(--av4-wine-2), var(--av4-wine-deep));
+  box-shadow:
+    0 0 0 8px rgb(var(--av4-gold-rgb) / 0.08),
+    0 0 70px 6px rgb(var(--av4-gold-rgb) / 0.22),
+    inset 0 0 50px rgb(var(--av4-gold-rgb) / 0.14);
+  text-align: center;
+  animation: av4-resp-respira 8s ease-in-out infinite;
+}
+
+.av4-resp__sello {
+  width: 9cqw;
+  height: 9cqw;
+  margin-bottom: 1.2cqw;
+  opacity: 0.95;
+}
+
+.av4 .av4-resp__nucleo p {
+  margin: 0;
+}
+
+.av4 .av4-resp__fecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.av4-resp__dia {
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-serif);
+  font-size: 21cqw;
+  font-style: italic;
+  font-weight: var(--av4-accent-weight, 500);
+  line-height: 0.95;
+}
+
+.av4-resp__mes {
+  margin-top: 1cqw;
+  color: #fff;
+  font-size: max(13px, 3.6cqw);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.av4 .av4-resp__hora {
+  margin-top: 3cqw;
+  color: #fff;
+  font-size: max(13px, 3.5cqw);
+  font-weight: 600;
+}
+
+.av4 .av4-resp__formato {
+  margin-top: 0.8cqw;
+  color: rgb(255 255 255 / 0.78);
+  font-size: max(12px, 3cqw);
+}
+
+@keyframes av4-resp-respira {
+  0%, 100% { transform: scale(0.93); opacity: 0.82; }
+  50%      { transform: scale(1.05); opacity: 1; }
+}
+
+.av4-resp__cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-resp__aro,
+  .av4-resp__nucleo {
+    animation: none;
+  }
+}
+
+/* ---- Cierre · el código que se abre (El Código Corazón) ---- */
+
+.av4-cod {
+  --fh: clamp(68px, 17vw, 96px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+/* La placa lleva la textura dorada como marco. */
+.av4-cod__placa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 18px clamp(14px, 4vw, 30px) clamp(16px, 4vw, 26px);
+  border-radius: 24px;
+  background: url("/activacion-v2/bg-gold.jpg") 50% 40% / cover no-repeat;
+  box-shadow:
+    0 0 0 1px rgb(255 238 190 / 0.55) inset,
+    0 30px 60px -30px rgb(var(--av4-gold-rgb) / 0.4);
+  cursor: pointer;
+  transition: box-shadow 1s ease;
+}
+
+.av4-cod--abierto .av4-cod__placa {
+  box-shadow:
+    0 0 0 1px rgb(255 238 190 / 0.8) inset,
+    0 0 70px 6px rgb(var(--av4-gold-rgb) / 0.55),
+    0 30px 60px -30px rgb(var(--av4-gold-rgb) / 0.6);
+}
+
+.av4-cod__candado {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgb(255 238 190 / 0.7);
+  border-radius: 50%;
+  background: rgb(var(--av4-wine-deep-rgb) / 0.88);
+  color: var(--av4-gold-soft);
+  transition: color 0.6s ease, box-shadow 0.8s ease, transform 0.6s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.av4-cod--abierto .av4-cod__candado {
+  color: #fff;
+  box-shadow: 0 0 22px 4px rgb(255 224 150 / 0.75);
+  transform: scale(1.08);
+}
+
+.av4-cod__fichas {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2.4vw, 16px);
+  padding: clamp(12px, 3vw, 18px) clamp(14px, 3.4vw, 24px);
+  border-radius: 16px;
+  background: rgb(var(--av4-wine-deep-rgb) / 0.9);
+  box-shadow: inset 0 2px 14px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(0 0 0 / 0.35);
+}
+
+.av4-cod__grupo {
+  display: flex;
+  align-items: center;
+  gap: clamp(5px, 1.4vw, 9px);
+}
+
+.av4-cod__punto {
+  width: 8px;
+  height: 8px;
+  margin-inline: clamp(5px, 2vw, 12px);
+  background: var(--av4-gold);
+  box-shadow: 0 0 10px rgb(var(--av4-gold-rgb) / 0.9);
+  transform: rotate(45deg);
+}
+
+.av4-cod__ficha {
+  position: relative;
+  display: block;
+  width: calc(var(--fh) * 0.7);
+  height: var(--fh);
+  overflow: hidden;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.55);
+  border-radius: 10px;
+  background: #0d0a07;
+}
+
+/* Cilindro: se oscurece hacia arriba y abajo, como un rodillo. */
+.av4-cod__ficha::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0.78) 0%,
+    rgb(0 0 0 / 0) 30%,
+    rgb(0 0 0 / 0) 70%,
+    rgb(0 0 0 / 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+.av4-cod__tira {
+  display: block;
+  transform: translateY(calc(var(--pos, 0) * var(--fh) * -1));
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.14, 0.72, 0.16, 1);
+}
+
+.av4-cod__tira > span {
+  display: block;
+  height: var(--fh);
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-serif);
+  font-size: calc(var(--fh) * 0.66);
+  font-weight: 600;
+  line-height: var(--fh);
+  text-align: center;
+  text-shadow: 0 0 18px rgb(var(--av4-gold-rgb) / 0.6);
+}
+
+/* Barrido de luz dorada cuando la combinación se abre. */
+.av4-cod__brillo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 32%, rgb(255 244 200 / 0.6) 50%, transparent 68%);
+  opacity: 0;
+  transform: translateX(-110%);
+  pointer-events: none;
+}
+
+.av4-cod--abierto .av4-cod__brillo {
+  animation: av4-cod-brillo 1.3s ease-out 1;
+}
+
+@keyframes av4-cod-brillo {
+  0%   { opacity: 1; transform: translateX(-110%); }
+  100% { opacity: 1; transform: translateX(110%); }
+}
+
+.av4 .av4-cod__datos {
+  margin: 4px 0 0;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+}
+
+.av4 .av4-cod__datos strong {
+  color: var(--av4-gold-soft);
+}
+
+.av4 .av4-cod__datos--sec {
+  margin: 0;
+  color: rgb(255 255 255 / 0.78);
+  font-size: 15px;
+}
+
+.av4-cod__cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* El botón está desde el principio; "se enciende" cuando el código se abre. */
+.av4-cod .av4-cod__cta .av4-cta {
+  transition: filter 0.9s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.av4-cod:not(.av4-cod--abierto) .av4-cod__cta .av4-cta {
+  filter: saturate(0.55) brightness(0.82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-cod--abierto .av4-cod__brillo {
+    animation: none;
+  }
+
+  .av4-cod__tira,
+  .av4-cod .av4-cod__cta .av4-cta {
+    transition: none;
+  }
+}
+
+/* ---- Cierre · el sobre con el sello (El Cierre de Ciclo) ---- */
+
+.av4-sobre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  margin-top: 8px;
+}
+
+.av4-sobre__escena {
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 560 / 480;
+  container-type: inline-size;
+  cursor: pointer;
+  perspective: 1500px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Sombra de apoyo bajo el sobre. */
+.av4-sobre__escena::after {
+  content: "";
+  position: absolute;
+  inset: auto 4% -3% 4%;
+  height: 7%;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.5);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.av4-sobre__fondo,
+.av4-sobre__frente {
+  position: absolute;
+  left: 0;
+  top: 52%;
+  width: 100%;
+  height: 48%;
+  border-radius: 0 0 10px 10px;
+}
+
+.av4-sobre__fondo {
+  z-index: 1;
+  background: linear-gradient(180deg, rgb(var(--av4-rose-soft-rgb) / 0.95), var(--av4-rose-soft));
+  box-shadow: inset 0 14px 22px -10px rgb(0 0 0 / 0.35);
+}
+
+/* Bolsillo delantero: dos aguas y la base, con la V abierta arriba. */
+.av4-sobre__frente {
+  z-index: 3;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.05), transparent 30%, transparent 70%, rgb(0 0 0 / 0.05)),
+    linear-gradient(160deg, #fffdf8, var(--av4-rose-bg));
+  clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Solapa con dos caras: la de afuera y la de adentro (más oscura) al abrirse. */
+.av4-sobre__solapa {
+  position: absolute;
+  left: 0;
+  top: 52%;
+  z-index: 4;
+  width: 100%;
+  height: 26.9%;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  transition:
+    transform 1s cubic-bezier(0.5, 0, 0.2, 1) 0.15s,
+    z-index 0s linear 0.55s;
+}
+
+.av4-sobre__solapa::before,
+.av4-sobre__solapa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.av4-sobre__solapa::before {
+  background: linear-gradient(180deg, var(--av4-ivory), var(--av4-rose-bg) 80%);
+}
+
+.av4-sobre__solapa::after {
+  background: linear-gradient(0deg, var(--av4-rose-soft), rgb(var(--av4-rose-soft-rgb) / 0.8));
+  transform: rotateX(180deg);
+}
+
+.av4-sobre__sello {
+  position: absolute;
+  left: 50%;
+  top: 78.9%;
+  z-index: 5;
+  width: 15cqw;
+  height: auto;
+  filter: drop-shadow(0 6px 8px rgb(0 0 0 / 0.45));
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 0.4s ease,
+    transform 0.55s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+.av4-sobre__carta {
+  position: absolute;
+  left: 10%;
+  top: 54%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2cqw;
+  width: 80%;
+  height: 44%;
+  padding: 2cqw 4cqw;
+  border-radius: 8px;
+  background:
+    radial-gradient(70% 60% at 50% 0%, rgb(var(--av4-gold-rgb) / 0.22), transparent 70%),
+    #fffdf8;
+  box-shadow: 0 -4px 22px rgb(0 0 0 / 0.18);
+  color: var(--av4-ink);
+  text-align: center;
+  transition: transform 1.1s cubic-bezier(0.25, 0.8, 0.25, 1) 0.55s;
+}
+
+.av4 .av4-sobre__carta p {
+  margin: 0;
+}
+
+.av4 .av4-sobre__carta p.av4-sobre__fecha {
+  color: var(--av4-ink);
+  font-family: var(--av4-serif);
+  font-size: max(26px, 8.4cqw);
+  font-weight: var(--av4-accent-weight, 500);
+  line-height: 1;
+}
+
+.av4-sobre__fecha span {
+  font-style: italic;
+}
+
+.av4-sobre__fecha em {
+  font-style: normal;
+}
+
+.av4 .av4-sobre__carta p.av4-sobre__hora {
+  color: var(--av4-rose-text);
+  font-size: max(14px, 3.5cqw);
+  font-weight: 700;
+}
+
+.av4 .av4-sobre__carta p.av4-sobre__formato {
+  color: var(--av4-ink-soft);
+  font-size: max(13px, 3cqw);
+}
+
+.av4 .av4-sobre__carta p.av4-sobre__otros {
+  padding-top: 1.2cqw;
+  border-top: 1px solid rgb(var(--av4-gold-rgb) / 0.6);
+  color: var(--av4-ink-soft);
+  font-size: max(11.5px, 2.5cqw);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+/* Cerrado: la carta queda dentro, la solapa tapa la V y el sello la cierra. */
+.av4-sobre__escena:not(.av4-sobre__escena--abierto) .av4-sobre__carta {
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+/* Abierto. */
+.av4-sobre__escena--abierto .av4-sobre__solapa {
+  z-index: 1;
+  transform: rotateX(180deg);
+}
+
+.av4-sobre__escena--abierto .av4-sobre__sello {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.5) rotate(14deg);
+}
+
+.av4-sobre__escena--abierto .av4-sobre__carta {
+  transform: translateY(-82%);
+}
+
+.av4-sobre__cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av4-sobre__solapa,
+  .av4-sobre__sello,
+  .av4-sobre__carta {
+    transition: none;
+  }
+}
+
+/* ---- Hero ≤ 800px de alto en escritorio (con la cinta de datos y la prueba social, sin barra) ---- */
+
+@media (min-width: 1001px) {
+  .av4.av4--esmeralda .av4-hero__shell {
+    padding-block: 26px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__copy {
+    max-width: 650px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__tag {
+    margin-top: 18px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__title {
+    margin-top: 14px;
+    font-size: clamp(36px, 3.3vw, 47px);
+  }
+
+  .av4.av4--esmeralda p.av4-hero__lead {
+    max-width: 640px;
+    margin-bottom: 18px;
+  }
+
+  .av4.av4--esmeralda .av4-prueba--hero {
+    margin-top: 14px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .av4.av4--amanecer .av4-hero__shell {
+    padding-block: 20px;
+  }
+
+  .av4.av4--amanecer .av4-hero__copy {
+    max-width: min(640px, 56vw);
+  }
+
+  .av4.av4--amanecer .av4-hero__tag {
+    margin-top: 16px;
+  }
+
+  .av4.av4--amanecer .av4-hero__title {
+    margin-top: 12px;
+    font-size: clamp(32px, 3.3vw, 46px);
+  }
+
+  .av4.av4--amanecer p.av4-hero__lead {
+    max-width: 600px;
+    margin-bottom: 16px;
+  }
+
+  .av4.av4--amanecer p.av4-hero__para {
+    margin-bottom: 16px;
+  }
+
+  .av4.av4--amanecer .av4-prueba--hero {
+    margin-top: 14px;
+  }
+}
+
+/* Botón perla (Misión Alma) también en el hero, donde el tema lo pinta azul noche. */
+.av4.av4--amanecer .av4-hero__copy a.av4-cta.av4-cta--perla {
+  background: var(--av4-rose-text);
+  color: #fff;
+  box-shadow:
+    inset 0 0.3rem 0.9rem rgb(255 255 255 / 0.3),
+    inset 0 -0.1rem 0.3rem rgb(0 0 0 / 0.55),
+    inset 0 -0.4rem 0.9rem rgb(255 255 255 / 0.4),
+    0 1.2rem 1.4rem -0.4rem rgb(var(--av4-wine-deep-rgb) / 0.4),
+    0 0.5rem 0.5rem -0.3rem rgb(0 0 0 / 0.5);
+}
+
+.av4.av4--amanecer .av4-hero__copy a.av4-cta.av4-cta--perla:hover {
+  box-shadow:
+    inset 0 0.3rem 0.5rem rgb(255 255 255 / 0.4),
+    inset 0 -0.1rem 0.3rem rgb(0 0 0 / 0.55),
+    inset 0 -0.4rem 0.9rem rgb(255 255 255 / 0.6),
+    0 1.6rem 1.8rem -0.4rem rgb(var(--av4-wine-deep-rgb) / 0.45),
+    0 0.5rem 0.5rem -0.3rem rgb(0 0 0 / 0.5);
+}
+
+.av4.av4--amanecer .av4-hero__copy .av4-cta--perla::before {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.34) 0%, transparent 100%);
+}
+
+.av4.av4--amanecer .av4-hero__copy .av4-cta--perla .av4-cta__circulo {
+  background: rgb(255 255 255 / 0.94);
+  color: var(--av4-rose-text);
+  box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.5);
+}
+
+/* Marcar: el título deja sitio a la marca de la esquina. */
+.av4-cards--marca .av4-tit h3 {
+  padding-right: 40px;
+}
+
+@media (max-width: 640px) {
+  .av4-resp {
+    gap: 12px;
+  }
+
+  .av4-resp__escena {
+    margin-bottom: -8%;
+  }
+}
+
+/* Sobre de Cierre de Ciclo: cada horario entero en su línea (no "13:00" arriba y "hs" abajo). */
+.av4-sobre__otros {
+  text-wrap: balance;
+}
+
+.av4-sobre__otros span {
+  white-space: nowrap;
 }

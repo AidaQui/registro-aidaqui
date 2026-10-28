@@ -1,6 +1,11 @@
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
+import {
+  CierreCodigo,
+  CierreRespira,
+  CierreSobre,
+} from "@/components/activacion-v4/Av4CierreVisual";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import {
   EVENTO,
@@ -19,7 +24,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 export default function Av4Cierre() {
   const ref = useScrollReveal<HTMLElement>();
-  const c = useContenido().cierre;
+  const { cierre: c, disenio } = useContenido();
+  const visual = disenio?.cierreVisual;
   const principal = HORARIOS[0];
 
   return (
@@ -39,6 +45,11 @@ export default function Av4Cierre() {
             </div>
           )}
 
+          {visual === "respira" && <CierreRespira cta={c.cta} />}
+          {visual === "codigo" && <CierreCodigo cta={c.cta} />}
+          {visual === "sobre" && <CierreSobre cta={c.cta} />}
+
+          {!visual && (
           <div className="av4-et" data-reveal>
             <div className="av4-et__sombra">
               <div>
@@ -83,6 +94,7 @@ export default function Av4Cierre() {
               </div>
             </div>
           </div>
+          )}
 
           <p className="av4-despedida" data-reveal>
             {c.despedida}

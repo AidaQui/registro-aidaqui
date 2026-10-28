@@ -21,7 +21,7 @@ export default function ActivacionV4() {
   return (
     <>
       <Head>
-        <title>Experiencia Energética — Aida Qui</title>
+        <title>Inmersión Energética — Aida Qui</title>
         <meta
           name="description"
           content="Una experiencia guiada en directo para reconectar con la verdad de tu corazón, reconocer los miedos que te frenan y activar tu poder interior para empezar a crear una vida que ames todos los días."

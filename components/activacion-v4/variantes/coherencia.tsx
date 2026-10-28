@@ -79,8 +79,8 @@ export const CONTENIDO_COHERENCIA: Contenido = {
     texto:
       "Primero activamos el corazón. Después llevamos lo que descubras a tu cuerpo, a tu descanso y a la forma en que vives cada día.",
     intro: EXPERIENCIA_INTRO,
-    // Foto de la pantalla del MacBook (otra que en las demás landings).
-    foto: { src: "/activacion-v2/item4.jpg", posicion: "50% 35%" },
+    // Foto de la pantalla del MacBook (otra que en las demás landings): plano abierto, Aida de lejos.
+    foto: { src: "/registro-v2/hero.webp", posicion: "86% 40%" },
     items: [
       "Sacar a tu cuerpo del modo alerta y volver a sentir calma.",
       "Reconocer qué situación de tu vida te está drenando la energía.",
@@ -116,6 +116,12 @@ export const CONTENIDO_COHERENCIA: Contenido = {
     testimonios: "muro",
     heroParaEnBajada: true,
     prueba: "hero",
+    // Botón de vidrio (el de /registro-v3), en esmeralda. Sin barra de anuncio.
+    ctaEstilo: "vidrio",
+    // Cierre: un círculo que respira en lugar de la entrada.
+    cierreVisual: "respira",
+    // Para ti: se marcan las situaciones que sientes tuyas.
+    paraTiMarcar: true,
   },
 
   cierre: {

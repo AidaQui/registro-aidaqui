@@ -12,7 +12,7 @@ import { SOPORTE_WHATSAPP } from "@/lib/soporte";
 
 export const EVENTO = {
   /** Nombre de la experiencia. */
-  titulo: "Experiencia Energética",
+  titulo: "Inmersión Energética",
   /** Rótulo corto de la fecha. */
   fechaCorta: "14 de noviembre",
   /** Forma larga para prosa. */

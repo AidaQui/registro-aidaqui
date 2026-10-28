@@ -18,10 +18,10 @@ export default function GraciasActivacionV4() {
   return (
     <>
       <Head>
-        <title>¡Tu lugar está reservado! — Experiencia Energética</title>
+        <title>¡Tu lugar está reservado! — Inmersión Energética</title>
         <meta
           name="description"
-          content="Ya eres parte de la Experiencia Energética. Únete al grupo de WhatsApp para recibir el enlace de la sesión en vivo."
+          content="Ya eres parte de la Inmersión Energética. Únete al grupo de WhatsApp para recibir el enlace de la sesión en vivo."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* noindex: nadie debería llegar aquí desde un buscador sin haber

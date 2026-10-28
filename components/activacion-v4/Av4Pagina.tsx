@@ -45,17 +45,20 @@ export default function Av4Pagina({
   tema = "",
   estructura = "v4",
 }: Props) {
+  // La barra de anuncio sólo va donde la landing la pide (disenio.barra).
+  const conBarra = estructura === "areas" && !!contenido.disenio?.barra;
+
   return (
     <>
       {/* Más ágil que el default: la página es larga y con 2s se sentía lenta. */}
       <SmoothScroll duration={1.1} wheelMultiplier={1} />
       <Av4ContenidoProvider contenido={contenido}>
         <main
-          className={`av4 ${tema} ${estructura === "areas" ? "av4--areas" : ""} ${fuentes}`
+          className={`av4 ${tema} ${estructura === "areas" ? "av4--areas" : ""} ${conBarra ? "av4--barra" : ""} ${fuentes}`
             .replace(/\s+/g, " ")
             .trim()}
         >
-          {estructura === "areas" && <Av4Barra />}
+          {conBarra && <Av4Barra />}
           <Av4Hero />
           {estructura === "areas" ? (
             <>
