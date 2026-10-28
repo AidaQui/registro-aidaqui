@@ -2,7 +2,6 @@ import { EVENTO } from "@/components/activacion-v4/config";
 import type { Contenido } from "@/components/activacion-v4/contenido";
 import {
   BASE_AREAS,
-  EL_DIA,
   EXPERIENCIA_INTRO,
   EXPERIENCIA_TITULAR,
   PARA_TI_CIERRE,
@@ -131,7 +130,6 @@ export const CONTENIDO_COHERENCIA: Contenido = {
         Tu cuerpo ya ha hablado. {oro("La pregunta es si vas a escucharlo.")}
       </>
     ),
-    subtitulo: `${EL_DIA}, una noche para volver a ti y recuperar tu energía.`,
     cta: "Quiero mi plaza",
   },
 };
