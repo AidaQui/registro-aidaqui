@@ -2,6 +2,7 @@ import { Check, ShieldCheck, Tag, Video } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import { EVENTO, LINKS, PRECIO } from "@/components/activacion-v4/config";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -10,14 +11,6 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * línea de perforación y código de barras decorativo). Sin logos de pago
  * inventados: sólo lo que es cierto. En móvil la entrada va primero.
  */
-
-const INCLUYE = [
-  "Una experiencia guiada vía Zoom",
-  "Prácticas para integrar la experiencia en tu día a día.",
-  "Meditaciones para cultivar el amor, la alegría y la apertura a recibir.",
-  "Mi práctica para trabajar las creencias que te limitan.",
-  "Una canalización para el grupo en directo.",
-];
 
 function Lista({ items, lado }: { items: string[]; lado: "izq" | "der" }) {
   return (
@@ -36,6 +29,7 @@ function Lista({ items, lado }: { items: string[]; lado: "izq" | "der" }) {
 
 export default function Av4Precio() {
   const ref = useScrollReveal<HTMLElement>();
+  const { precio: c, ctaCompra } = useContenido();
   const monto = PRECIO.actual.replace(/€/g, "").trim();
   const moneda = PRECIO.actual.includes("€") ? "€" : "";
 
@@ -49,13 +43,12 @@ export default function Av4Precio() {
       <div className="av4-wrap">
         <div className="av4-head" data-reveal>
           <h2 id="av4-precio-title" className="av4-title">
-            ¿Qué recibirás por solo{" "}
-            <span className="av4-oro">{monto} euros</span>?
+            {c.titular(monto)}
           </h2>
         </div>
 
         <div className="av4-pr">
-          <Lista items={INCLUYE.slice(0, 3)} lado="izq" />
+          <Lista items={c.incluye.slice(0, 3)} lado="izq" />
 
           <div className="av4-tk" data-reveal>
             <div className="av4-tk__forma">
@@ -70,7 +63,7 @@ export default function Av4Precio() {
                 {PRECIO.tachado && (
                   <span className="av4-tk__tachado">{PRECIO.tachado}</span>
                 )}
-                <span className="av4-tk__todo">Todo por</span>
+                <span className="av4-tk__todo">{c.todoPor}</span>
                 <span className="av4-tk__precio">
                   <span className="av4-tk__monto">{monto}</span>
                   <span className="av4-tk__moneda">{moneda}</span>
@@ -80,7 +73,7 @@ export default function Av4Precio() {
                     que incluye y cuánto cuesta a la vista. */}
                 <Av4Cta
                   href={LINKS.registro}
-                  label="Activa tu poder"
+                  label={ctaCompra}
                   className="av4-cta--bloque"
                   ubicacion="precio"
                 />
@@ -88,11 +81,11 @@ export default function Av4Precio() {
                 <ul className="av4-sellos">
                   <li>
                     <ShieldCheck size={15} strokeWidth={1.8} aria-hidden="true" />
-                    Compra segura
+                    {c.sellos.seguro}
                   </li>
                   <li>
                     <Tag size={15} strokeWidth={1.8} aria-hidden="true" />
-                    Pago único
+                    {c.sellos.unico}
                   </li>
                   <li>
                     <Video size={15} strokeWidth={1.8} aria-hidden="true" />
@@ -105,7 +98,7 @@ export default function Av4Precio() {
             </div>
           </div>
 
-          <Lista items={INCLUYE.slice(3)} lado="der" />
+          <Lista items={c.incluye.slice(3)} lado="der" />
         </div>
       </div>
     </section>

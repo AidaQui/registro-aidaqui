@@ -4,6 +4,7 @@ import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
 import Av4Lockup from "@/components/activacion-v4/Av4Lockup";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
 import { EVENTO } from "@/components/activacion-v4/config";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 
 /**
  * Hero en vino profundo: logotipo, etiqueta, titular, bajada, horarios y CTA,
@@ -11,6 +12,8 @@ import { EVENTO } from "@/components/activacion-v4/config";
  * En escritorio todo entra en 750px de alto.
  */
 export default function Av4Hero() {
+  const { hero, ctaPrincipal } = useContenido();
+
   return (
     <section className="av4-hero" aria-labelledby="av4-hero-title">
       <div className="av4-hero__foto" aria-hidden="true" />
@@ -26,16 +29,10 @@ export default function Av4Hero() {
           </div>
 
           <h1 id="av4-hero-title" className="av4-hero__title">
-            Deja de posponer{" "}
-            <span className="av4-oro">la vida que de verdad quieres vivir</span>.
+            {hero.titular}
           </h1>
 
-          <p className="av4-hero__lead">
-            Una experiencia guiada en directo para{" "}
-            <strong>reconectar con la verdad de tu corazón</strong>, reconocer
-            los miedos que te frenan y activar tu poder interior para empezar a
-            crear una vida que ames todos los días.
-          </p>
+          <p className="av4-hero__lead">{hero.bajada}</p>
 
           {/* Horarios, CTA y cinta de datos comparten ancho: el botón y la
               cinta miden lo mismo que la grilla de horarios. */}
@@ -44,7 +41,7 @@ export default function Av4Hero() {
 
             {/* Va al pricing, no al checkout: saltar afuera sin ver qué incluye
                 ni cuánto cuesta es la fricción que más rebota. */}
-            <Av4Cta href="#av4-precio" />
+            <Av4Cta href="#av4-precio" label={ctaPrincipal} />
 
             <Av4Datos />
           </div>

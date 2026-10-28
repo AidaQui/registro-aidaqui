@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -9,6 +10,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 export default function Av4Bio() {
   const ref = useScrollReveal<HTMLElement>();
+  const c = useContenido().bio;
 
   return (
     <section
@@ -50,36 +52,16 @@ export default function Av4Bio() {
 
         <div className="av4-dos__copy">
           <div data-reveal>
-            <Av4Tag>Aida Qui</Av4Tag>
+            <Av4Tag>{c.etiqueta}</Av4Tag>
           </div>
           <h2 id="av4-bio-title" className="av4-title av4-title--izq" data-reveal>
-            ¿Quién guiará <span className="av4-oro">esta experiencia</span>?
+            {c.titular}
           </h2>
 
           <div className="av4-parrafos" data-reveal>
-            <p>
-              Aida Qui es una de las referentes más reconocidas en{" "}
-              <strong>transformación energética</strong> y espiritualidad
-              práctica en habla hispana.
-            </p>
-            <p>
-              Es creadora de la <em>Academia ADN</em>, un movimiento y escuela
-              de transformación diseñado para ayudar a las personas a elevar su
-              consciencia, vivir desde una mayor coherencia y transformar todas
-              las áreas de su vida.
-            </p>
-            <p>
-              Durante años ha acompañado a miles de personas en procesos de
-              transformación profunda, ayudándolas a cambiar su realidad{" "}
-              <strong>desde la raíz</strong>: su energía, su identidad y la
-              forma en la que habitan su vida.
-            </p>
-            <p>
-              Su trabajo une espiritualidad práctica, maestría energética,
-              sistema emocional y transformación profunda para ayudar a las
-              personas a dejar atrás viejas versiones de sí mismas y comenzar a
-              vivir desde una frecuencia más auténtica, consciente y alineada.
-            </p>
+            {c.parrafos.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
         </div>
       </div>

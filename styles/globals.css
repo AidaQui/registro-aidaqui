@@ -28008,11 +28008,34 @@ body {
   --av4-rose-text: #a8454f;
   --av4-gold: #c9a15a;
   --av4-gold-soft: #e3c48a;
+  --av4-gold-light: #f1dcab;
   --av4-ink: #2b1a1f;
   --av4-ink-soft: #5a4249;
-  --av4-line: rgba(74, 20, 38, 0.14);
+  /* Mismos colores en canales RGB, para poder usarlos con transparencia:
+     rgb(var(--av4-gold-rgb) / 0.35). Una variante cambia hex y canales juntos. */
+  --av4-gold-rgb: 201 161 90;
+  --av4-gold-soft-rgb: 227 196 138;
+  --av4-wine-rgb: 74 20 38;
+  --av4-wine-deep-rgb: 53 16 28;
+  --av4-rose-rgb: 201 123 123;
+  --av4-rose-soft-rgb: 232 180 176;
+  --av4-rose-bg-rgb: 245 230 225;
+  /* Botón principal: degradado, tinta del texto y resplandor. */
+  --av4-cta-1: #b8873a;
+  --av4-cta-2: #e8c677;
+  --av4-cta-3: #f6dfa3;
+  --av4-cta-4: #d9aa55;
+  --av4-cta-ink: #2b1a1f;
+  --av4-cta-halo-rgb: 255 236 190;
+  --av4-cta-glow-rgb: 224 170 70;
+  /* Tarjetas crema (ticket de precio, etc.). */
+  --av4-card-1: #fff8f1;
+  --av4-card-2: #f4e4d4;
+  --av4-line: rgb(var(--av4-wine-rgb) / 0.14);
   --av4-sans: var(--font-av4-sans), "Plus Jakarta Sans", Arial, sans-serif;
   --av4-serif: var(--font-av4-serif), "Playfair Display", Georgia, serif;
+  /* Fuente de los títulos: por defecto la sans; una variante la cambia a serif. */
+  --av4-display: var(--av4-sans);
 
   position: relative;
   overflow-x: clip;
@@ -28081,8 +28104,8 @@ body {
 
 .av4-sec--claro {
   background:
-    radial-gradient(40% 30% at 90% 30%, rgba(232, 180, 176, 0.28), transparent 70%),
-    radial-gradient(40% 40% at 0% 100%, rgba(201, 161, 90, 0.14), transparent 70%),
+    radial-gradient(40% 30% at 90% 30%, rgb(var(--av4-rose-soft-rgb) / 0.28), transparent 70%),
+    radial-gradient(40% 40% at 0% 100%, rgb(var(--av4-gold-rgb) / 0.14), transparent 70%),
     var(--av4-ivory);
 }
 
@@ -28098,8 +28121,8 @@ body {
   --t-accent: var(--av4-gold-soft);
   color: #fff;
   background:
-    radial-gradient(45% 36% at 85% 40%, rgba(201, 123, 123, 0.3), transparent 70%),
-    radial-gradient(45% 45% at 5% 100%, rgba(201, 161, 90, 0.18), transparent 70%),
+    radial-gradient(45% 36% at 85% 40%, rgb(var(--av4-rose-rgb) / 0.3), transparent 70%),
+    radial-gradient(45% 45% at 5% 100%, rgb(var(--av4-gold-rgb) / 0.18), transparent 70%),
     var(--av4-wine);
 }
 
@@ -28142,7 +28165,7 @@ body {
   position: relative;
   display: inline-block;
   padding: 9px 18px 9px 26px;
-  background: linear-gradient(90deg, rgba(201, 161, 90, 0.32), rgba(201, 161, 90, 0.06));
+  background: linear-gradient(90deg, rgb(var(--av4-gold-rgb) / 0.32), rgb(var(--av4-gold-rgb) / 0.06));
   color: var(--av4-ink);
   font-size: 13px;
   font-weight: 600;
@@ -28181,6 +28204,7 @@ body {
 }
 
 .av4-title {
+  font-family: var(--av4-display);
   margin-top: 24px;
   color: var(--t-title);
   font-size: clamp(34px, 4vw, 52px);
@@ -28204,6 +28228,7 @@ body {
 }
 
 .av4-subtitulo {
+  font-family: var(--av4-display);
   margin-top: 8px;
   color: var(--t-title);
   font-size: clamp(28px, 3vw, 38px);
@@ -28220,6 +28245,7 @@ body {
 /* "Mi intención para este encuentro es:" marcado: más grande, con la palabra
    clave en el acento y una línea dorada corta debajo. */
 .av4-intencion-titulo {
+  font-family: var(--av4-display);
   font-size: clamp(32px, 3.6vw, 46px);
 }
 
@@ -28298,8 +28324,8 @@ body {
   padding: 0 12px 0 48px;
   overflow: hidden;
   border-radius: 12px;
-  background: linear-gradient(105deg, #b8873a 0%, #e8c677 38%, #f6dfa3 55%, #d9aa55 100%);
-  color: #2b1a1f;
+  background: linear-gradient(105deg, var(--av4-cta-1) 0%, var(--av4-cta-2) 38%, var(--av4-cta-3) 55%, var(--av4-cta-4) 100%);
+  color: var(--av4-cta-ink);
   font-family: var(--av4-sans);
   font-size: 18px;
   font-weight: 800;
@@ -28308,16 +28334,16 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   box-shadow:
-    0 0 0 1px rgba(255, 236, 190, 0.5) inset,
-    0 18px 38px -12px rgba(224, 170, 70, 0.75),
-    0 0 40px -6px rgba(227, 196, 138, 0.55);
+    0 0 0 1px rgb(var(--av4-cta-halo-rgb) / 0.5) inset,
+    0 18px 38px -12px rgb(var(--av4-cta-glow-rgb) / 0.75),
+    0 0 40px -6px rgb(var(--av4-gold-soft-rgb) / 0.55);
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
 
 .av4 a.av4-cta {
-  color: #2b1a1f;
+  color: var(--av4-cta-ink);
 }
 
 /* Barrido de brillo. */
@@ -28347,9 +28373,9 @@ body {
 .av4-cta:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 0 0 1px rgba(255, 236, 190, 0.7) inset,
-    0 26px 46px -12px rgba(224, 170, 70, 0.9),
-    0 0 56px -4px rgba(227, 196, 138, 0.8);
+    0 0 0 1px rgb(var(--av4-cta-halo-rgb) / 0.7) inset,
+    0 26px 46px -12px rgb(var(--av4-cta-glow-rgb) / 0.9),
+    0 0 56px -4px rgb(var(--av4-gold-soft-rgb) / 0.8);
 }
 
 .av4-cta:focus-visible {
@@ -28434,9 +28460,9 @@ body {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: linear-gradient(140deg, #e3c48a, #c9a15a);
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
   color: var(--av4-wine);
-  box-shadow: 0 8px 18px -10px rgba(201, 161, 90, 0.9);
+  box-shadow: 0 8px 18px -10px rgb(var(--av4-gold-rgb) / 0.9);
 }
 
 .av4-icono--sm {
@@ -28526,8 +28552,8 @@ body {
   overflow: hidden;
   color: #fff;
   background:
-    radial-gradient(50% 60% at 78% 35%, rgba(201, 123, 123, 0.35), transparent 70%),
-    radial-gradient(40% 50% at 0% 100%, rgba(201, 161, 90, 0.2), transparent 70%),
+    radial-gradient(50% 60% at 78% 35%, rgb(var(--av4-rose-rgb) / 0.35), transparent 70%),
+    radial-gradient(40% 50% at 0% 100%, rgb(var(--av4-gold-rgb) / 0.2), transparent 70%),
     var(--av4-wine);
 }
 
@@ -28542,8 +28568,8 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(74, 20, 38, 0.97) 0%, rgba(74, 20, 38, 0.9) 34%, rgba(74, 20, 38, 0.35) 62%, rgba(74, 20, 38, 0) 82%),
-    linear-gradient(0deg, var(--av4-wine) 0%, rgba(74, 20, 38, 0) 22%);
+    linear-gradient(90deg, rgb(var(--av4-wine-rgb) / 0.97) 0%, rgb(var(--av4-wine-rgb) / 0.9) 34%, rgb(var(--av4-wine-rgb) / 0.35) 62%, rgb(var(--av4-wine-rgb) / 0) 82%),
+    linear-gradient(0deg, var(--av4-wine) 0%, rgb(var(--av4-wine-rgb) / 0) 22%);
 }
 
 .av4-hero__shell {
@@ -28568,6 +28594,7 @@ body {
 }
 
 .av4-hero__title {
+  font-family: var(--av4-display);
   margin-top: 18px;
   color: #fff;
   font-size: clamp(38px, 3.9vw, 52px);
@@ -28611,9 +28638,9 @@ body {
   align-items: center;
   gap: 9px;
   padding: 9px 15px 9px 11px;
-  border: 1px solid rgba(201, 161, 90, 0.5);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
   border-radius: 8px;
-  background: rgba(53, 16, 28, 0.6);
+  background: rgb(var(--av4-wine-deep-rgb) / 0.6);
   color: #fff;
   font-size: 16px;
   font-weight: 500;
@@ -28755,7 +28782,7 @@ body {
 .av4-card {
   position: relative;
   padding-top: 26px;
-  filter: drop-shadow(0 18px 22px rgba(74, 20, 38, 0.16));
+  filter: drop-shadow(0 18px 22px rgb(var(--av4-wine-rgb) / 0.16));
   transition:
     transform 0.25s ease,
     filter 0.25s ease;
@@ -28771,7 +28798,7 @@ body {
   z-index: 2;
   width: 104px;
   height: 27px;
-  border: 1px solid rgba(201, 161, 90, 0.5);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
   border-bottom: 0;
   border-radius: 14px 14px 0 0;
   background:
@@ -28783,14 +28810,14 @@ body {
   position: relative;
   overflow: hidden;
   padding: 22px 24px 24px;
-  border: 1px solid rgba(201, 161, 90, 0.5);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
   border-radius: 0 16px 16px 16px;
   background: #fff;
 }
 
 .av4-card:hover {
   transform: translateY(-6px);
-  filter: drop-shadow(0 26px 28px rgba(74, 20, 38, 0.28));
+  filter: drop-shadow(0 26px 28px rgb(var(--av4-wine-rgb) / 0.28));
 }
 
 .av4-card:hover::before,
@@ -28799,6 +28826,7 @@ body {
 }
 
 .av4-card h3 {
+  font-family: var(--av4-display);
   position: relative;
   margin-top: 0;
   /* El número de fondo ocupa la esquina superior derecha: el título le deja
@@ -28870,7 +28898,7 @@ body {
   padding: 14px 20px 14px 16px;
   border-left: 3px solid var(--av4-gold);
   border-radius: 0 10px 10px 0;
-  background: linear-gradient(90deg, rgba(201, 161, 90, 0.22), rgba(201, 161, 90, 0.03));
+  background: linear-gradient(90deg, rgb(var(--av4-gold-rgb) / 0.22), rgb(var(--av4-gold-rgb) / 0.03));
   color: var(--av4-ink);
   font-size: 17px;
   font-weight: 500;
@@ -28878,7 +28906,7 @@ body {
 }
 
 .av4-sec--oscuro .av4-borde li {
-  background: linear-gradient(90deg, rgba(201, 161, 90, 0.28), rgba(201, 161, 90, 0.04));
+  background: linear-gradient(90deg, rgb(var(--av4-gold-rgb) / 0.28), rgb(var(--av4-gold-rgb) / 0.04));
   color: #fff;
 }
 
@@ -28914,7 +28942,7 @@ body {
   left: -8%;
   width: 280px;
   height: 280px;
-  background: rgba(201, 123, 123, 0.55);
+  background: rgb(var(--av4-rose-rgb) / 0.55);
 }
 
 .av4-ctx__foto::after {
@@ -28922,7 +28950,7 @@ body {
   bottom: 12%;
   width: 260px;
   height: 260px;
-  background: rgba(201, 161, 90, 0.55);
+  background: rgb(var(--av4-gold-rgb) / 0.55);
 }
 
 .av4-foto {
@@ -28939,7 +28967,7 @@ body {
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   box-shadow:
-    0 30px 60px -30px rgba(74, 20, 38, 0.5),
+    0 30px 60px -30px rgb(var(--av4-wine-rgb) / 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
@@ -28984,10 +29012,10 @@ body {
   position: relative;
   padding: clamp(28px, 3vw, 40px);
   overflow: hidden;
-  border: 1px solid rgba(201, 161, 90, 0.28);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.28);
   border-radius: 18px;
   background:
-    radial-gradient(120% 90% at 0% 0%, rgba(201, 161, 90, 0.16), transparent 60%),
+    radial-gradient(120% 90% at 0% 0%, rgb(var(--av4-gold-rgb) / 0.16), transparent 60%),
     rgba(255, 255, 255, 0.03);
 }
 
@@ -29005,9 +29033,9 @@ body {
   place-items: center;
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(201, 161, 90, 0.5);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
   border-radius: 50%;
-  background: rgba(201, 161, 90, 0.1);
+  background: rgb(var(--av4-gold-rgb) / 0.1);
   color: var(--av4-gold);
 }
 
@@ -29081,7 +29109,7 @@ body {
 .av4-mac__velo {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(53, 16, 28, 0.95) 0%, rgba(74, 20, 38, 0.6) 48%, rgba(74, 20, 38, 0) 80%);
+  background: linear-gradient(90deg, rgb(var(--av4-wine-deep-rgb) / 0.95) 0%, rgb(var(--av4-wine-rgb) / 0.6) 48%, rgb(var(--av4-wine-rgb) / 0) 80%);
 }
 
 .av4-mac__slide {
@@ -29143,8 +29171,8 @@ body {
   width: max-content;
   padding: 4px 9px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #c9a15a, #e3c48a);
-  color: #2b1a1f;
+  background: linear-gradient(90deg, var(--av4-gold), var(--av4-gold-soft));
+  color: var(--av4-cta-ink);
 }
 
 .av4-mac__sello {
@@ -29214,7 +29242,7 @@ body {
   overflow: hidden;
   border: 4px solid #fff;
   border-radius: 14px;
-  box-shadow: 0 24px 40px -28px rgba(74, 20, 38, 0.6);
+  box-shadow: 0 24px 40px -28px rgb(var(--av4-wine-rgb) / 0.6);
 }
 
 .av4-collage__alta {
@@ -29258,10 +29286,10 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(201, 161, 90, 0.4);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.4);
   border-radius: 16px;
   background: var(--av4-wine);
-  box-shadow: 0 24px 40px -30px rgba(74, 20, 38, 0.5);
+  box-shadow: 0 24px 40px -30px rgb(var(--av4-wine-rgb) / 0.5);
   transition:
     transform 0.25s ease,
     border-color 0.25s ease;
@@ -29286,7 +29314,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(53, 16, 28, 0.25);
+  background: rgb(var(--av4-wine-deep-rgb) / 0.25);
 }
 
 /* Panel de cristal que cubre toda la tarjeta: la imagen queda como textura
@@ -29301,7 +29329,7 @@ body {
   padding: 26px 22px 28px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 12px;
-  background: rgba(53, 16, 28, 0.45);
+  background: rgb(var(--av4-wine-deep-rgb) / 0.45);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -29334,6 +29362,7 @@ body {
 }
 
 .av4 p.av4-gran-cierre {
+  font-family: var(--av4-display);
   margin-top: clamp(56px, 7vw, 96px);
   color: var(--av4-ink);
   font-size: clamp(32px, 4.2vw, 56px);
@@ -29359,14 +29388,14 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(53, 16, 28, 0.84), rgba(53, 16, 28, 0.94)),
+    linear-gradient(rgb(var(--av4-wine-deep-rgb) / 0.84), rgb(var(--av4-wine-deep-rgb) / 0.94)),
     url("/registro-v3/hero.webp") center / cover no-repeat;
 }
 
 @media (max-width: 700px) {
   .av4-cierre__fondo {
     background:
-      linear-gradient(rgba(53, 16, 28, 0.84), rgba(53, 16, 28, 0.94)),
+      linear-gradient(rgb(var(--av4-wine-deep-rgb) / 0.84), rgb(var(--av4-wine-deep-rgb) / 0.94)),
       url("/registro-v3/hero-mobile.webp") center top / cover no-repeat;
   }
 }
@@ -29440,7 +29469,7 @@ body {
   height: 68px;
   margin: 34px 0 22px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #c9a15a, #e3c48a);
+  background: linear-gradient(135deg, var(--av4-gold), var(--av4-gold-soft));
   color: var(--av4-wine);
 }
 
@@ -29448,9 +29477,9 @@ body {
   width: 100%;
   margin-top: 32px;
   padding: clamp(26px, 4vw, 38px);
-  border: 1px solid rgba(201, 161, 90, 0.55);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.55);
   border-radius: 16px;
-  background: rgba(53, 16, 28, 0.55);
+  background: rgb(var(--av4-wine-deep-rgb) / 0.55);
 }
 
 .av4 p.av4-paso__texto {
@@ -29497,8 +29526,8 @@ body {
 
   .av4-hero__foto::after {
     background:
-      linear-gradient(90deg, rgba(74, 20, 38, 0.92) 0%, rgba(74, 20, 38, 0.55) 45%, rgba(74, 20, 38, 0.1) 80%),
-      linear-gradient(180deg, rgba(74, 20, 38, 0.2) 0%, rgba(74, 20, 38, 0.55) 48%, var(--av4-wine) 86%);
+      linear-gradient(90deg, rgb(var(--av4-wine-rgb) / 0.92) 0%, rgb(var(--av4-wine-rgb) / 0.55) 45%, rgb(var(--av4-wine-rgb) / 0.1) 80%),
+      linear-gradient(180deg, rgb(var(--av4-wine-rgb) / 0.2) 0%, rgb(var(--av4-wine-rgb) / 0.55) 48%, var(--av4-wine) 86%);
   }
 
   .av4-hero__shell {
@@ -29655,7 +29684,7 @@ body {
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.05em;
-  -webkit-text-stroke: 1.5px rgba(201, 161, 90, 0.32);
+  -webkit-text-stroke: 1.5px rgb(var(--av4-gold-rgb) / 0.32);
   pointer-events: none;
   user-select: none;
 }
@@ -29696,12 +29725,12 @@ body {
 
 .av4-marquee::before {
   left: 0;
-  background: linear-gradient(90deg, #f5e6e1 10%, rgba(245, 230, 225, 0));
+  background: linear-gradient(90deg, var(--av4-rose-bg) 10%, rgb(var(--av4-rose-bg-rgb) / 0));
 }
 
 .av4-marquee::after {
   right: 0;
-  background: linear-gradient(270deg, #f5e6e1 10%, rgba(245, 230, 225, 0));
+  background: linear-gradient(270deg, var(--av4-rose-bg) 10%, rgb(var(--av4-rose-bg-rgb) / 0));
 }
 
 .av4-marquee__track {
@@ -29720,10 +29749,10 @@ body {
   width: clamp(290px, 30vw, 380px);
   height: 380px;
   padding: 26px 28px;
-  border: 1px solid rgba(201, 161, 90, 0.4);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.4);
   border-radius: 16px;
   background: #fff;
-  box-shadow: 0 20px 36px -28px rgba(74, 20, 38, 0.5);
+  box-shadow: 0 20px 36px -28px rgb(var(--av4-wine-rgb) / 0.5);
 }
 
 .av4-tcard__head {
@@ -29777,6 +29806,7 @@ body {
 }
 
 .av4-tcard__title {
+  font-family: var(--av4-display);
   margin: 0;
   color: var(--av4-ink);
   font-size: 20px;
@@ -29803,7 +29833,7 @@ body {
   padding: 10px 22px;
   border: 1px solid var(--av4-gold);
   border-radius: 8px;
-  background: rgba(201, 161, 90, 0.14);
+  background: rgb(var(--av4-gold-rgb) / 0.14);
   color: var(--av4-wine);
   cursor: pointer;
   font-family: var(--av4-sans);
@@ -29813,50 +29843,50 @@ body {
 }
 
 .av4-tcard__more:hover {
-  background: rgba(201, 161, 90, 0.3);
+  background: rgb(var(--av4-gold-rgb) / 0.3);
   transform: translateY(-1px);
 }
 
 /* Pop-up reutilizado: sólo se reviste con la paleta v4. */
 .av4-modal-scope .testi-modal {
-  background: rgba(53, 16, 28, 0.7);
+  background: rgb(var(--av4-wine-deep-rgb) / 0.7);
   font-family: var(--font-av4-sans), "Plus Jakarta Sans", Arial, sans-serif;
 }
 
 .av4-modal-scope .testi-modal__panel {
-  border-color: rgba(201, 161, 90, 0.6);
-  background: #fbf6f1;
-  box-shadow: 0 30px 70px rgba(53, 16, 28, 0.55);
+  border-color: rgb(var(--av4-gold-rgb) / 0.6);
+  background: var(--av4-ivory);
+  box-shadow: 0 30px 70px rgb(var(--av4-wine-deep-rgb) / 0.55);
 }
 
 .av4-modal-scope .testi-card__avatar {
-  background: linear-gradient(160deg, #5b1a2e, #35101c);
-  color: #e3c48a;
+  background: linear-gradient(160deg, var(--av4-wine-2), var(--av4-wine-deep));
+  color: var(--av4-gold-soft);
   font-family: inherit;
 }
 
 .av4-modal-scope .testi-card__name,
 .av4-modal-scope .testi-modal__title {
-  color: #4a1426;
+  color: var(--av4-wine);
   font-family: inherit;
   font-weight: 700;
 }
 
 .av4-modal-scope .testi-card__meta {
-  color: #5a4249;
+  color: var(--av4-ink-soft);
   font-family: inherit;
   font-size: 14px;
 }
 
 .av4-modal-scope .testi-modal__body p {
-  color: #2b1a1f;
+  color: var(--av4-ink);
   font-family: inherit;
   font-size: 17px;
 }
 
 .av4-modal-scope .testi-modal__close {
-  background: rgba(74, 20, 38, 0.08);
-  color: #4a1426;
+  background: rgb(var(--av4-wine-rgb) / 0.08);
+  color: var(--av4-wine);
 }
 
 @media (max-width: 700px) {
@@ -30113,7 +30143,7 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: linear-gradient(140deg, #e3c48a, #c9a15a);
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
   color: var(--av4-wine);
 }
 
@@ -30132,9 +30162,9 @@ body {
   position: relative;
   padding: 0 clamp(22px, 3vw, 32px) 0;
   border-radius: 18px;
-  background: linear-gradient(180deg, #fff8f1 0%, #f4e4d4 100%);
+  background: linear-gradient(180deg, var(--av4-card-1) 0%, var(--av4-card-2) 100%);
   color: var(--av4-ink);
-  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.7);
+  box-shadow: inset 0 0 0 1px rgb(var(--av4-gold-rgb) / 0.7);
   -webkit-mask-image:
     radial-gradient(circle 20px at 50% 0, transparent 97%, #000),
     radial-gradient(circle 16px at 0 var(--y), transparent 97%, #000),
@@ -30172,7 +30202,7 @@ body {
 
 .av4-tk__pildora {
   padding: 6px 18px;
-  border: 1px solid rgba(74, 20, 38, 0.3);
+  border: 1px solid rgb(var(--av4-wine-rgb) / 0.3);
   border-radius: 999px;
   color: var(--av4-wine);
   font-size: 15px;
@@ -30186,7 +30216,7 @@ body {
   top: var(--y);
   right: 24px;
   left: 24px;
-  border-top: 2px dashed rgba(74, 20, 38, 0.3);
+  border-top: 2px dashed rgb(var(--av4-wine-rgb) / 0.3);
 }
 
 .av4-tk__abajo {
@@ -30214,6 +30244,7 @@ body {
 }
 
 .av4-tk__monto {
+  font-family: var(--av4-display);
   font-size: clamp(72px, 7vw, 92px);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -30275,7 +30306,7 @@ body {
 
 .av4-et__sombra {
   filter: drop-shadow(0 34px 40px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 28px rgba(201, 161, 90, 0.25));
+    drop-shadow(0 0 28px rgb(var(--av4-gold-rgb) / 0.25));
 }
 
 .av4-et__forma {
@@ -30284,8 +30315,8 @@ body {
   display: flex;
   overflow: hidden;
   border-radius: 18px;
-  background: linear-gradient(160deg, #5b1a2e 0%, #35101c 100%);
-  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.7);
+  background: linear-gradient(160deg, var(--av4-wine-2) 0%, var(--av4-wine-deep) 100%);
+  box-shadow: inset 0 0 0 1px rgb(var(--av4-gold-rgb) / 0.7);
   -webkit-mask-image:
     radial-gradient(circle 18px at var(--x) 0, transparent 97%, #000),
     radial-gradient(circle 18px at var(--x) 100%, transparent 97%, #000);
@@ -30329,8 +30360,8 @@ body {
   gap: 14px;
   width: 210px;
   padding: 28px 18px;
-  border-left: 2px dashed rgba(53, 16, 28, 0.45);
-  background: linear-gradient(170deg, #f1dcab 0%, #c9a15a 100%);
+  border-left: 2px dashed rgb(var(--av4-wine-deep-rgb) / 0.45);
+  background: linear-gradient(170deg, var(--av4-gold-light) 0%, var(--av4-gold) 100%);
   color: var(--av4-wine);
 }
 
@@ -30472,7 +30503,7 @@ body {
     width: auto;
     height: 150px;
     padding: 18px 22px;
-    border-top: 2px dashed rgba(53, 16, 28, 0.45);
+    border-top: 2px dashed rgb(var(--av4-wine-deep-rgb) / 0.45);
     border-left: 0;
   }
 
@@ -30544,9 +30575,9 @@ body {
   .av4-hero__foto::after {
     background: linear-gradient(
       180deg,
-      rgba(74, 20, 38, 0) 0%,
-      rgba(74, 20, 38, 0) 40%,
-      rgba(74, 20, 38, 0.78) 56%,
+      rgb(var(--av4-wine-rgb) / 0) 0%,
+      rgb(var(--av4-wine-rgb) / 0) 40%,
+      rgb(var(--av4-wine-rgb) / 0.78) 56%,
       var(--av4-wine) 80%
     );
   }
@@ -30717,8 +30748,8 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(70% 60% at 50% 30%, rgba(74, 20, 38, 0.2), rgba(74, 20, 38, 0.9) 85%),
-    linear-gradient(180deg, rgba(74, 20, 38, 0.55) 0%, var(--av4-wine) 100%);
+    radial-gradient(70% 60% at 50% 30%, rgb(var(--av4-wine-rgb) / 0.2), rgb(var(--av4-wine-rgb) / 0.9) 85%),
+    linear-gradient(180deg, rgb(var(--av4-wine-rgb) / 0.55) 0%, var(--av4-wine) 100%);
 }
 
 @media (max-width: 640px) {
@@ -30745,7 +30776,7 @@ body {
   height: 84px;
   margin: 30px 0 22px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #c9a15a, #f1dcab);
+  background: linear-gradient(135deg, var(--av4-gold), var(--av4-gold-light));
   color: var(--av4-wine);
   animation: av4-glow 2.8s ease-in-out infinite;
 }
@@ -30765,10 +30796,10 @@ body {
 @keyframes av4-glow {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(227, 196, 138, 0.55), 0 14px 30px -10px rgba(201, 161, 90, 0.7);
+    box-shadow: 0 0 0 0 rgb(var(--av4-gold-soft-rgb) / 0.55), 0 14px 30px -10px rgb(var(--av4-gold-rgb) / 0.7);
   }
   50% {
-    box-shadow: 0 0 0 16px rgba(227, 196, 138, 0), 0 14px 30px -10px rgba(201, 161, 90, 0.7);
+    box-shadow: 0 0 0 16px rgb(var(--av4-gold-soft-rgb) / 0), 0 14px 30px -10px rgb(var(--av4-gold-rgb) / 0.7);
   }
 }
 
@@ -30777,7 +30808,7 @@ body {
   width: min(560px, 100%);
   margin-top: 34px;
   filter: drop-shadow(0 30px 34px rgba(0, 0, 0, 0.5))
-    drop-shadow(0 0 30px rgba(201, 161, 90, 0.3));
+    drop-shadow(0 0 30px rgb(var(--av4-gold-rgb) / 0.3));
 }
 
 .av4-gp__forma {
@@ -30785,8 +30816,8 @@ body {
   position: relative;
   padding: 26px clamp(20px, 4vw, 34px) 30px;
   border-radius: 18px;
-  background: linear-gradient(180deg, #fff8f1 0%, #f4e4d4 100%);
-  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.7);
+  background: linear-gradient(180deg, var(--av4-card-1) 0%, var(--av4-card-2) 100%);
+  box-shadow: inset 0 0 0 1px rgb(var(--av4-gold-rgb) / 0.7);
   -webkit-mask-image:
     radial-gradient(circle 18px at 0 var(--y), transparent 97%, #000),
     radial-gradient(circle 18px at 100% var(--y), transparent 97%, #000);
@@ -30800,7 +30831,7 @@ body {
 .av4-gp__tag {
   display: inline-block;
   padding: 7px 16px;
-  border: 1px solid rgba(74, 20, 38, 0.3);
+  border: 1px solid rgb(var(--av4-wine-rgb) / 0.3);
   border-radius: 999px;
   color: var(--av4-wine);
   font-size: 13px;
@@ -30822,7 +30853,7 @@ body {
   top: var(--y);
   right: 24px;
   left: 24px;
-  border-top: 2px dashed rgba(74, 20, 38, 0.3);
+  border-top: 2px dashed rgb(var(--av4-wine-rgb) / 0.3);
 }
 
 .av4-gp__cta {
@@ -30838,9 +30869,9 @@ body {
 @keyframes av4-llama {
   50% {
     box-shadow:
-      0 0 0 1px rgba(255, 236, 190, 0.7) inset,
-      0 18px 38px -8px rgba(224, 170, 70, 1),
-      0 0 60px 4px rgba(227, 196, 138, 0.7);
+      0 0 0 1px rgb(var(--av4-cta-halo-rgb) / 0.7) inset,
+      0 18px 38px -8px rgb(var(--av4-cta-glow-rgb) / 1),
+      0 0 60px 4px rgb(var(--av4-gold-soft-rgb) / 0.7);
   }
 }
 
@@ -30881,10 +30912,10 @@ body {
   align-items: flex-start;
   gap: 14px;
   padding: 26px 24px;
-  border: 1px solid rgba(201, 161, 90, 0.5);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.5);
   border-radius: 16px;
   background: #fff;
-  box-shadow: 0 20px 40px -30px rgba(74, 20, 38, 0.45);
+  box-shadow: 0 20px 40px -30px rgb(var(--av4-wine-rgb) / 0.45);
 }
 
 .av4-paso3 svg {
@@ -30900,7 +30931,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(140deg, #e3c48a, #c9a15a);
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
   color: var(--av4-wine);
   font-size: 20px;
   font-weight: 800;
@@ -30950,4 +30981,211 @@ body {
   .av4-gp__forma {
     --y: 207px;
   }
+}
+
+
+/* ===== Activación v4: variantes de prueba de concepto ===== */
+/*
+ * /activacion-v4a, /v4b y /v4c: misma estructura, enlaces y precio que v4, con
+ * paleta y tipografía propias. Cada tema es un modificador sobre `.av4` que
+ * sólo redefine variables (colores en hex y en canales RGB, botón, tarjetas y
+ * fuentes); ninguna regla de pieza cambia. Ojo: cada color va dos veces, en
+ * hex (--av4-gold) y en canales (--av4-gold-rgb), y deben coincidir.
+ * Las fuentes las carga cada página con next/font (--font-av4-sans y
+ * --font-av4-serif), así que --av4-sans y --av4-serif ya apuntan a ellas.
+ */
+
+/* Títulos en serif: la serif pide menos peso y menos tracking negativo que la sans. */
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) {
+  --av4-display: var(--av4-serif);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda)
+  :is(.av4-title, .av4-subtitulo, .av4-hero__title, .av4-card h3, .av4-tcard__title, p.av4-gran-cierre, .av4-tk__monto) {
+  font-style: normal;
+  font-weight: var(--av4-display-weight);
+  letter-spacing: var(--av4-display-track);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-title {
+  font-size: calc(clamp(34px, 4vw, 52px) * var(--av4-display-scale));
+  line-height: var(--av4-display-leading);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-subtitulo {
+  font-size: calc(clamp(28px, 3vw, 38px) * var(--av4-display-scale));
+  line-height: var(--av4-display-leading);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-intencion-titulo {
+  font-size: calc(clamp(32px, 3.6vw, 46px) * var(--av4-display-scale));
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-hero__title {
+  font-size: calc(clamp(38px, 3.9vw, 52px) * var(--av4-display-scale));
+  line-height: var(--av4-display-leading);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) p.av4-gran-cierre {
+  font-size: calc(clamp(32px, 4.2vw, 56px) * var(--av4-display-scale));
+  line-height: var(--av4-display-leading);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-card h3 {
+  font-size: calc(21px * var(--av4-display-scale));
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-tcard__title {
+  font-size: calc(20px * var(--av4-display-scale));
+}
+
+/* El acento del hero, en las variantes, también va en cursiva serif. */
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-hero .av4-oro {
+  font-style: italic;
+  font-weight: var(--av4-accent-weight);
+}
+
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-oro {
+  font-weight: var(--av4-accent-weight);
+}
+
+/* Las fotos de las intenciones traen su propio tinte (violeta): se pasan al
+   color del tema para que las tarjetas no desentonen con la paleta. */
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-intencion__foto::after {
+  background: rgb(var(--av4-wine-rgb) / 0.9);
+  mix-blend-mode: color;
+}
+
+/* ---- A · Arcilla: tierra cocida, caramelo y terracota ---- */
+
+.av4--arcilla {
+  --av4-ivory: #f7efe6;
+  --av4-rose-bg: #efe0d0;
+  --av4-wine: #3b2418;
+  --av4-wine-2: #4a2e1f;
+  --av4-wine-deep: #2a190f;
+  --av4-rose: #b8673f;
+  --av4-rose-soft: #e6b59a;
+  --av4-rose-text: #a24a2a;
+  --av4-gold: #c8834f;
+  --av4-gold-soft: #e9bf97;
+  --av4-gold-light: #f3d6b8;
+  --av4-ink: #2e1d14;
+  --av4-ink-soft: #5e4636;
+  --av4-gold-rgb: 200 131 79;
+  --av4-gold-soft-rgb: 233 191 151;
+  --av4-wine-rgb: 59 36 24;
+  --av4-wine-deep-rgb: 42 25 15;
+  --av4-rose-rgb: 184 103 63;
+  --av4-rose-soft-rgb: 230 181 154;
+  --av4-rose-bg-rgb: 239 224 208;
+  --av4-cta-1: #a85f2e;
+  --av4-cta-2: #dd9460;
+  --av4-cta-3: #f1bf90;
+  --av4-cta-4: #c8834f;
+  --av4-cta-ink: #2a190f;
+  --av4-cta-halo-rgb: 255 214 178;
+  --av4-cta-glow-rgb: 200 131 79;
+  --av4-card-1: #fffaf3;
+  --av4-card-2: #f2e0cc;
+  --av4-display-weight: 600;
+  --av4-display-track: -0.012em;
+  --av4-display-scale: 1.04;
+  --av4-display-leading: 1.1;
+  --av4-accent-weight: 500;
+}
+
+/* ---- B · Lavanda: nocturno, místico y suave ---- */
+
+.av4--lavanda {
+  --av4-ivory: #f6f3fb;
+  --av4-rose-bg: #ece6f7;
+  --av4-wine: #1f1a3d;
+  --av4-wine-2: #2a2350;
+  --av4-wine-deep: #15112b;
+  --av4-rose: #9b87d6;
+  --av4-rose-soft: #cdbff0;
+  --av4-rose-text: #6c55b5;
+  --av4-gold: #d9b97c;
+  --av4-gold-soft: #f1dcb3;
+  --av4-gold-light: #f8eccb;
+  --av4-ink: #1f1a3d;
+  --av4-ink-soft: #4d4670;
+  --av4-gold-rgb: 217 185 124;
+  --av4-gold-soft-rgb: 241 220 179;
+  --av4-wine-rgb: 31 26 61;
+  --av4-wine-deep-rgb: 21 17 43;
+  --av4-rose-rgb: 155 135 214;
+  --av4-rose-soft-rgb: 205 191 240;
+  --av4-rose-bg-rgb: 236 230 247;
+  --av4-cta-1: #bf9852;
+  --av4-cta-2: #e8cc8e;
+  --av4-cta-3: #f8e7bf;
+  --av4-cta-4: #d9b97c;
+  --av4-cta-ink: #1f1a3d;
+  --av4-cta-halo-rgb: 255 240 205;
+  --av4-cta-glow-rgb: 217 185 124;
+  --av4-card-1: #fdfbff;
+  --av4-card-2: #ebe4f7;
+  /* Instrument Serif sólo existe en 400: se compensa con tamaño. */
+  --av4-display-weight: 400;
+  --av4-display-track: -0.005em;
+  --av4-display-scale: 1.14;
+  --av4-display-leading: 1.06;
+  --av4-accent-weight: 400;
+}
+
+/* Instrument Serif sólo tiene peso 400: el resto de textos serif que pedían
+   500/600 se fijan en 400 (si no, el navegador los engorda a la fuerza) y la
+   pregunta, que no pasa por --av4-display-scale, se agranda a mano. */
+.av4--lavanda .av4-pregunta__titulo,
+.av4--lavanda .av4-lockup__script,
+.av4--lavanda .av4-mac__slide em,
+.av4--lavanda p.av4-lema,
+.av4--lavanda p.av4-despedida {
+  font-weight: 400;
+}
+
+.av4--lavanda .av4-pregunta__titulo {
+  font-size: calc(clamp(24px, 2.4vw, 30px) * var(--av4-display-scale));
+  line-height: 1.15;
+}
+
+/* ---- C · Esmeralda: frondoso, firme y de lujo ---- */
+
+.av4--esmeralda {
+  --av4-ivory: #f5f1e8;
+  --av4-rose-bg: #f3e3dc;
+  --av4-wine: #0f3b32;
+  --av4-wine-2: #154a3f;
+  --av4-wine-deep: #0a2a23;
+  --av4-rose: #d99a8a;
+  --av4-rose-soft: #f0c9bd;
+  --av4-rose-text: #a65745;
+  --av4-gold: #c9a35c;
+  --av4-gold-soft: #e6cd95;
+  --av4-gold-light: #f1e1b8;
+  --av4-ink: #16241f;
+  --av4-ink-soft: #4a5a53;
+  --av4-gold-rgb: 201 163 92;
+  --av4-gold-soft-rgb: 230 205 149;
+  --av4-wine-rgb: 15 59 50;
+  --av4-wine-deep-rgb: 10 42 35;
+  --av4-rose-rgb: 217 154 138;
+  --av4-rose-soft-rgb: 240 201 189;
+  --av4-rose-bg-rgb: 243 227 220;
+  --av4-cta-1: #ad8638;
+  --av4-cta-2: #e0c482;
+  --av4-cta-3: #f1e1ad;
+  --av4-cta-4: #c9a35c;
+  --av4-cta-ink: #0a2a23;
+  --av4-cta-halo-rgb: 255 240 195;
+  --av4-cta-glow-rgb: 201 163 92;
+  --av4-card-1: #fffaf0;
+  --av4-card-2: #efe4d0;
+  --av4-display-weight: 500;
+  --av4-display-track: -0.015em;
+  --av4-display-scale: 1.08;
+  --av4-display-leading: 1.1;
+  --av4-accent-weight: 500;
 }

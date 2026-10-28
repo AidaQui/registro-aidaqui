@@ -8,6 +8,7 @@ import {
   LINKS,
   PRECIO,
 } from "@/components/activacion-v4/config";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -18,6 +19,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  */
 export default function Av4Cierre() {
   const ref = useScrollReveal<HTMLElement>();
+  const c = useContenido().cierre;
   const principal = HORARIOS[0];
 
   return (
@@ -72,13 +74,13 @@ export default function Av4Cierre() {
           </div>
 
           <p className="av4-despedida" data-reveal>
-            Te espero, alma bella.
+            {c.despedida}
           </p>
 
           <div className="av4-soporte-fila" data-reveal>
             <Av4Cta
               href={LINKS.soporte}
-              label="Contacta con soporte"
+              label={c.ctaSoporte}
               variante="verde"
             />
           </div>

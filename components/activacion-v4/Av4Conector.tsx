@@ -21,7 +21,7 @@ export default function Av4Conector({
   color,
   variante = "tab",
   direccion = "sube",
-  acento = "#c9a15a",
+  acento = "var(--av4-gold)",
 }: Props) {
   return (
     <div

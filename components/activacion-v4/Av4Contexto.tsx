@@ -1,18 +1,13 @@
 import Image from "next/image";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-/** Contexto: texto a la izquierda, foto a la derecha. Copy literal. */
-
-const LINEAS = [
-  "Relaciones que necesitan una nueva forma.",
-  "Prioridades que han cambiado.",
-  "Deseos que vuelven con fuerza.",
-  "Una necesidad cada vez más profunda de vivir con verdad.",
-];
+/** Contexto: texto a la izquierda, foto a la derecha. Copy en contenido.tsx. */
 
 export default function Av4Contexto() {
   const ref = useScrollReveal<HTMLElement>();
+  const c = useContenido().contexto;
 
   return (
     <section
@@ -23,39 +18,24 @@ export default function Av4Contexto() {
       <div className="av4-wrap av4-dos">
         <div className="av4-dos__copy">
           <div data-reveal>
-            <Av4Tag>Este momento</Av4Tag>
+            <Av4Tag>{c.etiqueta}</Av4Tag>
           </div>
           <h2
             id="av4-contexto-title"
             className="av4-title av4-title--izq"
             data-reveal
           >
-            En medio de tanto cambio, volver a tu corazón{" "}
-            <span className="av4-oro">cobra un nuevo sentido</span>.
+            {c.titular}
           </h2>
 
           <div className="av4-parrafos" data-reveal>
-            <p>
-              Vivimos un momento de mucho ruido, información y cambios. Hay
-              opiniones sobre todo: cómo deberías vivir, qué deberías conseguir
-              y quién deberías ser.
-            </p>
-            <p>
-              <strong>
-                Y entre tantas voces, puedes terminar alejándote de la tuya.
-              </strong>
-            </p>
-            <p>
-              Desde mi forma de sentir este momento planetario, estamos siendo
-              llamados a revisar las estructuras desde las que vivimos: lo que
-              sostenemos por miedo, lo que elegimos por costumbre y lo que ya
-              no se corresponde con quienes somos.
-            </p>
-            <p>Quizá también lo estás sintiendo.</p>
+            {c.parrafos.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
 
           <ul className="av4-borde" data-reveal-group data-reveal-fade>
-            {LINEAS.map((t) => (
+            {c.lineas.map((t) => (
               <li key={t}>
                 {t}
               </li>
@@ -63,10 +43,7 @@ export default function Av4Contexto() {
           </ul>
 
           <p className="av4-parrafos av4-parrafos--solo" data-reveal>
-            Volver al corazón es parte de esa transformación:{" "}
-            <strong>recuperar una guía interior</strong> desde la que elegir con
-            más consciencia lo que queremos crear, individualmente y como
-            comunidad.
+            {c.cierre}
           </p>
         </div>
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useMarquee } from "@/hooks/useMarquee";
 import Av4Tag from "@/components/activacion-v4/Av4Tag";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import TestimonialModal from "@/components/academia-lista-de-espera/TestimonialModal";
 import {
   testimonials,
@@ -18,6 +19,7 @@ import {
 export default function Av4Testimonios() {
   const ref = useScrollReveal<HTMLElement>();
   const trackRef = useMarquee<HTMLDivElement>();
+  const c = useContenido().testimonios;
   const [active, setActive] = useState<Testimonial | null>(null);
 
   return (
@@ -29,11 +31,9 @@ export default function Av4Testimonios() {
       >
         <div className="av4-wrap">
           <div className="av4-head" data-reveal>
-            <Av4Tag>Testimonios</Av4Tag>
+            <Av4Tag>{c.etiqueta}</Av4Tag>
             <h2 id="av4-testi-title" className="av4-title">
-              Lo que dicen quienes ya han{" "}
-              <br className="av4-br-web" />
-              trabajado con <span className="av4-oro">Aida</span>
+              {c.titular}
             </h2>
             <img
               src="/lista-de-espera/testimonios/trutspilot.png"
