@@ -34,7 +34,7 @@ export default function Av4Hero() {
 
           <div className="av4-hero__tag">
             <Av4Tag>
-              {EVENTO.fechaCorta} · {EVENTO.formato}
+              {hero.etiqueta ?? `${EVENTO.fechaCorta} · ${EVENTO.formato}`}
             </Av4Tag>
           </div>
 
@@ -43,6 +43,10 @@ export default function Av4Hero() {
           </h1>
 
           <p className="av4-hero__lead">{hero.bajada}</p>
+
+          {hero.paraMujeres && (
+            <p className="av4-hero__para">{hero.paraMujeres}</p>
+          )}
 
           {/* Horarios, CTA y cinta de datos comparten ancho: el botón y la
               cinta miden lo mismo que la grilla de horarios. */}

@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { Instrument_Serif, Onest } from "next/font/google";
 import Av4Pagina from "@/components/activacion-v4/Av4Pagina";
-import { CONTENIDO_B } from "@/components/activacion-v4/variantes/b";
+import { CONTENIDO_CIERRE_DE_CICLO, DESCRIPCION_CIERRE_DE_CICLO } from "@/components/activacion-v4/variantes/cierre-de-ciclo";
 
-/* Variante B (lavanda) de la prueba de concepto de v4. Tema en globals.css
-   (.av4--lavanda); copy en components/activacion-v4/variantes/b.tsx.
+/* El Cierre de Ciclo (relaciones). Tema en globals.css (.av4--lavanda); copy en
+   components/activacion-v4/variantes/cierre-de-ciclo.tsx.
    Sin `weight` en las variables: listar pesos las pide como estáticas (ver _app.tsx). */
 const serif = Instrument_Serif({
   subsets: ["latin"],
@@ -19,22 +19,20 @@ const sans = Onest({
   variable: "--font-av4-sans",
 });
 
-export default function ActivacionV4B() {
+export default function CierreDeCiclo() {
   return (
     <>
       <Head>
-        {/* Variante de test: no compite en buscadores con la v4. */}
+        {/* Landing de anuncios: no compite en buscadores con la v4. */}
         <meta name="robots" content="noindex" />
-        <title>Activación del Corazón y el Poder Interior — Aida Qui</title>
-        <meta
-          name="description"
-          content="Una experiencia guiada en directo para reconectar con la verdad de tu corazón, reconocer los miedos que te frenan y activar tu poder interior para empezar a crear una vida que ames todos los días."
-        />
+        <title>El Cierre de Ciclo — Aida Qui</title>
+        <meta name="description" content={DESCRIPCION_CIERRE_DE_CICLO} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Av4Pagina
-        contenido={CONTENIDO_B}
+        contenido={CONTENIDO_CIERRE_DE_CICLO}
         tema="av4--lavanda"
+        estructura="areas"
         fuentes={`${sans.variable} ${serif.variable}`}
       />
     </>

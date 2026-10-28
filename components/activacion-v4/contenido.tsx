@@ -20,15 +20,46 @@ import { CTA_LABEL } from "@/components/activacion-v4/config";
 
 const oro = (t: string) => <span className="av4-oro">{t}</span>;
 
+/** Foto enmarcada opcional (mismas medidas reales que `hero.retrato`). */
+export type FotoContenido = {
+  src: string;
+  /** Medidas reales del archivo, para que next/image reserve el espacio. */
+  ancho: number;
+  alto: number;
+  /** object-position del encuadre dentro del marco (por defecto, el del CSS). */
+  posicion?: string;
+};
+
 export type Contenido = {
+  /**
+   * Nombre de la landing en el logotipo (hero, entrada de precio, cierre y pie)
+   * y en la diapositiva del MacBook. v4 lleva "Activación del Corazón…".
+   */
+  marca: {
+    /** Nombre completo, para lectores de pantalla. */
+    nombre: string;
+    /** Primera línea del logotipo, en mayúsculas (p. ej. "OPERACIÓN"). */
+    linea1: string;
+    /** Segunda línea, en mayúsculas y color de acento (p. ej. "COHERENCIA"). */
+    linea2: string;
+    /** Línea en cursiva bajo la segunda (sólo v4: "y el Poder Interior"). */
+    script?: string;
+    /** Diapositiva del MacBook: [línea normal, línea en cursiva]. */
+    macbook: [string, string];
+  };
+
   /** Texto del botón principal (hero, ancla al precio). */
   ctaPrincipal: string;
   /** Texto del botón de compra de la sección de precio y del botón bajo las señales. */
   ctaCompra: string;
 
   hero: {
+    /** Etiqueta sobre el titular. Sin ella: "{fecha} · {formato}". */
+    etiqueta?: string;
     titular: ReactNode;
     bajada: ReactNode;
+    /** Línea corta bajo la bajada: "Para mujeres que…". Opcional. */
+    paraMujeres?: ReactNode;
     /**
      * Retrato enmarcado opcional. Sin él, el hero es el de v4 (foto a pantalla
      * completa que pone el CSS). Con él, el hero cambia de composición:
@@ -53,7 +84,46 @@ export type Contenido = {
     texto: ReactNode;
     /** Cinco tarjetas: título (primera cláusula) + texto (el resto). */
     senales: { titulo: string; texto: string }[];
+    /**
+     * Alternativa a `senales`: cinco frases enteras, cada una en una tarjeta con
+     * su número grande ("01", "02"…). Si está, manda sobre `senales`.
+     */
+    items?: string[];
     cierre: ReactNode;
+  };
+
+  /**
+   * Sección "La experiencia" (sólo las landings por área; v4 no la tiene):
+   * titular, introducción, "A través de…", cuatro resultados y el MacBook.
+   */
+  laExperiencia?: {
+    etiqueta: string;
+    titular: ReactNode;
+    /** Primero activamos el corazón. Después… (cambia por área). */
+    texto: string;
+    /** "A través de la meditación y una activación energética guiada vas a:" */
+    intro: string;
+    items: string[];
+  };
+
+  /**
+   * Sección del área (sólo las landings por área): es el ángulo de cada una.
+   * Título, uno o dos párrafos, el "Cuando…:" con cuatro resultados y un aviso
+   * pequeño opcional.
+   */
+  area?: {
+    etiqueta: string;
+    titular: ReactNode;
+    parrafos: ReactNode[];
+    /** "Cuando vuelves a la coherencia:" */
+    intro: string;
+    items: string[];
+    aviso?: string;
+    /**
+     * Foto del área, opcional. Sin ella, la sección es sólo texto + panel.
+     * Con ella, aparece enmarcada en arco con el panel superpuesto.
+     */
+    foto?: FotoContenido;
   };
 
   experiencia: {
@@ -71,8 +141,12 @@ export type Contenido = {
     etiqueta: string;
     titular: ReactNode;
     parrafos: ReactNode[];
+    /** Lista de líneas bajo los párrafos. Vacía = no se pinta. */
     lineas: string[];
-    cierre: ReactNode;
+    /** Párrafo final. Opcional. */
+    cierre?: ReactNode;
+    /** Foto del bloque. Sin ella, se usa /activacion-v4/contexto.jpg (v4). */
+    foto?: FotoContenido;
   };
 
   precio: {
@@ -105,12 +179,25 @@ export type Contenido = {
   };
 
   cierre: {
+    /** Titular y subtítulo sobre la entrada. Opcionales (v4 no los lleva). */
+    titular?: ReactNode;
+    subtitulo?: string;
+    /** Texto del botón de la entrada. Sin él, el CTA por defecto. */
+    cta?: string;
     despedida: string;
     ctaSoporte: string;
   };
 };
 
 export const CONTENIDO_V4: Contenido = {
+  marca: {
+    nombre: "Activación del Corazón y el Poder Interior",
+    linea1: "ACTIVACIÓN",
+    linea2: "DEL CORAZÓN",
+    script: "y el Poder Interior",
+    macbook: ["Activación del Corazón", "y el Poder Interior"],
+  },
+
   ctaPrincipal: CTA_LABEL,
   ctaCompra: "Activa tu poder",
 

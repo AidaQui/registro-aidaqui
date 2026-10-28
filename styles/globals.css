@@ -30986,7 +30986,7 @@ body {
 
 /* ===== Activación v4: variantes de prueba de concepto ===== */
 /*
- * /activacion-v4a, /v4b y /v4c: misma estructura, enlaces y precio que v4, con
+ * Landings por área (/operacion-coherencia, /codigo-corazon, /cierre-de-ciclo): misma estructura, enlaces y precio que v4, con
  * paleta y tipografía propias. Cada tema es un modificador sobre `.av4` que
  * sólo redefine variables (colores en hex y en canales RGB, botón, tarjetas y
  * fuentes); ninguna regla de pieza cambia. Ojo: cada color va dos veces, en
@@ -30996,62 +30996,62 @@ body {
  */
 
 /* Títulos en serif: la serif pide menos peso y menos tracking negativo que la sans. */
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) {
   --av4-display: var(--av4-serif);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda)
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer)
   :is(.av4-title, .av4-subtitulo, .av4-hero__title, .av4-card h3, .av4-tcard__title, p.av4-gran-cierre, .av4-tk__monto) {
   font-style: normal;
   font-weight: var(--av4-display-weight);
   letter-spacing: var(--av4-display-track);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-title {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-title {
   font-size: calc(clamp(34px, 4vw, 52px) * var(--av4-display-scale));
   line-height: var(--av4-display-leading);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-subtitulo {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-subtitulo {
   font-size: calc(clamp(28px, 3vw, 38px) * var(--av4-display-scale));
   line-height: var(--av4-display-leading);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-intencion-titulo {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-intencion-titulo {
   font-size: calc(clamp(32px, 3.6vw, 46px) * var(--av4-display-scale));
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-hero__title {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-hero__title {
   font-size: calc(clamp(38px, 3.9vw, 52px) * var(--av4-display-scale));
   line-height: var(--av4-display-leading);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) p.av4-gran-cierre {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) p.av4-gran-cierre {
   font-size: calc(clamp(32px, 4.2vw, 56px) * var(--av4-display-scale));
   line-height: var(--av4-display-leading);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-card h3 {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-card h3 {
   font-size: calc(21px * var(--av4-display-scale));
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-tcard__title {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-tcard__title {
   font-size: calc(20px * var(--av4-display-scale));
 }
 
 /* El acento del hero, en las variantes, también va en cursiva serif. */
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-hero .av4-oro {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-hero .av4-oro {
   font-style: italic;
   font-weight: var(--av4-accent-weight);
 }
 
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-oro {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-oro {
   font-weight: var(--av4-accent-weight);
 }
 
 /* Las fotos de las intenciones traen su propio tinte (violeta): se pasan al
    color del tema para que las tarjetas no desentonen con la paleta. */
-.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda) .av4-intencion__foto::after {
+.av4:is(.av4--arcilla, .av4--lavanda, .av4--esmeralda, .av4--amanecer) .av4-intencion__foto::after {
   background: rgb(var(--av4-wine-rgb) / 0.9);
   mix-blend-mode: color;
 }
@@ -31633,4 +31633,587 @@ body {
   .av4.av4--esmeralda .av4-hero__title {
     margin-top: 22px;
   }
+}
+
+/* ===== Landings por área: Operación Coherencia, El Código Corazón, El Cierre
+   de Ciclo y Misión Alma =====
+ *
+ * Usan los temas de arriba (esmeralda, arcilla, lavanda) y uno propio,
+ * `av4--amanecer` (Misión Alma). Todo lo de acá es nuevo: v4 no lo usa, así que
+ * no cambia cómo se ve. Secciones nuevas: .av4-vive (La experiencia),
+ * .av4-area (sección del área) y .av4-exp--centro (Bloque A centrado).
+ */
+
+/* ---- Hero: línea "Para mujeres que…" ---- */
+
+.av4 p.av4-hero__para {
+  max-width: 560px;
+  margin: -6px 0 24px;
+  padding-left: 16px;
+  border-left: 2px solid var(--av4-gold);
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-serif);
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.av4.av4--lavanda p.av4-hero__para {
+  grid-column: 1 / -1;
+  max-width: 620px;
+  margin: -2px auto 20px;
+  padding-left: 0;
+  border-left: 0;
+  font-size: 25px;
+  text-wrap: balance;
+}
+
+.av4.av4--esmeralda p.av4-hero__para {
+  color: #7d5f1a;
+  border-left-color: #b08a3a;
+}
+
+@media (max-width: 1000px) {
+  .av4 p.av4-hero__para {
+    margin: -2px 0 18px;
+    font-size: 17px;
+  }
+
+  .av4.av4--lavanda p.av4-hero__para {
+    margin: -2px auto 18px;
+  }
+}
+
+/* ---- Para ti: tarjetas con número grande ---- */
+
+.av4-cards--num {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.av4-cards--num .av4-card {
+  grid-column: span 2;
+}
+
+/* Cinco tarjetas: tres arriba y dos más anchas debajo. */
+.av4-cards--num .av4-card:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+.av4-cards--num .av4-card__in {
+  height: 100%;
+  padding: 20px 26px 28px;
+}
+
+.av4-cards--num .av4-card .av4-num {
+  position: static;
+  display: block;
+  color: var(--av4-rose-text);
+  font-family: var(--av4-serif);
+  font-size: 56px;
+  font-style: italic;
+  font-weight: var(--av4-accent-weight, 500);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  -webkit-text-stroke: 0;
+}
+
+.av4-cards--num .av4-card .av4-num::after {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 2px;
+  margin-top: 12px;
+  background: var(--av4-gold);
+}
+
+.av4-cards--num .av4-card p {
+  margin-top: 14px;
+  color: var(--av4-ink);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+@media (max-width: 1000px) {
+  .av4-cards--num {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .av4-cards--num .av4-card,
+  .av4-cards--num .av4-card:nth-child(n + 4) {
+    grid-column: span 1;
+  }
+
+  .av4-cards--num .av4-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .av4-cards--num {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .av4-cards--num .av4-card:last-child {
+    grid-column: auto;
+  }
+
+  .av4-cards--num .av4-card .av4-num {
+    font-size: 48px;
+  }
+}
+
+/* ---- Bloque A centrado (Por qué el corazón) ---- */
+
+.av4-exp--centro .av4-exp__cabeza {
+  margin-bottom: 0;
+}
+
+.av4-exp--centro .av4-exp__cabeza .av4-texto {
+  max-width: 740px;
+}
+
+.av4-exp--centro .av4-exp__lista {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+/* Corazón enmarcado en dos anillos, sobre la etiqueta. */
+.av4-exp__emblema {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 26px;
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.7);
+  border-radius: 50%;
+  background: rgb(var(--av4-gold-rgb) / 0.12);
+  color: var(--av4-gold-soft);
+  box-shadow:
+    0 0 0 9px rgb(var(--av4-gold-rgb) / 0.08),
+    0 0 0 19px rgb(var(--av4-gold-rgb) / 0.04),
+    0 0 46px 6px rgb(var(--av4-rose-rgb) / 0.35);
+}
+
+/* ---- La experiencia ---- */
+
+.av4 p.av4-vive__intro {
+  margin-top: 30px;
+  color: var(--av4-ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.av4-vive__lista {
+  margin-top: 14px;
+}
+
+.av4-vive .av4-cta-fila {
+  margin-top: 30px;
+}
+
+/* ---- Sección del área ---- */
+
+.av4-area__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(36px, 5.5vw, 88px);
+  align-items: start;
+}
+
+.av4-area__intro {
+  padding-left: clamp(18px, 2.2vw, 32px);
+  border-left: 2px solid var(--av4-gold);
+}
+
+.av4 .av4-area .av4-area__titulo {
+  font-size: calc(clamp(38px, 4.4vw, 60px) * var(--av4-display-scale, 1));
+  line-height: 1.06;
+}
+
+.av4-area__intro .av4-parrafos {
+  margin-top: 28px;
+}
+
+.av4 .av4-area__intro .av4-parrafos p {
+  font-size: 18px;
+}
+
+/* Panel oscuro con los cuatro resultados. */
+.av4-area__panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 3.4vw, 48px);
+  border: 1px solid rgb(var(--av4-gold-rgb) / 0.4);
+  border-radius: 22px;
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgb(var(--av4-rose-rgb) / 0.3), transparent 65%),
+    radial-gradient(80% 60% at 0% 100%, rgb(var(--av4-gold-rgb) / 0.2), transparent 70%),
+    var(--av4-wine);
+  box-shadow: 0 40px 70px -40px rgb(var(--av4-wine-rgb) / 0.75);
+}
+
+.av4-area__panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--av4-gold), transparent 80%);
+}
+
+.av4 .av4-area__panel p.av4-area__cuando {
+  margin-bottom: 14px;
+  color: var(--av4-gold-soft);
+  font-family: var(--av4-serif);
+  font-size: calc(clamp(24px, 2.4vw, 32px) * var(--av4-display-scale, 1));
+  font-style: italic;
+  font-weight: var(--av4-accent-weight, 500);
+  line-height: 1.2;
+}
+
+.av4 .av4-area__panel .av4-area__lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.av4-area__check {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--av4-gold-soft), var(--av4-gold));
+  color: var(--av4-wine-deep);
+}
+
+.av4 p.av4-area__aviso {
+  max-width: 780px;
+  margin-top: clamp(32px, 4vw, 52px);
+  padding-top: 18px;
+  border-top: 1px solid var(--av4-line);
+  color: var(--av4-ink-soft);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .av4-area__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Con foto: columna izquierda con la foto en arco; a la derecha el texto y,
+   debajo, el panel oscuro que se le superpone por el borde. */
+.av4-area__grid--foto {
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  grid-template-areas:
+    "foto intro"
+    "foto panel";
+  column-gap: clamp(28px, 4vw, 64px);
+  row-gap: clamp(28px, 3.4vw, 48px);
+}
+
+.av4-area__grid--foto .av4-area__intro {
+  grid-area: intro;
+}
+
+.av4-area__foto {
+  position: relative;
+  grid-area: foto;
+  align-self: stretch;
+  min-height: 0;
+}
+
+/* Halo de luz detrás del arco, con los colores del tema. */
+.av4-area__foto::before {
+  content: "";
+  position: absolute;
+  inset: 8% -10% 4% -14%;
+  z-index: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgb(var(--av4-gold-rgb) / 0.4), transparent),
+    radial-gradient(70% 70% at 20% 90%, rgb(var(--av4-rose-rgb) / 0.3), transparent);
+  filter: blur(34px);
+  pointer-events: none;
+}
+
+.av4-area__marco {
+  position: sticky;
+  top: 96px;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 4 / 5.6;
+  overflow: hidden;
+  border-radius: 999px 999px 24px 24px;
+  box-shadow:
+    0 0 0 8px rgb(255 255 255 / 0.55),
+    0 0 0 9px rgb(var(--av4-gold-rgb) / 0.7),
+    0 34px 60px -28px rgb(var(--av4-wine-rgb) / 0.6);
+}
+
+.av4-area__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.av4-area__grid--foto .av4-area__panel {
+  z-index: 2;
+  grid-area: panel;
+  margin-left: calc(-1 * clamp(32px, 5vw, 76px));
+}
+
+@media (max-width: 1000px) {
+  .av4-area__grid--foto {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "intro"
+      "foto"
+      "panel";
+    row-gap: 28px;
+  }
+
+  .av4-area__foto {
+    align-self: auto;
+    padding-inline: 14px;
+  }
+
+  .av4-area__marco {
+    position: relative;
+    top: auto;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  /* El panel sube sobre el pie de la foto. */
+  .av4-area__grid--foto .av4-area__panel {
+    margin-left: 0;
+    margin-top: calc(-1 * clamp(56px, 18vw, 96px));
+    margin-inline: 4px;
+  }
+}
+
+/* ---- Cierre: titular y subtítulo sobre la entrada ---- */
+
+.av4-cierre__cabeza {
+  margin-bottom: clamp(32px, 4vw, 52px);
+}
+
+.av4-cierre__cabeza .av4-title {
+  max-width: 900px;
+  margin-top: 0;
+}
+
+/* ---- Tema Misión Alma: amanecer ---- */
+/* Luz de amanecer: durazno y crema en las secciones claras, azul crepúsculo
+   en las oscuras, albaricoque como dorado y coral como acento. Mismo contrato
+   que los otros temas: cada color va en hex y en canales RGB. */
+
+.av4--amanecer {
+  --av4-ivory: #fbf1ea;
+  --av4-rose-bg: #f6e1d7;
+  --av4-wine: #1c2740;
+  --av4-wine-2: #25334f;
+  --av4-wine-deep: #141c30;
+  --av4-rose: #e07a6a;
+  --av4-rose-soft: #f2b3a6;
+  --av4-rose-text: #b5483a;
+  --av4-gold: #e3a467;
+  --av4-gold-soft: #f3cfa4;
+  --av4-gold-light: #f9e2c4;
+  --av4-ink: #1c2740;
+  --av4-ink-soft: #4a5570;
+  --av4-ivory-rgb: 251 241 234;
+  --av4-gold-rgb: 227 164 103;
+  --av4-gold-soft-rgb: 243 207 164;
+  --av4-wine-rgb: 28 39 64;
+  --av4-wine-deep-rgb: 20 28 48;
+  --av4-rose-rgb: 224 122 106;
+  --av4-rose-soft-rgb: 242 179 166;
+  --av4-rose-bg-rgb: 246 225 215;
+  --av4-cta-1: #cf8a47;
+  --av4-cta-2: #f0b97c;
+  --av4-cta-3: #f9dab0;
+  --av4-cta-4: #e3a467;
+  --av4-cta-ink: #141c30;
+  --av4-cta-halo-rgb: 255 226 190;
+  --av4-cta-glow-rgb: 227 164 103;
+  --av4-card-1: #fffaf5;
+  --av4-card-2: #f6e1d7;
+  --av4-display-weight: 500;
+  --av4-display-track: -0.012em;
+  --av4-display-scale: 1.06;
+  --av4-display-leading: 1.1;
+  --av4-accent-weight: 500;
+}
+
+/* ---- Hero amanecer: claro, con la foto a todo el alto saliendo por la derecha ---- */
+
+.av4.av4--amanecer .av4-hero {
+  color: var(--av4-ink);
+  background: linear-gradient(180deg, var(--av4-ivory) 0%, var(--av4-rose-bg) 100%);
+}
+
+.av4.av4--amanecer .av4-hero::after {
+  display: none;
+}
+
+/* Aida caminando al sol, pegada al borde derecho. */
+.av4.av4--amanecer .av4-hero__foto {
+  background: url("/registro-v1/hero.webp") 100% 50% / auto 100% no-repeat;
+}
+
+/* El crema entra desde la izquierda, bajo el texto, y un velo de sol baja por
+   la esquina de arriba a la derecha. */
+.av4.av4--amanecer .av4-hero__foto::after {
+  background:
+    radial-gradient(52% 64% at 100% 0%, rgb(var(--av4-gold-soft-rgb) / 0.55), transparent 72%),
+    linear-gradient(90deg, var(--av4-ivory) 0%, var(--av4-ivory) 36%, rgb(var(--av4-ivory-rgb) / 0.9) 47%, rgb(var(--av4-ivory-rgb) / 0.42) 59%, rgb(var(--av4-ivory-rgb) / 0) 76%),
+    linear-gradient(0deg, var(--av4-rose-bg) 0%, rgb(var(--av4-rose-bg-rgb) / 0) 18%);
+}
+
+.av4.av4--amanecer .av4-hero .av4-lockup {
+  color: var(--av4-wine);
+}
+
+.av4.av4--amanecer .av4-hero .av4-lockup__del {
+  color: #8f5a1c;
+}
+
+.av4.av4--amanecer .av4-hero .av4-tag {
+  color: var(--av4-wine);
+}
+
+.av4.av4--amanecer .av4-hero__title {
+  color: var(--av4-wine);
+}
+
+.av4.av4--amanecer .av4-hero .av4-oro {
+  color: var(--av4-rose-text);
+}
+
+.av4.av4--amanecer p.av4-hero__lead {
+  color: var(--av4-ink-soft);
+}
+
+.av4.av4--amanecer p.av4-hero__para {
+  color: #8f5a1c;
+  border-left-color: var(--av4-gold);
+}
+
+.av4.av4--amanecer .av4-hero strong {
+  color: var(--av4-wine);
+}
+
+.av4.av4--amanecer .av4-hero .av4-horario {
+  border-color: rgb(var(--av4-gold-rgb) / 0.7);
+  background: rgb(255 255 255 / 0.66);
+  color: var(--av4-ink);
+}
+
+.av4.av4--amanecer .av4-hero .av4-horario__hora {
+  color: #8f5a1c;
+}
+
+/* CTA del hero: azul crepúsculo con letra durazno; el albaricoque claro se
+   perdía contra el fondo crema. */
+.av4.av4--amanecer .av4-hero__copy a.av4-cta {
+  background: linear-gradient(105deg, var(--av4-wine-deep) 0%, #2d3d63 48%, var(--av4-wine) 100%);
+  color: var(--av4-gold-light);
+  box-shadow:
+    0 0 0 1px rgb(var(--av4-gold-rgb) / 0.7) inset,
+    0 18px 34px -14px rgb(var(--av4-wine-deep-rgb) / 0.6);
+}
+
+.av4.av4--amanecer .av4-hero__copy a.av4-cta:hover {
+  box-shadow:
+    0 0 0 1px rgb(var(--av4-gold-rgb) / 0.95) inset,
+    0 26px 44px -14px rgb(var(--av4-wine-deep-rgb) / 0.75);
+}
+
+.av4.av4--amanecer .av4-hero__copy a.av4-cta:focus-visible {
+  outline-color: var(--av4-wine);
+}
+
+.av4.av4--amanecer .av4-hero__copy .av4-cta::before {
+  background: linear-gradient(100deg, transparent, rgb(var(--av4-gold-soft-rgb) / 0.35), transparent);
+}
+
+.av4.av4--amanecer .av4-hero__copy .av4-cta__circulo {
+  background: var(--av4-gold-soft);
+  color: var(--av4-wine);
+  box-shadow: none;
+}
+
+.av4.av4--amanecer .av4-hero .av4-datos li {
+  color: #8f5a1c;
+}
+
+.av4.av4--amanecer .av4-hero .av4-datos strong {
+  color: var(--av4-wine);
+}
+
+.av4.av4--amanecer .av4-hero .av4-datos small {
+  color: var(--av4-ink-soft);
+}
+
+@media (max-width: 1000px) {
+  /* Tablet: la misma foto ancha, arriba, y el texto debajo. */
+  .av4.av4--amanecer .av4-hero {
+    background: linear-gradient(180deg, var(--av4-ivory) 0%, var(--av4-ivory) 52%, var(--av4-rose-bg) 100%);
+  }
+
+  .av4.av4--amanecer .av4-hero__foto {
+    height: 460px;
+    background: url("/registro-v1/hero.webp") 72% 0 / cover no-repeat;
+  }
+
+  .av4.av4--amanecer .av4-hero__foto::after {
+    background:
+      radial-gradient(60% 70% at 100% 0%, rgb(var(--av4-gold-soft-rgb) / 0.5), transparent 72%),
+      linear-gradient(180deg, rgb(var(--av4-ivory-rgb) / 0) 0%, rgb(var(--av4-ivory-rgb) / 0) 50%, rgb(var(--av4-ivory-rgb) / 0.88) 80%, var(--av4-ivory) 100%);
+  }
+
+  .av4.av4--amanecer .av4-hero__shell {
+    padding-top: 340px;
+  }
+
+  .av4.av4--amanecer .av4-hero__title {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Móvil: la versión vertical de la foto. */
+  .av4.av4--amanecer .av4-hero__foto {
+    height: 470px;
+    background: url("/registro-v1/banner-mobile.jpg") 50% 0 / cover no-repeat;
+  }
+
+  .av4.av4--amanecer .av4-hero__shell {
+    padding-top: 330px;
+  }
+}
+
+/* El MacBook también aparece sobre fondo claro: su diapositiva siempre es oscura. */
+.av4 .av4-mac__slide strong {
+  color: #fff;
+}
+
+/* Logotipo de las landings por área (sin línea en cursiva): el nombre en dos líneas del mismo cuerpo. */
+.av4-lockup__del:only-child {
+  font-size: 1.5em;
 }

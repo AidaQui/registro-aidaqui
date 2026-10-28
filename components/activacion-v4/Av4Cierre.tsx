@@ -32,6 +32,13 @@ export default function Av4Cierre() {
         <div className="av4-cierre__fondo" aria-hidden="true" />
 
         <div className="av4-wrap">
+          {c.titular && (
+            <div className="av4-head av4-cierre__cabeza" data-reveal>
+              <h2 className="av4-title">{c.titular}</h2>
+              {c.subtitulo && <p className="av4-texto">{c.subtitulo}</p>}
+            </div>
+          )}
+
           <div className="av4-et" data-reveal>
             <div className="av4-et__sombra">
               <div>
@@ -58,7 +65,11 @@ export default function Av4Cierre() {
                       {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
                     </p>
 
-                    <Av4Cta href={LINKS.registro} ubicacion="cierre" />
+                    <Av4Cta
+                      href={LINKS.registro}
+                      ubicacion="cierre"
+                      {...(c.cta && { label: c.cta })}
+                    />
                   </div>
 
                   <div className="av4-et__talon" aria-hidden="true">

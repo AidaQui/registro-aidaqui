@@ -28,17 +28,35 @@ export default function Av4Identificacion() {
           <p className="av4-texto">{c.texto}</p>
         </div>
 
-        <ul className="av4-cards" data-reveal-group data-reveal-fade>
-          {c.senales.map(({ titulo, texto }, i) => (
-            <li key={titulo} className="av4-card">
-              <div className="av4-card__in">
-                <span className="av4-num">{String(i + 1).padStart(2, "0")}</span>
-                <h3>{titulo}</h3>
-                <p>{texto}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {c.items ? (
+          /* Landings por área: cada tarjeta lleva su número grande y la frase entera. */
+          <ul
+            className="av4-cards av4-cards--num"
+            data-reveal-group
+            data-reveal-fade
+          >
+            {c.items.map((texto, i) => (
+              <li key={texto} className="av4-card">
+                <div className="av4-card__in">
+                  <span className="av4-num">{String(i + 1).padStart(2, "0")}</span>
+                  <p>{texto}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="av4-cards" data-reveal-group data-reveal-fade>
+            {c.senales.map(({ titulo, texto }, i) => (
+              <li key={titulo} className="av4-card">
+                <div className="av4-card__in">
+                  <span className="av4-num">{String(i + 1).padStart(2, "0")}</span>
+                  <h3>{titulo}</h3>
+                  <p>{texto}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="av4-pie-fila" data-reveal>
           <p>{c.cierre}</p>

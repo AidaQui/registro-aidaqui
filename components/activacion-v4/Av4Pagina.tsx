@@ -2,6 +2,8 @@ import Av4Hero from "@/components/activacion-v4/Av4Hero";
 import Av4Identificacion from "@/components/activacion-v4/Av4Identificacion";
 import Av4Experiencia from "@/components/activacion-v4/Av4Experiencia";
 import Av4Contexto from "@/components/activacion-v4/Av4Contexto";
+import Av4LaExperiencia from "@/components/activacion-v4/Av4LaExperiencia";
+import Av4Area from "@/components/activacion-v4/Av4Area";
 import Av4Precio from "@/components/activacion-v4/Av4Precio";
 import Av4Bio from "@/components/activacion-v4/Av4Bio";
 import Av4Momento from "@/components/activacion-v4/Av4Momento";
@@ -26,10 +28,22 @@ type Props = {
   fuentes: string;
   /** Modificador de tema, p. ej. "av4--arcilla". Vacío = paleta Corazón (v4). */
   tema?: string;
+  /**
+   * "v4" (por defecto): la estructura de /activacion-v4.
+   * "areas": las cuatro landings por área (Para ti · Por qué el corazón · La
+   * experiencia · Este momento · Sección del área · Precio · Aida ·
+   * Testimonios · Cierre). Necesitan `laExperiencia` y `area` en el contenido.
+   */
+  estructura?: "v4" | "areas";
 };
 
 /** Estructura completa de la landing v4, reutilizada por v4 y sus variantes. */
-export default function Av4Pagina({ contenido, fuentes, tema = "" }: Props) {
+export default function Av4Pagina({
+  contenido,
+  fuentes,
+  tema = "",
+  estructura = "v4",
+}: Props) {
   return (
     <>
       {/* Más ágil que el default: la página es larga y con 2s se sentía lenta. */}
@@ -37,21 +51,46 @@ export default function Av4Pagina({ contenido, fuentes, tema = "" }: Props) {
       <Av4ContenidoProvider contenido={contenido}>
         <main className={`av4 ${tema} ${fuentes}`.replace(/\s+/g, " ").trim()}>
           <Av4Hero />
-          <Av4Conector color={MARFIL} />
-          <Av4Identificacion />
-          <Av4Conector color={VINO} variante="onda" />
-          <Av4Experiencia />
-          <Av4Conector color={MARFIL} />
-          <Av4Contexto />
-          <Av4Conector color={VINO} />
-          <Av4Precio />
-          <Av4Conector color={MARFIL} variante="onda" />
-          <Av4Bio />
-          <Av4Conector color={ROSA} />
-          <Av4Testimonios />
-          <Av4Momento />
-          <Av4Conector color={VINO} />
-          <Av4Cierre />
+          {estructura === "areas" ? (
+            <>
+              <Av4Conector color={MARFIL} />
+              <Av4Identificacion />
+              <Av4Conector color={VINO} variante="onda" />
+              <Av4Experiencia modo="corazon" />
+              <Av4Conector color={ROSA} />
+              <Av4LaExperiencia />
+              <Av4Conector color={MARFIL} />
+              <Av4Contexto />
+              <Av4Conector color={ROSA} variante="onda" />
+              <Av4Area />
+              <Av4Conector color={VINO} />
+              <Av4Precio />
+              <Av4Conector color={MARFIL} variante="onda" />
+              <Av4Bio />
+              <Av4Conector color={ROSA} />
+              <Av4Testimonios />
+              <Av4Conector color={VINO} />
+              <Av4Cierre />
+            </>
+          ) : (
+            <>
+              <Av4Conector color={MARFIL} />
+              <Av4Identificacion />
+              <Av4Conector color={VINO} variante="onda" />
+              <Av4Experiencia />
+              <Av4Conector color={MARFIL} />
+              <Av4Contexto />
+              <Av4Conector color={VINO} />
+              <Av4Precio />
+              <Av4Conector color={MARFIL} variante="onda" />
+              <Av4Bio />
+              <Av4Conector color={ROSA} />
+              <Av4Testimonios />
+              <Av4Momento />
+              <Av4Conector color={VINO} />
+              <Av4Cierre />
+            </>
+          )}
         </main>
       </Av4ContenidoProvider>
       <GradualBlur height="7rem" strength={2} divCount={6} />

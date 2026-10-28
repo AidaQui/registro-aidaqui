@@ -8,6 +8,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 export default function Av4Contexto() {
   const ref = useScrollReveal<HTMLElement>();
   const c = useContenido().contexto;
+  // Foto propia del bloque (landings por área); sin ella, la de v4.
+  const foto = c.foto;
 
   return (
     <section
@@ -34,28 +36,33 @@ export default function Av4Contexto() {
             ))}
           </div>
 
-          <ul className="av4-borde" data-reveal-group data-reveal-fade>
-            {c.lineas.map((t) => (
-              <li key={t}>
-                {t}
-              </li>
-            ))}
-          </ul>
+          {c.lineas.length > 0 && (
+            <ul className="av4-borde" data-reveal-group data-reveal-fade>
+              {c.lineas.map((t) => (
+                <li key={t}>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          )}
 
-          <p className="av4-parrafos av4-parrafos--solo" data-reveal>
-            {c.cierre}
-          </p>
+          {c.cierre && (
+            <p className="av4-parrafos av4-parrafos--solo" data-reveal>
+              {c.cierre}
+            </p>
+          )}
         </div>
 
         <div className="av4-ctx__foto" data-reveal="right">
           <div className="av4-foto">
             <div className="av4-foto__img">
           <Image
-            src="/activacion-v4/contexto.jpg"
+            src={foto?.src ?? "/activacion-v4/contexto.jpg"}
             alt="Aida Qui meditando"
             fill
             sizes="(max-width: 900px) 90vw, 520px"
             className="av4-cover"
+            style={foto?.posicion ? { objectPosition: foto.posicion } : undefined}
           />
           </div>
           </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import { EVENTO, HORARIOS } from "@/components/activacion-v4/config";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 
 /**
  * MacBook dibujado en CSS (marco de aluminio, muesca de cámara, base con
@@ -11,6 +12,7 @@ import { EVENTO, HORARIOS } from "@/components/activacion-v4/config";
  */
 export default function Av4Macbook() {
   const principal = HORARIOS[0];
+  const { marca } = useContenido();
   const ref = useRef<HTMLDivElement>(null);
 
   /* Dispara la entrada escalonada cuando el portátil entra en pantalla. */
@@ -49,8 +51,8 @@ export default function Av4Macbook() {
                 <i /> EN DIRECTO
               </span>
               <strong>
-                Activación del Corazón
-                <em>y el Poder Interior</em>
+                {marca.macbook[0]}
+                <em>{marca.macbook[1]}</em>
               </strong>
               <span className="av4-mac__fecha">
                 {EVENTO.fechaCorta} · {principal.hora}

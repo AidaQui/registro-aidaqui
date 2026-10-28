@@ -11,33 +11,59 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const ICONOS_PREGUNTA = [Heart, HeartCrack];
 
 
-export default function Av4Experiencia() {
+type Props = {
+  /**
+   * "corazon": versión de las landings por área ("Por qué el corazón"): composición
+   * centrada, sin MacBook (va en "La experiencia") y sin botón. Sin prop, es la de v4.
+   */
+  modo?: "corazon";
+};
+
+export default function Av4Experiencia({ modo }: Props) {
   const ref = useScrollReveal<HTMLElement>();
   const { experiencia: c, ctaPrincipal } = useContenido();
+  const centrado = modo === "corazon";
 
   return (
     <section
       ref={ref}
-      className="av4-sec av4-sec--oscuro av4-exp"
+      className={`av4-sec av4-sec--oscuro av4-exp${centrado ? " av4-exp--centro" : ""}`}
       aria-labelledby="av4-exp-title"
     >
-      <div className="av4-wrap av4-dos">
-        <div className="av4-dos__copy">
+      {centrado ? (
+        <div className="av4-wrap av4-head av4-exp__cabeza">
+          <span className="av4-exp__emblema" aria-hidden="true" data-reveal>
+            <Heart size={26} strokeWidth={1.6} />
+          </span>
           <div data-reveal>
             <Av4Tag>{c.etiqueta}</Av4Tag>
           </div>
-          <h2 id="av4-exp-title" className="av4-title av4-title--izq" data-reveal>
+          <h2 id="av4-exp-title" className="av4-title" data-reveal>
             {c.titular}
           </h2>
-          <p className="av4-texto av4-texto--izq" data-reveal>
+          <p className="av4-texto" data-reveal>
             {c.texto}
           </p>
         </div>
+      ) : (
+        <div className="av4-wrap av4-dos">
+          <div className="av4-dos__copy">
+            <div data-reveal>
+              <Av4Tag>{c.etiqueta}</Av4Tag>
+            </div>
+            <h2 id="av4-exp-title" className="av4-title av4-title--izq" data-reveal>
+              {c.titular}
+            </h2>
+            <p className="av4-texto av4-texto--izq" data-reveal>
+              {c.texto}
+            </p>
+          </div>
 
-        <div data-reveal="right">
-          <Av4Macbook />
+          <div data-reveal="right">
+            <Av4Macbook />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="av4-wrap av4-exp__lista">
         <div className="av4-exp__preguntas" data-reveal-group data-reveal-fade>
@@ -69,9 +95,11 @@ export default function Av4Experiencia() {
           ))}
         </ul>
 
-        <div className="av4-cta-fila av4-cta-fila--centro" data-reveal>
-          <Av4Cta href="#av4-precio" label={ctaPrincipal} />
-        </div>
+        {!centrado && (
+          <div className="av4-cta-fila av4-cta-fila--centro" data-reveal>
+            <Av4Cta href="#av4-precio" label={ctaPrincipal} />
+          </div>
+        )}
       </div>
     </section>
   );
