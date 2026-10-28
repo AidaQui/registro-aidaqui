@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMovimiento } from "@/components/activacion-v4/useMovimiento";
-import { Lock, LockOpen } from "lucide-react";
+import { ArrowUpRight, Lock, LockOpen } from "lucide-react";
 import Av4Cta from "@/components/activacion-v4/Av4Cta";
 import Av4Horarios from "@/components/activacion-v4/Av4Horarios";
+import { useContenido } from "@/components/activacion-v4/Av4ContenidoContext";
 import Av4Sello from "@/components/activacion-v4/Av4Sello";
 import {
   EVENTO,
@@ -256,61 +257,158 @@ export function CierreCodigo({ cta }: Props) {
 }
 
 /* ------------------------------------------------------------------ */
-/* El Cierre de Ciclo · el sobre con el sello de Aida                  */
+/* El Cierre de Ciclo · el sobre con la carta                          */
 /* ------------------------------------------------------------------ */
 
+/** Inclinación máxima del sobre, en grados, en los bordes de la escena. */
+const INCLINACION = 9;
+
+type Punto = { x: number; y: number };
+
 /**
- * Un sobre cerrado con el sello de cera de Aida. Al entrar en pantalla (o al
- * tocarlo) el sello se rompe, la solapa gira hacia atrás y la carta sube con
- * la fecha, la hora y el formato. El botón va debajo, siempre a la vista.
+ * Escribe `texto` letra a letra cuando `activo` pasa a `true`. Sin movimiento
+ * (servidor, primer render o movimiento reducido) devuelve el texto entero. El
+ * estado sólo cambia dentro de temporizadores, nunca en el efecto en sí.
+ */
+function useTecleo(texto: string, activo: boolean, movimiento: boolean) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!movimiento || !activo) return;
+    let i = 0;
+    let t: number;
+    const paso = () => {
+      i += 1;
+      setN(i);
+      if (i < texto.length) t = window.setTimeout(paso, 80);
+    };
+    t = window.setTimeout(paso, 700);
+    return () => window.clearTimeout(t);
+  }, [texto, activo, movimiento]);
+  if (!movimiento) return { visible: texto, escribiendo: false };
+  return { visible: texto.slice(0, n), escribiendo: true };
+}
+
+/**
+ * Un sobre índigo con una carta marfil guardada hasta el fondo del bolsillo: de
+ * ella sólo asoma el encabezado hasta que el cursor (o el foco) la sube. Todo el
+ * sobre es el enlace al checkout, se inclina hacia el puntero y lleva una
+ * etiqueta de vidrio pegada al cursor. Con pantalla táctil la carta descansa
+ * medio levantada. El botón va debajo, siempre a la vista.
  */
 export function CierreSobre({ cta }: Props) {
   const principal = HORARIOS[0];
-  const { dia, mes } = partesFecha();
   const otros = HORARIOS.slice(1);
+  const nombre = useContenido().marca.nombre;
   const movimiento = useMovimiento();
-  const [abiertoE, setAbierto] = useState(false);
-  const abierto = movimiento ? abiertoE : true;
+  const escenaRef = useRef<HTMLDivElement>(null);
+  const [inclinacion, setInclinacion] = useState<Punto>({ x: 0, y: 0 });
+  const [etiqueta, setEtiqueta] = useState<Punto | null>(null);
+  const [visto, setVisto] = useState(false);
+  const { visible, escribiendo } = useTecleo(EVENTO.fechaCorta, visto, movimiento);
 
-  const ref = useEntra<HTMLDivElement>(() => {
-    if (!reducirMovimiento()) window.setTimeout(() => setAbierto(true), 450);
-  }, 0.6);
+  const entra = useEntra<HTMLDivElement>(() => setVisto(true), 0.5);
+
+  // Un solo manejador para la inclinación y la etiqueta: necesitan las mismas
+  // coordenadas, separarlos duplicaría el trabajo en cada movimiento.
+  function alMover(e: React.PointerEvent<HTMLDivElement>) {
+    if (e.pointerType === "touch") return;
+    const escena = escenaRef.current;
+    if (!escena) return;
+    const r = escena.getBoundingClientRect();
+    setInclinacion({
+      x: ((e.clientX - r.left) / r.width) * 2 - 1,
+      y: ((e.clientY - r.top) / r.height) * 2 - 1,
+    });
+    setEtiqueta({ x: e.clientX - r.left, y: e.clientY - r.top });
+  }
+
+  function alSalir() {
+    setInclinacion({ x: 0, y: 0 });
+    setEtiqueta(null);
+  }
 
   return (
-    <div className="av4-sobre" data-reveal>
+    <div ref={entra} className="av4-carta" data-reveal>
       <div
-        ref={ref}
-        className={`av4-sobre__escena${abierto ? " av4-sobre__escena--abierto" : ""}`}
-        onClick={() => setAbierto(!abierto)}
+        ref={escenaRef}
+        className="av4-carta__escena"
+        onPointerMove={alMover}
+        onPointerLeave={alSalir}
       >
-        <div className="av4-sobre__fondo" aria-hidden="true" />
+        <div className="av4-carta__halo" aria-hidden="true" />
 
-        <div className="av4-sobre__carta">
-          <p className="av4-sobre__fecha">
-            <span>{dia}</span> {mes && <em>de {mes}</em>}
-          </p>
-          <p className="av4-sobre__hora">
-            {principal.hora} {principal.pais} peninsular
-          </p>
-          <p className="av4-sobre__formato">
-            {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
-          </p>
-          <p className="av4-sobre__otros">
-            {otros.map((h, i) => (
-              <span key={h.pais}>
-                {i > 0 && " · "}
-                {h.pais === "México" ? "Ciudad de México" : h.pais} {h.hora}
+        <a
+          className="av4-carta__sobre"
+          href={LINKS.registro}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-sierra="checkout"
+          data-sierra-target={`Checkout ${PRECIO.actual} · cierre-sobre`}
+          aria-label={`Quiero mi plaza: ${nombre}, ${EVENTO.fechaCorta}`}
+          style={{
+            // rotateX va invertido: un puntero bajo el centro inclina el borde de arriba hacia vos.
+            transform: `translateY(-50%) rotateY(${inclinacion.x * INCLINACION}deg) rotateX(${-inclinacion.y * INCLINACION}deg)`,
+          }}
+        >
+          <span className="av4-carta__dorso" />
+
+          <span className="av4-carta__hoja">
+            <span className="av4-carta__cabecera">
+              <span>{nombre}</span>
+              <span>{EVENTO.fechaCorta}</span>
+            </span>
+
+            <span className="av4-carta__titulo">
+              <span className="av4-carta__lema">{nombre}</span>
+              <span className="av4-carta__fecha">
+                {visible}
+                {escribiendo && <span className="av4-carta__cursor">_</span>}
               </span>
-            ))}
-          </p>
-        </div>
+            </span>
 
-        <div className="av4-sobre__frente" aria-hidden="true" />
-        <div className="av4-sobre__solapa" aria-hidden="true" />
-        <Av4Sello size={72} className="av4-sobre__sello" />
+            <span className="av4-carta__regla" />
+
+            <span className="av4-carta__cuerpo">
+              <strong>
+                {principal.hora} {principal.pais} peninsular
+              </strong>
+              <span>
+                {otros
+                  .map((h) => `${h.pais === "México" ? "Ciudad de México" : h.pais} ${h.hora}`)
+                  .join(" · ")}
+              </span>
+              <span>
+                {EVENTO.formato} · {PRECIO.actual.replace("€", " €")}
+              </span>
+            </span>
+
+            <span className="av4-carta__firma">Aida Qui ↗</span>
+          </span>
+
+          <span className="av4-carta__frente">
+            <span className="av4-carta__pliegue" />
+          </span>
+
+          <span className="av4-carta__sello">
+            <Av4Sello size={96} className="av4-carta__sello-img" />
+            <span className="av4-carta__flecha">
+              <ArrowUpRight size={14} strokeWidth={2.4} />
+            </span>
+          </span>
+        </a>
+
+        {etiqueta && (
+          <span
+            className="av4-carta__etiqueta"
+            aria-hidden="true"
+            style={{ transform: `translate3d(${etiqueta.x}px, ${etiqueta.y}px, 0)` }}
+          >
+            Quiero mi plaza
+          </span>
+        )}
       </div>
 
-      <div className="av4-sobre__cta">
+      <div className="av4-carta__cta">
         <BotonCierre cta={cta} />
       </div>
     </div>
