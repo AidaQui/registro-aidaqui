@@ -34954,3 +34954,125 @@ body {
   --t-strong: var(--av4-wine);
   --t-text: #6f6273;
 }
+
+/* ---- Landings por área · hero en móvil: la promesa, la fecha y los horarios en el primer pantallazo ----
+ *
+ * Como en v4: la foto acompaña arriba pero no se come la pantalla. El retrato
+ * (arco u óvalo) se achica y la foto de Misión Alma baja de alto, con el texto
+ * montado sobre su parte baja.
+ */
+
+@media (max-width: 640px) {
+  /* Operación Coherencia: arco más chico, marco de latón más cerca. */
+  .av4.av4--esmeralda .av4-hero__shell {
+    padding-top: 20px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__retrato {
+    width: 150px;
+    height: 186px;
+    margin: 0 12px 22px 0;
+  }
+
+  .av4.av4--esmeralda .av4-hero__retrato::before {
+    transform: translate(10px, 10px);
+  }
+
+  .av4.av4--esmeralda .av4-hero__marco::after {
+    inset: 6px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__rama {
+    left: -30px;
+    bottom: 14px;
+    width: 52px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__tag {
+    margin-top: 12px;
+  }
+
+  .av4.av4--esmeralda .av4-hero__title {
+    margin-top: 16px;
+  }
+
+  /* El Cierre de Ciclo: óvalo más chico, con sus aros. */
+  .av4.av4--lavanda .av4-hero__shell {
+    padding-top: 34px;
+  }
+
+  .av4.av4--lavanda .av4-hero__retrato {
+    width: 136px;
+    height: 164px;
+    margin-bottom: 26px;
+  }
+
+  .av4.av4--lavanda .av4-hero__retrato::before {
+    inset: -9px;
+  }
+
+  .av4.av4--lavanda .av4-hero__retrato::after {
+    inset: -19px;
+  }
+
+  .av4.av4--lavanda .av4-hero__tag {
+    margin-top: 12px;
+  }
+
+  .av4.av4--lavanda .av4-hero__title {
+    margin-top: 16px;
+  }
+
+  /* Misión Alma: la foto más baja y el texto empieza sobre ella. */
+  .av4.av4--amanecer .av4-hero__foto {
+    height: 400px;
+  }
+
+  .av4.av4--amanecer .av4-hero__foto::after {
+    background:
+      radial-gradient(60% 70% at 100% 0%, rgb(var(--av4-gold-soft-rgb) / 0.5), transparent 72%),
+      linear-gradient(180deg, rgb(var(--av4-ivory-rgb) / 0) 0%, rgb(var(--av4-ivory-rgb) / 0) 42%, rgb(var(--av4-ivory-rgb) / 0.86) 66%, var(--av4-ivory) 92%);
+  }
+
+  .av4.av4--amanecer .av4-hero__shell {
+    padding-top: 236px;
+  }
+
+  .av4.av4--amanecer .av4-hero__tag {
+    margin-top: 12px;
+  }
+
+  .av4.av4--amanecer .av4-hero__title {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* El titular a la escala del de v4 (era 40px y empujaba los horarios y el botón fuera de la pantalla). */
+  .av4.av4--areas .av4-hero__title {
+    font-size: clamp(30px, 8.6vw, 36px);
+  }
+
+  .av4.av4--areas p.av4-hero__lead {
+    margin-bottom: 16px;
+  }
+
+  .av4.av4--areas p.av4-hero__para {
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Cierre de Ciclo: el texto va en grilla y los márgenes no se pisan, así que se suman. */
+  .av4.av4--lavanda.av4--areas p.av4-hero__lead {
+    margin-top: 14px;
+  }
+
+  .av4.av4--lavanda.av4--areas p.av4-hero__para {
+    margin-top: 0;
+  }
+
+  .av4.av4--lavanda.av4--areas .av4-hero__accion {
+    margin-top: 18px;
+  }
+}
