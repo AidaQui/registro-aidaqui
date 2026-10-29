@@ -34957,25 +34957,59 @@ body {
 
 /* ---- Landings por área · hero en móvil: la promesa, la fecha y los horarios en el primer pantallazo ----
  *
- * Como en v4: la foto acompaña arriba pero no se come la pantalla. El retrato
- * (arco u óvalo) se achica y la foto de Misión Alma baja de alto, con el texto
- * montado sobre su parte baja.
+ * Como en v4: la foto acompaña pero no se come la pantalla. En Coherencia y
+ * Cierre el retrato (arco u óvalo) va chico al lado del sello; en Código y
+ * Misión la foto queda arriba y el texto sube sobre su parte baja.
  */
 
 @media (max-width: 640px) {
-  /* Operación Coherencia: arco más chico, marco de latón más cerca. */
+  /* Operación Coherencia y El Cierre de Ciclo: el sello y el retrato comparten
+     la primera fila. El bloque de texto se disuelve (display: contents) para
+     que el logotipo y el retrato sean hermanos en la grilla del hero. */
+  .av4.av4--esmeralda .av4-hero__shell,
+  .av4.av4--lavanda .av4-hero__shell {
+    display: grid;
+    align-items: center;
+  }
+
+  .av4.av4--esmeralda .av4-hero__copy,
+  .av4.av4--lavanda .av4-hero__copy {
+    display: contents;
+  }
+
+  .av4.av4--esmeralda .av4-hero__copy > *,
+  .av4.av4--lavanda .av4-hero__copy > * {
+    grid-column: 1 / -1;
+  }
+
+  .av4.av4--esmeralda .av4-hero__copy > .av4-lockup,
+  .av4.av4--lavanda .av4-hero__copy > .av4-lockup {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .av4.av4--esmeralda .av4-hero__retrato,
+  .av4.av4--lavanda .av4-hero__retrato {
+    grid-row: 1;
+    grid-column: 2;
+    order: 0;
+  }
+
+  /* Coherencia: arco a la derecha, con el marco de latón más cerca. */
   .av4.av4--esmeralda .av4-hero__shell {
-    padding-top: 20px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 14px;
+    padding-top: 22px;
   }
 
   .av4.av4--esmeralda .av4-hero__retrato {
-    width: 150px;
-    height: 186px;
-    margin: 0 12px 22px 0;
+    width: 112px;
+    height: 140px;
+    margin: 0 10px 10px 0;
   }
 
   .av4.av4--esmeralda .av4-hero__retrato::before {
-    transform: translate(10px, 10px);
+    transform: translate(8px, 8px);
   }
 
   .av4.av4--esmeralda .av4-hero__marco::after {
@@ -34983,49 +35017,69 @@ body {
   }
 
   .av4.av4--esmeralda .av4-hero__rama {
-    left: -30px;
-    bottom: 14px;
-    width: 52px;
+    display: none;
   }
 
   .av4.av4--esmeralda .av4-hero__tag {
-    margin-top: 12px;
+    margin-top: 14px;
   }
 
   .av4.av4--esmeralda .av4-hero__title {
     margin-top: 16px;
   }
 
-  /* El Cierre de Ciclo: óvalo más chico, con sus aros. */
+  /* Cierre: el sello y el óvalo, centrados como el resto del hero. */
   .av4.av4--lavanda .av4-hero__shell {
-    padding-top: 34px;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    column-gap: 30px;
+    padding-top: 30px;
+  }
+
+  .av4.av4--lavanda .av4-hero__copy > * {
+    justify-self: center;
   }
 
   .av4.av4--lavanda .av4-hero__retrato {
-    width: 136px;
-    height: 164px;
-    margin-bottom: 26px;
+    width: 100px;
+    height: 122px;
+    margin: 0;
   }
 
   .av4.av4--lavanda .av4-hero__retrato::before {
-    inset: -9px;
+    inset: -7px;
   }
 
   .av4.av4--lavanda .av4-hero__retrato::after {
-    inset: -19px;
+    inset: -14px;
   }
 
   .av4.av4--lavanda .av4-hero__tag {
-    margin-top: 12px;
+    margin-top: 26px;
   }
 
   .av4.av4--lavanda .av4-hero__title {
     margin-top: 16px;
   }
 
+  /* El Código Corazón: el texto sube y el espresso entra antes sobre la foto. */
+  .av4.av4--arcilla .av4-hero__shell {
+    padding-top: 150px;
+  }
+
+  .av4.av4--arcilla .av4-hero__foto::after {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--av4-wine-rgb) / 0) 0%,
+      rgb(var(--av4-wine-rgb) / 0) 30%,
+      rgb(var(--av4-wine-rgb) / 0.8) 47%,
+      var(--av4-wine) 72%
+    );
+  }
+
   /* Misión Alma: la foto más baja y el texto empieza sobre ella. */
   .av4.av4--amanecer .av4-hero__foto {
-    height: 400px;
+    height: 350px;
   }
 
   .av4.av4--amanecer .av4-hero__foto::after {
@@ -35035,7 +35089,7 @@ body {
   }
 
   .av4.av4--amanecer .av4-hero__shell {
-    padding-top: 236px;
+    padding-top: 186px;
   }
 
   .av4.av4--amanecer .av4-hero__tag {
@@ -35044,6 +35098,28 @@ body {
 
   .av4.av4--amanecer .av4-hero__title {
     margin-top: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Celulares angostos: el nombre del sello no se parte y el retrato cede lugar. */
+  .av4.av4--esmeralda .av4-hero .av4-lockup,
+  .av4.av4--lavanda .av4-hero .av4-lockup {
+    white-space: nowrap;
+  }
+
+  .av4.av4--esmeralda .av4-hero__retrato {
+    width: 96px;
+    height: 120px;
+  }
+
+  .av4.av4--lavanda .av4-hero__shell {
+    column-gap: 20px;
+  }
+
+  .av4.av4--lavanda .av4-hero__retrato {
+    width: 88px;
+    height: 108px;
   }
 }
 
