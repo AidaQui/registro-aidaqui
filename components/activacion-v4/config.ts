@@ -75,8 +75,14 @@ export const LINKS = {
   soporte: SOPORTE_WHATSAPP,
 } as const;
 
-/** Grupo de WhatsApp de la experiencia (página de gracias). */
+/**
+ * Grupos de WhatsApp de la experiencia (páginas de gracias). Cada público
+ * tiene el suyo: el orgánico entra por /activacion-v4 y su link de Stripe
+ * vuelve a /activacion-v4/gracias; el frío (anuncios) entra por las cuatro
+ * landings de área y su link de Stripe vuelve a /inmersion/gracias.
+ */
 export const GRUPO_WHATSAPP = "https://chat.whatsapp.com/G1AN4bv8fnvKr2IVREeY7x";
+export const GRUPO_WHATSAPP_FRIO = "https://chat.whatsapp.com/FeJsrS1THtfEnLzVt63Kqa";
 
 export const CTA_LABEL = "Quiero apuntarme";
 

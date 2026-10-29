@@ -16,8 +16,9 @@ import {
  * Página de gracias: mismo sistema que la landing. Quien llega aquí ya pagó,
  * así que no hay CTA de compra: el paso clave es el grupo de WhatsApp, donde
  * se reparte el enlace de la sesión. Todo sale de datos que ya tenemos.
+ * `grupo` cambia el grupo de WhatsApp según el público (ver config.ts).
  */
-export default function Av4Gracias() {
+export default function Av4Gracias({ grupo = GRUPO_WHATSAPP }: { grupo?: string }) {
   const principal = HORARIOS[0];
   const PASOS = [
     "Únete al grupo de WhatsApp",
@@ -72,7 +73,7 @@ export default function Av4Gracias() {
               <div className="av4-gp__perf" aria-hidden="true" />
               <div className="av4-gp__cta">
                 <Av4Cta
-                  href={GRUPO_WHATSAPP}
+                  href={grupo}
                   label="Unirme al grupo"
                   icono={<Av4WhatsAppIcon />}
                 />
