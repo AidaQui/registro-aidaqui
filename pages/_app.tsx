@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Fraunces, Jost, Lora } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import Clarity from "@/components/Clarity";
 import { SierraTracking } from "@/components/sierra-tracking";
 
 const fraunces = Fraunces({
@@ -40,7 +39,7 @@ const jost = Jost({
  * /activacion, /masterclass, /lista-de-espera y /diagnostico.
  *
  * Así que Lora entra como variable propia y sólo /frecuencia la usa —ver
- * .frec-lora en globals.css—. Si al verla convence, el paso siguiente es
+ * .frec-lora en styles/legacy.module.css—. Si al verla convence, el paso siguiente es
  * decidir si se lleva al resto del sitio.
  */
 const lora = Lora({
@@ -62,7 +61,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <main className={`${fraunces.variable} ${jost.variable} ${lora.variable}`}>
       <Component {...pageProps} />
       <Analytics />
-      <Clarity />
       <SierraTracking />
     </main>
   );
