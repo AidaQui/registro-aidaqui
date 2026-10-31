@@ -27,6 +27,21 @@ export default function MisionAlma() {
         <title>Misión Alma — Aida Qui</title>
         <meta name="description" content={DESCRIPCION_MISION_ALMA} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Foto del hero (fondo CSS, LCP): se precarga por breakpoint. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/activacion-v4/hero-amanecer-mobile.webp"
+          media="(max-width: 640px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/registro-v1/hero.webp"
+          media="(min-width: 641px)"
+          fetchPriority="high"
+        />
       </Head>
       <Av4Pagina
         contenido={CONTENIDO_MISION_ALMA}

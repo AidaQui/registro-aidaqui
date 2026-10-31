@@ -29521,7 +29521,7 @@ body {
     width: 100%;
     height: 420px;
     /* Versión mobile de la misma foto del hero de escritorio (registro-v2). */
-    background: url("/registro-v2/hero-mobile.jpg") 85% 0 / 115% auto no-repeat;
+    background: url("/activacion-v4/hero-mobile.webp") 85% 0 / 115% auto no-repeat;
   }
 
   .av4-hero__foto::after {
@@ -30569,7 +30569,7 @@ body {
 @media (max-width: 640px) {
   .av4-hero__foto {
     height: 460px;
-    background: url("/registro-v2/hero-mobile.jpg") 50% 0 / 100% auto no-repeat;
+    background: url("/activacion-v4/hero-mobile.webp") 50% 0 / 100% auto no-repeat;
   }
 
   .av4-hero__foto::after {
@@ -30754,7 +30754,7 @@ body {
 
 @media (max-width: 640px) {
   .av4-gr__foto {
-    background-image: url("/registro-v2/hero-mobile.jpg");
+    background-image: url("/activacion-v4/hero-mobile.webp");
     background-size: 100% auto;
     background-position: 50% 0;
     background-repeat: no-repeat;
@@ -31214,7 +31214,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/masterclass/aida-1.jpg") 50% 50% / cover no-repeat;
+  background: url("/activacion-v4/hero-arcilla.webp") 50% 50% / cover no-repeat;
   transform: scaleX(-1);
 }
 
@@ -31234,7 +31234,7 @@ body {
      texto debajo como en v4. */
   .av4.av4--arcilla .av4-hero__foto::before {
     transform: none;
-    background: url("/masterclass/aida-1.jpg") 66% 0 / cover no-repeat;
+    background: url("/activacion-v4/hero-arcilla.webp") 66% 0 / cover no-repeat;
   }
 
   .av4.av4--arcilla .av4-hero__foto::after {
@@ -31253,7 +31253,7 @@ body {
   }
 
   .av4.av4--arcilla .av4-hero__foto::before {
-    background: url("/masterclass/aida-1-mobile.jpg") 50% 0 / 100% auto no-repeat;
+    background: url("/activacion-v4/hero-arcilla-mobile.webp") 50% 0 / 100% auto no-repeat;
   }
 
   .av4.av4--arcilla .av4-hero__foto::after {
@@ -32200,7 +32200,7 @@ body {
   /* Móvil: la versión vertical de la foto. */
   .av4.av4--amanecer .av4-hero__foto {
     height: 470px;
-    background: url("/registro-v1/banner-mobile.jpg") 50% 0 / cover no-repeat;
+    background: url("/activacion-v4/hero-amanecer-mobile.webp") 50% 0 / cover no-repeat;
   }
 
   .av4.av4--amanecer .av4-hero__shell {

@@ -10,6 +10,7 @@ const fraunces = Fraunces({
   display: "swap",
   variable: "--font-fraunces",
   style: ["normal", "italic"],
+  preload: false,
 });
 
 /*
@@ -28,6 +29,7 @@ const jost = Jost({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jost",
+  preload: false,
 });
 
 /*
@@ -46,8 +48,15 @@ const lora = Lora({
   display: "swap",
   variable: "--font-lora",
   style: ["normal", "italic"],
+  preload: false,
 });
 
+/*
+ * Las tres fuentes globales van con `preload: false`: este archivo es global y
+ * precargarlas metía sus woff2 en TODAS las landings, incluidas las v4, que no
+ * las usan. En mobile competían con la foto del hero (el LCP) por la red.
+ * Sin preload, cada landing las baja sólo cuando su CSS las pide.
+ */
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={`${fraunces.variable} ${jost.variable} ${lora.variable}`}>

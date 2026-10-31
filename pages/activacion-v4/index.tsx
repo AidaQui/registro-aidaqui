@@ -27,6 +27,22 @@ export default function ActivacionV4() {
           content="Una experiencia guiada en directo para reconectar con la verdad de tu corazón, reconocer los miedos que te frenan y activar tu poder interior para empezar a crear una vida que ames todos los días."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* La foto del hero es fondo CSS y es el LCP: el navegador recién la
+            descubre al bajar el CSS, así que se precarga por breakpoint. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/activacion-v4/hero-mobile.webp"
+          media="(max-width: 1000px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/registro-v2/hero.webp"
+          media="(min-width: 1001px)"
+          fetchPriority="high"
+        />
       </Head>
       <Av4Pagina
         contenido={CONTENIDO_V4}
