@@ -1,0 +1,7 @@
+{
+  "name": "critters",
+  "version": "0.0.0-local",
+  "private": true,
+  "description": "Shim for next.config experimental.optimizeCss: Next requires 'critters'; this wraps beasties and strips the ?dpl= query Vercel adds to CSS hrefs.",
+  "main": "index.js"
+}

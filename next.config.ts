@@ -16,6 +16,15 @@ const sierraWebinar = sierraPanel
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   devIndicators: false,
+  experimental: {
+    // Critters (paquete `critters`) mete en el HTML el CSS que la página usa y
+    // carga el resto sin bloquear: en mobile los <link> de CSS eran la
+    // principal solicitud de bloqueo de renderización.
+    // `fonts: true` porque Next pasa `fonts: false`: sin los @font-face en el
+    // CSS inline, las fuentes empezaban a bajar recién con el CSS diferido y
+    // el texto que se parte en líneas por JS medía con la fuente de respaldo.
+    optimizeCss: { fonts: true },
+  },
   async rewrites() {
     return [
       ...sierraWebinar,
