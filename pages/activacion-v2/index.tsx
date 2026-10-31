@@ -10,7 +10,6 @@ import RecibirasSection from "@/components/activacion-v2/RecibirasSection";
 import SobreAida from "@/components/activacion-v2/SobreAida";
 import PrecioSection from "@/components/activacion-v2/PrecioSection";
 import CierreFrecuencia from "@/components/activacion-v2/CierreFrecuencia";
-import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
 export default function Frecuencia() {
@@ -39,7 +38,6 @@ export default function Frecuencia() {
         <PrecioSection />
         <CierreFrecuencia />
       </main>
-      <GradualBlur height="7rem" strength={2} divCount={6} />
     </>
   );
 }

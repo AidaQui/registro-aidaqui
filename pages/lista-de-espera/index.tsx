@@ -9,7 +9,6 @@ import WhatIsAdnSection from "@/components/academia-lista-de-espera/WhatIsAdnSec
 import AboutAidaEspera from "@/components/academia-lista-de-espera/AboutAidaEspera";
 import ClosingEspera from "@/components/academia-lista-de-espera/ClosingEspera";
 import WaitlistModal from "@/components/academia-lista-de-espera/WaitlistModal";
-import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
 export default function AcademiaEspera() {
@@ -38,7 +37,6 @@ export default function AcademiaEspera() {
         <AboutAidaEspera />
         <ClosingEspera onOpenForm={openForm} />
       </main>
-      <GradualBlur height="7rem" strength={2} divCount={6} />
       <WaitlistModal open={formOpen} onClose={closeForm} />
     </>
   );

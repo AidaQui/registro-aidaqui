@@ -13,7 +13,6 @@ import Av4Conector from "@/components/activacion-v4/Av4Conector";
 import Av4Cierre from "@/components/activacion-v4/Av4Cierre";
 import { Av4ContenidoProvider } from "@/components/activacion-v4/Av4ContenidoContext";
 import type { Contenido } from "@/components/activacion-v4/contenido";
-import GradualBlur from "@/components/academia-lista-de-espera/GradualBlur";
 import SmoothScroll from "@/components/academia-lista-de-espera/SmoothScroll";
 
 /* Fondos de cada sección: salen del tema (variables de .av4), así cada
@@ -102,7 +101,6 @@ export default function Av4Pagina({
           )}
         </main>
       </Av4ContenidoProvider>
-      <GradualBlur height="7rem" strength={2} divCount={6} />
     </>
   );
 }
