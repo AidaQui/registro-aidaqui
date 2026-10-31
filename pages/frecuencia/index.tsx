@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import HeroSection from "@/components/frecuencia/HeroSection";
 import PainSection from "@/components/frecuencia/PainSection";

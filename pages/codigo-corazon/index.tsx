@@ -1,9 +1,10 @@
+import "@/styles/av4.module.css";
 import Head from "next/head";
 import { Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
 import Av4Pagina from "@/components/activacion-v4/Av4Pagina";
 import { CONTENIDO_CODIGO_CORAZON, DESCRIPCION_CODIGO_CORAZON } from "@/components/activacion-v4/variantes/codigo-corazon";
 
-/* El Código Corazón (dinero y abundancia). Tema en globals.css (.av4--arcilla); copy en
+/* El Código Corazón (dinero y abundancia). Tema en styles/av4.module.css (.av4--arcilla); copy en
    components/activacion-v4/variantes/codigo-corazon.tsx.
    Sin `weight` en las variables: listar pesos las pide como estáticas (ver _app.tsx).
    `preload: false`: Turbopack mete estas @font-face en un chunk de CSS que cargan

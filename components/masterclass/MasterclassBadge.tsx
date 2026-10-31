@@ -1,5 +1,5 @@
 // Badge "Masterclass gratuita" con espigas doradas y animación CONTINUA.
-// Adaptado de un componente styled-components a CSS plano (ver .mc-wheat-* en globals.css).
+// Adaptado de un componente styled-components a CSS plano (ver .mc-wheat-* en styles/legacy.module.css).
 // Las hojas (.fil0) se pintan en verde oscuro vía CSS.
 
 export default function MasterclassBadge() {

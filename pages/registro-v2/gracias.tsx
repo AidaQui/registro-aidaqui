@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import GraciasHero from "@/components/registro-v2/GraciasHero";
 import { fuentesV2 } from "@/components/registro-v2/fuentes";

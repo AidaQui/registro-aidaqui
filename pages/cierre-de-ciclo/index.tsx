@@ -1,9 +1,10 @@
+import "@/styles/av4.module.css";
 import Head from "next/head";
 import { Instrument_Serif, Onest } from "next/font/google";
 import Av4Pagina from "@/components/activacion-v4/Av4Pagina";
 import { CONTENIDO_CIERRE_DE_CICLO, DESCRIPCION_CIERRE_DE_CICLO } from "@/components/activacion-v4/variantes/cierre-de-ciclo";
 
-/* El Cierre de Ciclo (relaciones). Tema en globals.css (.av4--lavanda); copy en
+/* El Cierre de Ciclo (relaciones). Tema en styles/av4.module.css (.av4--lavanda); copy en
    components/activacion-v4/variantes/cierre-de-ciclo.tsx.
    Sin `weight` en las variables: listar pesos las pide como estáticas (ver _app.tsx). */
 const serif = Instrument_Serif({

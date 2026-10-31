@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import GraciasHero from "@/components/registro-v1/GraciasHero";
 

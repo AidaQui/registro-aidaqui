@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import GraciasSectionEspera from "@/components/academia-lista-de-espera/GraciasSectionEspera";
 

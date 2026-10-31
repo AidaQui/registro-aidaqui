@@ -16,7 +16,7 @@ import {
 /**
  * Opiniones reales de alumnas de Academia ADN (los mismos datos y pop-up que
  * /lista-de-espera). NO son de esta activación, y el titular lo dice así.
- * El modal se estiliza bajo .av4-modal-scope (ver globals.css).
+ * El modal se estiliza bajo .av4-modal-scope (ver styles/av4.module.css).
  */
 /* El evento ya no se llama "Activación del Corazón": la opinión que lo nombra
    así es real y no se edita, así que en estas landings no se muestra. */

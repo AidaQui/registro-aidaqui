@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import MolecularDnaAnimation from "@/components/diagnostico/MolecularDnaAnimation";
 import styles from "./adn-animation.module.css";

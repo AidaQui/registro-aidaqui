@@ -1,6 +1,6 @@
 // Badge "Experiencia online" con espigas y animación CONTINUA.
 // Misma pieza que la de /masterclass; los colores de esta copia se pisan en
-// globals.css bajo .hero-section--ent (bloque ENTRENAMIENTO).
+// styles/legacy.module.css bajo .hero-section--ent (bloque ENTRENAMIENTO).
 
 import { Radio } from "lucide-react";
 

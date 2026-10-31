@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import GraciasSection from "@/components/activacion-v3/GraciasSection";
 

@@ -5,7 +5,7 @@ import { Instrument_Serif, DM_Sans } from "next/font/google";
  * textos. Se cargan sólo en las páginas de la v3 (no en _app) para no
  * sumarle peso al resto del sitio.
  *
- * En globals.css (bloque REGISTRO V3), .rv3 redefine --font-fraunces y
+ * En styles/legacy.module.css (bloque REGISTRO V3), .rv3 redefine --font-fraunces y
  * --font-jost con estas variables: así todas las reglas heredadas de la
  * masterclass y de la v1 toman las fuentes nuevas sin tocarlas una por una.
  *

@@ -7,7 +7,7 @@ import * as THREE from "three";
  * Adaptado de LightPillar (reactbits.dev). Cambios respecto al original:
  *
  *   1. TypeScript, que es lo que usa el proyecto.
- *   2. El CSS va en globals.css —ver .frec-precio__pillar—, no en un archivo
+ *   2. El CSS va en styles/legacy.module.css —ver .frec-precio__pillar—, no en un archivo
  *      aparte: aquí no hay módulos CSS por componente.
  *   3. Se detiene cuando la tarjeta no está a la vista o la pestaña pasa a
  *      segundo plano. El original pinta mientras esté montado, y esto vive a

@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import GraciasActivacion from "@/components/activacion/GraciasActivacion";
 

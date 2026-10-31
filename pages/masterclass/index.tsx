@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import HeroSectionMC from "@/components/masterclass/HeroSectionMC";
 import ClassContentSection from "@/components/masterclass/ClassContentSection";

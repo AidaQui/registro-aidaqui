@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
@@ -272,7 +273,7 @@ export default function LeadMagnetPage() {
             único de la página.
 
             Lo sustituye una retícula de líneas violetas sobre crema, y va en
-            CSS —dos degradados repetidos, ver .dg-page en globals.css— y no en
+            CSS —dos degradados repetidos, ver .dg-page en styles/legacy.module.css— y no en
             un lienzo: es un dibujo estático y regular, exactamente lo que un
             background-image resuelve sin pedir WebGL, sin un contexto gráfico
             por pestaña y sin un fotograma de trabajo por segundo.

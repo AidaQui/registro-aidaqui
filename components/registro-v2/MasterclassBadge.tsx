@@ -1,6 +1,6 @@
 // Badge "Entrenamiento práctico y gratuito" con espigas y animación CONTINUA.
 // Misma pieza que la de /masterclass; los colores de esta copia se pisan en
-// globals.css bajo .hero-section--rv2 (bloque REGISTRO V2).
+// styles/legacy.module.css bajo .hero-section--rv2 (bloque REGISTRO V2).
 
 import { Radio } from "lucide-react";
 

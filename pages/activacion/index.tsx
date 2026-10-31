@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import HeroFrecuencia from "@/components/activacion/HeroFrecuencia";
 import IdentificacionSection from "@/components/activacion/IdentificacionSection";

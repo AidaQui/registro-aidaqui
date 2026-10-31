@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import AnnouncementBar from "@/components/registro-v1/AnnouncementBar";
 import HeroSectionMC from "@/components/registro-v1/HeroSectionMC";
@@ -11,7 +12,7 @@ import StarDivider from "@/components/registro-v1/StarDivider";
 
 // Copia de /masterclass con otra promesa y la paleta de la terraza
 // mediterránea. La clase "ent" del <main> es la que activa esa paleta en
-// globals.css (bloque ENTRENAMIENTO), así que /masterclass no se entera.
+// styles/legacy.module.css (bloque ENTRENAMIENTO), así que /masterclass no se entera.
 export default function Entrenamiento() {
   return (
     <>

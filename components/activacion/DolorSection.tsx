@@ -30,7 +30,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * EL FONDO ES CSS, NO UNA FOTO. Las catorce imágenes de la carpeta ya están
  * repartidas entre las secciones de experiencia y de entregables, y repetir
  * cuatro de ellas aquí se nota a media página de distancia. Un degradado por
- * cuerpo —el tono lo pone `data-cuerpo` en globals.css— da fondo distinto a
+ * cuerpo —el tono lo pone `data-cuerpo` en styles/legacy.module.css— da fondo distinto a
  * cada tarjeta, no pesa nada y deja el icono legible por delante, que es lo
  * que una foto con detalle no permitiría.
  */
@@ -105,7 +105,7 @@ export default function DolorSection() {
 
         {/* El nombre va en blanco sobre el dorado, con un velo que lo apaga
             por abajo: el dorado tiene brillos casi blancos y sin ese velo el
-            texto se perdería contra ellos. Las reglas están en globals.css
+            texto se perdería contra ellos. Las reglas están en styles/legacy.module.css
             bajo .frec-cuerpos[data-tipo="clara"]. */}
         <ul
           className="frec-cuerpos"

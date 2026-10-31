@@ -1,3 +1,4 @@
+import "@/styles/av4.module.css";
 import Head from "next/head";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import Av4Gracias from "@/components/activacion-v4/Av4Gracias";

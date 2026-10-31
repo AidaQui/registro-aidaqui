@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import AnnouncementBar from "@/components/registro-v3/AnnouncementBar";
 import HeroSectionMC from "@/components/registro-v3/HeroSectionMC";
@@ -11,7 +12,7 @@ import { fuentesV3 } from "@/components/registro-v3/fuentes";
 
 // Copia exacta de /registro-v2 para la siguiente variante del test de
 // promesas. La clase "rv3" del <main> activa su bloque REGISTRO V3 en
-// globals.css, así que /registro-v2, /registro-v1 y /masterclass no se
+// styles/legacy.module.css, así que /registro-v2, /registro-v1 y /masterclass no se
 // enteran de sus cambios.
 export default function RegistroV3() {
   return (

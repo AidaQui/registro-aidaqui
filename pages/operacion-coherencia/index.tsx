@@ -1,9 +1,10 @@
+import "@/styles/av4.module.css";
 import Head from "next/head";
 import { Newsreader, Familjen_Grotesk } from "next/font/google";
 import Av4Pagina from "@/components/activacion-v4/Av4Pagina";
 import { CONTENIDO_COHERENCIA, DESCRIPCION_COHERENCIA } from "@/components/activacion-v4/variantes/coherencia";
 
-/* Operación Coherencia (salud y energía). Tema en globals.css (.av4--esmeralda); copy en
+/* Operación Coherencia (salud y energía). Tema en styles/av4.module.css (.av4--esmeralda); copy en
    components/activacion-v4/variantes/coherencia.tsx.
    Sin `weight` en las variables: listar pesos las pide como estáticas (ver _app.tsx). */
 const serif = Newsreader({

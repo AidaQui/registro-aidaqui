@@ -10,7 +10,7 @@ import {
 
 // Los mismos testimonios (datos y pop-up) que /lista-de-espera: si se suma
 // uno allí, aparece también aquí. Va pegada debajo del pase y comparte su
-// fondo marrón (ver .ent-dark-band en globals.css); los colores de la
+// fondo marrón (ver .ent-dark-band en styles/legacy.module.css); los colores de la
 // terraza se pisan bajo .testi-ent.
 export default function TestimonialsSection() {
   const ref = useScrollReveal<HTMLElement>();

@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import HeroSectionADN from "@/components/academia/HeroSectionADN";
 import ScarcitySection from "@/components/academia/ScarcitySection";

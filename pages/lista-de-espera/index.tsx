@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import { useCallback, useState } from "react";
 import Head from "next/head";
 import HeroSectionEspera from "@/components/academia-lista-de-espera/HeroSectionEspera";

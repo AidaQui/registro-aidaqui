@@ -1,3 +1,4 @@
+import "@/styles/legacy.module.css";
 import Head from "next/head";
 import AnnouncementBar from "@/components/registro-v2/AnnouncementBar";
 import HeroSectionMC from "@/components/registro-v2/HeroSectionMC";
@@ -11,7 +12,7 @@ import { fuentesV2 } from "@/components/registro-v2/fuentes";
 
 // Copia de /registro-v1 para la siguiente variante del test de promesas
 // (misma estructura; cambian tipografía, paleta y algunos detalles). La
-// clase "rv2" del <main> activa su bloque REGISTRO V2 en globals.css, así
+// clase "rv2" del <main> activa su bloque REGISTRO V2 en styles/legacy.module.css, así
 // que /registro-v1 y /masterclass no se enteran de sus cambios.
 export default function RegistroV2() {
   return (
